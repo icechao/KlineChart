@@ -13,7 +13,7 @@ import android.view.MotionEvent;
  * @PackageName  : com.icechao.klinelib.view
  * @FileName     : ScrollView.java
  * @Author       : chao
- * @Date         : 2019/1/10
+ * @Date         : 2019/4/10
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

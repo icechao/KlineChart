@@ -6,5 +6,5 @@ import android.view.View;
 
 public interface PriceItemListener {
 
-    void onClick(MarketBuySellItem item, View view);
+    void onClick(MarketTradeItem item, View view);
 }

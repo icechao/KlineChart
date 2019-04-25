@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
  * @PackageName  : com.icechao.klinelib.utils
  * @FileName     : ScrollAndScaleView.java
  * @Author       : chao
- * @Date         : 2019/1/8
+ * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
@@ -92,7 +92,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        isLongPress = true;
+        setLongPress(true);
     }
 
     @Override
@@ -182,11 +182,11 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
         // 按压手指超过1个
         if (event.getPointerCount() > 1) {
-            isLongPress = false;
+            setLongPress( false);
         }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                touch = true;
+                setTouch(true);
                 x = event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -201,15 +201,15 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             case MotionEvent.ACTION_UP:
                 if (x == event.getX()) {
                     if (isLongPress) {
-                        isLongPress = false;
+                        setLongPress( false);
                     }
                 }
-                touch = false;
+                setTouch(false);
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                isLongPress = false;
-                touch = false;
+                setLongPress( false);
+                setTouch(false);
                 invalidate();
                 break;
             default:
@@ -312,6 +312,14 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     public interface EventLisenter {
         void onEvent();
+    }
+
+    public void setLongPress(boolean longPress) {
+        isLongPress = longPress;
+    }
+
+    public void setTouch(boolean touch) {
+        this.touch = touch;
     }
 
     private EventLisenter eventLisenter;

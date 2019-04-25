@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.Status;
 import com.icechao.klinelib.entity.KLineEntity;
-import com.icechao.klinelib.entity.MarketBuySellItem;
+import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -302,9 +302,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     //下面是深度想着的计算
     //-----------------------------------------------------------------------------------------//
 
-    private List<MarketBuySellItem> askList = new ArrayList<>();
+    private List<MarketTradeItem> askList = new ArrayList<>();
 
-    private List<MarketBuySellItem> bidList = new ArrayList<>();
+    private List<MarketTradeItem> bidList = new ArrayList<>();
 
 
     /**
@@ -317,14 +317,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
      * @param type
      * @param totalAmount
      */
-    private void updateBuySellList(String symbol, List<MarketBuySellItem> list, List<List<Double>> priceAndAmount, List<Double> totalList, int type, double totalAmount) {
+    private void updateBuySellList(String symbol, List<MarketTradeItem> list, List<List<Double>> priceAndAmount, List<Double> totalList, int type, double totalAmount) {
         int loop = Math.min(20, priceAndAmount.size());
         list.clear();
-        MarketBuySellItem item;
+        MarketTradeItem item;
 
         for (int i = 0; i < loop; i++) {
-            item = new MarketBuySellItem();
-            item.setTradeType(MarketBuySellItem.MARKET_TRADE);
+            item = new MarketTradeItem();
+            item.setTradeType(MarketTradeItem.MARKET_TRADE);
             item.setNeedDraw(true);
             item.setSymbol(symbol);
             item.setPrice(priceAndAmount.get(i).get(0));
@@ -366,7 +366,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             item.setAmount(totalAmount);
             list.add(item);
         }
-        if (type == MarketBuySellItem.BUY_TYPE) {
+        if (type == MarketTradeItem.BUY_TYPE) {
             Collections.reverse(list);
         }
 

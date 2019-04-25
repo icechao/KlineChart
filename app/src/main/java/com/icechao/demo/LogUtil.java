@@ -6,7 +6,7 @@ package com.icechao.demo;
  * @PackageName  : com.icechao.klinelib.utils
  * @FileName     : LogUtil.java
  * @Author       : chao
- * @Date         : 2019/1/10
+ * @Date         : 2019/4/10
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

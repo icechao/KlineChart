@@ -10,7 +10,7 @@ import java.util.Locale;
  * @PackageName  : com.icechao.klinelib.utils
  * @FileName     : BigValueFormatter.java
  * @Author       : chao
- * @Date         : 2019/1/8
+ * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

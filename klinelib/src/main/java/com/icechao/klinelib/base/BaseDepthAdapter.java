@@ -16,7 +16,7 @@ import java.util.List;
  * @PackageName  : com.icechao.klinelib.base
  * @FileName     : BaseDepthAdapter.java
  * @Author       : chao
- * @Date         : 2019/1/9
+ * @Date         : 2019/4/9
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

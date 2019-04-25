@@ -5,13 +5,13 @@ package com.icechao.klinelib.entity;
 
 import java.io.Serializable;
 
-public class MarketBuySellItem implements Serializable {
+public class MarketTradeItem implements Serializable {
 
     public static final int BUY_TYPE = 0;
     public static final int SELL_TYPE = 1;
-    public static final int VERTICAL_TRADE = 1; //竖版交易的盘口
-    public static final int HORIZONTAL_TRADE = 0; //横版交易的盘口
-    public static final int MARKET_TRADE = 2; //k线的盘口
+    public static final int VERTICAL_TRADE = 1;
+    public static final int HORIZONTAL_TRADE = 0;
+    public static final int MARKET_TRADE = 2;
 
 
     private double price;
@@ -29,13 +29,13 @@ public class MarketBuySellItem implements Serializable {
 
     private boolean isOrderPlace;
 
-    private int tradeType;//交易的方向  横版或者竖版
+    private int tradeType;
 
-    public MarketBuySellItem() {
+    public MarketTradeItem() {
 
     }
 
-    public MarketBuySellItem(int type, int tradeType) {
+    public MarketTradeItem(int type, int tradeType) {
         this.type = type;
         this.tradeType = tradeType;
     }

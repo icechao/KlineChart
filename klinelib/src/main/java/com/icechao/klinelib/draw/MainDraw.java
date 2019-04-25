@@ -4,14 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
-import com.icechao.klinelib.base.IChartDraw;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.entity.ICandle;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -19,15 +16,13 @@ import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberUtil;
 import com.icechao.klinelib.utils.ViewUtil;
 
-import java.util.Arrays;
-
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
  * @FileName     : MainDraw.java
  * @Author       : chao
- * @Date         : 2019/1/8
+ * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
@@ -96,13 +91,13 @@ public class MainDraw extends BaseDraw {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 view.drawEndMinutsLine(canvas, linePaint, lastX, lastClosePrice, curX);
-                view.drawEndMinutsLineArea(canvas, lineAreaPaint, lastX, lastClosePrice, curX);
+                view.drawEndFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX);
 
             } else {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 float closePrice = values[Constants.INDEX_CLOSE + indexInterval];
                 view.drawLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
-                view.drawMinutsLineArea(canvas, lineAreaPaint, lastX, lastClosePrice, curX, closePrice);
+                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, closePrice);
             }
 
         } else {

@@ -9,7 +9,7 @@ import java.util.List;
  * @PackageName  : com.icechao.demo.websocket.bean
  * @FileName     : DepthBean.java
  * @Author       : chao
- * @Date         : 2019/1/23
+ * @Date         : 2019/4/23
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

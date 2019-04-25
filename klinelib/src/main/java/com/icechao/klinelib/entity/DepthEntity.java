@@ -6,7 +6,7 @@ package com.icechao.klinelib.entity;
  * @PackageName  : com.icechao.klinelib.entity
  * @FileName     : DepthEntity.java
  * @Author       : chao
- * @Date         : 2019/1/9
+ * @Date         : 2019/4/9
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

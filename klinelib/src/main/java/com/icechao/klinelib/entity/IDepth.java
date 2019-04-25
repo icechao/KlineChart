@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @PackageName  : com.icechao.klinelib.entity
  * @FileName     : IDepth.java
  * @Author       : chao
- * @Date         : 2019/1/8
+ * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

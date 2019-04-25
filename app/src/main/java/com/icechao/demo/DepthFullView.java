@@ -20,7 +20,7 @@ import java.util.List;
  * @PackageName  : com.icechao.kline
  * @FileName     : DepthFullView.java
  * @Author       : chao
- * @Date         : 2019/1/11
+ * @Date         : 2019/4/11
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.icechao.klinelib.entity.MarketBuySellItem;
+import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.R;
 
 import java.util.ArrayList;
@@ -22,15 +22,15 @@ import java.util.List;
  * @PackageName  : com.icechao.klinelib.adapter
  * @FileName     : DepthRecycleViewAdapter.java
  * @Author       : chao
- * @Date         : 2019/1/11
+ * @Date         : 2019/4/11
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
 public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleViewAdapter.DepthViewHolder> {
 
     private Handler handler = new Handler(Looper.getMainLooper());
-    private List<MarketBuySellItem> leftDatas = new ArrayList<>();
-    private List<MarketBuySellItem> rightDatas = new ArrayList<>();
+    private List<MarketTradeItem> leftDatas = new ArrayList<>();
+    private List<MarketTradeItem> rightDatas = new ArrayList<>();
 
     private Context context;
 
@@ -38,7 +38,7 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
         this.context = context;
     }
 
-    public void setData(List<MarketBuySellItem> leftDatas, List<MarketBuySellItem> rightDatas) {
+    public void setData(List<MarketTradeItem> leftDatas, List<MarketTradeItem> rightDatas) {
 //        this.leftMax = leftMax;
 //        this.rightMax = rightMax;
 
@@ -66,8 +66,8 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
 
     @Override
     public void onBindViewHolder(DepthViewHolder viewHolder, int i) {
-        MarketBuySellItem left = leftDatas.get(i);
-        MarketBuySellItem right = rightDatas.get(i);
+        MarketTradeItem left = leftDatas.get(i);
+        MarketTradeItem right = rightDatas.get(i);
         String index = String.valueOf(i + 1);
 
         viewHolder.textViewLeftIndex.setText(index);

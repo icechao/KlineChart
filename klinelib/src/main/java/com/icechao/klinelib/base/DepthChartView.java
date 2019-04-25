@@ -6,7 +6,7 @@ package com.icechao.klinelib.base;
  * @PackageName  : com.icechao.klinelib.view
  * @FileName     : DepthChart.java
  * @Author       : chao
- * @Date         : 2019/1/23
+ * @Date         : 2019/4/23
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
