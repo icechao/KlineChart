@@ -2,7 +2,9 @@ package com.icechao.klinelib.adapter;
 
 import com.icechao.klinelib.base.BaseKLineChartAdapter;
 import com.icechao.klinelib.entity.KLineEntity;
+import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.DataHelper;
+import com.icechao.klinelib.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +15,6 @@ import java.util.List;
  * Created by tifezh on 2016/6/18.
  */
 public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdapter<T> {
-//    private T lastData;
 
     private int dataCount;
 
@@ -45,18 +46,23 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
 
     @Override
     public Date getDate(int position) {
+        if (position >= dataCount) {
+            return new Date();
+        }
         return new Date(datas.get(position).getDate());
     }
 
 
     public void resetData(List<T> data) {
         notifyDataWillChanged();
+        datas = data;
         if (null != data && data.size() > 0) {
-            datas = data;
             this.dataCount = datas.size();
-//            this.lastData = data.get(data.size() - 1);
             points = DataHelper.calculate((List<KLineEntity>) datas);
             notifyDataSetChanged();
+        } else {
+            points = new float[]{};
+            this.dataCount = 0;
         }
     }
 
@@ -67,22 +73,11 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     public void addLast(T entity) {
         if (null != entity) {
             datas.add(entity);
-            points = DataHelper.calculate((List<KLineEntity>) datas);
-//            this.lastData = datas.get(datas.size() - 1);
             this.dataCount++;
+            points = DataHelper.calculate((List<KLineEntity>) datas);
             notifyDataSetChanged();
         }
     }
-
-
-    /**
-     * 获取当前K线最后一个数据
-     *
-     * @return 最后一根线的bean
-     */
-//    public KLineEntity getLastData() {
-//        return lastData;
-//    }
 
     /**
      * 改变某个点的值
@@ -91,22 +86,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void changeItem(int position, T data) {
         datas.set(position, data);
-//        this.lastData = datas.get(datas.size() - 1);
         points = DataHelper.calculate((List<KLineEntity>) datas);
         notifyDataSetChanged();
-    }
-
-    /**
-     * 数据清除
-     */
-    public void clearData() {
-        this.datas.clear();
-//        this.lastData = null;
-        this.dataCount = datas.size();
-        notifyDataSetChanged();
-    }
-
-    public List<T> getData() {
-        return datas;
     }
 }

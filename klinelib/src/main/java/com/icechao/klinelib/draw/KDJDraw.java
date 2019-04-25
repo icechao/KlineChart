@@ -60,21 +60,21 @@ public class KDJDraw extends BaseDraw {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
-        IKDJ point = (IKDJ) view.getItem(position);
-        if (Float.MIN_VALUE != point.getK()) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y,int position, float[] values) {
+//        IKDJ point = (IKDJ) view.getItem(position);
+        if (Float.MIN_VALUE != values[Constants.KDJ_K]) {
             String text = String.format(Constants.KDJ_TOP_TEXT_TAMPLATE, Constants.KDJ_K, Constants.KDJ_D, Constants.KDJ_J);
             canvas.drawText(text, x, y, view.getTextPaint());
             x += view.getTextPaint().measureText(text);
 
-            text = kIndexLabel + view.formatValue(point.getK()) + " ";
+            text = kIndexLabel + view.formatValue(values[Constants.KDJ_K]) + " ";
             canvas.drawText(text, x, y, mKPaint);
             x += mKPaint.measureText(text);
-            if (Float.MIN_VALUE != point.getD()) {
-                text = dIndexLabel + view.formatValue(point.getD()) + " ";
+            if (Float.MIN_VALUE != values[Constants.KDJ_D]) {
+                text = dIndexLabel + view.formatValue(values[Constants.KDJ_D]) + " ";
                 canvas.drawText(text, x, y, mDPaint);
                 x += mDPaint.measureText(text);
-                text = jIndexLabel + view.formatValue(point.getJ()) + " ";
+                text = jIndexLabel + view.formatValue(values[Constants.KDJ_J]) + " ";
                 canvas.drawText(text, x, y, mJPaint);
             }
         }

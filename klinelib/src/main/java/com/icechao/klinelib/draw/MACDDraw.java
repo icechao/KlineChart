@@ -66,19 +66,19 @@ public class MACDDraw extends BaseDraw {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
-        IMACD point = (IMACD) view.getItem(position);
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y,int position, float[] values) {
+//        IMACD point = (IMACD) view.getItem(position);
         String text = String.format(Constants.MACD_TOP_TEXT_TAMPLATE, Constants.MACD_S, Constants.MACD_L, Constants.MACD_M);
         canvas.drawText(text, x, y, view.getTextPaint());
         x += mMACDPaint.measureText(text);
 
-        text = macdIndexLabel + view.formatValue(point.getMacd()) + "  ";
+        text = macdIndexLabel + view.formatValue(values[Constants.INDEX_MACD_MACD]) + "  ";
         canvas.drawText(text, x, y, mMACDPaint);
         x += mMACDPaint.measureText(text);
-        text = difIndexLabel + view.formatValue(point.getDif()) + "  ";
+        text = difIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DIF]) + "  ";
         canvas.drawText(text, x, y, mDIFPaint);
         x += mDIFPaint.measureText(text);
-        text = deaIndexLabel + view.formatValue(point.getDea());
+        text = deaIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DEA]);
         canvas.drawText(text, x, y, mDEAPaint);
     }
 

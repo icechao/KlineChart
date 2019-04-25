@@ -7,10 +7,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
+import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
-import com.icechao.klinelib.entity.ICandle;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberUtil;
@@ -35,6 +35,12 @@ public class MainDraw extends BaseDraw {
     private ValueFormatter valueFormatter = new ValueFormatter();
     private int indexPaddingTop = 10;
     private final int indexInterval;
+    private String indexMa1;
+    private String indexMa2;
+    private String indexMa3;
+    private String indexBoll;
+    private String indexUb;
+    private String indexLb;
 
     public void setItemCount(int mItemCount) {
         itemCount = mItemCount;
@@ -80,6 +86,14 @@ public class MainDraw extends BaseDraw {
         marketInfoText[5] = ("涨跌额  ");
         marketInfoText[6] = ("涨跌幅  ");
         marketInfoText[7] = ("成交量  ");
+
+        indexMa1 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_1);
+        indexMa2 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_2);
+        indexMa3 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_3);
+        ;
+        indexBoll = context.getString(R.string.k_index_boll);
+        indexUb = context.getString(R.string.k_index_ub);
+        indexLb = context.getString(R.string.k_index_lb);
     }
 
 
@@ -90,13 +104,13 @@ public class MainDraw extends BaseDraw {
         if (view.isLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
-                view.drawEndMinutsLine(canvas, linePaint, lastX, lastClosePrice, curX);
+                view.drawEndLine(canvas, linePaint, lastX, lastClosePrice, curX);
                 view.drawEndFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX);
 
             } else {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 float closePrice = values[Constants.INDEX_CLOSE + indexInterval];
-                view.drawLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
+                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
                 view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, closePrice);
             }
 
@@ -145,9 +159,9 @@ public class MainDraw extends BaseDraw {
     private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float start, float animEnd, Paint paint, float end) {
         if (Float.MIN_VALUE != start) {
             if (itemCount - 1 == position && 0 != animEnd && view.isAnimationLast()) {
-                view.drawLine(canvas, paint, lastX, start, curX, animEnd);
+                view.drawMainLine(canvas, paint, lastX, start, curX, animEnd);
             } else {
-                view.drawLine(canvas, paint, lastX, start, curX, end);
+                view.drawMainLine(canvas, paint, lastX, start, curX, end);
             }
         }
     }
@@ -164,7 +178,8 @@ public class MainDraw extends BaseDraw {
 
     @Override
     @SuppressWarnings("all")
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+
 
         //修改头文字显示在顶部
         y = maTextHeight + indexPaddingTop;
@@ -172,38 +187,37 @@ public class MainDraw extends BaseDraw {
 
         } else {
             Status status = view.getStatus();
-            ICandle point = view.getItem(position);
             if (status == Status.MA) {
                 String text;
-                if (Float.MIN_VALUE != point.getMaOne()) {
-                    text = "MA5:" + getValueFormatter().format(point.getMaOne()) + "  ";
+                if (Float.MIN_VALUE != values[Constants.INDEX_MA_1]) {
+                    text = indexMa1 + getValueFormatter().format(values[Constants.INDEX_MA_1]) + "  ";
                     canvas.drawText(text, x, y, indexPaintOne);
                     x += indexPaintOne.measureText(text);
                 }
-                if (Float.MIN_VALUE != point.getMaTwo()) {
-                    text = "MA10:" + getValueFormatter().format(point.getMaTwo()) + "  ";
+                if (Float.MIN_VALUE != values[Constants.INDEX_MA_2]) {
+                    text = indexMa2 + getValueFormatter().format(values[Constants.INDEX_MA_2]) + "  ";
                     canvas.drawText(text, x, y, indexPaintTwo);
                     x += indexPaintTwo.measureText(text);
                 }
-                if (Float.MIN_VALUE != point.getMaThree()) {
-                    text = "MA30:" + getValueFormatter().format(point.getMaThree());
+                if (Float.MIN_VALUE != values[Constants.INDEX_MA_3]) {
+                    text = indexMa3 + getValueFormatter().format(values[Constants.INDEX_MA_3]);
                     canvas.drawText(text, x, y, indexPaintThree);
                 }
             } else if (status == Status.BOLL) {
-                if (0 != point.getMb()) {
-                    String text = "BOLL:" + view.formatValue(point.getMb()) + "  ";
+                if (Float.MIN_VALUE != values[Constants.INDEX_BOLL_MB]) {
+                    String text = indexBoll + view.formatValue(values[Constants.INDEX_BOLL_MB]) + "  ";
                     canvas.drawText(text, x, y, indexPaintOne);
                     x += indexPaintOne.measureText(text);
-                    text = "UB:" + view.formatValue(point.getUp()) + "  ";
+                    text = indexUb + view.formatValue(values[Constants.INDEX_BOLL_UP]) + "  ";
                     canvas.drawText(text, x, y, indexPaintTwo);
                     x += indexPaintTwo.measureText(text);
-                    text = "LB:" + view.formatValue(point.getDn());
+                    text = indexLb + view.formatValue(values[Constants.INDEX_BOLL_DN]);
                     canvas.drawText(text, x, y, indexPaintThree);
                 }
             }
         }
         if (view.isLongPress()) {
-            drawSelector(view, canvas);
+            drawSelector(view, canvas, values);
         }
     }
 
@@ -259,22 +273,23 @@ public class MainDraw extends BaseDraw {
      *
      * @param view   view
      * @param canvas canvas
+     * @param values
      */
     @SuppressLint("DefaultLocale")
-    private void drawSelector(BaseKLineChartView view, Canvas canvas) {
+    private void drawSelector(BaseKLineChartView view, Canvas canvas, float[] values) {
 
         int index = view.getSelectedIndex();
 
-        ICandle point = view.getItem(index);
+//        ICandle point = view.getItem(index);
         strings[0] = view.formatDateTime(view.getAdapter().getDate(index));
-        strings[1] = view.getValueFormatter().format(point.getOpenPrice());
-        strings[2] = (view.getValueFormatter().format(point.getHighPrice()));
-        strings[3] = (view.getValueFormatter().format(point.getLowPrice()));
-        strings[4] = (view.getValueFormatter().format(point.getClosePrice()));
-        float tempDiffPrice = point.getClosePrice() - point.getOpenPrice();
+        strings[1] = view.getValueFormatter().format(values[Constants.INDEX_OPEN]);
+        strings[2] = (view.getValueFormatter().format(values[Constants.INDEX_HIGH]));
+        strings[3] = (view.getValueFormatter().format(values[Constants.INDEX_LOW]));
+        strings[4] = (view.getValueFormatter().format(values[Constants.INDEX_CLOSE]));
+        float tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
         strings[5] = (view.getValueFormatter().format(tempDiffPrice));
-        strings[6] = NumberUtil.roundFormatDown((tempDiffPrice * 100) / point.getOpenPrice(), 2) + "%";
-        strings[7] = NumberUtil.getTradeMarketAmount(valueFormatter.format(point.getVolume()));
+        strings[6] = NumberUtil.roundFormatDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
+        strings[7] = NumberUtil.getTradeMarketAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
 
         float width = 0, left, top = margin + view.getTopPadding();
         //上下多加两个padding值的间隙
@@ -505,9 +520,9 @@ public class MainDraw extends BaseDraw {
             String LowString;
             float stringWidth, screenMid = view.getX((screenRightIndex + screenLeftIndex) / 2);
             if (minX < screenMid) {
-                LowString = "── " + Float.toString(mainLowMinValue);
+                LowString = "── " + mainLowMinValue;
             } else {
-                LowString = Float.toString(mainLowMinValue) + " ──";
+                LowString = mainLowMinValue + " ──";
                 stringWidth = maxMinPaint.measureText(LowString);
                 minX -= stringWidth;
             }
@@ -517,9 +532,9 @@ public class MainDraw extends BaseDraw {
             String highString;
             y = fixTextYBaseBottom(y);
             if (maxX < screenMid) {
-                highString = "── " + Float.toString(mainHighMaxValue);
+                highString = "── " + mainHighMaxValue;
             } else {
-                highString = Float.toString(mainHighMaxValue) + " ──";
+                highString = mainHighMaxValue + " ──";
                 stringWidth = maxMinPaint.measureText(highString);
                 maxX -= stringWidth;
             }

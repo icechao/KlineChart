@@ -54,13 +54,13 @@ public class WRDraw extends BaseDraw {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
-        IWR point = (IWR) view.getItem(position);
-        if (Float.MIN_VALUE != point.getWrOne()) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float... values) {
+//        IWR point = (IWR) view.getItem(position);
+        if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
             String text = String.format(Constants.WR_TOP_TEXT_TEMPLATE, Constants.WR_1);
             canvas.drawText(text, x, y, view.getTextPaint());
             x += view.getTextPaint().measureText(text);
-            text = view.formatValue(point.getWrOne()) + " ";
+            text = view.formatValue(values[Constants.INDEX_WR_1]) + " ";
             canvas.drawText(text, x, y, r1Paint);
         }
     }

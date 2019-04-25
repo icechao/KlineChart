@@ -29,10 +29,14 @@ public class Constants {
     public static final int RSI_1 = 14;
     public static final String WR_TOP_TEXT_TEMPLATE = "WR(%s):";
     public static final int WR_1 = 14;
+    public static final int K_MA_NUMBER_1 = 5;
+    public static final int K_MA_NUMBER_2 = 10;
+    public static final int K_MA_NUMBER_3 = 30;
 
 
     private static int i = 0;
-    public static final int INDEX_HIGH = i;
+    public static final int INDEX_DATE = i;
+    public static final int INDEX_HIGH = ++i;
     public static final int INDEX_OPEN = ++i;
     public static final int INDEX_LOW = ++i;
     public static final int INDEX_CLOSE = ++i;

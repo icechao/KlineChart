@@ -5,10 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
-import com.icechao.klinelib.entity.IVolume;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberUtil;
@@ -40,12 +40,18 @@ public class VolumeDraw extends BaseDraw {
     private float lineVolWidth;
     private int mItemCount;
     private final int indexInterval;
+    private String volMaIndex2;
+    private String volMaIndex1;
+    private String volIndex;
 
     public VolumeDraw(Context context) {
         mRedPaint.setColor(ContextCompat.getColor(context, R.color.color_03C087));
         mGreenPaint.setColor(ContextCompat.getColor(context, R.color.color_FF605A));
         pillarWidth = ViewUtil.Dp2Px(context, 4);
         indexInterval = Constants.getCount();
+        volIndex = context.getString(R.string.k_index_vol);
+        volMaIndex1 = context.getString(R.string.k_index_vol_ma1);
+        volMaIndex2 = context.getString(R.string.k_index_vol_ma2);
     }
 
     private float endMa5 = 0;
@@ -106,27 +112,29 @@ public class VolumeDraw extends BaseDraw {
 
     @Override
     public void drawText(
-            @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
-        IVolume point = (IVolume) view.getItem(position);
+            @NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+//        IVolume point = (IVolume) view.getItem(position);
         String text;
         if (position == mItemCount - 1 && view.isAnimationLast()) {
-            text = "VOL:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(view.getLastVol())) + "  ";
+            text = volIndex + NumberUtil.getTradeMarketAmount(getValueFormatter().format(view.getLastVol())) + "  ";
         } else {
-            text = "VOL:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(point.getVolume())) + "  ";
+            text = volIndex + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
         }
         canvas.drawText(text, x, y, volLeftPaint);
         x += view.getTextPaint().measureText(text);
+
         if (position == mItemCount - 1 && view.isAnimationLast()) {
-            text = "MA5:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMa5)) + "  ";
+            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMa5)) + "  ";
         } else {
-            text = "MA5:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(point.getMA5Volume())) + "  ";
+            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
         }
         canvas.drawText(text, x, y, ma5Paint);
         x += ma5Paint.measureText(text);
         if (position == mItemCount - 1 && view.isAnimationLast()) {
-            text = "MA10:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMa10)) + "  ";
+
+            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMa10)) + "  ";
         } else {
-            text = "MA10:" + NumberUtil.getTradeMarketAmount(getValueFormatter().format(point.getMA10Volume())) + "  ";
+            text = volMaIndex2 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
         }
         canvas.drawText(text, x, y, ma10Paint);
     }

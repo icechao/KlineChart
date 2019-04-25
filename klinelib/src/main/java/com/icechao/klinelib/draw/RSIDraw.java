@@ -14,6 +14,7 @@ import com.icechao.klinelib.entity.ICandle;
 import com.icechao.klinelib.entity.IRSI;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
+import com.icechao.klinelib.utils.LogUtil;
 
 /*************************************************************************
  * Description   :
@@ -48,14 +49,13 @@ public class RSIDraw extends BaseDraw {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y) {
-        IRSI point = (IRSI) view.getItem(position);
-        if (Float.MIN_VALUE != point.getRsiOne()) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+        if (Float.MIN_VALUE != values[Constants.INDEX_RSI_1]) {
             String text = String.format(Constants.RSI_TOP_TEXT_TAMPLATE, Constants.RSI_1);
             Paint textPaint = view.getTextPaint();
             canvas.drawText(text, x, y, textPaint);
             x += textPaint.measureText(text);
-            text = view.formatValue(point.getRsiOne());
+            text = view.formatValue(values[Constants.INDEX_RSI_1]);
             canvas.drawText(text, x, y, mRSI1Paint);
         }
     }

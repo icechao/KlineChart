@@ -29,7 +29,7 @@ public class DataHelper {
                              float priceMaOne, float priceMaTwo, float priceMaThree,
                              int s, int l, int m,
                              float maOne, float maTwo, float maThree,
-                             int kdjDay,
+                             int kdjDay, int rsi,
                              int wr1, int wr2, int wr3) {
         float maSum1 = 0;
         float maSum2 = 0;
@@ -55,6 +55,8 @@ public class DataHelper {
             float closePrice = point.getClosePrice();
 
 
+            points[indexInterval * i + Constants.INDEX_RSI_1] = Float.MIN_VALUE;
+            points[indexInterval * i + Constants.INDEX_DATE] = point.high;
             points[indexInterval * i + Constants.INDEX_HIGH] = point.high;
             points[indexInterval * i + Constants.INDEX_OPEN] = point.open;
             points[indexInterval * i + Constants.INDEX_LOW] = point.low;
@@ -209,8 +211,27 @@ public class DataHelper {
             point.wrTwo = getValueWR(dataList, wr2, i);
             point.wrThree = getValueWR(dataList, wr3, i);
             points[indexInterval * i + Constants.INDEX_WR_1] = (float) point.wrOne;
-//            points[indexInterval * i + Constants.WR_2] = (float) point.wrOne;
-//            points[indexInterval * i + Constants.WR_3] = (float) point.wrOne;
+
+
+//           以每一日的收盘价减去上一日的收盘价，得到14个数值，
+//           这些数值有正有负。这样，RSI指标的计算公式具体如下：
+//           A=14个数字中正数之和
+//　　        B=14个数字中负数之和乘以(—1)
+//　　        RSI(14)=A÷(A＋B)×100
+            if (rsi <= i) {
+                double a = 0, b = 0;
+                for (int j = i; j >= i - 14; j--) {
+                    float temp = points[indexInterval * j + Constants.INDEX_CLOSE] - points[indexInterval * j + Constants.INDEX_OPEN];
+                    if (temp > 0) {
+                        a += temp;
+                    } else {
+                        b += temp;
+                    }
+                }
+                points[indexInterval * i + Constants.INDEX_RSI_1] = (float) (a / (a - b) * 100d);
+            } else {
+                points[indexInterval * i + Constants.INDEX_RSI_1] = Float.MIN_VALUE;
+            }
 
         }
 
@@ -266,12 +287,17 @@ public class DataHelper {
      */
     public static float[] calculate(List<KLineEntity> dataList) {
         float[] points = calculate(dataList, 2, 20,
-                5, 10, 30,
-                12, 26, 9,
-                5, 10, 30,
-                14,
-                14, 0, 0);
-        calculateRSI(points, dataList, 14);
+                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
+                Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,
+                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
+                Constants.KDJ_K, Constants.RSI_1,
+                Constants.WR_1, 0, 0);
+
+
+//        for (int i = 0; i < dataList.size(); i++) {
+//            LogUtil.e(points[Constants.getCount() * i + Constants.INDEX_RSI_1]);
+//        }
+
         return points;
     }
 
@@ -332,76 +358,11 @@ public class DataHelper {
     }
 
 
-    public static void calculateRSI(float[] points, List<KLineEntity> klineInfos,
-                                    int n) {
-        if (klineInfos.size() > n) {
-            double firstValue = klineInfos.get(n - 1).rOne;
-            if (firstValue != 0 && firstValue != Float.MIN_VALUE) {
-                calculateRSIChange(points, klineInfos, n, findStartIndex(klineInfos),
-                        klineInfos.size());
-            } else {
-                calculateRSIChange(points, klineInfos, n, 0, klineInfos.size());
-            }
-        }
-
-    }
-
-
-    private static void calculateRSIChange(float[] points, List<KLineEntity> klineInfos,
-                                           int n, int start, int end) {
-        double upPriceRma = 0;
-        double downPriceRma = 0;
-        for (int i = start; i < end; i++) {
-            double rsi = 0;
-            if (i == n) {
-                double upPrice = 0;
-                double downPrice = 0;
-                for (int k = 1; k <= n; k++) {
-                    KLineEntity kLineEntity = klineInfos.get(k);
-                    double close = kLineEntity.close;
-                    double lastClose = klineInfos.get(k - 1).close;
-                    upPrice += Math.max(close - lastClose, 0);
-                    downPrice += Math.max(lastClose - close, 0);
-                }
-                upPriceRma = upPrice / n;
-                downPriceRma = downPrice / n;
-                rsi = calculateRSI(upPriceRma, downPriceRma);
-            } else if (i > n) {
-                double close = klineInfos.get(i).close;
-                double lastClose = klineInfos.get(i - 1).close;
-
-                double upPrice = Math.max(close - lastClose, 0);
-                double downPrice = Math.max(lastClose - close, 0);
-
-                upPriceRma = (upPrice + (n - 1) * upPriceRma) / n;
-                downPriceRma = (downPrice + (n - 1) * downPriceRma) / n;
-                rsi = calculateRSI(upPriceRma, downPriceRma);
-            } else {
-                rsi = Float.MIN_VALUE;
-            }
-
-            klineInfos.get(i).rOne = (float) rsi;
-            points[Constants.getCount() * i + Constants.INDEX_RSI_1] = (float) rsi;
-        }
-    }
-
-    private static double calculateRSI(double upPriceRma, double downPriceRma) {
-        if (downPriceRma == 0) {
-            return 100;
-        } else {
-            if (upPriceRma == 0) {
-                return 0;
-            } else {
-                return 100 - (100 / (1 + upPriceRma / downPriceRma));
-            }
-        }
-    }
-
     private static int findStartIndex(List<KLineEntity> klineInfos) {
         int startIndex = 0;
         for (int i = klineInfos.size() - 1; i > 0; i--) {
             double maValue = klineInfos.get(i).rOne;
-            if (maValue != 0) {
+            if (maValue != 0 && maValue != Float.MIN_VALUE) {
                 startIndex = i + 1;
                 break;
             }

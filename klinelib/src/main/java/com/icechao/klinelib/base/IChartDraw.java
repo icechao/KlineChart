@@ -51,7 +51,7 @@ public interface IChartDraw<T> {
      * @param x        x的起始坐标
      * @param y        y的起始坐标
      */
-    void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float x, float y);
+    void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float... values);
 
 
     /**

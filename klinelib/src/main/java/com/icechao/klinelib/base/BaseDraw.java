@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public abstract class BaseDraw implements com.icechao.klinelib.base.IChartDraw {
+public abstract class BaseDraw implements IChartDraw {
 
     @Override
     public float getMaxValue(float... values) {

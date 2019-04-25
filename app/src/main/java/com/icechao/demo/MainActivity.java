@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.Status;
 import com.icechao.klinelib.entity.KLineEntity;
@@ -148,18 +149,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             kLineEntity1.volume = kLineEntity.volume;
 
             textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
-            textViewRiseAndFallText.setText(String.format("%.2f", (kLineEntity1.close - kLineEntity1.open) / kLineEntity1.open));
+            float v = kLineEntity1.close - kLineEntity1.open;
+            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.open));
             textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.close));
             textViewHighPriceText.setText(kLineEntity1.high + "");
             textViewLowPriceText.setText(kLineEntity1.low + "");
             textViewVolumeSumText.setText(kLineEntity1.volume + "");
-
-//            private TextView textViewPriceText;
-//            private TextView textViewRiseAndFallText;
-//            private TextView textViewCny;
-//            private TextView textViewHighPriceText;
-//            private TextView textViewLowPriceText;
-//            private TextView textViewVolumeSumText;
 
 
             if (i++ % 10 == 0) {
@@ -226,23 +221,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.text_view_five_minute:
                 chartView.hideSelectData();
                 chartView.setMainDrawLine(false);
-                adapter.resetData(all.subList(12, 330));
+                adapter.resetData(all);
 
                 break;
             case R.id.text_view_half_hour:
                 chartView.hideSelectData();
                 chartView.setMainDrawLine(false);
-                adapter.resetData(all.subList(115, 405));
+                adapter.resetData(all);
                 break;
             case R.id.text_view_one_week:
                 chartView.hideSelectData();
                 chartView.setMainDrawLine(false);
-                adapter.resetData(all.subList(160, 480));
+                adapter.resetData(all);
                 break;
             case R.id.text_view_one_mounth:
                 chartView.hideSelectData();
                 chartView.setMainDrawLine(false);
-                adapter.resetData(all.subList(10, 30));
+                adapter.resetData(all);
                 break;
 
         }
