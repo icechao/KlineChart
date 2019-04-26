@@ -1,171 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#131F30"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#131F30"
+    android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:src="@drawable/h_back"/>
 
         <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="14dp"
-                android:background="@color/color_6D87A8"/>
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_6D87A8" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="BTC/USDT"
-                android:textColor="#CFD3E9"
-                android:textSize="18sp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="K线Demo"
+            android:textColor="#CFD3E9"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <com.icechao.klinelib.view.ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="10dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
             <RelativeLayout
-                    android:id="@+id/market_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#131F30"
-                    android:paddingTop="10dp">
+                android:id="@+id/market_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#131F30"
+                android:paddingTop="10dp">
 
                 <RelativeLayout
-                        android:id="@+id/trade_price_layout"
-                        android:layout_width="match_parent"
+                    android:id="@+id/trade_price_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/text_view_price_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:paddingBottom="15dp">
+                        android:drawablePadding="9dp"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_03C087"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:id="@+id/text_view_price_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="9dp"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/color_03C087"
-                            android:textSize="24sp"
-                            android:textStyle="bold"/>
+                        android:id="@+id/text_view_cny"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_view_price_text"
+                        android:layout_alignLeft="@+id/text_view_price_text"
+                        android:layout_marginTop="8dp"
+                        android:includeFontPadding="false"
+                        android:textColor="#6D87A8"
+                        android:textSize="14sp" />
 
                     <TextView
-                            android:id="@+id/text_view_cny"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_view_price_text"
-                            android:layout_alignLeft="@+id/text_view_price_text"
-                            android:layout_marginTop="8dp"
-                            android:includeFontPadding="false"
-                            android:textColor="#6D87A8"
-                            android:textSize="14sp"/>
-
-                    <TextView
-                            android:id="@+id/text_view_rise_and_fall_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_view_price_text"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toRightOf="@+id/text_view_cny"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/color_03C087"
-                            android:textSize="14sp"/>
+                        android:id="@+id/text_view_rise_and_fall_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_view_price_text"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/text_view_cny"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_03C087"
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 
 
                 <TableLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp">
 
                     <TableRow>
 
                         <TextView
-                                android:id="@+id/high_price_label"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="highest"
-                                android:textColor="@color/color_6D87A8"
-                                android:textSize="12dp"/>
+                            android:id="@+id/high_price_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="高"
+                            android:textColor="@color/color_6D87A8"
+                            android:textSize="12dp" />
 
 
                         <TextView
-                                android:id="@+id/high_price_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:includeFontPadding="false"
-                                android:textColor="#CFD3E9"
-                                android:textSize="12dp"/>
+                            android:id="@+id/high_price_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:includeFontPadding="false"
+                            android:textColor="#CFD3E9"
+                            android:textSize="12dp" />
                     </TableRow>
 
                     <TableRow android:layout_marginTop="10dp">
 
                         <TextView
-                                android:id="@+id/low_price_label"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="lowest"
-                                android:textColor="@color/color_6D87A8"
-                                android:textSize="12dp"/>
+                            android:id="@+id/low_price_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="低"
+                            android:textColor="@color/color_6D87A8"
+                            android:textSize="12dp" />
 
 
                         <TextView
-                                android:id="@+id/low_price_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:includeFontPadding="false"
-                                android:textColor="#CFD3E9"
-                                android:textSize="12dp"/>
+                            android:id="@+id/low_price_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:includeFontPadding="false"
+                            android:textColor="#CFD3E9"
+                            android:textSize="12dp" />
                     </TableRow>
 
                     <TableRow android:layout_marginTop="10dp">
 
                         <TextView
-                                android:id="@+id/volume_sum_label"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="24"
-                                android:textColor="@color/color_6D87A8"
-                                android:textSize="12dp"/>
+                            android:id="@+id/volume_sum_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="24量"
+                            android:textColor="@color/color_6D87A8"
+                            android:textSize="12dp" />
 
                         <TextView
-                                android:id="@+id/volume_sum_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:includeFontPadding="false"
-                                android:textColor="#CFD3E9"
-                                android:textSize="12dp"/>
+                            android:id="@+id/volume_sum_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:includeFontPadding="false"
+                            android:textColor="#CFD3E9"
+                            android:textSize="12dp" />
 
                     </TableRow>
 
@@ -175,162 +170,165 @@
             </RelativeLayout>
 
             <RadioGroup
-                    android:id="@+id/radio_group_defalt_index"
-                    android:layout_width="match_parent"
+                android:id="@+id/radio_group_defalt_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <RadioButton
+                    android:id="@+id/radio_button_time_line"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="分时"
+                    android:textColor="@color/color_6D87A8"
+                    android:textSize="12sp" />
 
                 <RadioButton
-                        android:id="@+id/radio_button_time_line"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="分时"
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
+                    android:id="@+id/radio_button_fifteen"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+
+                    android:text="15分钟"
+                    android:textColor="@color/color_6D87A8"
+                    android:textSize="12sp" />
 
                 <RadioButton
-                        android:id="@+id/radio_button_fifteen"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
+                    android:id="@+id/radio_button_one_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="1小时"
+                    android:textColor="@color/color_6D87A8"
 
-                        android:text="15分钟"
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
-
-                <RadioButton
-                        android:id="@+id/radio_button_one_hour"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="1小时"
-
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <RadioButton
-                        android:id="@+id/radio_button_four_hour"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
+                    android:id="@+id/radio_button_four_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="4小时"
 
-                        android:text="4小时"
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
-
-                <RadioButton
-                        android:id="@+id/radio_button_one_day"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-
-                        android:text="1天"
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
+                    android:textColor="@color/color_6D87A8"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <RadioButton
-                        android:id="@+id/radio_button_more"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="更多"
-                        android:textColor="@color/color_6D87A8"
-                        android:textSize="12sp"/>
+                    android:id="@+id/radio_button_one_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="1天"
+
+                    android:textColor="@color/color_6D87A8"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_more"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="更多"
+                    android:textColor="@color/color_6D87A8"
+                    android:textSize="12sp" />
 
                 <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_223349"/>
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_223349" />
 
                 <RadioButton
-                        android:textColor="@color/color_4B85D6"
-                        android:text="指标"
-                        android:id="@+id/radio_button_index_setting"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:paddingRight="10dp"/>
+                    android:id="@+id/radio_button_index_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:paddingRight="10dp"
+                    android:text="指标"
+                    android:textColor="@color/color_4B85D6" />
             </RadioGroup>
 
             <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
                 <com.icechao.klinelib.view.KLineChartView
-                        android:id="@+id/kLineChartView"
-                        android:layout_width="match_parent"
-                        android:layout_height="580dp"
-                        android:background="@color/color_081734"/>
+                    android:id="@+id/kLineChartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="580dp"
+                    android:background="@color/color_081734" />
 
                 <include
-                        android:id="@+id/kline_operater"
-                        layout="@layout/kline_operator"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:visibility="gone"/>
+                    android:id="@+id/kline_operater"
+                    layout="@layout/kline_operator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="gone" />
             </RelativeLayout>
 
 
             <RadioGroup
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_081734"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <RadioButton
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/color_081734"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="深度"
+                    android:textColor="@color/color_6D87A8" />
 
                 <RadioButton
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="深度"
-                        android:textColor="@color/color_6D87A8"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="成交"
+                    android:textColor="@color/color_6D87A8" />
 
                 <RadioButton
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="成交"
-                        android:textColor="@color/color_6D87A8"/>
-
-                <RadioButton
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="简介"
-                        android:textColor="@color/color_6D87A8"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="简介"
+                    android:textColor="@color/color_6D87A8" />
             </RadioGroup>
 
             <com.icechao.demo.DepthFullView
-                    android:id="@+id/full_depth_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0.5dp"/>
+                android:id="@+id/full_depth_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0.5dp" />
         </LinearLayout>
 
     </com.icechao.klinelib.view.ScrollView>
