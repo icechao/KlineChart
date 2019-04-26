@@ -41,7 +41,7 @@
 
 
 
-<img src="https://github.com/icechao/kline/blob/master/app/src/main/assets/3yfwc-wv75b.gif" width="300" hegiht="500" align=center />
+<img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
 
 
 
