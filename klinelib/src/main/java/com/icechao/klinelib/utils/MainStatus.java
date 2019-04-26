@@ -1,15 +1,15 @@
-package com.icechao.klinelib.draw;
+package com.icechao.klinelib.utils;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : Status.java
+ * @FileName     : MainStatus.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public enum Status {
+public enum MainStatus {
     MA, BOLL, NONE
 }

@@ -4,14 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
-import com.icechao.klinelib.base.IChartDraw;
 import com.icechao.klinelib.base.IValueFormatter;
-import com.icechao.klinelib.entity.ICandle;
-import com.icechao.klinelib.entity.IMACD;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.R;
@@ -29,15 +25,15 @@ import com.icechao.klinelib.R;
 
 public class MACDDraw extends BaseDraw {
 
-    private Paint mRedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mGreenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mDIFPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mDEAPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mMACDPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint greenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint difPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint deaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint macdPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     /**
      * macd 中柱子的宽度
      */
-    private float mMACDWidth = 0;
+    private float macdWidth = 0;
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String macdIndexLabel;
@@ -45,8 +41,8 @@ public class MACDDraw extends BaseDraw {
     private String deaIndexLabel;
 
     public MACDDraw(Context context, int upColor, int downColor) {
-        mRedPaint.setColor(upColor);
-        mGreenPaint.setColor(downColor);
+        redPaint.setColor(upColor);
+        greenPaint.setColor(downColor);
         indexInterval = Constants.getCount();
         macdIndexLabel = context.getString(R.string.k_index_macd);
         difIndexLabel = context.getString(R.string.k_index_dif);
@@ -57,29 +53,31 @@ public class MACDDraw extends BaseDraw {
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
         drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD]);
+        if (position == 0) {
+            return;
+        }
         if (Float.MIN_VALUE != values[Constants.INDEX_MACD_DEA]) {
-            view.drawChildLine(canvas, mDEAPaint, lastX, values[Constants.INDEX_MACD_DEA], curX, values[Constants.INDEX_MACD_DEA + indexInterval]);
+            view.drawChildLine(canvas, deaPaint, lastX, values[Constants.INDEX_MACD_DEA], curX, values[Constants.INDEX_MACD_DEA + indexInterval]);
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_MACD_DIF]) {
-            view.drawChildLine(canvas, mDIFPaint, lastX, values[Constants.INDEX_MACD_DIF], curX, values[Constants.INDEX_MACD_DIF + indexInterval]);
+            view.drawChildLine(canvas, difPaint, lastX, values[Constants.INDEX_MACD_DIF], curX, values[Constants.INDEX_MACD_DIF + indexInterval]);
         }
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y,int position, float[] values) {
-//        IMACD point = (IMACD) view.getItem(position);
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
         String text = String.format(Constants.MACD_TOP_TEXT_TAMPLATE, Constants.MACD_S, Constants.MACD_L, Constants.MACD_M);
         canvas.drawText(text, x, y, view.getTextPaint());
-        x += mMACDPaint.measureText(text);
+        x += macdPaint.measureText(text);
 
         text = macdIndexLabel + view.formatValue(values[Constants.INDEX_MACD_MACD]) + "  ";
-        canvas.drawText(text, x, y, mMACDPaint);
-        x += mMACDPaint.measureText(text);
+        canvas.drawText(text, x, y, macdPaint);
+        x += macdPaint.measureText(text);
         text = difIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DIF]) + "  ";
-        canvas.drawText(text, x, y, mDIFPaint);
-        x += mDIFPaint.measureText(text);
+        canvas.drawText(text, x, y, difPaint);
+        x += difPaint.measureText(text);
         text = deaIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DEA]);
-        canvas.drawText(text, x, y, mDEAPaint);
+        canvas.drawText(text, x, y, deaPaint);
     }
 
 
@@ -129,11 +127,11 @@ public class MACDDraw extends BaseDraw {
      * @param macd
      */
     private void drawMACD(Canvas canvas, BaseKLineChartView view, float x, float macd) {
-        float r = mMACDWidth / 2 * view.getScaleX();
+        float r = macdWidth / 2 * view.getScaleX();
         if (macd >= 0) {
-            canvas.drawRect(x - r, view.getChildY(macd), x + r, view.getChildY(0), mRedPaint);
+            canvas.drawRect(x - r, view.getChildY(macd), x + r, view.getChildY(0), redPaint);
         } else {
-            canvas.drawRect(x - r, view.getChildY(0), x + r, view.getChildY(macd), mGreenPaint);
+            canvas.drawRect(x - r, view.getChildY(0), x + r, view.getChildY(macd), greenPaint);
         }
     }
 
@@ -141,21 +139,21 @@ public class MACDDraw extends BaseDraw {
      * 设置DIF颜色
      */
     public void setDIFColor(int color) {
-        this.mDIFPaint.setColor(color);
+        this.difPaint.setColor(color);
     }
 
     /**
      * 设置DEA颜色
      */
     public void setDEAColor(int color) {
-        this.mDEAPaint.setColor(color);
+        this.deaPaint.setColor(color);
     }
 
     /**
      * 设置MACD颜色
      */
     public void setMACDColor(int color) {
-        this.mMACDPaint.setColor(color);
+        this.macdPaint.setColor(color);
     }
 
     /**
@@ -164,24 +162,24 @@ public class MACDDraw extends BaseDraw {
      * @param MACDWidth
      */
     public void setMACDWidth(float MACDWidth) {
-        mMACDWidth = MACDWidth;
+        macdWidth = MACDWidth;
     }
 
     /**
      * 设置曲线宽度
      */
     public void setLineWidth(float width) {
-        mDEAPaint.setStrokeWidth(width);
-        mDIFPaint.setStrokeWidth(width);
-        mMACDPaint.setStrokeWidth(width);
+        deaPaint.setStrokeWidth(width);
+        difPaint.setStrokeWidth(width);
+        macdPaint.setStrokeWidth(width);
     }
 
     /**
      * 设置文字大小
      */
     public void setTextSize(float textSize) {
-        mDEAPaint.setTextSize(textSize);
-        mDIFPaint.setTextSize(textSize);
-        mMACDPaint.setTextSize(textSize);
+        deaPaint.setTextSize(textSize);
+        difPaint.setTextSize(textSize);
+        macdPaint.setTextSize(textSize);
     }
 }

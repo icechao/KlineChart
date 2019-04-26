@@ -39,8 +39,6 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
     }
 
     public void setData(List<MarketTradeItem> leftDatas, List<MarketTradeItem> rightDatas) {
-//        this.leftMax = leftMax;
-//        this.rightMax = rightMax;
 
         if (0 != this.leftDatas.size() || 0 != this.rightDatas.size()) {
             this.leftDatas.clear();
@@ -48,12 +46,7 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
         }
         this.leftDatas = leftDatas;
         this.rightDatas = rightDatas;
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
+        handler.post(() -> notifyDataSetChanged());
 
     }
 
@@ -88,7 +81,7 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
     @Override
     public int getItemCount() {
         int size = rightDatas.size();
-        return /*size > 20 ? 20 :*/ size;
+        return size;
     }
 
     public class DepthViewHolder extends RecyclerView.ViewHolder {

@@ -10,7 +10,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.icechao.klinelib.adapter.KLineChartAdapter;
-import com.icechao.klinelib.draw.Status;
+import com.icechao.klinelib.utils.ChildStatus;
+import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.entity.KLineEntity;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
@@ -129,7 +130,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 runOnUiThread(() -> {
                     all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all);
+                    adapter.resetData(all.subList(100,300));
                     chartView.hideLoading();
                     changeLast();
                 });
@@ -182,7 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         switch (v.getId()) {
             case R.id.text_view_hide_master:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.NONE);
+                chartView.changeMainDrawType(MainStatus.NONE);
 
                 break;
             case R.id.text_view_hide_sub:
@@ -191,27 +192,27 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.MA);
+                chartView.changeMainDrawType(MainStatus.MA);
                 break;
             case R.id.text_view_boll:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.BOLL);
+                chartView.changeMainDrawType(MainStatus.BOLL);
                 break;
             case R.id.text_view_macd:
                 chartView.hideSelectData();
-                chartView.setChildDraw(0);
+                chartView.setChildDraw(ChildStatus.MACD);
                 break;
             case R.id.text_view_kdj:
                 chartView.hideSelectData();
-                chartView.setChildDraw(1);
+                chartView.setChildDraw(ChildStatus.KDJ);
                 break;
             case R.id.text_view_rsi:
                 chartView.hideSelectData();
-                chartView.setChildDraw(2);
+                chartView.setChildDraw(ChildStatus.RSI);
                 break;
             case R.id.text_view_wr:
                 chartView.hideSelectData();
-                chartView.setChildDraw(3);
+                chartView.setChildDraw(ChildStatus.WR);
                 break;
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();

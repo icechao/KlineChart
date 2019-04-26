@@ -41,7 +41,7 @@ public class RSIDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
-        if (Float.MIN_VALUE != values[Constants.INDEX_RSI_1]) {
+        if (Float.MIN_VALUE != values[Constants.INDEX_RSI_1] && position != 0) {
             view.drawChildLine(canvas, mRSI1Paint, lastX,
                     values[Constants.INDEX_RSI_1],
                     curX, values[Constants.INDEX_RSI_1 + indexInterval]);

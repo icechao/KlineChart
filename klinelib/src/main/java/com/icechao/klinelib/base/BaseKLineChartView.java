@@ -12,7 +12,8 @@ import android.view.ScaleGestureDetector;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.MainDraw;
-import com.icechao.klinelib.draw.Status;
+import com.icechao.klinelib.utils.ChildStatus;
+import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.draw.VolumeDraw;
 import com.icechao.klinelib.entity.ICandle;
 import com.icechao.klinelib.formatter.DateFormatter;
@@ -61,7 +62,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 当前子视图的索引
      */
-    private int childDrawPosition = -1;
+    private ChildStatus childDrawPosition = ChildStatus.NONE;
 
     /**
      * 绘制K线时画板平移的距离
@@ -688,23 +689,42 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
         canvas.save();
         canvas.translate(canvasTranslateX, 0);
-        for (int i = screenLeftIndex; i <= screenRightIndex && i > 0; i++) {
-
-            float lastX = getX(i - 1);
+        for (int i = screenLeftIndex; i <= screenRightIndex && i >= 0; i++) {
             float curX = getX(i);
-
             int nextTemp = indexInterval * i + indexInterval;
-            int lastTemp = indexInterval * i - indexInterval;
-            mainDraw.drawTranslated(canvas, lastX, curX, this, i,
-                    Arrays.copyOfRange(points, lastTemp, nextTemp)
-            );
+            if (i == 0) {
 
-            volDraw.drawTranslated(canvas, lastX, curX, this, i,
-                    Arrays.copyOfRange(points, lastTemp, nextTemp));
-            if (null != childDraw) {
-                childDraw.drawTranslated(canvas, lastX, curX, this, i,
+                LogUtil.e("1" + (i <= screenRightIndex && i >= 0));
+                LogUtil.e("2" + (i + 1 <= screenRightIndex && i + 1 >= 0));
+
+                mainDraw.drawTranslated(canvas, curX, curX, this, i,
+                        Arrays.copyOfRange(points, 0, indexInterval)
+                );
+                volDraw.drawTranslated(canvas, curX, curX, this, i,
+                        Arrays.copyOfRange(points, 0, indexInterval));
+                if (null != childDraw) {
+                    childDraw.drawTranslated(canvas, curX, curX, this, i,
+                            Arrays.copyOfRange(points, 0, indexInterval));
+                }
+            } else {
+
+                LogUtil.e("else 1" + (i <= screenRightIndex && i >= 0));
+                LogUtil.e("else 2" + (i + 1 <= screenRightIndex && i + 1 >= 0));
+
+
+                float lastX = getX(i - 1);
+                int lastTemp = indexInterval * i - indexInterval;
+                mainDraw.drawTranslated(canvas, lastX, curX, this, i,
+                        Arrays.copyOfRange(points, lastTemp, nextTemp)
+                );
+                volDraw.drawTranslated(canvas, lastX, curX, this, i,
                         Arrays.copyOfRange(points, lastTemp, nextTemp));
+                if (null != childDraw) {
+                    childDraw.drawTranslated(canvas, lastX, curX, this, i,
+                            Arrays.copyOfRange(points, lastTemp, nextTemp));
+                }
             }
+
         }
         mainDraw.drawMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue, screenLeftIndex, screenRightIndex);
         drawCross(canvas);
@@ -1089,21 +1109,21 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param status MA/BOLL/NONE
      */
-    public void changeMainDrawType(Status status) {
+    public void changeMainDrawType(MainStatus status) {
         if (this.status != status) {
             this.status = status;
             invalidate();
         }
     }
 
-    public Status getStatus() {
+    public MainStatus getStatus() {
         return this.status;
     }
 
     /**
      * 当前主视图显示的指标
      */
-    private Status status = Status.MA;
+    private MainStatus status = MainStatus.MA;
 
     /**
      * 计算当前选中item的X的坐标
@@ -1244,14 +1264,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         int tempLeft = screenLeftIndex > 0 ? screenLeftIndex + 1 : 0;
         for (int i = tempLeft; i <= screenRightIndex; i++) {
             int tempIndex = indexInterval * i;
-            mainMaxValue = status == Status.MA ?
+            mainMaxValue = status == MainStatus.MA ?
                     mainDraw.getMaxValue(mainMaxValue,
                             points[tempIndex + Constants.INDEX_HIGH],
                             points[tempIndex + Constants.INDEX_MA_1],
                             points[tempIndex + Constants.INDEX_MA_2],
                             points[tempIndex + Constants.INDEX_MA_3]) :
                     mainDraw.getMaxValue(mainMaxValue, points[tempIndex + Constants.INDEX_BOLL_UP]);
-            mainMinValue = status == Status.MA ?
+            mainMinValue = status == MainStatus.MA ?
                     mainDraw.getMinValue(mainMinValue,
                             points[tempIndex + Constants.INDEX_LOW],
                             points[tempIndex + Constants.INDEX_MA_1],
@@ -1306,10 +1326,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             }
         }
 
-        if (Math.abs(volMaxValue) < 0.01) {
-            volMaxValue = 15.00f;
+        if (volMaxValue < 0.01) {
+            volMaxValue = 100;
         }
-        if (childMaxValue == mChildMinValue) {
+        if (null != childDraw) {
             childMaxValue += Math.abs(childMaxValue * 0.03f);
             mChildMinValue -= Math.abs(mChildMinValue * 0.03f);
             if (childMaxValue == 0) {
@@ -1317,11 +1337,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             }
         }
 
-        if (5 == childDrawPosition) {
-            childMaxValue = 0f;
-            if (Math.abs(mChildMinValue) < 0.01)
-                mChildMinValue = -10.00f;
-        }
         mainScaleY = mainRect.height() * 1f / (mainMaxValue - mainMinValue);
         volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
         if (null != childRect)
@@ -1482,10 +1497,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param position position
      */
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
-    public void setChildDraw(int position) {
-        if (childDrawPosition != position) {
+    public void setChildDraw(ChildStatus position) {
+        if (childDrawPosition.getStatu() != position.getStatu()) {
             childDrawPosition = position;
-            childDraw = mChildDraws.get(position);
+            childDraw = mChildDraws.get(position.getStatu());
             initRect();
             invalidate();
         }
@@ -1495,7 +1510,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 隐藏子图
      */
     public void hideChildDraw() {
-        childDrawPosition = -1;
+        childDrawPosition = ChildStatus.NONE;
         childDraw = null;
         initRect();
         invalidate();

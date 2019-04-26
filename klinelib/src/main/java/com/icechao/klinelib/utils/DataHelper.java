@@ -292,12 +292,6 @@ public class DataHelper {
                 Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
                 Constants.KDJ_K, Constants.RSI_1,
                 Constants.WR_1, 0, 0);
-
-
-//        for (int i = 0; i < dataList.size(); i++) {
-//            LogUtil.e(points[Constants.getCount() * i + Constants.INDEX_RSI_1]);
-//        }
-
         return points;
     }
 
@@ -358,19 +352,6 @@ public class DataHelper {
     }
 
 
-    private static int findStartIndex(List<KLineEntity> klineInfos) {
-        int startIndex = 0;
-        for (int i = klineInfos.size() - 1; i > 0; i--) {
-            double maValue = klineInfos.get(i).rOne;
-            if (maValue != 0 && maValue != Float.MIN_VALUE) {
-                startIndex = i + 1;
-                break;
-            }
-        }
-        return startIndex;
-    }
-
-
     public static float calcWr(List<KLineEntity> dataDiction, int nIndex, int n) {
         float result = 0;
         float lowInNLowsValue = getLowestOfArray(dataDiction, nIndex, n);   //N日内最低价的最低值
@@ -413,24 +394,6 @@ public class DataHelper {
             }
         }
         return result;
-    }
-
-    public static void calculateBoLL(List<KLineEntity> klineInfos, int n, int p) {
-        if (n == 0 || p == 0) {
-            return;
-        }
-        if (klineInfos.size() < n) {
-            return;
-        }
-
-        for (int i = n - 1; i < klineInfos.size(); i++) {
-            float boll = calculateBoll(klineInfos, i, n);
-            float highBoll = boll + p * STD(klineInfos, i, n);
-            float lowBoll = boll - p * STD(klineInfos, i, n);
-            klineInfos.get(i).up = (highBoll);
-            klineInfos.get(i).mb = (boll);
-            klineInfos.get(i).dn = (lowBoll);
-        }
     }
 
 

@@ -42,6 +42,9 @@ public class KDJDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
+        if (position == 0) {
+            return;
+        }
         if (Float.MIN_VALUE != values[Constants.INDEX_KDJ_K]) {
             view.drawChildLine(canvas, mKPaint, lastX,
                     values[Constants.INDEX_KDJ_K], curX,
@@ -60,7 +63,7 @@ public class KDJDraw extends BaseDraw {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y,int position, float[] values) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
 //        IKDJ point = (IKDJ) view.getItem(position);
         if (Float.MIN_VALUE != values[Constants.KDJ_K]) {
             String text = String.format(Constants.KDJ_TOP_TEXT_TAMPLATE, Constants.KDJ_K, Constants.KDJ_D, Constants.KDJ_J);

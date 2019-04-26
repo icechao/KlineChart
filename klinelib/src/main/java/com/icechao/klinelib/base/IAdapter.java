@@ -20,14 +20,14 @@ import java.util.Date;
 
 public interface IAdapter<T> extends Serializable {
     /**
-     * 获取点的数目
+     * 获取数据个数
      *
      * @return
      */
     int getCount();
 
     /**
-     * 通过序号获取item
+     * 获取某个数据
      *
      * @param position 对应的序号
      * @return 数据实体
@@ -35,7 +35,7 @@ public interface IAdapter<T> extends Serializable {
     KLineEntity getItem(int position);
 
     /**
-     * 通过序号获取时间
+     * 获取某个数据时间
      *
      * @param position
      * @return
@@ -43,7 +43,7 @@ public interface IAdapter<T> extends Serializable {
     Date getDate(int position);
 
     /**
-     * 注册一个数据观察者
+     * 添加数据观察者
      *
      * @param observer 数据观察者
      */
@@ -57,17 +57,17 @@ public interface IAdapter<T> extends Serializable {
     void unregisterDataSetObserver(DataSetObserver observer);
 
     /**
-     * 当数据发生变化时调用
+     * 发生变化
      */
     void notifyDataSetChanged();
 
     /**
-     * 数据即将发生变化时调用
+     * 即将发生变化
      */
     void notifyDataWillChanged();
 
     /**
-     * 向尾部添加数据
+     * 向尾部追加数据
      */
     void addLast(T entity);
 }

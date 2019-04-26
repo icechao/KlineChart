@@ -66,8 +66,8 @@ public class DepthFullView extends RelativeLayout {
 
 
     public void setDepthChartData(List<MarketDepthPercentItem> percentBuyList, List<MarketDepthPercentItem> percentSellList) {
-        depthView.setBuyDataListValue(percentBuyList);
-        depthView.setSellDataListValue(percentSellList);
+        depthView.setBuyList(percentBuyList);
+        depthView.setSellList(percentSellList);
         depthView.postInvalidate();
     }
 }

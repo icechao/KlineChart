@@ -14,6 +14,7 @@ import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberUtil;
+import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.utils.ViewUtil;
 
 /*************************************************************************
@@ -99,15 +100,13 @@ public class MainDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
-
-
         if (view.isLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 view.drawEndLine(canvas, linePaint, lastX, lastClosePrice, curX);
                 view.drawEndFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX);
 
-            } else {
+            } else if (position != 0) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 float closePrice = values[Constants.INDEX_CLOSE + indexInterval];
                 view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
@@ -115,43 +114,52 @@ public class MainDraw extends BaseDraw {
             }
 
         } else {
-            drawCandle(view, canvas, curX,
-                    values[Constants.INDEX_HIGH + indexInterval],
-                    values[Constants.INDEX_LOW + indexInterval],
-                    values[Constants.INDEX_OPEN + indexInterval],
-                    values[Constants.INDEX_CLOSE + indexInterval],
-                    position);
-            Status status = view.getStatus();
-            if (status == Status.MA) {
-                //画第一根ma
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_MA_1],
-                        maOne, indexPaintOne,
-                        values[Constants.INDEX_MA_1 + indexInterval]);
-                //画第二根ma
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_MA_2],
-                        maTwo, indexPaintTwo,
-                        values[Constants.INDEX_MA_2 + indexInterval]);
-                //画第三根ma
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_MA_3],
-                        maThree, indexPaintThree,
-                        values[Constants.INDEX_MA_3 + indexInterval]);
-            } else if (status == Status.BOLL) {
-                //画boll
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_BOLL_UP],
-                        bollUp, indexPaintTwo,
-                        values[Constants.INDEX_BOLL_UP + indexInterval]);
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_BOLL_MB],
-                        bollMb, indexPaintOne,
-                        values[Constants.INDEX_BOLL_MB + indexInterval]);
-                drawLine(lastX, curX, canvas, view, position,
-                        values[Constants.INDEX_BOLL_DN],
-                        bollDn, indexPaintThree,
-                        values[Constants.INDEX_BOLL_DN + indexInterval]);
+            if (position == 0) {
+                drawCandle(view, canvas, curX,
+                        values[Constants.INDEX_HIGH],
+                        values[Constants.INDEX_LOW],
+                        values[Constants.INDEX_OPEN],
+                        values[Constants.INDEX_CLOSE],
+                        position);
+            } else {
+                drawCandle(view, canvas, curX,
+                        values[Constants.INDEX_HIGH + indexInterval],
+                        values[Constants.INDEX_LOW + indexInterval],
+                        values[Constants.INDEX_OPEN + indexInterval],
+                        values[Constants.INDEX_CLOSE + indexInterval],
+                        position);
+                MainStatus status = view.getStatus();
+                if (status == MainStatus.MA) {
+                    //画第一根ma
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_MA_1],
+                            maOne, indexPaintOne,
+                            values[Constants.INDEX_MA_1 + indexInterval]);
+                    //画第二根ma
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_MA_2],
+                            maTwo, indexPaintTwo,
+                            values[Constants.INDEX_MA_2 + indexInterval]);
+                    //画第三根ma
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_MA_3],
+                            maThree, indexPaintThree,
+                            values[Constants.INDEX_MA_3 + indexInterval]);
+                } else if (status == MainStatus.BOLL) {
+                    //画boll
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_BOLL_UP],
+                            bollUp, indexPaintTwo,
+                            values[Constants.INDEX_BOLL_UP + indexInterval]);
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_BOLL_MB],
+                            bollMb, indexPaintOne,
+                            values[Constants.INDEX_BOLL_MB + indexInterval]);
+                    drawLine(lastX, curX, canvas, view, position,
+                            values[Constants.INDEX_BOLL_DN],
+                            bollDn, indexPaintThree,
+                            values[Constants.INDEX_BOLL_DN + indexInterval]);
+                }
             }
         }
     }
@@ -186,8 +194,8 @@ public class MainDraw extends BaseDraw {
         if (view.isLine()) {
 
         } else {
-            Status status = view.getStatus();
-            if (status == Status.MA) {
+            MainStatus status = view.getStatus();
+            if (status == MainStatus.MA) {
                 String text;
                 if (Float.MIN_VALUE != values[Constants.INDEX_MA_1]) {
                     text = indexMa1 + getValueFormatter().format(values[Constants.INDEX_MA_1]) + "  ";
@@ -203,7 +211,7 @@ public class MainDraw extends BaseDraw {
                     text = indexMa3 + getValueFormatter().format(values[Constants.INDEX_MA_3]);
                     canvas.drawText(text, x, y, indexPaintThree);
                 }
-            } else if (status == Status.BOLL) {
+            } else if (status == MainStatus.BOLL) {
                 if (Float.MIN_VALUE != values[Constants.INDEX_BOLL_MB]) {
                     String text = indexBoll + view.formatValue(values[Constants.INDEX_BOLL_MB]) + "  ";
                     canvas.drawText(text, x, y, indexPaintOne);
@@ -456,7 +464,7 @@ public class MainDraw extends BaseDraw {
                 view.generaterAnimator(maThree, values[Constants.INDEX_MA_3], animation -> maThree = (float) animation.getAnimatedValue());
                 break;
             case BOLL:
-                if (bollUp == 0 && view.getStatus() == Status.BOLL) {
+                if (bollUp == 0 && view.getStatus() == MainStatus.BOLL) {
                     bollUp = values[Constants.INDEX_BOLL_UP];
                     bollDn = values[Constants.INDEX_BOLL_DN];
                     bollMb = values[Constants.INDEX_BOLL_MB];

@@ -22,7 +22,7 @@ import java.util.List;
  *************************************************************************/
 public abstract class BaseDepthAdapter implements com.icechao.klinelib.base.IAdapter {
 
-    Handler handler = new Handler(Looper.getMainLooper());
+    private Handler handler = new Handler(Looper.getMainLooper());
     private final DataSetObservable mDataSetObservable = new DataSetObservable();
     protected float[] tempLeftDatas;
     protected float[] tempRightDatas;
@@ -37,18 +37,8 @@ public abstract class BaseDepthAdapter implements com.icechao.klinelib.base.IAda
     protected List<List<Double>> iDepthsLeft = new ArrayList<>();
     protected List<List<Double>> iDepthsRight = new ArrayList<>();
 
-    Runnable notifyDataChangeRunable = new Runnable() {
-        @Override
-        public void run() {
-            mDataSetObservable.notifyChanged();
-        }
-    };
-    Runnable notifyDataWillChangeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mDataSetObservable.notifyInvalidated();
-        }
-    };
+    private Runnable notifyDataChangeRunable = mDataSetObservable::notifyChanged;
+    private Runnable notifyDataWillChangeRunnable = mDataSetObservable::notifyInvalidated;
 
     @Override
     public void notifyDataSetChanged() {

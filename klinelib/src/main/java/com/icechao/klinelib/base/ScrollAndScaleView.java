@@ -176,13 +176,12 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if (event.getPointerCount() > 1) {
+            setLongPress(false);
+        }
         if (null != eventLisenter) {
             eventLisenter.onEvent();
-        }
-
-        // 按压手指超过1个
-        if (event.getPointerCount() > 1) {
-            setLongPress( false);
         }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
@@ -201,14 +200,14 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             case MotionEvent.ACTION_UP:
                 if (x == event.getX()) {
                     if (isLongPress) {
-                        setLongPress( false);
+                        setLongPress(false);
                     }
                 }
                 setTouch(false);
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                setLongPress( false);
+                setLongPress(false);
                 setTouch(false);
                 invalidate();
                 break;
