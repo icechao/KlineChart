@@ -47,7 +47,3 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="400" hegiht="400" align=center />
 
 
-
-
-    最初版本修改自:https://github.com/tifezh/KChartView
-    改着改着发现有些东西真的不合理,除了几个基础的东西很多都修改了
