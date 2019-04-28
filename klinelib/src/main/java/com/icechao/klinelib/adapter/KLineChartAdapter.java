@@ -2,9 +2,7 @@ package com.icechao.klinelib.adapter;
 
 import com.icechao.klinelib.base.BaseKLineChartAdapter;
 import com.icechao.klinelib.entity.KLineEntity;
-import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.DataHelper;
-import com.icechao.klinelib.utils.LogUtil;
+import com.icechao.klinelib.utils.DataTools;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +56,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         datas = data;
         if (null != data && data.size() > 0) {
             this.dataCount = datas.size();
-            points = DataHelper.calculate((List<KLineEntity>) datas);
+            points = DataTools.calculate((List<KLineEntity>) datas);
             notifyDataSetChanged();
         } else {
             points = new float[]{};
@@ -74,7 +72,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         if (null != entity) {
             datas.add(entity);
             this.dataCount++;
-            points = DataHelper.calculate((List<KLineEntity>) datas);
+            points = DataTools.calculate((List<KLineEntity>) datas);
             notifyDataSetChanged();
         }
     }
@@ -86,7 +84,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void changeItem(int position, T data) {
         datas.set(position, data);
-        points = DataHelper.calculate((List<KLineEntity>) datas);
+        points = DataTools.calculate((List<KLineEntity>) datas);
         notifyDataSetChanged();
     }
 }

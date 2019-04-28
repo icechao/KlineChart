@@ -21,8 +21,8 @@ import com.icechao.klinelib.formatter.TimeFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.LogUtil;
-import com.icechao.klinelib.utils.NumberUtil;
-import com.icechao.klinelib.utils.ViewUtil;
+import com.icechao.klinelib.utils.NumberTools;
+import com.icechao.klinelib.utils.Dputil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ import java.util.List;
  * Description   : 绘制分类,BaseKLineChartView只绘制所有视图通用的图形 其他区域的绘制分别由对应的绘制类完成
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ViewUtil.java
+ * @FileName     : BaseKLineChartView.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
@@ -446,7 +446,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         showAnim = ValueAnimator.ofFloat(0f, 1f);
         showAnim.setDuration(duration);
         showAnim.addUpdateListener(animation -> invalidate());
-        selectorFramePaint.setStrokeWidth(ViewUtil.Dp2Px(getContext(), 0.6f));
+        selectorFramePaint.setStrokeWidth(Dputil.Dp2Px(getContext(), 0.6f));
         selectorFramePaint.setStyle(Paint.Style.STROKE);
         selectorFramePaint.setColor(Color.WHITE);
         priceLinePaint.setAntiAlias(true);
@@ -770,8 +770,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (isLongPress) {
             // 选中状态下的Y值
 //            IKLine point = (IKLine) getItem(selectedIndex);
-            float textHorizentalPadding = ViewUtil.Dp2Px(getContext(), 5);
-            float textVerticalPadding = ViewUtil.Dp2Px(getContext(), 3);
+            float textHorizentalPadding = Dputil.Dp2Px(getContext(), 5);
+            float textVerticalPadding = Dputil.Dp2Px(getContext(), 3);
             float r = textHeight / 2 + textVerticalPadding;
             y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
             float x;
@@ -911,7 +911,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
 
         //交易量图的Y轴label
-        String maxVol = NumberUtil.getTradeMarketAmount(volDraw.getValueFormatter().
+        String maxVol = NumberTools.getTradeMarketAmount(volDraw.getValueFormatter().
                 format(volMaxValue));
         canvas.drawText(maxVol, tempYLabelX -
                 textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
@@ -1211,7 +1211,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (screenLeftIndex != 0) {
             setTranslatedX(canvasTranslateX / oldScale * scale + difCount * tempWidth);
         } else {
-            setTranslatedX(getMinTranslate());
+            setTranslatedX(getMaxTranslate());
         }
         super.onScaleChanged(scale, oldScale);
     }

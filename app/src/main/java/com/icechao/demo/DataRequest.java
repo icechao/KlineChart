@@ -5,7 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.icechao.klinelib.entity.KLineEntity;
-import com.icechao.klinelib.utils.DataHelper;
+import com.icechao.klinelib.utils.DataTools;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class DataRequest {
         if (datas == null) {
             final List<KLineEntity> data = new Gson().fromJson(getStringFromAssert(context, "ibm.json"), new TypeToken<List<KLineEntity>>() {
             }.getType());
-            DataHelper.calculate(data);
+            DataTools.calculate(data);
             datas = data;
         }
         return datas;

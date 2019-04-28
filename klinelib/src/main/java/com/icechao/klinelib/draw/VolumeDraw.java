@@ -11,15 +11,15 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.NumberUtil;
-import com.icechao.klinelib.utils.ViewUtil;
+import com.icechao.klinelib.utils.NumberTools;
+import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.R;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ViewUtil.java
+ * @FileName     : VolumeDraw.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
@@ -35,8 +35,6 @@ public class VolumeDraw extends BaseDraw {
     private Paint volLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float volWidth = 0;
     private IValueFormatter valueFormatter = new ValueFormatter();
-    //当前显示的是不是分钟线
-    //分钟线下,量的柱状图宽度/2
     private float lineVolWidth;
     private int itemsCount;
     private final int indexInterval;
@@ -47,7 +45,7 @@ public class VolumeDraw extends BaseDraw {
     public VolumeDraw(Context context) {
         redPaint.setColor(ContextCompat.getColor(context, R.color.color_03C087));
         greenPaint.setColor(ContextCompat.getColor(context, R.color.color_FF605A));
-        volWidth = ViewUtil.Dp2Px(context, 4);
+        volWidth = Dputil.Dp2Px(context, 4);
         indexInterval = Constants.getCount();
         volIndex = context.getString(R.string.k_index_vol);
         volMaIndex1 = context.getString(R.string.k_index_vol_ma1);
@@ -119,25 +117,25 @@ public class VolumeDraw extends BaseDraw {
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
         String text;
         if (position == itemsCount - 1 && view.isAnimationLast()) {
-            text = volIndex + NumberUtil.getTradeMarketAmount(getValueFormatter().format(view.getLastVol())) + "  ";
+            text = volIndex + NumberTools.getTradeMarketAmount(getValueFormatter().format(view.getLastVol())) + "  ";
         } else {
-            text = volIndex + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
+            text = volIndex + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
         }
         canvas.drawText(text, x, y, volLeftPaint);
         x += view.getTextPaint().measureText(text);
 
         if (position == itemsCount - 1 && view.isAnimationLast()) {
-            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMaOne)) + "  ";
+            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaOne)) + "  ";
         } else {
-            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
+            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
         }
         canvas.drawText(text, x, y, maOnePaint);
         x += maOnePaint.measureText(text);
         if (position == itemsCount - 1 && view.isAnimationLast()) {
 
-            text = volMaIndex1 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(endMaTwo)) + "  ";
+            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaTwo)) + "  ";
         } else {
-            text = volMaIndex2 + NumberUtil.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
+            text = volMaIndex2 + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
         }
         canvas.drawText(text, x, y, maTwoPaint);
     }

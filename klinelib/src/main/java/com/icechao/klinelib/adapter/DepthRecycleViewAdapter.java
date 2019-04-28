@@ -105,7 +105,6 @@ public class DepthRecycleViewAdapter extends RecyclerView.Adapter<DepthRecycleVi
             textViewRightPrice = itemView.findViewById(R.id.text_view_right_price);
             progressLeft = itemView.findViewById(R.id.progress_left);
             progressRight = itemView.findViewById(R.id.progress_right);
-
             progressLeft.setProgressDrawable(context.getResources().getDrawable(R.drawable.depth_progress_bar_left));
         }
 

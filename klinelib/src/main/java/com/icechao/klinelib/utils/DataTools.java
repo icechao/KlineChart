@@ -11,19 +11,52 @@ import java.util.List;
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : DataHelper.java
+ * @FileName     : DataTools.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class DataHelper {
+public class DataTools {
 
 
     /**
-     * 计算  重构:计算方法,过多循环~  把循环尽量放到一个循环种加快计算速度
+     * 计算MA BOLL RSI KDJ MACD
      *
      * @param dataList
+     */
+    public static float[] calculate(List<KLineEntity> dataList) {
+        float[] points = calculate(dataList, 2, 20,
+                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
+                Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,
+                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
+                Constants.KDJ_K, Constants.RSI_1,
+                Constants.WR_1, 0, 0);
+        return points;
+    }
+
+
+    /**
+     * 计算
+     *
+     * @param dataList
+     * @param bollP
+     * @param bollN
+     * @param priceMaOne
+     * @param priceMaTwo
+     * @param priceMaThree
+     * @param s
+     * @param l
+     * @param m
+     * @param maOne
+     * @param maTwo
+     * @param maThree
+     * @param kdjDay
+     * @param rsi
+     * @param wr1
+     * @param wr2
+     * @param wr3
+     * @return
      */
     static float[] calculate(List<KLineEntity> dataList, float bollP, int bollN,
                              float priceMaOne, float priceMaTwo, float priceMaThree,
@@ -190,16 +223,6 @@ public class DataHelper {
             point.MA10Volume = ma;
             points[indexInterval * i + Constants.INDEX_VOL_MA_2] = point.MA10Volume;
 
-//            if (i == maThree - 1) {
-//                ma = (volumeMaThree / maThree);
-//            } else if (i > maThree - 1) {
-//                volumeMaThree -= dataList.get((int) (i - maThree)).getVolume();
-//                ma = volumeMaThree / maThree;
-//            } else {
-//                ma = Float.MIN_VALUE;
-//            }
-//            point.MAVolume = ma;
-
             //kdj
             calcKdj(dataList, kdjDay, i, point, closePrice);
             points[indexInterval * i + Constants.INDEX_KDJ_K] = point.k;
@@ -249,8 +272,7 @@ public class DataHelper {
     }
 
     private static void calcKdj(List<KLineEntity> dataList, int kdjDay, int i, KLineEntity point, float closePrice) {
-        float k;
-        float d;
+        float k,d;
         if (i < kdjDay - 1 || 0 == i) {
             point.k = Float.MIN_VALUE;
             point.d = Float.MIN_VALUE;
@@ -280,30 +302,6 @@ public class DataHelper {
         }
     }
 
-    /**
-     * 计算MA BOLL RSI KDJ MACD
-     *
-     * @param dataList
-     */
-    public static float[] calculate(List<KLineEntity> dataList) {
-        float[] points = calculate(dataList, 2, 20,
-                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
-                Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,
-                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
-                Constants.KDJ_K, Constants.RSI_1,
-                Constants.WR_1, 0, 0);
-        return points;
-    }
-
-
-    /**
-     * 计算ema指标
-     *
-     * @param n      s或l
-     * @param index  index
-     * @param preEma 上一个ema
-     * @return ema
-     */
     private static float calculateEMA(List<KLineEntity> list, int n, int index, float preEma) {
         float y = 0;
         try {
@@ -322,22 +320,13 @@ public class DataHelper {
         }
     }
 
-    /**
-     * 计算DEA
-     *
-     * @param list    列表
-     * @param l       L26
-     * @param m       M9
-     * @param index   index
-     * @param preDea  上一个dea
-     * @param isFirst 是否是第一个
-     * @return dea
-     */
+
     private static float calculateDEA(List<KLineEntity> list, int l, int m, int index,
                                       float preDea,
                                       boolean isFirst) {
-        float y = 0;
+
         try {
+            float y = 0;
             if (isFirst) {
                 for (int i = l - 1; i <= m + l - 2; i++) {
                     y += list.get(i).getDif();
@@ -347,15 +336,15 @@ public class DataHelper {
                 return ((preDea * (m - 1) + list.get(index).getDif() * 2) / (m + 1));
             }
         } catch (Exception e) {
-            return y;
+            return 0;
         }
     }
 
 
     public static float calcWr(List<KLineEntity> dataDiction, int nIndex, int n) {
-        float result = 0;
-        float lowInNLowsValue = getLowestOfArray(dataDiction, nIndex, n);   //N日内最低价的最低值
-        float highInHighsValue = getHighestOfArray(dataDiction, nIndex, n);   //N日内最低价的最低值
+        float result;
+        float lowInNLowsValue = getMin(dataDiction, nIndex, n);   //N日内最低价的最低值
+        float highInHighsValue = getMax(dataDiction, nIndex, n);   //N日内最低价的最低值
         float valueSpan = highInHighsValue - lowInNLowsValue;
         if (valueSpan > 0) {
             KLineEntity kLineData = dataDiction.get(nIndex);
@@ -367,7 +356,7 @@ public class DataHelper {
     }
 
 
-    public static float getLowestOfArray(List<KLineEntity> valuesArray, int fromIndex, int nCount) {
+    public static float getMin(List<KLineEntity> valuesArray, int fromIndex, int nCount) {
         float result = Float.MAX_VALUE;
         int endIndex = fromIndex - (nCount - 1);
         if (fromIndex >= endIndex) {
@@ -382,8 +371,8 @@ public class DataHelper {
     }
 
 
-    public static float getHighestOfArray(List<KLineEntity> valuesArray,
-                                          int fromIndex, int nCount) {
+    public static float getMax(List<KLineEntity> valuesArray,
+                               int fromIndex, int nCount) {
         float result = Float.MIN_VALUE;
         int endIndex = fromIndex - (nCount - 1);
         if (fromIndex >= endIndex) {
@@ -396,30 +385,23 @@ public class DataHelper {
         return result;
     }
 
-
-    /**
-     * 布林线指标计算
-     */
-    private static float calculateBoll(List<KLineEntity> payloads, int index, int maN) {
+    private static float calculateBoll(List<KLineEntity> payloads, int position, int maN) {
         float sum = 0;
-        for (int i = index; i >= index - maN + 1; i--) {
+        for (int i = position; i >= position - maN + 1; i--) {
             sum = (sum + payloads.get(i).close);
         }
         return sum / maN;
 
     }
 
-    private static float STD(List<KLineEntity> payloads, int index, int maN) {
+    private static float STD(List<KLineEntity> payloads, int positon, int maN) {
 
-        float sum = 0f;
-        float std = 0f;
-        for (int i = index; i >= index - maN + 1; i--) {
+        float sum = 0f, std = 0f;
+        for (int i = positon; i >= positon - maN + 1; i--) {
             sum += payloads.get(i).close;
         }
         float avg = sum / maN;
-        //float avg = payloads.get(index).bollMa;
-        //不能提前计算,会出现0.001的误差
-        for (int i = index; i >= index - maN + 1; i--) {
+        for (int i = positon; i >= positon - maN + 1; i--) {
             std += (payloads.get(i).close - avg) * (payloads.get(i).close - avg);
         }
         return (float) Math.sqrt(std / maN);

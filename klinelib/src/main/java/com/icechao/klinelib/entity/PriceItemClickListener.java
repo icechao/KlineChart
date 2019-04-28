@@ -1,28 +1,19 @@
 package com.icechao.klinelib.entity;
 
-import java.io.Serializable;
+
+import android.view.View;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : IRSI.java
+ * @FileName     : PriceItemClickListener.java
  * @Author       : chao
- * @Date         : 2019/4/8
+ * @Date         : 2019/4/10
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
+public interface PriceItemClickListener {
 
-@Deprecated
-public interface IRSI extends Serializable {
-
-    /**
-     * RSI值
-     */
-    float getRsiOne();
-
-    float getRsiTwo();
-
-    float getRsiThree();
-
+    void onClick(MarketTradeItem item, View view);
 }

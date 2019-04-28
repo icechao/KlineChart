@@ -13,9 +13,9 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.NumberUtil;
+import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.MainStatus;
-import com.icechao.klinelib.utils.ViewUtil;
+import com.icechao.klinelib.utils.Dputil;
 
 /*************************************************************************
  * Description   :
@@ -77,8 +77,8 @@ public class MainDraw extends BaseDraw {
         downPaint.setStyle(Paint.Style.FILL);
         downLinePaint.setStyle(Paint.Style.STROKE);
         downLinePaint.setAntiAlias(true);
-        padding = ViewUtil.Dp2Px(context, 5);
-        margin = ViewUtil.Dp2Px(context, 5);
+        padding = Dputil.Dp2Px(context, 5);
+        margin = Dputil.Dp2Px(context, 5);
         marketInfoText[0] = ("时间   ");
         marketInfoText[1] = ("开     ");
         marketInfoText[2] = ("高     ");
@@ -296,8 +296,8 @@ public class MainDraw extends BaseDraw {
         strings[4] = (view.getValueFormatter().format(values[Constants.INDEX_CLOSE]));
         float tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
         strings[5] = (view.getValueFormatter().format(tempDiffPrice));
-        strings[6] = NumberUtil.roundFormatDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
-        strings[7] = NumberUtil.getTradeMarketAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
+        strings[6] = NumberTools.roundFormatDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
+        strings[7] = NumberTools.getTradeMarketAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
 
         float width = 0, left, top = margin + view.getTopPadding();
         //上下多加两个padding值的间隙

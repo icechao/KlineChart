@@ -5,14 +5,17 @@ package com.icechao.klinelib.entity;
 
 import java.io.Serializable;
 
+/*************************************************************************
+ * Description   :
+ *
+ * @PackageName  : com.icechao.klinelib.utils
+ * @FileName     : MarketTradeItem.java
+ * @Author       : chao
+ * @Date         : 2019/4/10
+ * @Email        : icechliu@gmail.com
+ * @version      : V1
+ *************************************************************************/
 public class MarketTradeItem implements Serializable {
-
-    public static final int BUY_TYPE = 0;
-    public static final int SELL_TYPE = 1;
-    public static final int VERTICAL_TRADE = 1;
-    public static final int HORIZONTAL_TRADE = 0;
-    public static final int MARKET_TRADE = 2;
-
 
     private double price;
     private double amount;
@@ -25,7 +28,7 @@ public class MarketTradeItem implements Serializable {
 
     private String symbol;
 
-    private PriceItemListener listener;
+    private PriceItemClickListener listener;
 
     private boolean isOrderPlace;
 
@@ -72,11 +75,11 @@ public class MarketTradeItem implements Serializable {
         this.length = length;
     }
 
-    public PriceItemListener getListener() {
+    public PriceItemClickListener getListener() {
         return listener;
     }
 
-    public void setListener(PriceItemListener listener) {
+    public void setListener(PriceItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -133,4 +136,8 @@ public class MarketTradeItem implements Serializable {
     public void setOrderPlace(boolean orderPlace) {
         isOrderPlace = orderPlace;
     }
+
+    public static final int BUY_TYPE = 0;
+    public static final int MARKET_TRADE = 2;
+
 }

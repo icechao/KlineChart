@@ -207,8 +207,6 @@ public class KLineEntity implements IKLine {
 
     public float MA10Volume;
 
-    public float MAVolume;
-
 
     @Override
     public float getRsiOne() {

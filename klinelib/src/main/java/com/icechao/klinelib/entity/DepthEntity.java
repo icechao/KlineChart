@@ -10,6 +10,8 @@ package com.icechao.klinelib.entity;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
+
+
 public class DepthEntity implements com.icechao.klinelib.entity.IDepth {
 
     private float price;

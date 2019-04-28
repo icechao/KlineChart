@@ -68,7 +68,7 @@ public interface IChartDraw<T> {
 
 
     /**
-     * 开启动画变换数字
+     * 开启动画
      *
      * @param view
      * @param values

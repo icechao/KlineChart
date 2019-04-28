@@ -14,22 +14,7 @@ import java.util.List;
  * @version      : V1
  *************************************************************************/
 public class DepthBean implements Serializable {
-//    {
-//        "ch": "market.btcusdt.depth.percent10",
-//            "ts": 1548297435172,
-//            "tick": {
-//        "asks": [
-//			[3672.633737500000000000, 1.282700000000000000]
-//		]
-//    }
-//    }
-    /**
-     * data : {"asks":[[3578.79,3.5841]],"bids":[[3578.78,0.0015],[3567.01,5.0E-4]]}
-     * id : depth
-     * rep : market.btcusdt.depth.step0
-     * status : ok
-     * ts : 1548243211444
-     */
+
 
     private String ch;
     private DataEntity tick;
@@ -97,10 +82,6 @@ public class DepthBean implements Serializable {
     }
 
     public class DataEntity {
-        /**
-         * asks : [[3578.79,3.5841]]
-         * bids : [[3578.78,0.0015],[3567.01,5.0E-4]]
-         */
         //卖
         private List<List<Double>> asks;
         //买

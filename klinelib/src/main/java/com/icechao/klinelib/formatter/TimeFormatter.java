@@ -9,7 +9,7 @@ import java.util.Date;
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ViewUtil.java
+ * @FileName     : TimeFormatter.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com

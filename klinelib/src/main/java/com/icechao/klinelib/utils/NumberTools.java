@@ -4,8 +4,17 @@ import android.text.TextUtils;
 
 import java.math.BigDecimal;
 
-
-public class NumberUtil {
+/*************************************************************************
+ * Description   :
+ *
+ * @PackageName  : com.icechao.klinelib.utils
+ * @FileName     : NumberTools.java
+ * @Author       : chao
+ * @Date         : 2019/4/8
+ * @Email        : icechliu@gmail.com
+ * @version      : V1
+ *************************************************************************/
+public class NumberTools {
 
 
     /**

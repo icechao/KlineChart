@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#131F30"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:visibility="invisible">
 
                 <RelativeLayout
                     android:id="@+id/trade_price_layout"
@@ -125,7 +126,7 @@
                         <TextView
                             android:id="@+id/low_price_label"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:includeFontPadding="false"
                             android:text="低"
                             android:textColor="@color/color_6D87A8"

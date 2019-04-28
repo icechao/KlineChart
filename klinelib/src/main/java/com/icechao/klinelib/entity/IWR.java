@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
+@Deprecated
 public interface IWR extends Serializable {
 
     /**

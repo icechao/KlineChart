@@ -37,11 +37,6 @@ public class WRDraw extends BaseDraw {
         indexInterval = Constants.getCount();
     }
 
-//    @Override
-//    public void drawTranslated(@Nullable IWR lastPoint, @NonNull IWR curPoint, float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position) {
-//
-//    }
-
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.draw.*;
 import com.icechao.klinelib.draw.KDJDraw;
@@ -18,7 +19,7 @@ import com.icechao.klinelib.draw.MACDDraw;
 import com.icechao.klinelib.draw.MainDraw;
 import com.icechao.klinelib.draw.RSIDraw;
 import com.icechao.klinelib.draw.WRDraw;
-import com.icechao.klinelib.utils.ViewUtil;
+import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.R;
 
 /*************************************************************************
@@ -75,10 +76,9 @@ public class KLineChartView extends BaseKLineChartView {
         setVolDraw(volumeDraw);
         setMainDraw(mainDraw);
 
-
         volumeDraw.setVolLeftColor(getResources().getColor(R.color.color_6D87A8));
+        setPriceLineWidth(Dputil.Dp2Px(context, 1));
         setPriceLineColor(getResources().getColor(R.color.color_6D87A8));
-        setPriceLineWidth(ViewUtil.Dp2Px(context, 1));
         setPriceLineRightColor(getResources().getColor(R.color.color_4B85D6));
         setSelectCrossBigColor(getResources().getColor(R.color.color_9ACFD3E9));
         setSelectCrossColor(getResources().getColor(R.color.color_CFD3E9));
@@ -97,7 +97,7 @@ public class KLineChartView extends BaseKLineChartView {
         setAreaBottomColor(getResources().getColor(R.color.color_004B85D6));
 
         setEndPointColor(Color.WHITE);
-        setLineEndPointWidth(ViewUtil.Dp2Px(context, 4));
+        setLineEndPointWidth(Dputil.Dp2Px(context, 4));
 
         setBackgroundFillPaint(getContext().getResources().getColor(R.color.color_131F30));
     }
@@ -106,22 +106,12 @@ public class KLineChartView extends BaseKLineChartView {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.KLineChartView);
         if (null != array) {
             try {
-                //public
-                setChartItemWidth(array.getDimension(R.styleable.KLineChartView_kc_point_width, getDimension(R.dimen.chart_point_width)));
-                setTextSize(array.getDimension(R.styleable.KLineChartView_kc_text_size, getDimension(R.dimen.chart_text_size)));
-                setTextColor(array.getColor(R.styleable.KLineChartView_kc_text_color, getColor(R.color.color_6D87A8)));
                 mainDraw.setLimitTextSize(array.getDimension(R.styleable.KLineChartView_kc_text_size, getDimension(R.dimen.chart_text_size)));
                 mainDraw.setLimitTextColor(array.getColor(R.styleable.KLineChartView_kc_text_color, getColor(R.color.color_6D87A8)));
-                setLineWidth(array.getDimension(R.styleable.KLineChartView_kc_line_width, getDimension(R.dimen.chart_line_width)));
-//                setBackgroundColor(array.getColor(R.styleable.KLineChartView_kc_background_color, getColor(R.color.chart_bac)));
-                setSelectPointColor(array.getColor(R.styleable.KLineChartView_kc_background_color, getColor(R.color.color_081724)));
+                setChartItemWidth(array.getDimension(R.styleable.KLineChartView_kc_point_width, getDimension(R.dimen.chart_point_width)));
+                setTextSize(array.getDimension(R.styleable.KLineChartView_kc_text_size, getDimension(R.dimen.chart_text_size)));
 
-                setSelectedXLineColor(getResources().getColor(R.color.color_CFD3E9));
-                setSelectedXLineWidth(getDimension(R.dimen.chart_line_width));
-
-                setSelectedYLineColor(getResources().getColor(R.color.color_1ACFD3E9));
-                setSelectedYLineWidth(getDimension(R.dimen.chart_point_width));
-
+                setTextColor(array.getColor(R.styleable.KLineChartView_kc_text_color, getColor(R.color.color_6D87A8)));
                 setGridLineWidth(array.getDimension(R.styleable.KLineChartView_kc_grid_line_width, getDimension(R.dimen.chart_grid_line_width)));
                 setGridLineColor(array.getColor(R.styleable.KLineChartView_kc_grid_line_color, getColor(R.color.color_223349)));
                 //macd
@@ -145,11 +135,20 @@ public class KLineChartView extends BaseKLineChartView {
                 setMaOneColor(array.getColor(R.styleable.KLineChartView_kc_dif_color, getColor(R.color.color_F6DC93)));
                 setMaTwoColor(array.getColor(R.styleable.KLineChartView_kc_dea_color, getColor(R.color.color_61D1C0)));
                 setMaThreeColor(array.getColor(R.styleable.KLineChartView_kc_macd_color, getColor(R.color.color_CB92FE)));
-                setCandleWidth(array.getDimension(R.styleable.KLineChartView_kc_candle_width, getDimension(R.dimen.chart_candle_width)));
-                setCandleLineWidth(array.getDimension(R.styleable.KLineChartView_kc_candle_line_width, getDimension(R.dimen.chart_candle_line_width)));
+
+                setSelectedXLineWidth(getDimension(R.dimen.chart_line_width));
+                setSelectedYLineWidth(getDimension(R.dimen.chart_point_width));
+                setSelectedXLineColor(getResources().getColor(R.color.color_CFD3E9));
+                setSelectedYLineColor(getResources().getColor(R.color.color_1ACFD3E9));
+                setSelectPointColor(array.getColor(R.styleable.KLineChartView_kc_background_color, getColor(R.color.color_081724)));
                 setSelectorBackgroundColor(array.getColor(R.styleable.KLineChartView_kc_selector_background_color, getColor(R.color.color_EA111725)));
                 setSelectorTextSize(array.getDimension(R.styleable.KLineChartView_kc_selector_text_size, getDimension(R.dimen.chart_selector_text_size)));
                 setCandleSolid(array.getBoolean(R.styleable.KLineChartView_kc_candle_solid, false));
+
+                setLineWidth(array.getDimension(R.styleable.KLineChartView_kc_line_width, getDimension(R.dimen.chart_line_width)));
+                setCandleWidth(array.getDimension(R.styleable.KLineChartView_kc_candle_width, getDimension(R.dimen.chart_candle_width)));
+                setCandleLineWidth(array.getDimension(R.styleable.KLineChartView_kc_candle_line_width, getDimension(R.dimen.chart_candle_line_width)));
+
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -217,18 +216,12 @@ public class KLineChartView extends BaseKLineChartView {
 
     @Override
     public void setScaleEnable(boolean scaleEnable) {
-//        if (isShowLoading) {
-//            throw new IllegalStateException("请勿在刷新状态设置属性");
-//        }
         super.setScaleEnable(scaleEnable);
 
     }
 
     @Override
     public void setScrollEnable(boolean scrollEnable) {
-//        if (isShowLoading) {
-//            throw new IllegalStateException("请勿在刷新状态设置属性");
-//        }
         super.setScrollEnable(scrollEnable);
     }
 
@@ -358,7 +351,6 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setCandleWidth(float candleWidth) {
         mainDraw.setCandleWidth(candleWidth);
-        //量的柱状图与蜡烛图同宽
         volumeDraw.setBarWidth(candleWidth);
     }
 

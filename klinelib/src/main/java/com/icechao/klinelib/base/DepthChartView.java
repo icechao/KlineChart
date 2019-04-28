@@ -29,8 +29,8 @@ import android.view.View;
 
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.NumberUtil;
-import com.icechao.klinelib.utils.ViewUtil;
+import com.icechao.klinelib.utils.NumberTools;
+import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.R;
 
 import java.util.ArrayList;
@@ -308,7 +308,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         numberLine = 5;
         horinzontalNumberLine = 3;
         borderWidth = 2;
-        borderTextSize = ViewUtil.Dp2Px(context, 10);
+        borderTextSize = Dputil.Dp2Px(context, 10);
         borderLineTextSize = 2;
         borderTransverseLineColor = Color.GRAY;
         borderTransverseLineWidth = 2;
@@ -316,13 +316,13 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         brokenLineFillWidth = 2;
         borderLineColor = Color.BLACK;
 
-        brokenLineMarginLeft = ViewUtil.Dp2Px(context, 0);
-        brokenLineMarginTop = ViewUtil.Dp2Px(context, 20);
-        brokenLineMarginBottom = ViewUtil.Dp2Px(context, 20);
-        brokenLinerMarginRight = ViewUtil.Dp2Px(context, 0);
-        horizontalLabelMarginTop = ViewUtil.Dp2Px(context, 5);
-        horizontalLabelMarginBottom = ViewUtil.Dp2Px(context, 5);
-        verticaLabelMarginRight = ViewUtil.Dp2Px(context, 5);
+        brokenLineMarginLeft = Dputil.Dp2Px(context, 0);
+        brokenLineMarginTop = Dputil.Dp2Px(context, 20);
+        brokenLineMarginBottom = Dputil.Dp2Px(context, 20);
+        brokenLinerMarginRight = Dputil.Dp2Px(context, 0);
+        horizontalLabelMarginTop = Dputil.Dp2Px(context, 5);
+        horizontalLabelMarginBottom = Dputil.Dp2Px(context, 5);
+        verticaLabelMarginRight = Dputil.Dp2Px(context, 5);
 
         initPaint();
 
@@ -377,7 +377,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
                     sellsPoint != null && (showIndex < sellsPoint.length && showIndex > 0);
             if (!safePoint) return;
             RectF center = new RectF(0, 0, 8, 8);
-            RectF ring = new RectF(0, 0, ViewUtil.Dp2Px(context, 15), ViewUtil.Dp2Px(context, 15));
+            RectF ring = new RectF(0, 0, Dputil.Dp2Px(context, 15), Dputil.Dp2Px(context, 15));
             center.offset(-center.width() / 2, -center.height() / 2);
             ring.offset(-ring.width() / 2, -ring.height() / 2);
             PointF touchPoint = showBuy ? buysPoint[showIndex] : sellsPoint[showIndex];
@@ -394,7 +394,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             Rect valueRect = new Rect();
             RectF valueRect2 = new RectF();
             textPaint.getTextBounds(touchVol, 0, touchVol.length(), valueRect);
-            valueRect2.set(0, touchPoint.y, valueRect.width() + 2 * ViewUtil.Dp2Px(context, 5), touchPoint.y + h);
+            valueRect2.set(0, touchPoint.y, valueRect.width() + 2 * Dputil.Dp2Px(context, 5), touchPoint.y + h);
             valueRect2.offset(getWidth() - valueRect2.width(), -valueRect2.height() / 2);
             if (valueRect2.bottom > y) {
                 valueRect2.offset(0, y - valueRect2.bottom);
@@ -408,7 +408,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             textPaint.getTextBounds(touchValue, 0, touchValue.length(), volRect);
             float baseLine = y + h / 2 - volRect.exactCenterY();
 
-            volRect2.set(0, y, volRect.width() + 2 * ViewUtil.Dp2Px(context, 5), y + h);
+            volRect2.set(0, y, volRect.width() + 2 * Dputil.Dp2Px(context, 5), y + h);
             float offsetX = Math.min(Math.max(0, touchPoint.x - volRect2.width() / 2), getWidth() - volRect2.width());
             volRect2.offset(offsetX, 0);
 
@@ -573,7 +573,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      *
      */
     private String verticalCoordinatePlace(double f) {
-        return NumberUtil.getTradeMarketAmount(valueFormatter.format((float) f));
+        return NumberTools.getTradeMarketAmount(valueFormatter.format((float) f));
     }
 
 
@@ -608,10 +608,10 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 设置边框左上右下边距
      */
     public void seMargins(float l, float t, float r, float b) {
-        brokenLineMarginLeft = ViewUtil.Dp2Px(context, l);
-        brokenLineMarginTop = ViewUtil.Dp2Px(context, t);
-        brokenLinerMarginRight = ViewUtil.Dp2Px(context, r);
-        brokenLineMarginBottom = ViewUtil.Dp2Px(context, b);
+        brokenLineMarginLeft = Dputil.Dp2Px(context, l);
+        brokenLineMarginTop = Dputil.Dp2Px(context, t);
+        brokenLinerMarginRight = Dputil.Dp2Px(context, r);
+        brokenLineMarginBottom = Dputil.Dp2Px(context, b);
     }
 
     public int getViewWidth() {
@@ -705,7 +705,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 边框文本大小
      */
     public void setBorderTextSize(float borderTextSize) {
-        this.borderTextSize = ViewUtil.Dp2Px(context, borderTextSize);
+        this.borderTextSize = Dputil.Dp2Px(context, borderTextSize);
     }
 
     /**
@@ -726,21 +726,21 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 边框线宽度
      */
     public void setBorderWidth(float borderWidth) {
-        this.borderWidth = ViewUtil.Dp2Px(context, borderWidth);
+        this.borderWidth = Dputil.Dp2Px(context, borderWidth);
     }
 
     /**
      * 边框横线宽度
      */
     public void setBorderTransverseLineWidth(float borderTransverseLineWidth) {
-        this.borderTransverseLineWidth = ViewUtil.Dp2Px(context, borderTransverseLineWidth);
+        this.borderTransverseLineWidth = Dputil.Dp2Px(context, borderTransverseLineWidth);
     }
 
     /**
      * 折线宽度
      */
     public void setBrokenLineWidth(float brokenLineWidth) {
-        this.brokenLineWidth = ViewUtil.Dp2Px(context, brokenLineWidth);
+        this.brokenLineWidth = Dputil.Dp2Px(context, brokenLineWidth);
     }
 
     /**
