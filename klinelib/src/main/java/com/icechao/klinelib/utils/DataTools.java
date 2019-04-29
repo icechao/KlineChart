@@ -29,7 +29,7 @@ public class DataTools {
         float[] points = calculate(dataList, 2, 20,
                 Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
                 Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,
-                Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
+                Constants.K_VOL_MA_NUMBER_1, Constants.K_VOL_MA_NUMBER_2,
                 Constants.KDJ_K, Constants.RSI_1,
                 Constants.WR_1, 0, 0);
         return points;
@@ -50,7 +50,6 @@ public class DataTools {
      * @param m
      * @param maOne
      * @param maTwo
-     * @param maThree
      * @param kdjDay
      * @param rsi
      * @param wr1
@@ -61,7 +60,7 @@ public class DataTools {
     static float[] calculate(List<KLineEntity> dataList, float bollP, int bollN,
                              double priceMaOne, double priceMaTwo, double priceMaThree,
                              int s, int l, int m,
-                             double maOne, double maTwo, float maThree,
+                             double maOne, double maTwo,
                              int kdjDay, int rsi,
                              int wr1, int wr2, int wr3) {
         double maSum1 = 0;
@@ -272,7 +271,7 @@ public class DataTools {
     }
 
     private static void calcKdj(List<KLineEntity> dataList, int kdjDay, int i, KLineEntity point, float closePrice) {
-        float k,d;
+        float k, d;
         if (i < kdjDay - 1 || 0 == i) {
             point.k = Float.MIN_VALUE;
             point.d = Float.MIN_VALUE;
