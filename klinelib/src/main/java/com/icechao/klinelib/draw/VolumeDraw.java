@@ -75,9 +75,9 @@ public class VolumeDraw extends BaseDraw {
                     endMaOne, maOnePaint,
                     values[Constants.INDEX_VOL_MA_1 + indexInterval]);
             drawLine(lastX, curX, canvas, view, position,
-                    values[Constants.INDEX_VOL_MA_1],
+                    values[Constants.INDEX_VOL_MA_2],
                     endMaTwo, maTwoPaint,
-                    values[Constants.INDEX_VOL_MA_1 + indexInterval]);
+                    values[Constants.INDEX_VOL_MA_2 + indexInterval]);
         }
 
     }
