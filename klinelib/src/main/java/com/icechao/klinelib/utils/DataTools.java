@@ -59,18 +59,18 @@ public class DataTools {
      * @return
      */
     static float[] calculate(List<KLineEntity> dataList, float bollP, int bollN,
-                             float priceMaOne, float priceMaTwo, float priceMaThree,
+                             double priceMaOne, double priceMaTwo, double priceMaThree,
                              int s, int l, int m,
-                             float maOne, float maTwo, float maThree,
+                             double maOne, double maTwo, float maThree,
                              int kdjDay, int rsi,
                              int wr1, int wr2, int wr3) {
-        float maSum1 = 0;
-        float maSum2 = 0;
-        float maSum3 = 0;
+        double maSum1 = 0;
+        double maSum2 = 0;
+        double maSum3 = 0;
 
 
-        float volumeMaOne = 0;
-        float volumeMaTwo = 0;
+        double volumeMaOne = 0;
+        double volumeMaTwo = 0;
 
 
         float preEma12 = 0;
@@ -103,30 +103,30 @@ public class DataTools {
             maSum3 += closePrice;
 
             if (i == priceMaOne - 1) {
-                point.maOne = maSum1 / priceMaOne;
+                point.maOne = (float) (maSum1 / priceMaOne);
             } else if (i >= priceMaOne) {
                 maSum1 -= dataList.get((int) (i - priceMaOne)).getClosePrice();
-                point.maOne = maSum1 / priceMaOne;
+                point.maOne = (float) (maSum1 / priceMaOne);
             } else {
                 point.maOne = Float.MIN_VALUE;
             }
             points[indexInterval * i + Constants.INDEX_MA_1] = point.maOne;
 
             if (i == priceMaTwo - 1) {
-                point.maTwo = maSum2 / priceMaTwo;
+                point.maTwo = (float) (maSum2 / priceMaTwo);
             } else if (i >= priceMaTwo) {
                 maSum2 -= dataList.get((int) (i - priceMaTwo)).getClosePrice();
-                point.maTwo = maSum2 / priceMaTwo;
+                point.maTwo = (float) (maSum2 / priceMaTwo);
             } else {
                 point.maTwo = Float.MIN_VALUE;
             }
             points[indexInterval * i + Constants.INDEX_MA_2] = point.maTwo;
 
             if (i == priceMaThree - 1) {
-                point.maThree = maSum3 / priceMaThree;
+                point.maThree = (float) (maSum3 / priceMaThree);
             } else if (i >= priceMaThree) {
                 maSum3 -= dataList.get((int) (i - priceMaThree)).getClosePrice();
-                point.maThree = maSum3 / priceMaThree;
+                point.maThree = (float) (maSum3 / priceMaThree);
             } else {
                 point.maThree = Float.MIN_VALUE;
             }
@@ -202,10 +202,10 @@ public class DataTools {
             volumeMaTwo += point.getVolume();
             float ma;
             if (i == maOne - 1) {
-                ma = (volumeMaOne / maOne);
+                ma = (float) (volumeMaOne / maOne);
             } else if (i > maOne - 1) {
                 volumeMaOne -= dataList.get((int) (i - maOne)).getVolume();
-                ma = volumeMaOne / maOne;
+                ma = (float) (volumeMaOne / maOne);
             } else {
                 ma = Float.MIN_VALUE;
             }
@@ -213,10 +213,10 @@ public class DataTools {
             points[indexInterval * i + Constants.INDEX_VOL_MA_1] = point.MA5Volume;
 
             if (i == maTwo - 1) {
-                ma = (volumeMaTwo / maTwo);
+                ma = (float) (volumeMaTwo / maTwo);
             } else if (i > maTwo - 1) {
                 volumeMaTwo -= dataList.get((int) (i - maTwo)).getVolume();
-                ma = volumeMaTwo / maTwo;
+                ma = (float) (volumeMaTwo / maTwo);
             } else {
                 ma = Float.MIN_VALUE;
             }

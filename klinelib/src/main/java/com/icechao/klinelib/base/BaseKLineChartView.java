@@ -602,7 +602,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public float getMainY(float value) {
         float v = mainMaxValue - value;
-        if (v < 0) {
+        if (v <= 0) {
             return mainRect.top + 1;
         }
         return borderCheck(v * mainScaleY + mainRect.top, mainRect.bottom);
@@ -617,7 +617,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
 
     private float borderCheck(float v, int bottom) {
-        return v > bottom ? bottom - 1 : v;
+        return v >= bottom ? bottom - 1 : v;
     }
 
 
@@ -629,7 +629,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public float getVolY(float value) {
         float v = volMaxValue - value;
-        if (v < 0) {
+        if (v <= 0) {
             return volRect.top + 1;
         }
         return borderCheck(v * volScaleY + volRect.top, volRect.bottom);

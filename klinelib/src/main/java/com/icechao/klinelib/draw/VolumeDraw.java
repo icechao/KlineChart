@@ -100,12 +100,12 @@ public class VolumeDraw extends BaseDraw {
         } else {
             top = view.getVolY(vol);
         }
-        if (0 != view.getLastVol() && top > bottom - 1) {
+        if (0 != vol && top > bottom - 1) {
             top = bottom - 1;
         }
         if (view.isLine()) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);
-        } else if (close > open) {//涨
+        } else if (close >= open) {//涨
             canvas.drawRect(curX - r, top, curX + r, bottom, redPaint);
         } else {
             canvas.drawRect(curX - r, top, curX + r, bottom, greenPaint);

@@ -268,7 +268,7 @@ public class MainDraw extends BaseDraw {
         } else if (open > close) {
             drawCandle(canvas, x, high, low, open, close + 1, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
-            drawCandle(canvas, x, high, low, close - 1, open + 1, cancleLeft, candleright, upPaint, upLinePaint);
+            drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
         }
     }
 
