@@ -1313,19 +1313,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 mChildMinValue = Math.min(mChildMinValue, childDraw.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
             }
         }
-        if (mainMaxValue != mainMinValue) {
-            float padding = (mainMaxValue - mainMinValue) * 0.05f;
-            mainMaxValue += padding;
-            mainMinValue -= padding;
-        } else {
+        if (mainMaxValue == mainMinValue) {
             //当最大值和最小值都相等的时候 分别增大最大值和 减小最小值
-            mainMaxValue += Math.abs(mainMaxValue * 0.03f);
-            mainMinValue -= Math.abs(mainMinValue * 0.03f);
-            if (mainMaxValue == 0) {
-                mainMaxValue = 1;
-            }
+            mainMaxValue += Math.abs(mainMaxValue * 0.05f);
+            mainMinValue -= Math.abs(mainMinValue * 0.05f);
         }
-
+        float padding = (mainMaxValue - mainMinValue) * 0.05f;
+        mainMaxValue += padding;
+        mainMinValue -= padding;
         if (volMaxValue < 0.01) {
             volMaxValue = 100;
         }

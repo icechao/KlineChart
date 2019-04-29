@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 runOnUiThread(() -> {
                     all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all.subList(100,300));
+                    adapter.resetData(all.subList(100, 300));
                     chartView.hideLoading();
                     changeLast();
                 });
@@ -141,13 +141,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
-            KLineEntity kLineEntity = all.get(Math.abs(i));
+            KLineEntity kLineEntity = adapter.getItem(adapter.getCount() - 1);
             KLineEntity kLineEntity1 = new KLineEntity();
             kLineEntity1.date = kLineEntity.date;
-            kLineEntity1.high = kLineEntity.high;
+            kLineEntity1.high = kLineEntity.close;
             kLineEntity1.close = kLineEntity.close;
-            kLineEntity1.low = kLineEntity.low;
-            kLineEntity1.volume = kLineEntity.volume;
+            kLineEntity1.open = kLineEntity.close;
+            kLineEntity1.low = kLineEntity.close;
+            kLineEntity1.volume = 0;
 
             textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
             float v = kLineEntity1.close - kLineEntity1.open;
@@ -159,12 +160,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
 
             if (i++ % 10 == 0) {
-                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).close;
-                adapter.addLast(kLineEntity1);
-            } else {
-
-                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).open;
+//                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).open;
                 adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
+            } else {
+                adapter.addLast(kLineEntity1);
+//                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).close;
+
+
             }
             changeLast();
 

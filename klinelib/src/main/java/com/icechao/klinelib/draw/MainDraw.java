@@ -263,10 +263,12 @@ public class MainDraw extends BaseDraw {
         float r = candleWidth / 2 * view.getScaleX();
         float cancleLeft = x - r;
         float candleright = x + r;
-        if (open <= close) {
+        if (open < close) {
             drawCandle(canvas, x, high, low, close, open, cancleLeft, candleright, downPaint, downLinePaint);
-        } else {
+        } else if (open > close) {
             drawCandle(canvas, x, high, low, open, close + 1, cancleLeft, candleright, upPaint, upLinePaint);
+        } else {
+            drawCandle(canvas, x, high, low, close - 1, open + 1, cancleLeft, candleright, upPaint, upLinePaint);
         }
     }
 
