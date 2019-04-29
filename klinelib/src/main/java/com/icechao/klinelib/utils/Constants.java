@@ -34,6 +34,10 @@ public class Constants {
     public static final int K_MA_NUMBER_3 = 30;
 
 
+    public static final int K_VOL_MA_NUMBER_1 = 5;
+    public static final int K_VOL_MA_NUMBER_2 = 10;
+
+
     private static int i = 0;
     public static final int INDEX_DATE = i;
     public static final int INDEX_HIGH = ++i;

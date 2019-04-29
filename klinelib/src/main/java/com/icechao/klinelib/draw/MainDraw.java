@@ -458,7 +458,7 @@ public class MainDraw extends BaseDraw {
                 if (maOne == 0) {
                     maOne = values[Constants.INDEX_MA_1];
                     maTwo = values[Constants.INDEX_MA_2];
-                    maThree = values[Constants.INDEX_MA_2];
+                    maThree = values[Constants.INDEX_MA_3];
                     return;
                 }
                 view.generaterAnimator(maOne, values[Constants.INDEX_MA_1], animation -> maOne = (float) animation.getAnimatedValue());

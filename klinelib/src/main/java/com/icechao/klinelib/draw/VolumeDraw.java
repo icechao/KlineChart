@@ -48,8 +48,9 @@ public class VolumeDraw extends BaseDraw {
         volWidth = Dputil.Dp2Px(context, 4);
         indexInterval = Constants.getCount();
         volIndex = context.getString(R.string.k_index_vol);
-        volMaIndex1 = context.getString(R.string.k_index_vol_ma1);
-        volMaIndex2 = context.getString(R.string.k_index_vol_ma2);
+        String temp = context.getString(R.string.k_index_vol_ma);
+        volMaIndex1 = String.format(temp, Constants.K_VOL_MA_NUMBER_1);
+        volMaIndex2 = String.format(temp, Constants.K_VOL_MA_NUMBER_2);
     }
 
     private float endMaOne = 0;
@@ -133,7 +134,7 @@ public class VolumeDraw extends BaseDraw {
         x += maOnePaint.measureText(text);
         if (position == itemsCount - 1 && view.isAnimationLast()) {
 
-            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaTwo)) + "  ";
+            text = volMaIndex2 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaTwo)) + "  ";
         } else {
             text = volMaIndex2 + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
         }
