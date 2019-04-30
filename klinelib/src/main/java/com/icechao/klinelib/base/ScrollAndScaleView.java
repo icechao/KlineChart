@@ -1,6 +1,7 @@
 package com.icechao.klinelib.base;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -8,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
+
+import com.icechao.klinelib.utils.LogUtil;
 
 /*************************************************************************
  * Description   :
@@ -27,6 +30,8 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     protected ScaleGestureDetector scaleDetector;
 
     protected boolean isLongPress = false;
+
+    protected int selectedIndex = -1;
 
     private OverScroller overScroller;
 
@@ -92,17 +97,20 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        setLongPress(true);
+        isLongPress = true;
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        LogUtil.e("onFling");
+        Long l = SystemClock.currentThreadTimeMillis();
         if (!isTouch() && isScrollEnable()) {
             overScroller.fling(scrollX, 0
-                    , Math.round(velocityX / scaleX), 0,
+                    , Math.round(velocityX / scaleX/2), 0,
                     Integer.MIN_VALUE, Integer.MAX_VALUE,
                     0, 0);
         }
+        LogUtil.e(SystemClock.currentThreadTimeMillis() - l);
         return true;
     }
 
@@ -132,7 +140,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         scrollX = x;
         if (scrollX != oldX) {
             onScrollChanged(scrollX, 0, oldX, 0);
-            invalidate();
+//            invalidate();
         }
 
     }
@@ -159,7 +167,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     }
 
     protected void onScaleChanged(float scale, float oldScale) {
-        invalidate();
+//        invalidate();
     }
 
     @Override
@@ -178,14 +186,15 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getPointerCount() > 1) {
-            setLongPress(false);
+            isLongPress = false;
+            selectedIndex = -1;
         }
         if (null != eventLisenter) {
             eventLisenter.onEvent();
         }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                setTouch(true);
+                touch = true;
                 x = event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -200,15 +209,17 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             case MotionEvent.ACTION_UP:
                 if (x == event.getX()) {
                     if (isLongPress) {
-                        setLongPress(false);
+                        isLongPress = false;
+                        selectedIndex = -1;
                     }
                 }
-                setTouch(false);
+                touch = false;
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                setLongPress(false);
-                setTouch(false);
+                isLongPress = false;
+                selectedIndex = -1;
+                touch = false;
                 invalidate();
                 break;
             default:
@@ -311,14 +322,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     public interface EventLisenter {
         void onEvent();
-    }
-
-    public void setLongPress(boolean longPress) {
-        isLongPress = longPress;
-    }
-
-    public void setTouch(boolean touch) {
-        this.touch = touch;
     }
 
     private EventLisenter eventLisenter;

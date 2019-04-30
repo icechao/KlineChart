@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.*;
+import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -220,10 +221,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     private Paint priceLineBoxRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    /**
-     * 当前选中索引
-     */
-    private int selectedIndex;
 
     /**
      * 价格框高度
@@ -328,7 +325,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             if (isLine) {
                 return;
             }
-            invalidate();
+            animInvalidate();
         });
         if (isAnimationLast) {
             float[] tempData = Arrays.copyOfRange(points, tempIndex, points.length);
@@ -694,9 +691,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             int nextTemp = indexInterval * i + indexInterval;
             if (i == 0) {
 
-                LogUtil.e("1" + (i <= screenRightIndex && i >= 0));
-                LogUtil.e("2" + (i + 1 <= screenRightIndex && i + 1 >= 0));
-
                 mainDraw.drawTranslated(canvas, curX, curX, this, i,
                         Arrays.copyOfRange(points, 0, indexInterval)
                 );
@@ -707,11 +701,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                             Arrays.copyOfRange(points, 0, indexInterval));
                 }
             } else {
-
-                LogUtil.e("else 1" + (i <= screenRightIndex && i >= 0));
-                LogUtil.e("else 2" + (i + 1 <= screenRightIndex && i + 1 >= 0));
-
-
                 float lastX = getX(i - 1);
                 int lastTemp = indexInterval * i - indexInterval;
                 mainDraw.drawTranslated(canvas, lastX, curX, this, i,
@@ -988,12 +977,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     private void fullScreenPriceLine(Canvas canvas, float y, String priceString, float textWidth, float halfPriceBoxHeight) {
-        Path path = new Path();
+//        Path path = new Path();
         for (int i = 0; i < width; i += 12) {
-            path.moveTo(i, y);
-            path.lineTo(i + 8, y);
+//            path.moveTo(i, y);
+//            path.lineTo();
+            canvas.drawLine(i, y, i + 8, y, priceLinePaint);
         }
-        canvas.drawPath(path, priceLinePaint);
+//        canvas.drawPath(path, priceLinePaint);
         float halfHeight = textHeight / 2;
         float boxRight = width - priceBoxMarginRight;
         float boxLeft = boxRight - textWidth - priceLineBoxHeight - halfHeight;
@@ -1050,7 +1040,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         valueAnimator.setRepeatCount(10000);
         valueAnimator.addUpdateListener(animation -> {
             endShadowLayerWidth = (Float) animation.getAnimatedValue();
-            invalidate();
+            animInvalidate();
         });
         valueAnimator.start();
     }
@@ -1196,6 +1186,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         } else {
             stopFreshPage();
         }
+        invalidate();
     }
 
     @Override
@@ -1213,7 +1204,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         } else {
             setTranslatedX(getMaxTranslate());
         }
-        super.onScaleChanged(scale, oldScale);
+        invalidate();
     }
 
 
@@ -2196,11 +2187,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         this.backgroundFillPaint.setColor(backGroundTopColor);
     }
 
-    @Override
-    public void setLongPress(boolean longPress) {
-        super.setLongPress(longPress);
-        if (!longPress) {
-            selectedIndex = -1;
+    private long time;
+
+    /**
+     * 刷新界面
+     */
+    public void animInvalidate() {
+        if (System.currentTimeMillis() - time > 16) {
+            invalidate();
+            time = System.currentTimeMillis();
         }
+
     }
+
 }
