@@ -1,4 +1,4 @@
-  最初版本修改自:https://github.com/tifezh/KChartView
+修改自:https://github.com/tifezh/KChartView
   
 
 # kline
