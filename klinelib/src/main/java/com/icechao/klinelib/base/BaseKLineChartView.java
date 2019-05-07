@@ -852,7 +852,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             //X轴最右侧的值
             translateX = xToTranslateX(width);
             if (translateX >= startX && translateX <= stopX) {
-                String text = formatDateTime(getAdapter().getDate(screenLeftIndex));
+                String text = formatDateTime(getAdapter().getDate(screenRightIndex));
                 canvas.drawText(text, width - textPaint.measureText(text), y, textPaint);
 
             }
