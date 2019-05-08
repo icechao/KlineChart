@@ -4,26 +4,20 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.*;
-import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.MainDraw;
-import com.icechao.klinelib.utils.ChildStatus;
-import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.draw.VolumeDraw;
 import com.icechao.klinelib.entity.ICandle;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.TimeFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.LogUtil;
-import com.icechao.klinelib.utils.NumberTools;
-import com.icechao.klinelib.utils.Dputil;
+import com.icechao.klinelib.utils.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +62,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制K线时画板平移的距离
      */
-    private float canvasTranslateX = 1f;
+    private float canvasTranslateX;
 
     private int width = 0;
 
@@ -264,51 +258,43 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private DataSetObserver dataSetObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
-            int dataCount = getAdapter().getCount();
-
-            if (dataCount == 0) {
-                setItemCount(dataCount);
-            } else {
-                int count = itemsCount;
-                setItemCount(dataCount);
-                ICandle item = getAdapter().getItem(itemsCount - 1);
-                float closePrice = 0f;
-                float vol = 0f;
-                float high = 0f;
-                float low = 0f;
-                if (null != item) {
-                    closePrice = item.getClosePrice();
-                    vol = item.getVolume();
-                    high = item.getHighPrice();
-                    low = item.getLowPrice();
-                }
-                if (itemsCount > count) {
-                    lastPrice = closePrice;
-                    lastVol = vol;
-                    lastHigh = high;
-                    lastLow = low;
-                    if (screenRightIndex == itemsCount - 2) {
-                        setTranslatedX(canvasTranslateX - chartItemWidth * getScaleX());
-                    }
-                } else if (count == itemsCount) {
-                    if (lastPrice != closePrice || lastVol != closePrice ||
-                            lastHigh != high || low != low) {
-                        laseChange();
-                    }
-                }
-            }
+            int dataCount = dataAdapter.getCount();
             points = dataAdapter.getPoints();
+            int temp = (dataAdapter.getCount() - 1) * indexInterval;
+            if (dataCount == 0) {
+                setItemCount(0);
+                notifyChanged();
+            } else if (dataCount > itemsCount) {
+                lastPrice = points[temp + Constants.INDEX_CLOSE];
+                lastVol = points[temp + Constants.INDEX_VOL];
+                lastHigh = points[temp + Constants.INDEX_HIGH];
+                lastLow = points[temp + Constants.INDEX_LOW];
+                if (screenRightIndex == itemsCount - 2) {
+                    setTranslatedX(canvasTranslateX - chartItemWidth * getScaleX());
+                }
+                setItemCount(dataCount);
+            } else if (itemsCount == dataCount) {
+                laseChange();
+            }
             notifyChanged();
         }
 
         @Override
         public void onInvalidated() {
             isAnimationLast = false;
-            canvasTranslateX = 1f;
             setItemCount(0);
+            points = null;
             postDelayed(action, 500);
         }
     };
+
+    private boolean resetTranslate = true;
+
+    public void setResetTranslate(boolean resetTranslate) {
+        this.resetTranslate = resetTranslate;
+    }
+
+
     private float selectedPointRadius = 5;
 
     /**
@@ -510,12 +496,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     @Override
     public void onDraw(Canvas canvas) {
-
-        if (!isShowLoading && width != 0 && null != points && points.length != 0) {
+        drawBackground(canvas);
+        drawGirdLines(canvas);
+        if (!isShowLoading && width != 0 && 0 != itemsCount && null != points && points.length != 0) {
             try {
                 initValues();
-                drawBackground(canvas);
-                drawGirdLines(canvas);
                 drawK(canvas);
                 drawYLabels(canvas);
                 drawXLabels(canvas);
@@ -534,7 +519,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas
      */
     private void drawBackground(Canvas canvas) {
-        int mid = width / 2;
+        int mid = width >> 1;
         backgroundPaint.setAlpha(18);
         backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainRect.bottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
         canvas.drawRect(0, 0, width, mainRect.bottom, backgroundPaint);
@@ -572,12 +557,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     public void setItemCount(int itemCount) {
         //数据个数为0时重置本地保存数据,重置平移
         if (itemCount == 0) {
-            this.itemsCount = itemCount;
             resetValues();
-            canvasTranslateX = 1f;
-        } else {
-            this.itemsCount = itemCount;
         }
+        this.itemsCount = itemCount;
         mainDraw.setItemCount(itemsCount);
         mainDraw.resetValues();
         volDraw.setItemCount(itemsCount);
@@ -683,7 +665,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas canvas
      */
     private void drawK(Canvas canvas) {
-
+        LogUtil.e("canvasTranslateX : " + canvasTranslateX);
         canvas.save();
         canvas.translate(canvasTranslateX, 0);
         for (int i = screenLeftIndex; i <= screenRightIndex && i >= 0; i++) {
@@ -897,6 +879,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float v = rowSpace * i + topPadding;
             canvas.drawText(text, tempYLabelX -
                     textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
+
         }
 
         //交易量图的Y轴label
@@ -905,11 +888,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawText(maxVol, tempYLabelX -
                 textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
 
+
         //子图Y轴label
         if (null != childDraw) {
             String childLable = childDraw.getValueFormatter().format(childMaxValue);
             canvas.drawText(childLable, tempYLabelX -
                     textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
+
         }
     }
 
@@ -1024,7 +1009,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     protected float getDataLength() {
-        return chartItemWidth * getScaleX() * (itemsCount - 1) + getmOverScrollRange();
+        float length = chartItemWidth * getScaleX() * (itemsCount - 1) + getmOverScrollRange();
+        if (length <= width && isScrollEnable()) {
+            setScrollEnable(false);
+        } else if (!isScrollEnable() && length > width) {
+            setScrollEnable(true);
+        }
+        return length;
     }
 
     /**
@@ -1088,8 +1079,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 重新计算并刷新线条
      */
     public void notifyChanged() {
-        if (1f == canvasTranslateX && width != 0) {
+        if (resetTranslate && width != 0) {
             setTranslatedX(getMinTranslate());
+            resetTranslate = false;
         }
         invalidate();
     }
@@ -1154,11 +1146,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             width = getMeasuredWidth();
         }
         if (dataLength >= width) {
-            setScrollEnable(true);
             return -(dataLength - width);
         } else {
-            setScrollEnable(false);
-//            return width - dataLength;
             return chartItemWidth * scaleX / 2;
         }
     }
@@ -1334,6 +1323,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (showAnim.isRunning()) {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
+        }
+
+        if (mainHighMaxValue == Float.MIN_VALUE) {
+            int j = points.length;
+            int a = j * 1;
+
         }
 
     }
@@ -1978,16 +1973,22 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     public void setShowLine(boolean isLine) {
-        if (isLine != this.isLine) {
-            setItemCount(0);
-        }
-        if (isLine && getX(screenRightIndex) + canvasTranslateX <= width) {
+        if (isLine && !this.isLine) {
+//            setItemCount(0);
+//            if (getX(screenRightIndex) + canvasTranslateX <= width) {
+//                startFreshPage();
+//            } else {
+//                stopFreshPage();
+//            }
             startFreshPage();
-        } else {
+
+            this.isLine = true;
+        } else if (this.isLine && !isLine) {
             stopFreshPage();
+            this.isLine = false;
         }
-        this.isLine = isLine;
-        setTranslatedX(getMinTranslate());
+        setResetTranslate(true);
+        setItemCount(0);
         invalidate();
     }
 

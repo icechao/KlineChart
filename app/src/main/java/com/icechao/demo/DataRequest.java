@@ -1,7 +1,6 @@
 package com.icechao.demo;
 
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.icechao.klinelib.entity.KLineEntity;

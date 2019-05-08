@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.icechao.klinelib.utils.LogUtil;
-
 /*************************************************************************
  * Description   : 修改,不为index为基础绘制X,而是为X坐标为基础绘制
  *

@@ -1,7 +1,6 @@
 package com.icechao.klinelib.base;
 
 import android.database.DataSetObserver;
-
 import com.icechao.klinelib.entity.KLineEntity;
 
 import java.io.Serializable;

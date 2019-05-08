@@ -5,8 +5,6 @@ import android.database.DataSetObserver;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.icechao.klinelib.entity.IDepth;
-
 import java.util.ArrayList;
 import java.util.List;
 

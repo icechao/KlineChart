@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.icechao.klinelib.draw.DepthDraw;
 import com.icechao.klinelib.draw.DepthLabelDraw;
 import com.icechao.klinelib.utils.Constants;

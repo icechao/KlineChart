@@ -7,11 +7,9 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-
-
+import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDepthView;
 import com.icechao.klinelib.utils.Dputil;
-import com.icechao.klinelib.R;
 
 /*************************************************************************
  * Description   :

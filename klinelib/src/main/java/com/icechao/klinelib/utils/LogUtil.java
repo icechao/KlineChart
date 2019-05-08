@@ -2,11 +2,6 @@ package com.icechao.klinelib.utils;
 
 import android.util.Log;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
-
 
 /*************************************************************************
  * Description   :

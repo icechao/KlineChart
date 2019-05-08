@@ -4,13 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-
+import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.R;
 
 /*************************************************************************
  * Description   :

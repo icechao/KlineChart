@@ -11,16 +11,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-
+import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.draw.*;
-import com.icechao.klinelib.draw.KDJDraw;
-import com.icechao.klinelib.draw.MACDDraw;
-import com.icechao.klinelib.draw.MainDraw;
-import com.icechao.klinelib.draw.RSIDraw;
-import com.icechao.klinelib.draw.WRDraw;
 import com.icechao.klinelib.utils.Dputil;
-import com.icechao.klinelib.R;
 
 /*************************************************************************
  * Description   :

@@ -32,6 +32,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         return datas.size();
     }
 
+    @Deprecated
     @Override
     public T getItem(int position) {
 
@@ -42,6 +43,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
 
     }
 
+    @Deprecated
     @Override
     public Date getDate(int position) {
         if (position >= dataCount) {

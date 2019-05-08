@@ -8,17 +8,16 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
+import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
-import com.icechao.klinelib.utils.ChildStatus;
-import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.entity.KLineEntity;
-import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
+import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.utils.ChildStatus;
+import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.view.KLineChartView;
-import com.icechao.kline.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +27,7 @@ import java.util.Random;
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private List<KLineEntity> datas;
+
 
     private KLineChartAdapter adapter;
 
@@ -141,12 +141,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
-            KLineEntity kLineEntity = adapter.getItem(adapter.getCount() - 1);
+            KLineEntity kLineEntity = adapter.getItem(Math.abs(new Random(50).nextInt())%100);
             KLineEntity kLineEntity1 = new KLineEntity();
             kLineEntity1.date = kLineEntity.date;
             kLineEntity1.high = kLineEntity.close;
             kLineEntity1.close = kLineEntity.close;
-            kLineEntity1.open = kLineEntity.close;
+            kLineEntity1.open = kLineEntity.open;
             kLineEntity1.low = kLineEntity.close;
             kLineEntity1.volume = 0;
 
@@ -161,16 +161,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
             if (i++ % 10 == 0) {
 //                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).open;
-                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
-            } else {
                 adapter.addLast(kLineEntity1);
+            } else {
+                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
 //                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).close;
 
 
             }
             changeLast();
 
-        }, 1000);
+        }, 2000);
     }
 
 

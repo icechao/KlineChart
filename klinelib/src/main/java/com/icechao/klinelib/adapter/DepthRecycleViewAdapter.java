@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.R;
+import com.icechao.klinelib.entity.MarketTradeItem;
 
 import java.util.ArrayList;
 import java.util.List;
