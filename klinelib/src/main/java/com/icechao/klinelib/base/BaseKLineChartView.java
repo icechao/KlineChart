@@ -1202,7 +1202,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (screenLeftIndex != 0) {
             setTranslatedX(canvasTranslateX / oldScale * scale + difCount * tempWidth);
         } else {
-            setTranslatedX(getMaxTranslate());
+            if (getDataLength() < width) {
+                setTranslatedX(-(width - getDataLength()));
+            } else {
+                setTranslatedX(getMaxTranslate());
+            }
         }
         invalidate();
     }
