@@ -6,6 +6,7 @@
 
   1. <b>继承KlineEntry写一个model</b>
   2. <b>复写方法</b>
+  
           /**
            * 开盘价
            */
@@ -41,10 +42,11 @@
               android:layout_width="match_parent"
               android:layout_height="580dp"
               android:background="@color/color_081734" />
-      支持自定义属性
+              
+          支持自定义属性
               自定义属性
               attrs.xml
-  4. <b>初始化k线,更多方法见 KLineChartView</b>
+  4. <b>初始化k线,   更多方法见 KLineChartView</b>
   
               private void initKline() {
                      adapter = new KLineChartAdapter();
