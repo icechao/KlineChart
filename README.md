@@ -48,6 +48,7 @@
               自定义属性
               attrs.xml
   4. 初始化k线,更多方法见 KLineChartView
+  
               private void initKline() {
                      adapter = new KLineChartAdapter();
                      chartView = findViewById(R.id.kLineChartView);
