@@ -6,83 +6,83 @@
 完整的K线功能,可拿来直接使用
 
 使用步骤: 
+
+  1. 继承KlineEntry写一个model
+  2. 复写方法
+          /**
+           * 开盘价
+           */
+          float getOpenPrice();
+
+          /**
+           * 最高价
+           */
+          float getHighPrice();
+
+          /**
+           * 最低价
+           */
+          float getLowPrice();
+
+          /**
+           * 收盘价
+           */
+          float getClosePrice();
+
+          /**
+           * 交易量
+           *
+           * @return
+           */
+          float getVolume();
+     如果日期不是Long类型,需要复写getId方法返回Long类型时间
+          getDate()
+  3. 在布局中直接使用
+
+            <com.icechao.klinelib.view.KLineChartView
+              android:id="@+id/kLineChartView"
+              android:layout_width="match_parent"
+              android:layout_height="580dp"
+              android:background="@color/color_081734" />
+      支持自定义属性
+              自定义属性
+              attrs.xml
+  4. 初始化k线,更多方法见 KLineChartView
+              private void initKline() {
+                     adapter = new KLineChartAdapter();
+                     chartView = findViewById(R.id.kLineChartView);
+                     chartView.setAdapter(adapter);
+                     chartView.setDateTimeFormatter(new DateFormatter());
+                     chartView.setGridColumns(5);
+                     chartView.setGridRows(5);
+                     chartView.setValueFormatter(new ValueFormatter() {
+                         @Override
+                         public String format(float value) {
+                             return String.format("%.2f", value);
+                         }
+                     });
+                     chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
+                         @Override
+                         public String format(float value) {
+                             return String.format("%.2f", value);
+                         }
+                     });
+                     chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
+                     chartView.showLoading();
+                 }
+  5.设置数据 
+           重新填充数据
+           resetData(List<KlineEntry>);
+           尾部追加数据 
+           addLast(KlineEntry);
+           修改某个数据 
+           changeItem(KlineEntry);
+       如果有需要在前面追加数据可以自定义方法参考addLast
+
+
     
-    1. 继承KlineEntry写一个model
-    2. 复写方法
-            /**
-             * 开盘价
-             */
-            float getOpenPrice();
-        
-            /**
-             * 最高价
-             */
-            float getHighPrice();
-        
-            /**
-             * 最低价
-             */
-            float getLowPrice();
-        
-            /**
-             * 收盘价
-             */
-            float getClosePrice();
-        
-            /**
-             * 交易量
-             *
-             * @return
-             */
-            float getVolume();
-       如果日期不是Long类型,需要复写getId方法返回Long类型时间
-            getDate()
-    3. 在布局中直接使用
-            
-              <com.icechao.klinelib.view.KLineChartView
-                android:id="@+id/kLineChartView"
-                android:layout_width="match_parent"
-                android:layout_height="580dp"
-                android:background="@color/color_081734" />
-        支持自定义属性
-                自定义属性
-                attrs.xml
-    4. 初始化k线,更多方法见 KLineChartView
-                private void initKline() {
-                       adapter = new KLineChartAdapter();
-                       chartView = findViewById(R.id.kLineChartView);
-                       chartView.setAdapter(adapter);
-                       chartView.setDateTimeFormatter(new DateFormatter());
-                       chartView.setGridColumns(5);
-                       chartView.setGridRows(5);
-                       chartView.setValueFormatter(new ValueFormatter() {
-                           @Override
-                           public String format(float value) {
-                               return String.format("%.2f", value);
-                           }
-                       });
-                       chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
-                           @Override
-                           public String format(float value) {
-                               return String.format("%.2f", value);
-                           }
-                       });
-                       chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
-                       chartView.showLoading();
-                   }
-    5.设置数据 
-             重新填充数据
-             resetData(List<KlineEntry>);
-             尾部追加数据 
-             addLast(KlineEntry);
-             修改某个数据 
-             changeItem(KlineEntry);
-         如果有需要在前面追加数据可以自定义方法参考addLast
-         
-         
-    
-       justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
-       showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
+   justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
+   showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
 
 
 
