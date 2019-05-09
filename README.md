@@ -4,8 +4,8 @@
 
 使用步骤: 
 
-  1. <b>继承KlineEntry写一个model<b>
-  2. 复写方法
+  1. <b>继承KlineEntry写一个model</b>
+  2. <b>复写方法</b>
           /**
            * 开盘价
            */
@@ -34,7 +34,7 @@
           float getVolume();
      如果日期不是Long类型,需要复写getId方法返回Long类型时间
           getDate()
-  3. 在布局中直接使用
+  3. <b>在布局中直接使用</b>
 
             <com.icechao.klinelib.view.KLineChartView
               android:id="@+id/kLineChartView"
@@ -44,7 +44,7 @@
       支持自定义属性
               自定义属性
               attrs.xml
-  4. 初始化k线,更多方法见 KLineChartView
+  4. <b>初始化k线,更多方法见 KLineChartView</b>
   
               private void initKline() {
                      adapter = new KLineChartAdapter();
@@ -68,7 +68,7 @@
                      chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
                      chartView.showLoading();
                  }
-  5.设置数据 
+  5.<b>设置数据</b>
   
            重新填充数据
            resetData(List<KlineEntry>);
