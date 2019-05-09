@@ -87,12 +87,12 @@
        如果有需要在前面追加数据可以自定义方法参考addLast
 
 
-#### Loadding展示
+### Loadding展示
 
        justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
        showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
 
-#### 主图MA/BOLL切换
+### 主图MA/BOLL切换
         
         chartView为KLineChartView对象
         chartView.changeMainDrawType(MainStatus.MA);
@@ -101,7 +101,7 @@
               MainStatus.BOLL, //显示boll
               MainStatus.NONE //只显示CandleLine
 
-#### 子图指标图切换
+### 子图指标图切换
 
         chartView为KLineChartView对象
         chartView.setChildDraw(ChildStatus.MACD);
@@ -111,7 +111,7 @@
            RSI, 
            WR;
            
-#### K线与分时线切换
+### K线与分时线切换
 
         chartView为KLineChartView对象
         chartView.setMainDrawLine(false);
