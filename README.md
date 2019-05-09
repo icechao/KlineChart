@@ -72,6 +72,7 @@
                      chartView.showLoading();
                  }
   5.设置数据 
+  
            重新填充数据
            resetData(List<KlineEntry>);
            尾部追加数据 
