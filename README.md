@@ -1,13 +1,10 @@
-修改自:https://github.com/tifezh/KChartView
-  
-
 # kline
 改自开源项目的K线
 完整的K线功能,可拿来直接使用
 
 使用步骤: 
 
-  1. 继承KlineEntry写一个model
+  1. <b>继承KlineEntry写一个model<b>
   2. 复写方法
           /**
            * 开盘价
@@ -126,4 +123,5 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
 
 
+修改自:https://github.com/tifezh/KChartView
 
