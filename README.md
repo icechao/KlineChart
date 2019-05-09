@@ -49,25 +49,31 @@
   4. <b>初始化k线,   更多方法见 KLineChartView</b>
   
               private void initKline() {
-                     adapter = new KLineChartAdapter();
-                     chartView = findViewById(R.id.kLineChartView);
-                     chartView.setAdapter(adapter);
+                     //设置K线的数据适配器
+                     chartView.setAdapter(new KLineChartAdapter());
+                     //设置X轴时间格式化对象,根据不同波段可以重新设置
                      chartView.setDateTimeFormatter(new DateFormatter());
+                     //背景网络列
                      chartView.setGridColumns(5);
+                     //背景网络行
                      chartView.setGridRows(5);
+                     //设置Y轴值格式化对象,默认保留两位小数
                      chartView.setValueFormatter(new ValueFormatter() {
                          @Override
                          public String format(float value) {
                              return String.format("%.2f", value);
                          }
                      });
+                     //设置交易量格式化对象,默认保留两位小数
                      chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
                          @Override
                          public String format(float value) {
                              return String.format("%.2f", value);
                          }
                      });
+                     //设置K线最右侧缩进距离
                      chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
+                     //显示loading
                      chartView.showLoading();
                  }
   5.<b>设置数据</b>
@@ -81,11 +87,38 @@
        如果有需要在前面追加数据可以自定义方法参考addLast
 
 
-    
-   justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
-   showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
+####Loadding展示
 
+       justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
+       showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
 
+####主图MA/BOLL切换
+        
+        chartView为KLineChartView对象
+        chartView.changeMainDrawType(MainStatus.MA);
+            
+              MainStatus.MA, //显示ma
+              MainStatus.BOLL, //显示boll
+              MainStatus.NONE //只显示CandleLine
+
+####子图指标图切换
+
+        chartView为KLineChartView对象
+        chartView.setChildDraw(ChildStatus.MACD);
+           NONE,//隐藏子图
+           MACD,
+           KDJ, 
+           RSI, 
+           WR;
+           
+####K线与分时线切换
+
+        chartView为KLineChartView对象
+        chartView.setMainDrawLine(false);
+           传入true显示折线的
+           传入false显示为CandleLine 
+        
+      
 
       - 修改十字线绘制
       - 修改分时线绘制
