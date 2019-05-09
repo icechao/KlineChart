@@ -20,7 +20,12 @@ public abstract class BaseDraw implements IChartDraw {
             return 0;
         }
         Arrays.sort(values);
-        return values[values.length - 1];
+        float value = values[values.length - 1];
+        if (Float.MIN_VALUE != value) {
+            return value;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -31,7 +36,7 @@ public abstract class BaseDraw implements IChartDraw {
         }
         Arrays.sort(values);
         for (int i = 0; i < length; i++) {
-            if (Float.MIN_VALUE != values[i]) {
+            if (Float.MIN_VALUE < values[i]) {
                 return values[i];
             }
         }

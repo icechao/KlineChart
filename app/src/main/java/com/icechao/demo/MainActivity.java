@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import com.google.gson.Gson;
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.entity.KLineEntity;
@@ -129,10 +130,32 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             public void run() {
                 SystemClock.sleep(1000);
                 runOnUiThread(() -> {
-                    all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all.subList(100, 300));
-                    chartView.hideLoading();
-                    changeLast();
+                    String data = "{\n" +
+                            "\t\"tick\": [{\n" +
+                            "\t\t\"amount\": 10.0,\n" +
+                            "\t\t\"count\": 1,\n" +
+                            "\t\t\"id\": 1557200040000,\n" +
+                            "\t\t\"open\": 1.0,\n" +
+                            "\t\t\"close\": 1.0,\n" +
+                            "\t\t\"low\": 1.0,\n" +
+                            "\t\t\"high\": 1.0,\n" +
+                            "\t\t\"vol\": 10.0\n" +
+                            "\t}, {\n" +
+                            "\t\t\"amount\": 10.0,\n" +
+                            "\t\t\"count\": 1,\n" +
+                            "\t\t\"id\": 1557200100000,\n" +
+                            "\t\t\"open\": 1.0,\n" +
+                            "\t\t\"close\": 3.0,\n" +
+                            "\t\t\"low\": 3.0,\n" +
+                            "\t\t\"high\": 3.0,\n" +
+                            "\t\t\"vol\": 30.0\n" +
+                            "\t}]\n" +
+                            "}";
+                    all = new Gson().fromJson(data, Tick.class).tick;
+//                    all = DataRequest.getALL(MainActivity.this);
+                    adapter.resetData(all);
+//                    chartView.hideLoading();
+//                    changeLast();
                 });
             }
         }.start();
@@ -141,7 +164,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
-            KLineEntity kLineEntity = adapter.getItem(Math.abs(new Random(50).nextInt())%100);
+            KLineEntity kLineEntity = adapter.getItem(Math.abs(new Random(50).nextInt()) % 100);
             KLineEntity kLineEntity1 = new KLineEntity();
             kLineEntity1.date = kLineEntity.date;
             kLineEntity1.high = kLineEntity.close;
@@ -262,7 +285,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.radio_button_fifteen:
                 chartView.hideSelectData();
                 chartView.setMainDrawLine(false);
-                adapter.resetData(all.subList(1, 300));
+                adapter.resetData(all);
 
                 break;
             case R.id.radio_button_one_hour:

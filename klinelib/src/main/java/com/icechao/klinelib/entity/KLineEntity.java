@@ -3,6 +3,8 @@ package com.icechao.klinelib.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /*************************************************************************
  * Description   :
  *
@@ -18,7 +20,7 @@ public class KLineEntity implements IKLine {
 
     @Override
     public String getDate() {
-        return date;
+        return new Date(getId()).toLocaleString();
     }
 
     @Override
@@ -150,25 +152,25 @@ public class KLineEntity implements IKLine {
     }
 
 
-    public String  getId() {
+    public long getId() {
         return date;
     }
 
     public void setId(String id) {
-        this.date = id;
+        this.date = Long.parseLong(id);
     }
 
-    @SerializedName("Date")
-    public String date;
-    @SerializedName("Open")
+    @SerializedName("id")
+    public long date;
+    @SerializedName("open")
     public float open;
-    @SerializedName("High")
+    @SerializedName("high")
     public float high;
-    @SerializedName("Low")
+    @SerializedName("low")
     public float low;
-    @SerializedName("Close")
+    @SerializedName("close")
     public float close;
-    @SerializedName("Volume")
+    @SerializedName("volume")
     public float volume;
 
     public float maOne;

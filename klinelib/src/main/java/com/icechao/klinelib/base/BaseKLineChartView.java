@@ -79,7 +79,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * y轴的缩放比例
      */
-    private float mainScaleY = 1;
+    private double mainScaleY = 1;
 
     /**
      * 成交量y轴缩放比例
@@ -93,11 +93,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 主视图的最大值
      */
-    private float mainMaxValue = Float.MAX_VALUE;
+    private double mainMaxValue = Float.MAX_VALUE;
     /**
      * 主视图的最小值
      */
-    private float mainMinValue = Float.MIN_VALUE;
+    private double mainMinValue = Float.MIN_VALUE;
 
     /**
      * 主视图K线的的最大值
@@ -580,7 +580,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return
      */
     public float getMainY(float value) {
-        float v = mainMaxValue - value;
+        double v = mainMaxValue - value;
         if (v <= 0) {
             return mainRect.top + 1;
         }
@@ -595,8 +595,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return
      */
 
-    private float borderCheck(float v, int bottom) {
-        return v >= bottom ? bottom - 1 : v;
+    private float borderCheck(double v, int bottom) {
+        return v >= bottom ? bottom - 1 : (float) v;
     }
 
 
@@ -863,7 +863,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private void drawYLabels(Canvas canvas) {
         float rowSpace = displayHeight / gridRows;
         int gridRowCount;
-        float rowValue;//当显示子视图时,y轴label减少显示一个
+        double rowValue;//当显示子视图时,y轴label减少显示一个
         if (null != childDraw) {
             gridRowCount = gridRows - 2;
             rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
@@ -1068,11 +1068,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 格式化值
      */
-    public String formatValue(float value) {
+    public String formatValue(double value) {
         if (null == getDateTimeFormatter()) {
             setValueFormatter(new ValueFormatter());
         }
-        return getValueFormatter().format(value);
+        return getValueFormatter().format((float) value);
     }
 
     /**
@@ -1248,20 +1248,28 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         int tempLeft = screenLeftIndex > 0 ? screenLeftIndex + 1 : 0;
         for (int i = tempLeft; i <= screenRightIndex; i++) {
             int tempIndex = indexInterval * i;
-            mainMaxValue = status == MainStatus.MA ?
-                    mainDraw.getMaxValue(mainMaxValue,
+            mainMaxValue = (status == MainStatus.MA || status == MainStatus.NONE) ?
+                    mainDraw.getMaxValue((float) mainMaxValue,
                             points[tempIndex + Constants.INDEX_HIGH],
                             points[tempIndex + Constants.INDEX_MA_1],
                             points[tempIndex + Constants.INDEX_MA_2],
                             points[tempIndex + Constants.INDEX_MA_3]) :
-                    mainDraw.getMaxValue(mainMaxValue, points[tempIndex + Constants.INDEX_BOLL_UP]);
-            mainMinValue = status == MainStatus.MA ?
-                    mainDraw.getMinValue(mainMinValue,
+                    mainDraw.getMaxValue((float) mainMaxValue,
+                            points[tempIndex + Constants.INDEX_HIGH],
+                            points[tempIndex + Constants.INDEX_BOLL_DN],
+                            points[tempIndex + Constants.INDEX_BOLL_UP],
+                            points[tempIndex + Constants.INDEX_BOLL_MB]);
+            mainMinValue = (status == MainStatus.MA || status == MainStatus.NONE) ?
+                    mainDraw.getMinValue((float) mainMinValue,
                             points[tempIndex + Constants.INDEX_LOW],
                             points[tempIndex + Constants.INDEX_MA_1],
                             points[tempIndex + Constants.INDEX_MA_2],
                             points[tempIndex + Constants.INDEX_MA_3]) :
-                    mainDraw.getMinValue(mainMinValue, points[tempIndex + Constants.INDEX_BOLL_DN]);
+                    mainDraw.getMinValue((float) mainMinValue,
+                            points[tempIndex + Constants.INDEX_LOW],
+                            points[tempIndex + Constants.INDEX_BOLL_DN],
+                            points[tempIndex + Constants.INDEX_BOLL_UP],
+                            points[tempIndex + Constants.INDEX_BOLL_MB]);
             float max = Math.max(points[tempIndex + Constants.INDEX_LOW], points[tempIndex + Constants.INDEX_HIGH]);
             float min = Math.min(points[tempIndex + Constants.INDEX_LOW], points[tempIndex + Constants.INDEX_HIGH]);
 
@@ -1302,11 +1310,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             mainMaxValue += Math.abs(mainMaxValue * 0.05f);
             mainMinValue -= Math.abs(mainMinValue * 0.05f);
         }
-        float padding = (mainMaxValue - mainMinValue) * 0.05f;
+        double padding = (mainMaxValue - mainMinValue) * 0.05f;
         mainMaxValue += padding;
         mainMinValue -= padding;
-        if (volMaxValue < 0.01) {
-            volMaxValue = 100;
+        if (volMaxValue < 0.001) {
+            volMaxValue = 0.1f;
         }
         if (null != childDraw) {
             childMaxValue += Math.abs(childMaxValue * 0.03f);
