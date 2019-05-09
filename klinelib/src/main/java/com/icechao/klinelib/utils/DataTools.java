@@ -57,7 +57,7 @@ public class DataTools {
      * @param wr3
      * @return
      */
-    static float[] calculate(List<KLineEntity> dataList, float bollP, int bollN,
+    static float[] calculate(List<? extends KLineEntity> dataList, float bollP, int bollN,
                              double priceMaOne, double priceMaTwo, double priceMaThree,
                              int s, int l, int m,
                              double maOne, double maTwo,
@@ -88,12 +88,12 @@ public class DataTools {
 
 
             points[indexInterval * i + Constants.INDEX_RSI_1] = Float.MIN_VALUE;
-            points[indexInterval * i + Constants.INDEX_DATE] = point.high;
-            points[indexInterval * i + Constants.INDEX_HIGH] = point.high;
-            points[indexInterval * i + Constants.INDEX_OPEN] = point.open;
-            points[indexInterval * i + Constants.INDEX_LOW] = point.low;
-            points[indexInterval * i + Constants.INDEX_CLOSE] = point.close;
-            points[indexInterval * i + Constants.INDEX_VOL] = point.volume;
+//            points[indexInterval * i + Constants.INDEX_DATE] = point.getHighPrice();
+            points[indexInterval * i + Constants.INDEX_HIGH] = point.getHighPrice();
+            points[indexInterval * i + Constants.INDEX_OPEN] = point.getOpenPrice();
+            points[indexInterval * i + Constants.INDEX_LOW] = point.getLowPrice();
+            points[indexInterval * i + Constants.INDEX_CLOSE] = point.getClosePrice();
+            points[indexInterval * i + Constants.INDEX_VOL] = point.getVolume();
 
 
             //ma计算
@@ -260,7 +260,7 @@ public class DataTools {
         return points;
     }
 
-    private static float getValueWR(List<KLineEntity> dataList, int wr1, int i) {
+    private static float getValueWR(List<? extends KLineEntity> dataList, int wr1, int i) {
         float valueWR;
         if (wr1 != 0 && i >= wr1) {
             valueWR = -calcWr(dataList, i, wr1);
@@ -270,7 +270,7 @@ public class DataTools {
         return valueWR;
     }
 
-    private static void calcKdj(List<KLineEntity> dataList, int kdjDay, int i, KLineEntity point, float closePrice) {
+    private static void calcKdj(List<? extends KLineEntity> dataList, int kdjDay, int i, KLineEntity point, float closePrice) {
         float k, d;
         if (i < kdjDay - 1 || 0 == i) {
             point.k = Float.MIN_VALUE;
@@ -301,18 +301,18 @@ public class DataTools {
         }
     }
 
-    private static float calculateEMA(List<KLineEntity> list, int n, int index, float preEma) {
+    private static float calculateEMA(List<? extends KLineEntity> list, int n, int index, float preEma) {
         float y = 0;
         try {
             if (index + 1 < n) {
                 return y;
             } else if (index + 1 == n) {
                 for (int i = 0; i < n; i++) {
-                    y += list.get(i).close;
+                    y += list.get(i).getClosePrice();
                 }
                 return y / n;
             } else {
-                return (preEma * (n - 1) + list.get(index).close * 2) / (n + 1);
+                return (preEma * (n - 1) + list.get(index).getClosePrice() * 2) / (n + 1);
             }
         } catch (Exception e) {
             return y;
@@ -320,7 +320,7 @@ public class DataTools {
     }
 
 
-    private static float calculateDEA(List<KLineEntity> list, int l, int m, int index,
+    private static float calculateDEA(List<? extends KLineEntity> list, int l, int m, int index,
                                       float preDea,
                                       boolean isFirst) {
 
@@ -340,14 +340,14 @@ public class DataTools {
     }
 
 
-    public static float calcWr(List<KLineEntity> dataDiction, int nIndex, int n) {
+    public static float calcWr(List<? extends KLineEntity> dataDiction, int nIndex, int n) {
         float result;
         float lowInNLowsValue = getMin(dataDiction, nIndex, n);   //N日内最低价的最低值
         float highInHighsValue = getMax(dataDiction, nIndex, n);   //N日内最低价的最低值
         float valueSpan = highInHighsValue - lowInNLowsValue;
         if (valueSpan > 0) {
             KLineEntity kLineData = dataDiction.get(nIndex);
-            result = 100 * (highInHighsValue - kLineData.close) / valueSpan;
+            result = 100 * (highInHighsValue - kLineData.getClosePrice()) / valueSpan;
         } else
             result = 0;
 
@@ -355,13 +355,13 @@ public class DataTools {
     }
 
 
-    public static float getMin(List<KLineEntity> valuesArray, int fromIndex, int nCount) {
+    public static float getMin(List<? extends KLineEntity> valuesArray, int fromIndex, int nCount) {
         float result = Float.MAX_VALUE;
         int endIndex = fromIndex - (nCount - 1);
         if (fromIndex >= endIndex) {
             for (int itemIndex = fromIndex + 1; itemIndex > endIndex; itemIndex--) {
                 KLineEntity klineData = valuesArray.get(itemIndex - 1);
-                float lowPrice = klineData.low;
+                float lowPrice = klineData.getLowPrice();
                 result = result <= lowPrice ? result : lowPrice;
             }
         }
@@ -370,38 +370,38 @@ public class DataTools {
     }
 
 
-    public static float getMax(List<KLineEntity> valuesArray,
+    public static float getMax(List<? extends KLineEntity> valuesArray,
                                int fromIndex, int nCount) {
         float result = Float.MIN_VALUE;
         int endIndex = fromIndex - (nCount - 1);
         if (fromIndex >= endIndex) {
             for (int itemIndex = fromIndex + 1; itemIndex > endIndex; itemIndex--) {
                 KLineEntity klineData = valuesArray.get(itemIndex - 1);
-                float highPrice = klineData.high;
+                float highPrice = klineData.getHighPrice();
                 result = result >= highPrice ? result : highPrice;
             }
         }
         return result;
     }
 
-    private static float calculateBoll(List<KLineEntity> payloads, int position, int maN) {
+    private static float calculateBoll(List<? extends KLineEntity> payloads, int position, int maN) {
         float sum = 0;
         for (int i = position; i >= position - maN + 1; i--) {
-            sum = (sum + payloads.get(i).close);
+            sum = (sum + payloads.get(i).getClosePrice());
         }
         return sum / maN;
 
     }
 
-    private static float STD(List<KLineEntity> payloads, int positon, int maN) {
+    private static float STD(List<? extends KLineEntity> payloads, int positon, int maN) {
 
         float sum = 0f, std = 0f;
         for (int i = positon; i >= positon - maN + 1; i--) {
-            sum += payloads.get(i).close;
+            sum += payloads.get(i).getClosePrice();
         }
         float avg = sum / maN;
         for (int i = positon; i >= positon - maN + 1; i--) {
-            std += (payloads.get(i).close - avg) * (payloads.get(i).close - avg);
+            std += (payloads.get(i).getClosePrice() - avg) * (payloads.get(i).getClosePrice() - avg);
         }
         return (float) Math.sqrt(std / maN);
     }

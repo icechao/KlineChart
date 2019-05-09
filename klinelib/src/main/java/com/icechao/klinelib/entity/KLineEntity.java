@@ -173,6 +173,7 @@ public class KLineEntity implements IKLine {
     @SerializedName("volume")
     public float volume;
 
+
     public float maOne;
 
     public float maTwo;
