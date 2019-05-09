@@ -92,7 +92,7 @@
        justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
        showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
 
-####主图MA/BOLL切换
+#### 主图MA/BOLL切换
         
         chartView为KLineChartView对象
         chartView.changeMainDrawType(MainStatus.MA);
