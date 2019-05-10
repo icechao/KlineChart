@@ -93,7 +93,7 @@ public class KLineChartView extends BaseKLineChartView {
         setEndPointColor(Color.WHITE);
         setLineEndPointWidth(Dputil.Dp2Px(context, 4));
 
-        setBackgroundFillPaint(getContext().getResources().getColor(R.color.color_131F30));
+        setBackgroundFillColor(getContext().getResources().getColor(R.color.color_131F30));
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -168,6 +168,10 @@ public class KLineChartView extends BaseKLineChartView {
     public void onRightSide() {
     }
 
+
+    /**
+     * 仅显示LoadingView同时显示K线
+     */
     public void showLoading() {
         if (null != progressBar && progressBar.getVisibility() != View.VISIBLE) {
             post(() -> {
@@ -179,6 +183,9 @@ public class KLineChartView extends BaseKLineChartView {
         }
     }
 
+    /**
+     * 仅显示LoadingView不显示K线
+     */
     public void justShowLoading() {
         showLoading();
         isShowLoading = true;
@@ -362,6 +369,52 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setCandleSolid(boolean candleSolid) {
         mainDraw.setStroke(candleSolid);
+    }
+
+    /**
+     * 设置主实图指定文字距离视图上边缘的距离,默认0
+     *
+     * @param indexPaddingTop  上边缘的距离
+     */
+    public void setIndexPaddingTop(int indexPaddingTop) {
+        super.setIndexPaddingTop(indexPaddingTop);
+    }
+
+    /**
+     * 设置是否自适应X左右边轴坐标的位置,默认true
+     *
+     * @param betterX true会自动缩进左右两边的label更好的展示
+     */
+    public void setBetterX(boolean betterX) {
+        super.setBetterX(betterX);
+    }
+
+
+    /**
+     * 设置圆点半径
+     *
+     * @param radius
+     */
+    public void setSelectedPointRadius(float radius) {
+        super.setSelectedPointRadius(radius);
+    }
+
+    /**
+     * 获取K线宽度
+     *
+     * @return
+     */
+    public float getChartItemWidth() {
+        return super.getChartItemWidth();
+    }
+
+    /**
+     * 设置十字线跟随手势移动
+     *
+     * @param crossFollowTouch true跟随false不跟随,十字线的指示框只会显示当前K线的收盘价
+     */
+    public void setCrossFollowTouch(boolean crossFollowTouch) {
+        this.crossFollowTouch = crossFollowTouch;
     }
 
     public void setRSI1Color(int color) {

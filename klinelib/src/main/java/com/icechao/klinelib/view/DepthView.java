@@ -61,16 +61,16 @@ public class DepthView extends BaseDepthView {
         setRightAreaColor(getResources().getColor(R.color.color_3D2E33));
         setLeftLegentText("买");
         setRightLegentText("卖");
-        setSelectedCricleRadiusWidth(Dputil.Dp2Px(context,1));
-        setSelectedCircleRadius(Dputil.Dp2Px(context,8));
-        setSelectedPointRadius(Dputil.Dp2Px(context,2));
-        setDepthLineWidth(Dputil.Dp2Px(context,1));
-        setLegentHeight(Dputil.Dp2Px(context,8));
+        setSelectedCricleRadiusWidth(Dputil.Dp2Px(context, 1));
+        setSelectedCircleRadius(Dputil.Dp2Px(context, 8));
+        setSelectedPointRadius(Dputil.Dp2Px(context, 2));
+        setDepthLineWidth(Dputil.Dp2Px(context, 1));
+        setLegentHeight(Dputil.Dp2Px(context, 8));
 
         setTextLabelTextSize(25);
 
 
-        setSelectedBorderWitdh(Dputil.Dp2Px(context,3));
+        setSelectedBorderWitdh(Dputil.Dp2Px(context, 3));
     }
 
     @Override

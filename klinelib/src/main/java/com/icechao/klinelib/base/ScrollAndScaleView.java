@@ -106,7 +106,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         Long l = SystemClock.currentThreadTimeMillis();
         if (!isTouch() && isScrollEnable()) {
             overScroller.fling(scrollX, 0
-                    , Math.round(velocityX / scaleX/2), 0,
+                    , Math.round(velocityX / scaleX / 2), 0,
                     Integer.MIN_VALUE, Integer.MAX_VALUE,
                     0, 0);
         }
@@ -182,6 +182,8 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private float x;
 
+    private float y;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -196,6 +198,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             case MotionEvent.ACTION_DOWN:
                 touch = true;
                 x = event.getX();
+                y = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 //长按之后移动
