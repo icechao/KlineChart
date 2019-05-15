@@ -43,7 +43,6 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
 
     }
 
-    @Deprecated
     @Override
     public Date getDate(int position) {
         if (position >= dataCount) {

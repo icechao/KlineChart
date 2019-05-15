@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @version      : V1
  *************************************************************************/
 
-@Deprecated
+
 public interface ICandle extends Serializable {
 
 

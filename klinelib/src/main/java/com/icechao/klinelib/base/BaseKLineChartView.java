@@ -236,7 +236,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 当前K线的最新价
      */
-    private float lastPrice, lastVol, lastHigh, lastLow;
+    private float lastPrice, lastVol;
 
     /**
      * K线数据适配器
@@ -257,6 +257,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private DataSetObserver dataSetObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
+            //从没数据变成有数据时,显示动画加载效果
+            if (itemsCount == 0) {
+                startAnimation();
+            }
             int dataCount = dataAdapter.getCount();
             points = dataAdapter.getPoints();
             int temp = (dataAdapter.getCount() - 1) * indexInterval;
@@ -266,8 +270,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (dataCount > itemsCount) {
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
-                lastHigh = points[temp + Constants.INDEX_HIGH];
-                lastLow = points[temp + Constants.INDEX_LOW];
                 if (screenRightIndex == itemsCount - 2) {
                     setTranslatedX(canvasTranslateX - chartItemWidth * getScaleX());
                 }
@@ -323,7 +325,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 当前数据个数
      */
     private int itemsCount;
-    @SuppressWarnings("unchecked")
     private List<IChartDraw> mChildDraws = new ArrayList<>();
 
     /**
@@ -452,7 +453,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         displayHeight = h - topPadding - bottomPadding;
         initRect();
         rowSpace = displayHeight / gridRows;
-        columnSpace = width / gridColumns;
+        columnSpace = (float) width / gridColumns;
     }
 
     float displayHeight = 0;
@@ -461,14 +462,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private float volPresent = 2f;
     private float childPresent = 2f;
 
+    @SuppressWarnings("unused")
     public void setMainPresent(float mainPresent) {
         this.mainPresent = mainPresent;
     }
 
+    @SuppressWarnings("unused")
     public void setVolPresent(float volPresent) {
         this.volPresent = volPresent;
     }
 
+    @SuppressWarnings("unused")
     public void setChildPresent(float childPresent) {
         this.childPresent = childPresent;
     }
@@ -517,7 +521,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制整体背景
      *
-     * @param canvas
+     * @param canvas canvas
      */
     private void drawBackground(Canvas canvas) {
         int mid = width >> 1;
@@ -541,8 +545,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         lastPrice = 0;
         lastVol = 0;
         lastPrice = 0;
-        lastHigh = 0;
-        lastLow = 0;
         selectedIndex = -1;
         itemsCount = 0;
         screenLeftIndex = 0;
@@ -553,7 +555,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置当前K线总数据个数
      *
-     * @param itemCount
+     * @param itemCount items count
      */
     public void setItemCount(int itemCount) {
         //数据个数为0时重置本地保存数据,重置平移
@@ -577,8 +579,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 计算主View的value对应的Y值
      *
-     * @param value
-     * @return
+     * @param value value
+     * @return location Y
      */
     public float getMainY(float value) {
         double v = mainMaxValue - value;
@@ -591,9 +593,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * Y轴值的极限值检测
      *
-     * @param v
-     * @param bottom
-     * @return
+     * @param v view
+     * @param bottom boder bottom
+     * @return value
      */
 
     private float borderCheck(double v, int bottom) {
@@ -604,8 +606,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 计算成交量View的Y值
      *
-     * @param value
-     * @return
+     * @param value value
+     * @return location y
      */
     public float getVolY(float value) {
         float v = volMaxValue - value;
@@ -618,8 +620,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 计算子View的Y值
      *
-     * @param value
-     * @return
+     * @param value value
+     * @return location y
      */
     public float getChildY(float value) {
         float v = childMaxValue - value;
@@ -816,12 +818,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     }
 
-    /**
-     * 绘制X轴上的所有label
-     *
-     * @param canvas
-     */
-
     private float columnSpace;
 
     private void drawXLabels(Canvas canvas) {
@@ -871,7 +867,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制Y轴上的所有label
      *
-     * @param canvas
+     * @param canvas canvase
      */
     private void drawYLabels(Canvas canvas) {
         int gridRowCount;
@@ -917,6 +913,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param mainYMoveUpInterval default 5
      */
+    @SuppressWarnings("unused")
     public void setMainYMoveUpInterval(int mainYMoveUpInterval) {
         this.mainYMoveUpInterval = mainYMoveUpInterval;
     }
@@ -928,6 +925,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param yLabelMarginRight default 10
      */
+    @SuppressWarnings("unused")
     public void setyLabelMarginRight(int yLabelMarginRight) {
         this.yLabelMarginRight = yLabelMarginRight;
     }
@@ -949,7 +947,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制横向的价格线
      *
-     * @param canvas
+     * @param canvas canvase
      */
     private void drawPriceLine(Canvas canvas) {
         float y = getMainY(lastPrice);
@@ -1139,6 +1137,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param y index of selected item
      */
+    @SuppressWarnings("unused")
     private double calculateSelectedY(float y) {
         if (y < mainRect.top + topPadding) {
             return mainMaxValue;
@@ -1174,7 +1173,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 获取画板的最小位移
      *
-     * @return
+     * @return translate value
      */
     private float getMinTranslate() {
 
@@ -1241,7 +1240,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置当前平移
      *
-     * @param mTranslateX
+     * @param mTranslateX canvasTranslateX
      */
     public void setTranslatedX(float mTranslateX) {
         if (mTranslateX < getMinTranslate()) {
@@ -1369,20 +1368,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
         }
-
-        if (mainHighMaxValue == Float.MIN_VALUE) {
-            int j = points.length;
-            int a = j * 1;
-
-        }
-
     }
 
     /**
      * 通过平移的位置获取X轴上的索引
      *
-     * @param translateX
-     * @return
+     * @param translateX mTranslateX
+     * @return canvasTranslateX
      */
     public int indexOfTranslateX(float translateX) {
         float dataLength = getDataLength();
@@ -1413,11 +1405,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制分时线尾部
      *
-     * @param canvas
-     * @param paint
-     * @param startX
-     * @param startValue
-     * @param stopX
+     * @param canvas canvase
+     * @param paint paint
+     * @param startX startx
+     * @param startValue start value
+     * @param stopX stopx
      */
     public void drawEndLine(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
         canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(lastPrice), paint);
@@ -1427,11 +1419,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制分时线尾部填充色
      *
-     * @param canvas
-     * @param paint
-     * @param startX
-     * @param startValue
-     * @param stopX
+     * @param canvas canvase
+     * @param paint paint
+     * @param startX start x
+     * @param startValue  start value
+     * @param stopX stopx
      */
     public void drawEndFill(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
         float y = displayHeight + topPadding + bottomPadding;
@@ -1517,7 +1509,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @return 获取适配器
      */
-    public IAdapter<ICandle> getAdapter() {
+    public KLineChartAdapter getAdapter() {
         return dataAdapter;
     }
 
@@ -1614,7 +1606,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return IChartDraw
      */
     @SuppressWarnings("unused")
-    public IChartDraw<ICandle> getMainDraw() {
+    public MainDraw getMainDraw() {
         return mainDraw;
     }
 
@@ -1628,11 +1620,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     @SuppressWarnings("unused")
-    public IChartDraw<ICandle> getVolDraw() {
+    public IChartDraw getVolDraw() {
         return volDraw;
     }
 
-    @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public void setVolDraw(IChartDraw mVolDraw) {
         this.volDraw = mVolDraw;
     }
@@ -1660,6 +1651,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 开始动画
      */
+    @SuppressWarnings("unused")
     public void startAnimation() {
         if (null != showAnim) {
             showAnim.start();
@@ -1696,7 +1688,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (gridColumns < 1) {
             gridColumns = 1;
         }
-        columnSpace = width / gridColumns;
+        columnSpace = (float) width / gridColumns;
         this.gridColumns = gridColumns;
     }
 
@@ -1905,7 +1897,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 获取新的价格
      *
-     * @return
+     * @return new price
      */
     public float getLastPrice() {
         return lastPrice;
@@ -1914,7 +1906,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 获取最新的成交量
      *
-     * @return
+     * @return new vol value
      */
     public float getLastVol() {
         return lastVol;
@@ -1937,7 +1929,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置价格线的宽度
      *
-     * @param lineWidth
+     * @param lineWidth price line width
      */
     public void setPriceLineWidth(float lineWidth) {
         priceLinePaint.setStrokeWidth(lineWidth);
@@ -1947,7 +1939,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 价格线右侧的颜色
      *
-     * @param color
+     * @param color price line right color
      */
     public void setPriceLineRightColor(int color) {
         priceLineBoxRightPaint.setColor(color);
@@ -1967,7 +1959,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 获取K线宽度
      *
-     * @return
+     * @return chartWidth
      */
     public float getChartItemWidth() {
         return chartItemWidth;
@@ -1980,7 +1972,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 分时线呼吸灯的颜色
      *
-     * @param color
+     * @param color pop color
      */
     public void setEndPointColor(int color) {
         lineEndPointPaint.setColor(color);
@@ -1990,7 +1982,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 分时线呼吸灯的颜色半径
      *
-     * @param width
+     * @param width pop width
      */
     public void setLineEndPointWidth(float width) {
         this.lineEndPointWidth = width;
@@ -2006,7 +1998,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return ValueAnimator
      */
     @SuppressWarnings("all")
-    protected ValueAnimator generaterAnimator(Float start, float end, ValueAnimator.AnimatorUpdateListener listener) {
+    public ValueAnimator generaterAnimator(Float start, float end, ValueAnimator.AnimatorUpdateListener listener) {
         ValueAnimator animator = ValueAnimator.ofFloat(0 == start ? end - 0.01f : start, end);
         animator.setDuration(duration);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -2065,7 +2057,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     @SuppressWarnings("unused")
     public void setMarketInfoText(String[] marketInfoText) {
-        ((MainDraw) mainDraw).setMarketInfoText(marketInfoText);
+        mainDraw.setMarketInfoText(marketInfoText);
     }
 
     /**
@@ -2121,7 +2113,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置圆点半径
      *
-     * @param radius
+     * @param radius selected circle radius
      */
     public void setSelectedPointRadius(float radius) {
         selectedPointRadius = radius;
@@ -2131,7 +2123,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 选中的线的Y轴颜色
      *
-     * @param color
+     * @param color select y color
      */
     public void setSelectedYColor(int color) {
         this.selectedYColor = color;
@@ -2140,7 +2132,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 背景色顶部颜色
      *
-     * @param color
+     * @param color backgroud linearGrident top
      */
     public void setBackgroundStartColor(int color) {
         this.backGroundTopColor = color;
@@ -2149,7 +2141,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 背景色底部颜色
      *
-     * @param color
+     * @param color backgroud linearGrident bottom
      */
     public void setBackgroundEmdColor(int color) {
         this.backGroundBottomColor = color;
@@ -2158,7 +2150,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置涨的颜色
      *
-     * @param color
+     * @param color increase color
      */
     public void setUpColor(int color) {
         mainDraw.setUpColor(color);
@@ -2168,7 +2160,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置跌的颜色
      *
-     * @param color
+     * @param color uncrease color
      */
     public void setDownColor(int color) {
         mainDraw.setDownColor(color);
@@ -2177,7 +2169,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置分时线颜色
      *
-     * @param color
+     * @param color time line color
      */
     public void setMinuteLineColor(int color) {
         mainDraw.setMinuteLineColor(color);
@@ -2187,7 +2179,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置分时线填充渐变的下部颜色
      *
-     * @param color
+     * @param color time line top fill color
      */
     public void setAreaTopColor(int color) {
         this.areaTopColor = color;
@@ -2196,7 +2188,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置分时线填充渐变的下部颜色
      *
-     * @param color
+     * @param color time line bottom fill color
      */
     public void setAreaBottomColor(int color) {
         this.areaBottomColor = color;
@@ -2206,16 +2198,16 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置是否以动画的方式变化最后一根线
      *
-     * @return
+     * @return whether show last chart with anim
      */
     public boolean isAnimationLast() {
         return isAnimationLast;
     }
 
     /**
-     * 设置主实图指定文字距离视图上边缘的距离,默认0
+     * 设置主实图指定文字距离视图上边缘的距离,
      *
-     * @param indexPaddingTop
+     * @param indexPaddingTop default 0
      */
     public void setIndexPaddingTop(int indexPaddingTop) {
         mainDraw.setIndexPaddingTop(indexPaddingTop);
@@ -2224,7 +2216,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置是否适应X左右边轴坐标的位置,默认true
      *
-     * @param betterX
+     * @param betterX true fix first and last X label location
      */
     public void setBetterX(boolean betterX) {
         this.betterX = betterX;

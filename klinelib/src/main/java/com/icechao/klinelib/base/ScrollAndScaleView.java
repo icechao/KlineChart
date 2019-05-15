@@ -102,15 +102,13 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        LogUtil.e("onFling");
-        Long l = SystemClock.currentThreadTimeMillis();
+
         if (!isTouch() && isScrollEnable()) {
             overScroller.fling(scrollX, 0
                     , Math.round(velocityX / scaleX / 2), 0,
                     Integer.MIN_VALUE, Integer.MAX_VALUE,
                     0, 0);
         }
-        LogUtil.e(SystemClock.currentThreadTimeMillis() - l);
         return true;
     }
 
@@ -123,6 +121,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
                 overScroller.forceFinished(true);
             }
         }
+        invalidate();
     }
 
     @Override
@@ -140,9 +139,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         scrollX = x;
         if (scrollX != oldX) {
             onScrollChanged(scrollX, 0, oldX, 0);
-//            invalidate();
         }
-
     }
 
     @Override
