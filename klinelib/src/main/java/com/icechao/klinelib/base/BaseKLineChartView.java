@@ -593,7 +593,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * Y轴值的极限值检测
      *
-     * @param v view
+     * @param v      view
      * @param bottom boder bottom
      * @return value
      */
@@ -698,7 +698,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             }
 
         }
-        mainDraw.drawMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue, screenLeftIndex, screenRightIndex);
+        mainDraw.drawMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
         canvas.restore();
     }
 
@@ -1405,11 +1405,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制分时线尾部
      *
-     * @param canvas canvase
-     * @param paint paint
-     * @param startX startx
+     * @param canvas     canvase
+     * @param paint      paint
+     * @param startX     startx
      * @param startValue start value
-     * @param stopX stopx
+     * @param stopX      stopx
      */
     public void drawEndLine(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
         canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(lastPrice), paint);
@@ -1419,11 +1419,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 绘制分时线尾部填充色
      *
-     * @param canvas canvase
-     * @param paint paint
-     * @param startX start x
-     * @param startValue  start value
-     * @param stopX stopx
+     * @param canvas     canvase
+     * @param paint      paint
+     * @param startX     start x
+     * @param startValue start value
+     * @param stopX      stopx
      */
     public void drawEndFill(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
         float y = displayHeight + topPadding + bottomPadding;
@@ -1910,6 +1910,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public float getLastVol() {
         return lastVol;
+    }
+
+    public float getTranslationScreenMid() {
+
+        return getX(screenLeftIndex) + width / 2;
     }
 
     /**

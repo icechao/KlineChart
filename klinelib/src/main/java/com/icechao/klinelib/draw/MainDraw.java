@@ -519,15 +519,14 @@ public class MainDraw extends BaseDraw {
 
     public void drawMaxMinValue(Canvas canvas, BaseKLineChartView view,
                                 float maxX, float mainHighMaxValue,
-                                float minX, float mainLowMinValue,
-                                int screenLeftIndex, int screenRightIndex) {
+                                float minX, float mainLowMinValue) {
         if (!view.isLine()) {
             //绘制最大值和最小值
             float y = view.getMainY(mainLowMinValue);
             //计算显示位置
             y = fixTextYBaseBottom(y);
             String LowString;
-            float stringWidth, screenMid = view.getX((screenRightIndex + screenLeftIndex) / 2);
+            float stringWidth, screenMid = view.getTranslationScreenMid();
             if (minX < screenMid) {
                 LowString = "── " + mainLowMinValue;
             } else {
