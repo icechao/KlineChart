@@ -3,6 +3,7 @@ package com.icechao.klinelib.draw;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
@@ -66,9 +67,7 @@ public class MainDraw extends BaseDraw {
     private String[] marketInfoText = new String[8];
 
     public MainDraw(Context context) {
-
         indexInterval = Constants.getCount();
-
         selectorBorderPaint.setStyle(Paint.Style.STROKE);
         upPaint.setStyle(Paint.Style.FILL);
         upLinePaint.setStyle(Paint.Style.STROKE);
@@ -90,10 +89,15 @@ public class MainDraw extends BaseDraw {
         indexMa1 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_1);
         indexMa2 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_2);
         indexMa3 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_3);
-        ;
+
         indexBoll = context.getString(R.string.k_index_boll);
         indexUb = context.getString(R.string.k_index_ub);
         indexLb = context.getString(R.string.k_index_lb);
+
+        selectorTextPaint.setColor(Color.WHITE);
+        selectorBorderPaint.setColor(Color.BLACK);
+        selectorBackgroundPaint.setColor(Color.DKGRAY);
+
     }
 
 
@@ -289,8 +293,8 @@ public class MainDraw extends BaseDraw {
 
         int index = view.getSelectedIndex();
 
-//        ICandle point = view.getItem(index);
-        strings[0] = view.formatDateTime(view.getAdapter().getDate(index));
+//        strings[0] = view.formatDateTime(view.getAdapter().getDate(index));
+        strings[0] = view.getTime(index);
         strings[1] = view.getValueFormatter().format(values[Constants.INDEX_OPEN]);
         strings[2] = (view.getValueFormatter().format(values[Constants.INDEX_HIGH]));
         strings[3] = (view.getValueFormatter().format(values[Constants.INDEX_LOW]));

@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 return String.format("%.2f", value);
             }
         });
-        chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
+        chartView.setVolFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
                 return String.format("%.2f", value);
@@ -142,13 +142,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
-            KLineEntity kLineEntity = all.get(Math.abs(new Random(50).nextInt()) % 100);
+            KLineEntity kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
             KLineEntity kLineEntity1 = new KLineEntity();
             kLineEntity1.date = kLineEntity.date;
-            kLineEntity1.high = kLineEntity.close;
+            kLineEntity1.high = kLineEntity.high;
             kLineEntity1.close = kLineEntity.close;
             kLineEntity1.open = kLineEntity.open;
-            kLineEntity1.low = kLineEntity.close;
+            kLineEntity1.low = kLineEntity.low;
             kLineEntity1.volume = 0;
 
             textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
