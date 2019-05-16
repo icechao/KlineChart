@@ -45,7 +45,7 @@
               
           支持自定义属性
               自定义属性查看:
-              https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml
+              [属性列表(https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)]
   4. <b>初始化k线,   更多方法见 KLineChartView</b>
   
               private void initKline() {
