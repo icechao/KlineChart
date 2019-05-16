@@ -44,8 +44,8 @@
               android:background="@color/color_081734" />
               
           支持自定义属性
-              自定义属性
-              attrs.xml
+              自定义属性查看:
+              https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml
   4. <b>初始化k线,   更多方法见 KLineChartView</b>
   
               private void initKline() {
