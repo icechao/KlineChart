@@ -277,8 +277,12 @@ public class MainDraw extends BaseDraw {
 
     private void drawCandle(Canvas canvas, float x, float high, float low, float open, float close, float cancleLeft, float candleright, Paint paint, Paint linePaint) {
         canvas.drawRect(cancleLeft, close, candleright, open, paint);
-        canvas.drawLine(x, high, x, open, linePaint);
-        canvas.drawLine(x, close, x, low, linePaint);
+        if (high != open) {
+            canvas.drawLine(x, high, x, open, linePaint);
+        }
+        if (close != low) {
+            canvas.drawLine(x, close, x, low, linePaint);
+        }
     }
 
     /**
