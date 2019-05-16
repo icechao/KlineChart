@@ -44,8 +44,10 @@
               android:background="@color/color_081734" />
               
           支持自定义属性
-              自定义属性
-              attrs.xml
+              自定义属性查看:
+             
+        [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
+              
   4. <b>初始化k线,   更多方法见 KLineChartView</b>
   
               private void initKline() {
@@ -117,6 +119,14 @@
         chartView.setMainDrawLine(false);
            传入true显示折线的
            传入false显示为CandleLine 
+           
+### 十字线跟随模式
+
+        chartView为KLineChartView对象
+        chartView.setCrossFollowTouch(boolean crossFollowTouch) ;
+           传入true跟随手指
+           传入false显示为收盘价
+          
         
       
 
@@ -144,6 +154,7 @@
       - 优化macd  rsi 指标线的算法
       - 重写网格绘制算法
       - 添加设置LoadingView的方法,loadingView可以在调用show/Hide  Loading时执行一些动画
+      - 添加手指出动时十字线的绘制方式(Y值跟随手指,Y轴指向最新价)
 
   
   
