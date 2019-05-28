@@ -4,89 +4,89 @@
 
 使用步骤: 
 
-  1. <b>继承KlineEntry写一个model</b>
-  2. <b>复写方法</b>
-  
-          /**
-           * 开盘价
-           */
-          float getOpenPrice();
+    1. <b>继承KlineEntry写一个model</b>
+    2. <b>复写方法</b>
 
-          /**
-           * 最高价
-           */
-          float getHighPrice();
+            /**
+             * 开盘价
+             */
+            float getOpenPrice();
 
-          /**
-           * 最低价
-           */
-          float getLowPrice();
+            /**
+             * 最高价
+             */
+            float getHighPrice();
 
-          /**
-           * 收盘价
-           */
-          float getClosePrice();
+            /**
+             * 最低价
+             */
+            float getLowPrice();
 
-          /**
-           * 交易量
-           *
-           * @return
-           */
-          float getVolume();
-     如果日期不是Long类型,需要复写getId方法返回Long类型时间
-          getDate()
-  3. <b>在布局中直接使用</b>
+            /**
+             * 收盘价
+             */
+            float getClosePrice();
 
-            <com.icechao.klinelib.view.KLineChartView
-              android:id="@+id/kLineChartView"
-              android:layout_width="match_parent"
-              android:layout_height="580dp"
-              android:background="@color/color_081734" />
-              
-          支持自定义属性
-              自定义属性查看:
-             
-        [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
-              
-  4. <b>初始化k线,   更多方法见 KLineChartView</b>
-  
-              private void initKline() {
-                     //设置K线的数据适配器
-                     chartView.setAdapter(new KLineChartAdapter());
-                     //设置X轴时间格式化对象,根据不同波段可以重新设置
-                     chartView.setDateTimeFormatter(new DateFormatter());
-                     //背景网络列
-                     chartView.setGridColumns(5);
-                     //背景网络行
-                     chartView.setGridRows(5);
-                     //设置Y轴值格式化对象,默认保留两位小数
-                     chartView.setValueFormatter(new ValueFormatter() {
-                         @Override
-                         public String format(float value) {
-                             return String.format("%.2f", value);
-                         }
-                     });
-                     //设置交易量格式化对象,默认保留两位小数
-                     chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
-                         @Override
-                         public String format(float value) {
-                             return String.format("%.2f", value);
-                         }
-                     });
-                     //设置K线最右侧缩进距离
-                     chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
-                     //显示loading
-                     chartView.showLoading();
-                 }
-  5.<b>设置数据</b>
-  
-           重新填充数据
-           resetData(List<KlineEntry>);
-           尾部追加数据 
-           addLast(KlineEntry);
-           修改某个数据 
-           changeItem(KlineEntry);
-       如果有需要在前面追加数据可以自定义方法参考addLast
+            /**
+             * 交易量
+             *
+             * @return
+             */
+            float getVolume();
+       如果日期不是Long类型,需要复写getId方法返回Long类型时间
+            getDate()
+    3. <b>在布局中直接使用</b>
+
+              <com.icechao.klinelib.view.KLineChartView
+                android:id="@+id/kLineChartView"
+                android:layout_width="match_parent"
+                android:layout_height="580dp"
+                android:background="@color/color_081734" />
+
+            支持自定义属性
+                自定义属性查看:
+
+          [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
+
+    4. <b>初始化k线,   更多方法见 KLineChartView</b>
+
+                private void initKline() {
+                       //设置K线的数据适配器
+                       chartView.setAdapter(new KLineChartAdapter());
+                       //设置X轴时间格式化对象,根据不同波段可以重新设置
+                       chartView.setDateTimeFormatter(new DateFormatter());
+                       //背景网络列
+                       chartView.setGridColumns(5);
+                       //背景网络行
+                       chartView.setGridRows(5);
+                       //设置Y轴值格式化对象,默认保留两位小数
+                       chartView.setValueFormatter(new ValueFormatter() {
+                           @Override
+                           public String format(float value) {
+                               return String.format("%.2f", value);
+                           }
+                       });
+                       //设置交易量格式化对象,默认保留两位小数
+                       chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
+                           @Override
+                           public String format(float value) {
+                               return String.format("%.2f", value);
+                           }
+                       });
+                       //设置K线最右侧缩进距离
+                       chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
+                       //显示loading
+                       chartView.showLoading();
+                   }
+    5.<b>设置数据</b>
+
+             重新填充数据
+             resetData(List<KlineEntry>);
+             尾部追加数据 
+             addLast(KlineEntry);
+             修改某个数据 
+             changeItem(KlineEntry);
+         如果有需要在前面追加数据可以自定义方法参考addLast
 
 
 ### Loadding展示
@@ -129,34 +129,6 @@
 
 
 
-
-      
-
-      - 修改十字线绘制
-      - 修改分时线绘制
-      - 重写CandleLine绘制
-      - 重写滑动计算方式
-      - 重写放大计算方式
-      - 添加深度图
-      - 分时线尾添加呼吸灯效果
-      - K线结尾数据发生变化时添加动画效果
-      - 添加当前价格的时间线
-      - 重写选中的绘制
-      - 优化重置数据计算
-      - 优化当前页面K线数目的计算
-      - 重写Y轴label的绘制
-      - 重写网格的绘制
-      - 最新价格和屏幕右侧添加指示线
-      - 重写十字线纵线的绘制
-      - 修改选中框的计算方式
-      - 添加追加尾部数据的方法
-      - 优化成交量柱状图的绘制
-      - 删除加载更多逻辑
-      - 添加时间和值的动态设置格式化
-      - 优化macd  rsi 指标线的算法
-      - 重写网格绘制算法
-      - 添加设置LoadingView的方法,loadingView可以在调用show/Hide  Loading时执行一些动画
-      - 添加手指出动时十字线的绘制方式(Y值跟随手指,Y轴指向最新价)
 
   
   
