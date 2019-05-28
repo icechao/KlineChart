@@ -126,8 +126,10 @@
         chartView.setCrossFollowTouch(boolean crossFollowTouch) ;
            传入true跟随手指
            传入false显示为收盘价
-          
-        
+
+
+
+
       
 
       - 修改十字线绘制
