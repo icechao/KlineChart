@@ -147,7 +147,8 @@
 
 
 #### 更多设置API查看
-        [KLineChartView](klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
+
+   [KLineChartView](klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
 
   
   
