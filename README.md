@@ -1,5 +1,5 @@
 # kline
-写过两次K线, 借鉴开源项目,改良一个能拿来直接用的K线,基于原项目基础ScallAnddScrallView,重写绘制计算,优化渲染速度,优化绘制算法
+写过两次K线, 借鉴开源项目,改良一个能拿来直接用的K线,基于原项目基础[ScallAnddScrallView](https://github.com/tifezh/KChartView),重写绘制计算,优化渲染速度,优化绘制算法
 
 
 使用步骤: 
@@ -161,5 +161,5 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
 
 
-ScrollAndScallView 修改自:https://github.com/tifezh/KChartView
+
 
