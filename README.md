@@ -146,7 +146,8 @@
            传入false显示为收盘价
 
 
-
+#### 更多设置API查看
+        [KLineChartView](klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
 
   
   
