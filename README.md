@@ -1,6 +1,11 @@
 # kline
 写过两次K线, 借鉴开源项目,改良一个能拿来直接用的K线,基于原项目基础[ScallAnddScrallView](https://github.com/tifezh/KChartView),重写绘制计算,优化渲染速度,优化绘制算法
 
+  
+ # QQ群 :  163565953
+ 
+ # 有问题可以加这个群反馈
+
 
 使用步骤: 
 
@@ -151,9 +156,6 @@
    [KLineChartView](klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
 
   
-  
- QQ群 :  163565953
- 有问题可以加这个群反馈
   
 #### 效果图
 后面复用历史数据会导致K线看起来有点乱,数据问题
