@@ -1544,7 +1544,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @return 获取适配器
      */
-    private KLineChartAdapter getAdapter() {
+    public KLineChartAdapter getAdapter() {
         return dataAdapter;
     }
 
