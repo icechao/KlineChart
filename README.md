@@ -4,44 +4,9 @@
 
 使用步骤: 
 
-  1. <b>继承KlineEntry写一个model</b>
-  2. <b>复写方法</b>
-  
-          /**
-          * 时间,返回long类型时间
-          */
-          long getDate();
-  
-          /**
-           * 开盘价
-           */
-          float getOpenPrice();
-
-          /**
-           * 最高价
-           */
-          float getHighPrice();
-
-          /**
-           * 最低价
-           */
-          float getLowPrice();
-
-          /**
-           * 收盘价
-           */
-          float getClosePrice();
-
-          /**
-           * 交易量
-           *
-           * @return
-           */
-          float getVolume();
-     如果日期不是Long类型,需要复写getId方法返回Long类型时间
-          getDate()
+  1. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间</b>
+  2. <b>实例化KLineChartAdapter对像</b>
   3. <b>在布局中直接使用</b>
-
             <com.icechao.klinelib.view.KLineChartView
               android:id="@+id/kLineChartView"
               android:layout_width="match_parent"
@@ -83,15 +48,19 @@
                      //显示loading
                      chartView.showLoading();
                  }
-  5.<b>设置数据</b>
+                 
+  5.<b>KLineChartAdapter设置数据</b>
   
-           重新填充数据
+           填充或重新填充数据
            resetData(List<KlineEntry>);
+           
            尾部追加数据 
            addLast(KlineEntry);
+           
            修改某个数据 
            changeItem(KlineEntry);
-       如果有需要在前面追加数据可以自定义方法参考addLast
+           
+           如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
 
 
 ### Loadding展示

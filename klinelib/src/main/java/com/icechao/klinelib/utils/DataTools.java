@@ -102,41 +102,41 @@ public class DataTools {
             maSum3 += closePrice;
 
             if (i == priceMaOne - 1) {
-                point.maOne = (float) (maSum1 / priceMaOne);
+                point.setMaOne((float) (maSum1 / priceMaOne));
             } else if (i >= priceMaOne) {
                 maSum1 -= dataList.get((int) (i - priceMaOne)).getClosePrice();
-                point.maOne = (float) (maSum1 / priceMaOne);
+                point.setMaOne((float) (maSum1 / priceMaOne));
             } else {
-                point.maOne = Float.MIN_VALUE;
+                point.setMaOne(Float.MIN_VALUE);
             }
-            points[indexInterval * i + Constants.INDEX_MA_1] = point.maOne;
+            points[indexInterval * i + Constants.INDEX_MA_1] = point.getMaOne();
 
             if (i == priceMaTwo - 1) {
-                point.maTwo = (float) (maSum2 / priceMaTwo);
+                point.setMaTwo((float) (maSum2 / priceMaTwo));
             } else if (i >= priceMaTwo) {
                 maSum2 -= dataList.get((int) (i - priceMaTwo)).getClosePrice();
-                point.maTwo = (float) (maSum2 / priceMaTwo);
+                point.setMaTwo((float) (maSum2 / priceMaTwo));
             } else {
-                point.maTwo = Float.MIN_VALUE;
+                point.setMaTwo(Float.MIN_VALUE);
             }
-            points[indexInterval * i + Constants.INDEX_MA_2] = point.maTwo;
+            points[indexInterval * i + Constants.INDEX_MA_2] = point.getMaTwo();
 
             if (i == priceMaThree - 1) {
-                point.maThree = (float) (maSum3 / priceMaThree);
+                point.setMaThree((float) (maSum3 / priceMaThree));
             } else if (i >= priceMaThree) {
                 maSum3 -= dataList.get((int) (i - priceMaThree)).getClosePrice();
-                point.maThree = (float) (maSum3 / priceMaThree);
+                point.setMaThree((float) (maSum3 / priceMaThree));
             } else {
-                point.maThree = Float.MIN_VALUE;
+                point.setMaThree(Float.MIN_VALUE);
             }
-            points[indexInterval * i + Constants.INDEX_MA_3] = point.maThree;
+            points[indexInterval * i + Constants.INDEX_MA_3] = point.getMaThree();
 
 
             //macd
             if (s > 0 && l > 0 && m > 0) {
                 if (size >= m + l - 2) {
                     if (i < l - 1) {
-                        point.dif = 0;
+                        point.setDif(0);
                     }
 
                     if (i >= s - 1) {
@@ -145,36 +145,36 @@ public class DataTools {
                         if (i >= l - 1) {
                             float ema26 = calculateEMA(dataList, l, i, preEma26);
                             preEma26 = ema26;
-                            point.dif = (ema12 - ema26);
+                            point.setDif(ema12 - ema26);
                         } else {
-                            point.dif = Float.MIN_VALUE;
+                            point.setDif(Float.MIN_VALUE);
                         }
                     } else {
-                        point.dif = Float.MIN_VALUE;
+                        point.setDif(Float.MIN_VALUE);
                     }
 
                     if (i >= m + l - 2) {
                         boolean isFirst = i == m + l - 2;
                         float dea = calculateDEA(dataList, l, m, i, preDea, isFirst);
                         preDea = dea;
-                        point.dea = (dea);
+                        point.setDea(dea);
                     } else {
-                        point.dea = Float.MIN_VALUE;
+                        point.setDea(Float.MIN_VALUE);
                     }
 
                     if (i >= m + l - 2) {
-                        point.macd = point.getDif() - point.getDea();
+                        point.setMacd(point.getDif() - point.getDea());
                     } else {
-                        point.macd = 0;
+                        point.setMacd(0);
                     }
 
                 } else {
-                    point.macd = 0;
+                    point.setMacd(0);
                 }
             }
-            points[indexInterval * i + Constants.INDEX_MACD_DIF] = point.dif;
-            points[indexInterval * i + Constants.INDEX_MACD_MACD] = point.macd;
-            points[indexInterval * i + Constants.INDEX_MACD_DEA] = point.dea;
+            points[indexInterval * i + Constants.INDEX_MACD_DIF] = point.getDif();
+            points[indexInterval * i + Constants.INDEX_MACD_MACD] = point.getMacd();
+            points[indexInterval * i + Constants.INDEX_MACD_DEA] = point.getDea();
 
 
             //boll计算
@@ -182,18 +182,18 @@ public class DataTools {
                 float boll = calculateBoll(dataList, i, bollN);
                 float highBoll = boll + bollP * STD(dataList, i, bollN);
                 float lowBoll = boll - bollP * STD(dataList, i, bollN);
-                point.up = highBoll;
-                point.mb = boll;
-                point.dn = lowBoll;
+                point.setUp(highBoll);
+                point.setMb(boll);
+                point.setDn(lowBoll);
             } else {
-                point.up = Float.MIN_VALUE;
-                point.mb = Float.MIN_VALUE;
-                point.dn = Float.MIN_VALUE;
+                point.setUp(Float.MIN_VALUE);
+                point.setMb(Float.MIN_VALUE);
+                point.setDn(Float.MIN_VALUE);
             }
 
-            points[indexInterval * i + Constants.INDEX_BOLL_UP] = point.up;
-            points[indexInterval * i + Constants.INDEX_BOLL_MB] = point.mb;
-            points[indexInterval * i + Constants.INDEX_BOLL_DN] = point.dn;
+            points[indexInterval * i + Constants.INDEX_BOLL_UP] = point.getUp();
+            points[indexInterval * i + Constants.INDEX_BOLL_MB] = point.getMb();
+            points[indexInterval * i + Constants.INDEX_BOLL_DN] = point.getDn();
 
 
             //vol ma计算
@@ -208,8 +208,8 @@ public class DataTools {
             } else {
                 ma = Float.MIN_VALUE;
             }
-            point.MA5Volume = ma;
-            points[indexInterval * i + Constants.INDEX_VOL_MA_1] = point.MA5Volume;
+            point.setMA5Volume(ma);
+            points[indexInterval * i + Constants.INDEX_VOL_MA_1] = point.getMA5Volume();
 
             if (i == maTwo - 1) {
                 ma = (float) (volumeMaTwo / maTwo);
@@ -219,20 +219,20 @@ public class DataTools {
             } else {
                 ma = Float.MIN_VALUE;
             }
-            point.MA10Volume = ma;
-            points[indexInterval * i + Constants.INDEX_VOL_MA_2] = point.MA10Volume;
+            point.setMA10Volume(ma);
+            points[indexInterval * i + Constants.INDEX_VOL_MA_2] = point.getMA10Volume();
 
             //kdj
             calcKdj(dataList, kdjDay, i, point, closePrice);
-            points[indexInterval * i + Constants.INDEX_KDJ_K] = point.k;
-            points[indexInterval * i + Constants.INDEX_KDJ_D] = point.d;
-            points[indexInterval * i + Constants.INDEX_KDJ_J] = point.j;
+            points[indexInterval * i + Constants.INDEX_KDJ_K] = point.getK();
+            points[indexInterval * i + Constants.INDEX_KDJ_D] = point.getD();
+            points[indexInterval * i + Constants.INDEX_KDJ_J] = point.getJ();
 
             //计算3个 wr指标
-            point.wrOne = getValueWR(dataList, wr1, i);
-            point.wrTwo = getValueWR(dataList, wr2, i);
-            point.wrThree = getValueWR(dataList, wr3, i);
-            points[indexInterval * i + Constants.INDEX_WR_1] = (float) point.wrOne;
+            point.setWrOne(getValueWR(dataList, wr1, i));
+            point.setWrTwo(getValueWR(dataList, wr2, i));
+            point.setWrThree(getValueWR(dataList, wr3, i));
+            points[indexInterval * i + Constants.INDEX_WR_1] = (float) point.getWrOne();
 
 
 //           以每一日的收盘价减去上一日的收盘价，得到14个数值，
@@ -273,9 +273,9 @@ public class DataTools {
     private static void calcKdj(List<? extends KLineEntity> dataList, int kdjDay, int i, KLineEntity point, float closePrice) {
         float k, d;
         if (i < kdjDay - 1 || 0 == i) {
-            point.k = Float.MIN_VALUE;
-            point.d = Float.MIN_VALUE;
-            point.j = Float.MIN_VALUE;
+            point.setK(Float.MIN_VALUE);
+            point.setD(Float.MIN_VALUE);
+            point.setJ(Float.MIN_VALUE);
         } else {
             int startIndex = i - kdjDay + 1;
             float maxRsi = Float.MIN_VALUE;
@@ -295,9 +295,9 @@ public class DataTools {
             k = 2f / 3f * (k1 == Float.MIN_VALUE ? 50 : k1) + 1f / 3f * rsv;
             float d1 = kLineEntity.getD();
             d = 2f / 3f * (d1 == Float.MIN_VALUE ? 50 : d1) + 1f / 3f * k;
-            point.k = k;
-            point.d = d;
-            point.j = 3f * k - 2 * d;
+            point.setK(k);
+            point.setD(d);
+            point.setJ(3f * k - 2 * d);
         }
     }
 

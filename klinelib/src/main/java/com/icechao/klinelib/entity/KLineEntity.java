@@ -1,11 +1,6 @@
 package com.icechao.klinelib.entity;
 
 
-import com.google.gson.annotations.SerializedName;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 /*************************************************************************
  * Description   :
  *
@@ -19,20 +14,54 @@ import java.text.SimpleDateFormat;
 public abstract class KLineEntity implements IKLine {
 
 
+    /**
+     * return the data time
+     *
+     * @return {@link Long} TimeMillis
+     */
     @Override
-    public abstract Long getDate() ;
+    public abstract Long getDate();
 
+    /**
+     * return open price
+     *
+     * @return {@link Float} price
+     */
     @Override
     public abstract float getOpenPrice();
 
+    /**
+     * return high price
+     *
+     * @return {@link Float} price
+     */
     @Override
     public abstract float getHighPrice();
 
+    /**
+     * return low price
+     *
+     * @return {@link Float} price
+     */
     @Override
     public abstract float getLowPrice();
 
+    /**
+     * return close price
+     *
+     * @return {@link Float} price
+     */
     @Override
     public abstract float getClosePrice();
+
+    /**
+     * return trade vol
+     *
+     * @return {@link Float} vol
+     */
+    @Override
+    public abstract float getVolume();
+
 
     @Override
     public float getMaOne() {
@@ -95,9 +124,6 @@ public abstract class KLineEntity implements IKLine {
     }
 
     @Override
-    public abstract float getVolume();
-
-    @Override
     public float getMA5Volume() {
         return MA5Volume;
     }
@@ -107,92 +133,41 @@ public abstract class KLineEntity implements IKLine {
         return MA10Volume;
     }
 
+    private float maOne;
 
-//    public abstract float getHigh();
-//
-//    public void setHigh(float high) {
-//        this.high = high;
-//    }
-//
-//    public float getAmount() {
-//        return volume;
-//    }
-//
-//    public void setAmount(float amount) {
-//        this.volume = amount;
-//    }
-//
-//    public float getVol() {
-//        return volume;
-//    }
-//
-//    public void setVol(float vol) {
-//        this.volume = vol;
-//    }
-//
-//    public float getLow() {
-//        return low;
-//    }
-//
-//    public void setLow(float low) {
-//        this.low = low;
-//    }
+    private float maTwo;
 
+    private float maThree;
 
-//    public abstract String getId();
+    private float dea;
 
-//    public void setId(String id) {
-//        this.date = id;
-//    }
+    private float dif;
 
-//    @SerializedName("Date")
-//    public String date;
-//    @SerializedName("Open")
-//    public float open;
-//    @SerializedName("High")
-//    public float high;
-//    @SerializedName("Low")
-//    public float low;
-//    @SerializedName("Close")
-//    public float close;
-//    @SerializedName("Volume")
-//    public float volume;
+    private float macd;
 
-    public float maOne;
+    private float k;
 
-    public float maTwo;
+    private float d;
 
-    public float maThree;
+    private float j;
 
-    public float dea;
+    private double rOne;
+    private double rTwo;
+    private double rThree;
 
-    public float dif;
+    private double wrOne;
+    private float wrTwo;
+    private float wrThree;
 
-    public float macd;
+    private float up;
 
-    public float k;
+    private float mb;
 
-    public float d;
+    private float dn;
 
-    public float j;
+    private float MA5Volume;
 
-    public double rOne;
-    public float rTwo;
-    public float rThree;
-
-    public double wrOne;
-    public float wrTwo;
-    public float wrThree;
-
-    public float up;
-
-    public float mb;
-
-    public float dn;
-
-    public float MA5Volume;
-
-    public float MA10Volume;
+    private float MA10Volume;
 
 
     @Override
@@ -202,12 +177,12 @@ public abstract class KLineEntity implements IKLine {
 
     @Override
     public float getRsiTwo() {
-        return rTwo;
+        return (float) rTwo;
     }
 
     @Override
     public float getRsiThree() {
-        return rThree;
+        return (float) rThree;
     }
 
 
@@ -224,5 +199,85 @@ public abstract class KLineEntity implements IKLine {
     @Override
     public Float getWrThree() {
         return wrThree;
+    }
+
+    public void setMaOne(float maOne) {
+        this.maOne = maOne;
+    }
+
+    public void setMaTwo(float maTwo) {
+        this.maTwo = maTwo;
+    }
+
+    public void setMaThree(float maThree) {
+        this.maThree = maThree;
+    }
+
+    public void setDea(float dea) {
+        this.dea = dea;
+    }
+
+    public void setDif(float dif) {
+        this.dif = dif;
+    }
+
+    public void setMacd(float macd) {
+        this.macd = macd;
+    }
+
+    public void setK(float k) {
+        this.k = k;
+    }
+
+    public void setD(float d) {
+        this.d = d;
+    }
+
+    public void setJ(float j) {
+        this.j = j;
+    }
+
+    public void setrOne(double rOne) {
+        this.rOne = rOne;
+    }
+
+    public void setrTwo(double rTwo) {
+        this.rTwo = rTwo;
+    }
+
+    public void setrThree(double rThree) {
+        this.rThree = rThree;
+    }
+
+    public void setWrOne(double wrOne) {
+        this.wrOne = wrOne;
+    }
+
+    public void setWrTwo(float wrTwo) {
+        this.wrTwo = wrTwo;
+    }
+
+    public void setWrThree(float wrThree) {
+        this.wrThree = wrThree;
+    }
+
+    public void setUp(float up) {
+        this.up = up;
+    }
+
+    public void setMb(float mb) {
+        this.mb = mb;
+    }
+
+    public void setDn(float dn) {
+        this.dn = dn;
+    }
+
+    public void setMA5Volume(float MA5Volume) {
+        this.MA5Volume = MA5Volume;
+    }
+
+    public void setMA10Volume(float MA10Volume) {
+        this.MA10Volume = MA10Volume;
     }
 }

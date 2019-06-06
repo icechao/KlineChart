@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
  * @version      : V1
  *************************************************************************/
 public class KChartBean extends KLineEntity {
+
+
     @Override
     public Long getDate() {
         try {
@@ -53,15 +55,55 @@ public class KChartBean extends KLineEntity {
     }
 
     @SerializedName("Date")
-    public String date;
+    private String date;
     @SerializedName("Open")
-    public float open;
+    private float open;
     @SerializedName("High")
-    public float high;
+    private float high;
     @SerializedName("Low")
-    public float low;
+    private float low;
     @SerializedName("Close")
-    public float close;
+    private float close;
     @SerializedName("Volume")
-    public float volume;
+    private float volume;
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public float getOpen() {
+        return open;
+    }
+
+    public void setOpen(float open) {
+        this.open = open;
+    }
+
+    public float getHigh() {
+        return high;
+    }
+
+    public void setHigh(float high) {
+        this.high = high;
+    }
+
+    public float getLow() {
+        return low;
+    }
+
+    public void setLow(float low) {
+        this.low = low;
+    }
+
+    public float getClose() {
+        return close;
+    }
+
+    public void setClose(float close) {
+        this.close = close;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
+    }
 }
