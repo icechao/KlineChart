@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class DataRequest {
-    private static List<? extends KLineEntity> datas = null;
+    private static List<KChartBean> datas = null;
 
     public static String getStringFromAssert(Context context, String fileName) {
         try {
@@ -27,7 +27,7 @@ public class DataRequest {
         return "";
     }
 
-    public static List<? extends KLineEntity> getALL(Context context) {
+    public static List<KChartBean> getALL(Context context) {
         if (datas == null) {
             final List<KChartBean> data = new Gson().fromJson(getStringFromAssert(context, "ibm.json"), new TypeToken<List<KChartBean>>() {
             }.getType());

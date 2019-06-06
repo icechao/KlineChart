@@ -55,7 +55,7 @@ public class KChartBean extends KLineEntity {
     }
 
     @SerializedName("Date")
-    private String date;
+    public String date;
     @SerializedName("Open")
     private float open;
     @SerializedName("High")
