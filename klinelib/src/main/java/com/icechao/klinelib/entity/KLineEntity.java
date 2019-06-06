@@ -16,38 +16,23 @@ import java.text.SimpleDateFormat;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class KLineEntity implements IKLine {
+public abstract class KLineEntity implements IKLine {
 
 
     @Override
-    public String getDate() {
-        try {
-            return new SimpleDateFormat("yyyy/MM/dd").parse(getId()).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
+    public abstract Long getDate() ;
 
     @Override
-    public float getOpenPrice() {
-        return open;
-    }
+    public abstract float getOpenPrice();
 
     @Override
-    public float getHighPrice() {
-        return high;
-    }
+    public abstract float getHighPrice();
 
     @Override
-    public float getLowPrice() {
-        return low;
-    }
+    public abstract float getLowPrice();
 
     @Override
-    public float getClosePrice() {
-        return close;
-    }
+    public abstract float getClosePrice();
 
     @Override
     public float getMaOne() {
@@ -110,9 +95,7 @@ public class KLineEntity implements IKLine {
     }
 
     @Override
-    public float getVolume() {
-        return volume;
-    }
+    public abstract float getVolume();
 
     @Override
     public float getMA5Volume() {
@@ -125,60 +108,55 @@ public class KLineEntity implements IKLine {
     }
 
 
-    public float getHigh() {
-        return high;
-    }
-
-    public void setHigh(float high) {
-        this.high = high;
-    }
-
-    public float getAmount() {
-        return volume;
-    }
-
-    public void setAmount(float amount) {
-        this.volume = amount;
-    }
-
-    public float getVol() {
-        return volume;
-    }
-
-    public void setVol(float vol) {
-        this.volume = vol;
-    }
-
-    public float getLow() {
-        return low;
-    }
-
-    public void setLow(float low) {
-        this.low = low;
-    }
+//    public abstract float getHigh();
+//
+//    public void setHigh(float high) {
+//        this.high = high;
+//    }
+//
+//    public float getAmount() {
+//        return volume;
+//    }
+//
+//    public void setAmount(float amount) {
+//        this.volume = amount;
+//    }
+//
+//    public float getVol() {
+//        return volume;
+//    }
+//
+//    public void setVol(float vol) {
+//        this.volume = vol;
+//    }
+//
+//    public float getLow() {
+//        return low;
+//    }
+//
+//    public void setLow(float low) {
+//        this.low = low;
+//    }
 
 
-    public String getId() {
-        return date;
-    }
+//    public abstract String getId();
 
-    public void setId(String id) {
-        this.date = id;
-    }
+//    public void setId(String id) {
+//        this.date = id;
+//    }
 
-    @SerializedName("Date")
-    public String date;
-    @SerializedName("Open")
-    public float open;
-    @SerializedName("High")
-    public float high;
-    @SerializedName("Low")
-    public float low;
-    @SerializedName("Close")
-    public float close;
-    @SerializedName("Volume")
-    public float volume;
-
+//    @SerializedName("Date")
+//    public String date;
+//    @SerializedName("Open")
+//    public float open;
+//    @SerializedName("High")
+//    public float high;
+//    @SerializedName("Low")
+//    public float low;
+//    @SerializedName("Close")
+//    public float close;
+//    @SerializedName("Volume")
+//    public float volume;
 
     public float maOne;
 

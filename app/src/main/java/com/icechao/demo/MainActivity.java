@@ -46,7 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private View klineOperater;
     //    private ReqBean klineReq;
     private DepthFullView depthFullView;
-    private List<KLineEntity> all;
+    private List<? extends KLineEntity> all;
 
 
     @Override
@@ -140,38 +140,38 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     }
 
     private void changeLast() {
-        handler.postDelayed(() -> {
-            int i = random.nextInt() * 1123 % 400;
-            KLineEntity kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
-            KLineEntity kLineEntity1 = new KLineEntity();
-            kLineEntity1.date = kLineEntity.date;
-            kLineEntity1.high = kLineEntity.high;
-            kLineEntity1.close = kLineEntity.close;
-            kLineEntity1.open = kLineEntity.open;
-            kLineEntity1.low = kLineEntity.low;
-            kLineEntity1.volume = 0;
-
-            textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
-            float v = kLineEntity1.close - kLineEntity1.open;
-            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.open));
-            textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.close));
-            textViewHighPriceText.setText(kLineEntity1.high + "");
-            textViewLowPriceText.setText(kLineEntity1.low + "");
-            textViewVolumeSumText.setText(kLineEntity1.volume + "");
-
-
-            if (i++ % 10 == 0) {
-//                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).open;
-                adapter.addLast(kLineEntity1);
-            } else {
-                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
-//                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).close;
-
-
-            }
-            changeLast();
-
-        }, 2000);
+//        handler.postDelayed(() -> {
+//            int i = random.nextInt() * 1123 % 400;
+//            KLineEntity kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
+//            KLineEntity kLineEntity1 = new KChartBean();
+//            kLineEntity1.date = kLineEntity.date;
+//            kLineEntity1.high = kLineEntity.high;
+//            kLineEntity1.close = kLineEntity.close;
+//            kLineEntity1.open = kLineEntity.open;
+//            kLineEntity1.low = kLineEntity.low;
+//            kLineEntity1.volume = 0;
+//
+//            textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
+//            float v = kLineEntity1.close - kLineEntity1.open;
+//            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.open));
+//            textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.close));
+//            textViewHighPriceText.setText(kLineEntity1.high + "");
+//            textViewLowPriceText.setText(kLineEntity1.low + "");
+//            textViewVolumeSumText.setText(kLineEntity1.volume + "");
+//
+//
+//            if (i++ % 10 == 0) {
+////                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).open;
+//                adapter.addLast(kLineEntity1);
+//            } else {
+//                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
+////                kLineEntity1.open = adapter.getItem(adapter.getCount() - 1).close;
+//
+//
+//            }
+//            changeLast();
+//
+//        }, 2000);
     }
 
 

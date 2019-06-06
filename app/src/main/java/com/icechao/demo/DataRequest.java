@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class DataRequest {
-    private static List<KLineEntity> datas = null;
+    private static List<? extends KLineEntity> datas = null;
 
     public static String getStringFromAssert(Context context, String fileName) {
         try {
@@ -27,9 +27,9 @@ public class DataRequest {
         return "";
     }
 
-    public static List<KLineEntity> getALL(Context context) {
+    public static List<? extends KLineEntity> getALL(Context context) {
         if (datas == null) {
-            final List<KLineEntity> data = new Gson().fromJson(getStringFromAssert(context, "ibm.json"), new TypeToken<List<KLineEntity>>() {
+            final List<KChartBean> data = new Gson().fromJson(getStringFromAssert(context, "ibm.json"), new TypeToken<List<KChartBean>>() {
             }.getType());
             DataTools.calculate(data);
             datas = data;
@@ -45,7 +45,7 @@ public class DataRequest {
      * @param size    每次查询的条数
      */
     public static List<KLineEntity> getData(Context context, int offset, int size) {
-        List<KLineEntity> all = getALL(context);
+        List<? extends KLineEntity> all = getALL(context);
         List<KLineEntity> data = new ArrayList<>();
         int start = Math.max(0, all.size() - 1 - offset - size);
         int stop = Math.min(all.size(), all.size() - offset);

@@ -48,7 +48,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         if (position >= dataCount) {
             return new Date();
         }
-        return new Date(datas.get(position).getId());
+        return new Date(datas.get(position).getDate());
     }
 
 

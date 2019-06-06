@@ -25,7 +25,7 @@ public class DataTools {
      *
      * @param dataList
      */
-    public static float[] calculate(List<KLineEntity> dataList) {
+    public static float[] calculate(List<? extends KLineEntity> dataList) {
         float[] points = calculate(dataList, 2, 20,
                 Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
                 Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,

@@ -8,6 +8,11 @@
   2. <b>复写方法</b>
   
           /**
+          * 时间,返回long类型时间
+          */
+          long getDate();
+  
+          /**
            * 开盘价
            */
           float getOpenPrice();

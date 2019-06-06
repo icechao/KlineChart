@@ -1,6 +1,7 @@
 package com.icechao.klinelib.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
 
 /*************************************************************************
  * Description   :
@@ -17,7 +18,7 @@ import java.io.Serializable;
 public interface ICandle extends Serializable {
 
 
-    String getDate();
+    Long getDate() throws ParseException;
 
     /**
      * 开盘价
