@@ -45,21 +45,20 @@
                   ......
             }
           
-  2. <b>实例化KLineChartAdapter对像</b>
-  3. <b>在布局中直接使用</b>
+  2. <b>在布局中直接使用</b>
   
             <com.icechao.klinelib.view.KLineChartView
               android:id="@+id/kLineChartView"
               android:layout_width="match_parent"
               android:layout_height="580dp"
               android:background="@color/color_081734" />
-              
+             
           支持自定义属性
               自定义属性查看:
              
         [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
               
-  4. <b>初始化k线</b>
+  3. <b>初始化k线</b>
   
               private void initKline() {
                      //设置K线的数据适配器
@@ -92,7 +91,10 @@
                  
         更多方法见 [KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
                  
-  5.<b>KLineChartAdapter设置数据</b>
+  4.<b>使用KLineChartAdapter设置数据</b>
+  
+           如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
+           chartView.getAdapter()
   
            填充或重新填充数据
            resetData(List<KlineEntry>);
