@@ -5,8 +5,49 @@
 ##使用步骤: 
 
   1. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
+  
+            public class KChartBean extends KLineEntity {
+            
+                  @Override
+                  public Long getDate() {
+                      try {
+                          return new SimpleDateFormat("yyy/MM/dd").parse(date).getTime();
+                      } catch (ParseException e) {
+                          e.printStackTrace();
+                          return 0L;
+                      }
+                  }
+
+                  @Override
+                  public float getOpenPrice() {
+                      return open;
+                  }
+
+                  @Override
+                  public float getHighPrice() {
+                      return high;
+                  }
+
+                  @Override
+                  public float getLowPrice() {
+                      return low;
+                  }
+
+                  @Override
+                  public float getClosePrice() {
+                      return close;
+                  }
+
+                  @Override
+                  public float getVolume() {
+                      return volume;
+                  }
+                  ......
+            }
+          
   2. <b>实例化KLineChartAdapter对像</b>
   3. <b>在布局中直接使用</b>
+  
             <com.icechao.klinelib.view.KLineChartView
               android:id="@+id/kLineChartView"
               android:layout_width="match_parent"
