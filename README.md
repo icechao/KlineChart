@@ -2,9 +2,9 @@
 借鉴开源项目,自己写的K线,修复原项目各种bug,优化性能,优化展示
 
 
-使用步骤: 
+##使用步骤: 
 
-  1. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间</b>
+  1. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
   2. <b>实例化KLineChartAdapter对像</b>
   3. <b>在布局中直接使用</b>
             <com.icechao.klinelib.view.KLineChartView
@@ -18,7 +18,7 @@
              
         [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
               
-  4. <b>初始化k线,   更多方法见 KLineChartView</b>
+  4. <b>初始化k线</b>
   
               private void initKline() {
                      //设置K线的数据适配器
@@ -48,6 +48,8 @@
                      //显示loading
                      chartView.showLoading();
                  }
+                 
+        更多方法见 [KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
                  
   5.<b>KLineChartAdapter设置数据</b>
   
