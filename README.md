@@ -83,7 +83,7 @@
                              return String.format("%.2f", value);
                          }
                      });
-                     //设置K线最右侧缩进距离
+                     //设置K线左侧滑动的超出距离
                      chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
                      //显示loading
                      chartView.showLoading();
