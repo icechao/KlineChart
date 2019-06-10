@@ -233,16 +233,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
 
     /**
-     * 滑到了最左边
-     */
-    abstract public void onLeftSide();
-
-    /**
-     * 滑到了最右边
-     */
-    abstract public void onRightSide();
-
-    /**
      * 是否在触摸中
      *
      * @return

@@ -301,6 +301,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected float selectedPointRadius = 5;
 
+    /**
+     * 滑动监听
+     */
+    protected SlidListener slidListener;
+
     private long time;
 
 
@@ -1283,8 +1288,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private void setTranslatedX(float mTranslateX) {
         if (mTranslateX < getMinTranslate()) {
             mTranslateX = getMinTranslate();
+            if (null != slidListener && mTranslateX == getMinTranslate()) {
+                slidListener.onSlidRight();
+            }
         } else if (mTranslateX > getMaxTranslate()) {
             mTranslateX = getMaxTranslate();
+            if (null != slidListener) {
+                slidListener.onSlidLeft();
+            }
         }
         this.canvasTranslateX = mTranslateX;
     }
@@ -1770,4 +1781,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         return this.status;
     }
 
+
+    public void setSlidListener(SlidListener slidListener) {
+        this.slidListener = slidListener;
+    }
 }

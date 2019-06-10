@@ -17,6 +17,7 @@ import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.ChildStatus;
 import com.icechao.klinelib.utils.MainStatus;
+import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.view.KLineChartView;
 
 import java.util.ArrayList;
@@ -119,6 +120,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         });
         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
         chartView.showLoading();
+
+
+        chartView.setSlidListener(new SlidListener() {
+            @Override
+            public void onSlidLeft() {
+                LogUtil.e("onSlidLeft");
+            }
+
+            @Override
+            public void onSlidRight() {
+                LogUtil.e("onSlidRight");
+            }
+        });
     }
 
     int i = 0;
@@ -131,7 +145,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 runOnUiThread(() -> {
                     all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all);
+                    adapter.resetData(all.subList(111, 333));
                     chartView.hideLoading();
                     changeLast();
                 });

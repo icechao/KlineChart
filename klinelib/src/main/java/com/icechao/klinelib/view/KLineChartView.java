@@ -161,15 +161,6 @@ public class KLineChartView extends BaseKLineChartView {
         return ContextCompat.getColor(getContext(), resId);
     }
 
-    @Override
-    public void onLeftSide() {
-        showLoading();
-    }
-
-    @Override
-    public void onRightSide() {
-    }
-
 
     /**
      * 仅显示LoadingView同时显示K线
