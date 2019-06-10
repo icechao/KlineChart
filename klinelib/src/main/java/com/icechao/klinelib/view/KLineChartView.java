@@ -493,7 +493,7 @@ public class KLineChartView extends BaseKLineChartView {
             stopFreshPage();
             this.isLine = false;
         }
-        setResetTranslate(true);
+        setResetTranslate();
         setItemCount(0);
         invalidate();
     }
@@ -1000,6 +1000,14 @@ public class KLineChartView extends BaseKLineChartView {
             this.status = status;
             invalidate();
         }
+    }
+
+    /**
+     * 设置K线跳转回最右侧
+     */
+    public void setResetTranslate() {
+        this.resetTranslate = true;
+        invalidate();
     }
 
     /**

@@ -347,11 +347,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     };
 
-    private boolean resetTranslate = true;
+    protected boolean resetTranslate = true;
 
-    public void setResetTranslate(boolean resetTranslate) {
-        this.resetTranslate = resetTranslate;
-    }
 
 
     /**
