@@ -1007,7 +1007,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setResetTranslate() {
         this.resetTranslate = true;
-        invalidate();
+        notifyChanged();
     }
 
     /**
