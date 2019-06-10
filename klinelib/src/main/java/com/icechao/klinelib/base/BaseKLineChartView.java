@@ -584,7 +584,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 drawK(canvas);
                 drawYLabels(canvas);
                 drawXLabels(canvas);
-                drawSelected(canvas);
+//                drawSelected(canvas);
                 drawPriceLine(canvas);
                 drawValue(canvas, isLongPress ? selectedIndex : screenRightIndex);
             } catch (Exception e) {
@@ -777,114 +777,108 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.restore();
     }
 
-    private void drawSelected(Canvas canvas) {
+    public void drawSelected(Canvas canvas, float x) {
+        float textHorizentalPadding = Dputil.Dp2Px(getContext(), 5);
+        float textVerticalPadding = Dputil.Dp2Px(getContext(), 3);
+        float y, textWidth;
+        String text;
+        //十字线竖线
+        float halfWidth = selectedWidth / 2 * scaleX;
+        float left = x - halfWidth;
+        float right = x + halfWidth;
+        float bottom = displayHeight + topPadding;
+        Path path = new Path();
+        path.moveTo(left, topPadding);
+        path.lineTo(right, topPadding);
+        path.lineTo(right, bottom);
+        path.lineTo(left, bottom);
+        path.close();
+        LinearGradient linearGradient = new LinearGradient(x, topPadding, x, bottom,
+                new int[]{Color.TRANSPARENT, selectedYColor, selectedYColor, Color.TRANSPARENT},
+                new float[]{0f, 0.2f, 0.8f, 1f}, Shader.TileMode.CLAMP);
+        selectedYLinePaint.setShader(linearGradient);
+        canvas.drawPath(path, selectedYLinePaint);
 
-        if (isLongPress) {
-            float textHorizentalPadding = Dputil.Dp2Px(getContext(), 5);
-            float textVerticalPadding = Dputil.Dp2Px(getContext(), 3);
-            float y, textWidth;
-            String text;
-            float x = getX(selectedIndex - screenLeftIndex);
+        //画X值
+        String date = formatDateTime(dataAdapter.getDate(selectedIndex));
+        textWidth = textPaint.measureText(date);
+        float r = textHeight / 2;
+        if (null != childDraw) {
+            y = childRect.bottom;
+        } else {
+            y = volRect.bottom;
+        }
+        float halfTextWidth = textWidth / 2;
+        float tempLeft = x - halfTextWidth;
+        left = tempLeft - textHorizentalPadding;
+        right = x + halfTextWidth + textHorizentalPadding;
+        bottom = y + baseLine + r - 2;
+        canvas.drawRect(left, y, right, bottom, selectedPointPaint);
+        canvas.drawRect(left, y, right, bottom, selectorFramePaint);
+        canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
+        //十字线Y值判断
+        if (crossFollowTouch) {
+            y = selectedY;
+            if (selectedY < mainRect.top + topPadding) {
+                return;
+            } else if (selectedY < mainRect.bottom) {
+                text = valueFormatter.format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - topPadding) * (mainRect.bottom - selectedY)));
+            } else if (selectedY < volRect.top) {
+                return;
+            } else if (selectedY < volRect.bottom) {
+                text = NumberTools.getTradeMarketAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
+            } else if (null != childDraw && selectedY < childRect.bottom) {
+                text = childDraw.getValueFormatter().format((childMaxValue / volRect.height() * (volRect.bottom - selectedY)));
+            } else if (null != childDraw && selectedY < childRect.top) {
+                return;
+            } else {
+                return;
+            }
+        } else {
+            text = formatValue(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
+            y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
+        }
 
-            //十字线竖线
-            float halfWidth = selectedWidth / 2 * scaleX;
-            float left = x - halfWidth;
-            float right = x + halfWidth;
-            float bottom = displayHeight + topPadding;
-            Path path = new Path();
-            path.moveTo(left, topPadding);
-            path.lineTo(right, topPadding);
-            path.lineTo(right, bottom);
-            path.lineTo(left, bottom);
+        //十字线横线
+        canvas.drawLine(-canvasTranslateX, y, -canvasTranslateX + width, y, selectedXLinePaint);
+
+        //十字线交点
+        if (!crossFollowTouch) {
+            canvas.drawCircle(x, y, chartItemWidth, selectedbigCrossPaint);
+            canvas.drawCircle(x, y, selectedPointRadius, selectedCrossPaint);
+        }
+
+        // 选中状态下的Y值
+        textWidth = textPaint.measureText(text);
+        r = textHeight / 2 + textVerticalPadding;
+        float tempX = textWidth + 2 * textHorizentalPadding;
+        //左侧框
+        float boxTop = y - r;
+        float boXBottom = y + r;
+        if (getX(selectedIndex - screenLeftIndex) > width / 2) {
+            x = -canvasTranslateX;
+            path = new Path();
+            path.moveTo(x, boxTop);
+            path.lineTo(x, boXBottom);
+            path.lineTo(tempX + x, boXBottom);
+            path.lineTo(tempX + x + textVerticalPadding * 2, y);
+            path.lineTo(tempX + x, boxTop);
             path.close();
-            LinearGradient linearGradient = new LinearGradient(x, topPadding, x, bottom,
-                    new int[]{Color.TRANSPARENT, selectedYColor, selectedYColor, Color.TRANSPARENT},
-                    new float[]{0f, 0.2f, 0.8f, 1f}, Shader.TileMode.CLAMP);
-            selectedYLinePaint.setShader(linearGradient);
-            canvas.drawPath(path, selectedYLinePaint);
-
-            //画X值
-            String date = formatDateTime(dataAdapter.getDate(selectedIndex));
-            textWidth = textPaint.measureText(date);
-            float r = textHeight / 2;
-            x = getX(selectedIndex - screenLeftIndex);
-            if (null != childDraw) {
-                y = childRect.bottom;
-            } else {
-                y = volRect.bottom;
-            }
-            float halfTextWidth = textWidth / 2;
-            float tempLeft = x - halfTextWidth;
-            left = tempLeft - textHorizentalPadding;
-            right = x + halfTextWidth + textHorizentalPadding;
-            bottom = y + baseLine + r - 2;
-            canvas.drawRect(left, y, right, bottom, selectedPointPaint);
-            canvas.drawRect(left, y, right, bottom, selectorFramePaint);
-            canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
-            //十字线Y值判断
-            if (crossFollowTouch) {
-                y = selectedY;
-                if (selectedY < mainRect.top + topPadding) {
-                    return;
-                } else if (selectedY < mainRect.bottom) {
-                    text = valueFormatter.format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - topPadding) * (mainRect.bottom - selectedY)));
-                } else if (selectedY < volRect.top) {
-                    return;
-                } else if (selectedY < volRect.bottom) {
-                    text = NumberTools.getTradeMarketAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
-                } else if (null != childDraw && selectedY < childRect.bottom) {
-                    text = childDraw.getValueFormatter().format((childMaxValue / volRect.height() * (volRect.bottom - selectedY)));
-                } else if (null != childDraw && selectedY < childRect.top) {
-                    return;
-                } else {
-                    return;
-                }
-            } else {
-                text = formatValue(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
-                y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
-            }
-
-            //十字线横线
-            canvas.drawLine(0, y, width - 5, y, selectedXLinePaint);
-            //十字线交点
-            if (!crossFollowTouch) {
-                canvas.drawCircle(x, y, chartItemWidth, selectedbigCrossPaint);
-                canvas.drawCircle(x, y, selectedPointRadius, selectedCrossPaint);
-            }
-
-            // 选中状态下的Y值
-            textWidth = textPaint.measureText(text);
-            r = textHeight / 2 + textVerticalPadding;
-            float tempX = textWidth + 2 * textHorizentalPadding;
-            //左侧框
-            float boxTop = y - r;
-            float boXBottom = y + r;
-            if (getX(selectedIndex - screenLeftIndex) > width / 2) {
-                x = 1;
-                path = new Path();
-                path.moveTo(x, boxTop);
-                path.lineTo(x, boXBottom);
-                path.lineTo(tempX, boXBottom);
-                path.lineTo(tempX + textVerticalPadding * 2, y);
-                path.lineTo(tempX, boxTop);
-                path.close();
-                canvas.drawPath(path, selectedPointPaint);
-                canvas.drawPath(path, selectorFramePaint);
-                canvas.drawText(text, x + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
-            } else {//右侧框
-                x = width - textWidth - 1 - 2 * textHorizentalPadding - textVerticalPadding;
-                path = new Path();
-                path.moveTo(x, y);
-                path.lineTo(x + textVerticalPadding * 2, boXBottom);
-                path.lineTo(width - 2, boXBottom);
-                path.lineTo(width - 2, boxTop);
-                path.lineTo(x + textVerticalPadding * 2, boxTop);
-                path.close();
-                canvas.drawPath(path, selectedPointPaint);
-                canvas.drawPath(path, selectorFramePaint);
-                canvas.drawText(text, x + textVerticalPadding + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
-            }
-
+            canvas.drawPath(path, selectedPointPaint);
+            canvas.drawPath(path, selectorFramePaint);
+            canvas.drawText(text, x + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
+        } else {//右侧框
+            x = -canvasTranslateX + width - textWidth - 1 - 2 * textHorizentalPadding - textVerticalPadding;
+            path = new Path();
+            path.moveTo(x, y);
+            path.lineTo(x + textVerticalPadding * 2, boXBottom);
+            path.lineTo(-canvasTranslateX + width - 2, boXBottom);
+            path.lineTo(-canvasTranslateX + width - 2, boxTop);
+            path.lineTo(x + textVerticalPadding * 2, boxTop);
+            path.close();
+            canvas.drawPath(path, selectedPointPaint);
+            canvas.drawPath(path, selectorFramePaint);
+            canvas.drawText(text, x + textVerticalPadding + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         }
     }
 

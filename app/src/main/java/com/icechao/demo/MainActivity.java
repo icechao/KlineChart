@@ -133,6 +133,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 LogUtil.e("onSlidRight");
             }
         });
+
+//        chartView.setCrossFollowTouch(true);
     }
 
     int i = 0;

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import android.view.View;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
@@ -272,6 +273,9 @@ public class MainDraw extends BaseDraw {
             drawCandle(canvas, x, high, low, open, close + 1, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
             drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
+        }
+        if (view.isLongPress() && position == view.getSelectedIndex()) {
+            view.drawSelected(canvas, x);
         }
     }
 
