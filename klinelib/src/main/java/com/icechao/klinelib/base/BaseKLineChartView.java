@@ -350,7 +350,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected boolean resetTranslate = true;
 
 
-
     /**
      * 当重置数据时,延时1s显示最后的加载动画
      */
@@ -578,9 +577,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (!isShowLoading && width != 0 && 0 != itemsCount && null != points && points.length != 0) {
             try {
                 initValues();
-                drawK(canvas);
                 drawYLabels(canvas);
                 drawXLabels(canvas);
+                drawK(canvas);
 //                drawSelected(canvas);
                 drawPriceLine(canvas);
                 drawValue(canvas, isLongPress ? selectedIndex : screenRightIndex);

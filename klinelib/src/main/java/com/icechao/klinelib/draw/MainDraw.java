@@ -290,7 +290,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * draw选择器
+     * 选中的弹出窗口, selected data popupwindow
      *
      * @param view   view
      * @param canvas canvas
@@ -372,7 +372,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置ma1颜色
+     * 设置ma1颜色 ma1 color
      *
      * @param color color
      */
@@ -381,7 +381,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置ma2颜色
+     * 设置ma2颜色, ma2 color
      *
      * @param color color
      */
@@ -390,7 +390,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置ma3颜色
+     * 设置ma3颜色 ,ma3 color
      *
      * @param color color
      */
@@ -399,7 +399,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置选择器文字颜色
+     * 设置选择器文字颜色 selected popupwindow text color
      *
      * @param color color
      */
@@ -412,7 +412,7 @@ public class MainDraw extends BaseDraw {
     private float selectedTextBaseLine;
 
     /**
-     * 设置选择器文字大小
+     * 设置选择器文字大小 selected popupwindow text size
      *
      * @param textSize textsize
      */
@@ -427,7 +427,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置选择器背景
+     * 设置选择器背景 selected popupwindow  background color
      *
      * @param color color
      */
@@ -436,7 +436,7 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置曲线宽度
+     * 设置曲线宽度 line width
      */
     public void setLineWidth(float width) {
         indexPaintThree.setStrokeWidth(width);
@@ -450,7 +450,7 @@ public class MainDraw extends BaseDraw {
     private float maTextHeight;
 
     /**
-     * 设置文字大小
+     * 设置文字大小 text size
      */
     public void setTextSize(float textSize) {
         indexPaintThree.setTextSize(textSize);
@@ -564,12 +564,12 @@ public class MainDraw extends BaseDraw {
 
 
     /**
-     * 最大值最小值画笔
+     * 最大值最小值画笔  max value /min value paint
      */
     private Paint maxMinPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
-     * 设置最大值/最小值文字颜色
+     * 设置最大值/最小值文字颜色 max value /min value text color
      */
     public void setLimitTextColor(int color) {
         maxMinPaint.setColor(color);
@@ -579,7 +579,7 @@ public class MainDraw extends BaseDraw {
     private float limitTextDecent;
 
     /**
-     * 设置最大值/最小值文字大小
+     * 设置最大值/最小值文字大小 max value /min value  text size
      */
     public void setLimitTextSize(float textSize) {
         maxMinPaint.setTextSize(textSize);
@@ -590,17 +590,27 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 解决text居中的问题
+     * 解决text居中的问题 fix text align center
      */
     public float fixTextYBaseBottom(float y) {
         return y + (limitTextHigh) / 2 - limitTextDecent;
     }
 
 
+    /**
+     * 分时线颜色, minute line color
+     *
+     * @param color
+     */
     public void setMinuteLineColor(int color) {
         linePaint.setColor(color);
     }
 
+    /**
+     * top padding main area
+     *
+     * @param indexPaddingTop
+     */
     public void setIndexPaddingTop(int indexPaddingTop) {
         this.indexPaddingTop = indexPaddingTop;
     }
