@@ -135,6 +135,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         });
 
 //        chartView.setCrossFollowTouch(true);
+
+        TextView textView = new TextView(this);
+        textView.setText("正在加载...");
+
+        chartView.setProgressBar(textView);
     }
 
     int i = 0;

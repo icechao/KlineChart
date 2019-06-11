@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKLineChartView;
@@ -34,7 +34,7 @@ import com.icechao.klinelib.utils.MainStatus;
  *************************************************************************/
 public class KLineChartView extends BaseKLineChartView {
 
-    private ImageView progressBar;
+    private View progressBar;
 
     private MACDDraw macdDraw;
     private RSIDraw rsiDraw;
@@ -163,16 +163,21 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * 仅显示LoadingView同时显示K线
+     * 仅显示LoadingView同时显示K线,如果调用方法前没设置过setProgressBar 会自动加载一个progressBar
      */
     public void showLoading() {
-        if (null != progressBar && progressBar.getVisibility() != View.VISIBLE) {
-            post(() -> {
-                progressBar.setVisibility(View.VISIBLE);
-                AnimationDrawable drawable = (AnimationDrawable) progressBar.getDrawable();
-                drawable.start();
-                isAnimationLast = false;
-            });
+        if (null != progressBar) {
+            if (progressBar.getVisibility() != View.VISIBLE) {
+                post(() -> {
+                    progressBar.setVisibility(View.VISIBLE);
+//                AnimationDrawable drawable = (AnimationDrawable) progressBar.getDrawable();
+//                drawable.start();
+                    isAnimationLast = false;
+                });
+            }
+        } else {
+            setProgressBar(new ProgressBar(getContext()));
+            showLoading();
         }
     }
 
@@ -193,8 +198,8 @@ public class KLineChartView extends BaseKLineChartView {
         if (null != progressBar && progressBar.getVisibility() == View.VISIBLE) {
             post(() -> {
                 progressBar.setVisibility(View.GONE);
-                AnimationDrawable drawable = (AnimationDrawable) progressBar.getDrawable();
-                drawable.stop();
+//                AnimationDrawable drawable = (AnimationDrawable) progressBar.getDrawable();
+//                drawable.stop();
                 isShowLoading = false;
             });
         }
@@ -1026,5 +1031,18 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setEndShadowLayerWidth(int endShadowLayerWidth) {
         this.endShadowLayerWidth = endShadowLayerWidth;
+    }
+
+    /**
+     * 设置加载loading
+     *
+     * @param progressBar loading View
+     */
+    public void setProgressBar(View progressBar) {
+        this.progressBar = progressBar;
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(CENTER_IN_PARENT);
+        progressBar.setVisibility(INVISIBLE);
+        addView(progressBar, layoutParams);
     }
 }
