@@ -92,8 +92,7 @@
                      chartView.showLoading();
                  }
                  
-        更多方法见 [KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)
-                 
+         
   4.<b>使用KLineChartAdapter设置数据</b>
   
            如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
@@ -111,6 +110,8 @@
            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
 
 
+# 部分API介绍  更多方法点击[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)查看
+        
 ### Loadding展示
 
        justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
@@ -179,7 +180,7 @@
       - 添加手指出动时十字线的绘制方式(Y值跟随手指,Y轴指向最新价)
 
   
-#### 效果图
+# 效果图
 后面复用历史数据会导致K线看起来有点乱,数据问题
 
 
