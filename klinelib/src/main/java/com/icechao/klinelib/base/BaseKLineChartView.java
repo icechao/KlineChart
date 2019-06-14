@@ -1135,11 +1135,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 重新计算并刷新线条
      */
     public void notifyChanged() {
-        if (resetTranslate && width != 0) {
+        if (resetTranslate && width != 0 && itemsCount != 0) {
             setTranslatedX(getMinTranslate());
             resetTranslate = false;
         }
-        invalidate();
     }
 
 

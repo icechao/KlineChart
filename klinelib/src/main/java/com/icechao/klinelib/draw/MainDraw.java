@@ -166,6 +166,10 @@ public class MainDraw extends BaseDraw {
                 }
             }
         }
+
+        if (view.isLongPress() && position == view.getSelectedIndex()) {
+            view.drawSelected(canvas, curX);
+        }
     }
 
     private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float start, float animEnd, Paint paint, float end) {
@@ -273,9 +277,6 @@ public class MainDraw extends BaseDraw {
             drawCandle(canvas, x, high, low, open, close + 1, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
             drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
-        }
-        if (view.isLongPress() && position == view.getSelectedIndex()) {
-            view.drawSelected(canvas, x);
         }
     }
 
