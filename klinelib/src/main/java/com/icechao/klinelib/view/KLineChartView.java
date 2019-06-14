@@ -498,8 +498,8 @@ public class KLineChartView extends BaseKLineChartView {
             stopFreshPage();
             this.isLine = false;
         }
-        setResetTranslate();
         setItemCount(0);
+        setResetTranslate();
         invalidate();
     }
 
