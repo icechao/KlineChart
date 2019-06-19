@@ -49,8 +49,6 @@ public class KLineChartView extends BaseKLineChartView {
 
     public KLineChartView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        initView(context);
-        initAttrs(attrs);
     }
 
     public KLineChartView(Context context, AttributeSet attrs, int defStyleAttr) {
