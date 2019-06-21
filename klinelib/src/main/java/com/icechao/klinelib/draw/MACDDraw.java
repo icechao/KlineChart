@@ -51,7 +51,7 @@ public class MACDDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
-        drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD]);
+        drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)]);
         if (position == 0) {
             return;
         }
