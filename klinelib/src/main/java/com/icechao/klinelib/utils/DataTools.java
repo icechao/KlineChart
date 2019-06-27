@@ -262,7 +262,7 @@ public class DataTools {
 
     private static float getValueWR(List<? extends KLineEntity> dataList, int wr1, int i) {
         float valueWR;
-        if (wr1 != 0 && i >= wr1) {
+        if (wr1 != 0 && i >= wr1 - 1) {
             valueWR = -calcWr(dataList, i, wr1);
         } else {
             valueWR = Float.MIN_VALUE;
