@@ -30,8 +30,11 @@ public class DataTools {
                 Constants.K_MA_NUMBER_1, Constants.K_MA_NUMBER_2, Constants.K_MA_NUMBER_3,
                 Constants.MACD_S, Constants.MACD_L, Constants.MACD_M,
                 Constants.K_VOL_MA_NUMBER_1, Constants.K_VOL_MA_NUMBER_2,
-                Constants.KDJ_K, Constants.RSI_1,
+                Constants.KDJ_K,
                 Constants.WR_1, 0, 0);
+
+        DataTools.calculateRSI(points, dataList, Constants.RSI_1);
+
         return points;
     }
 
@@ -51,7 +54,6 @@ public class DataTools {
      * @param maOne
      * @param maTwo
      * @param kdjDay
-     * @param rsi
      * @param wr1
      * @param wr2
      * @param wr3
@@ -61,7 +63,7 @@ public class DataTools {
                              double priceMaOne, double priceMaTwo, double priceMaThree,
                              int s, int l, int m,
                              double maOne, double maTwo,
-                             int kdjDay, int rsi,
+                             int kdjDay,
                              int wr1, int wr2, int wr3) {
         double maSum1 = 0;
         double maSum2 = 0;
@@ -79,7 +81,7 @@ public class DataTools {
 
         int indexInterval = Constants.getCount();
         float[] points = new float[dataList.size() * indexInterval];
-
+        String temp = "";
 
         int size = dataList.size();
         for (int i = 0; i < size; i++) {
@@ -240,25 +242,109 @@ public class DataTools {
 //           A=14个数字中正数之和
 //　　        B=14个数字中负数之和乘以(—1)
 //　　        RSI(14)=A÷(A＋B)×100
-            if (rsi <= i) {
-                double a = 0, b = 0;
-                for (int j = i; j >= i - 14; j--) {
-                    float temp = points[indexInterval * j + Constants.INDEX_CLOSE] - points[indexInterval * j + Constants.INDEX_OPEN];
-                    if (temp > 0) {
-                        a += temp;
-                    } else {
-                        b += temp;
-                    }
-                }
-                points[indexInterval * i + Constants.INDEX_RSI_1] = (float) (a / (a - b) * 100d);
-            } else {
-                points[indexInterval * i + Constants.INDEX_RSI_1] = Float.MIN_VALUE;
-            }
+//            if (rsi <= i) {
+//                double a = 0, b = 0;
+//                for (int j = i; j >= i - 14; j--) {
+//                    float temp = points[indexInterval * j + Constants.INDEX_CLOSE] - points[indexInterval * j + Constants.INDEX_OPEN];
+//                    if (temp > 0) {
+//                        a += temp;
+//                    } else {
+//                        b += temp;
+//                    }
+//                }
+//                points[indexInterval * i + Constants.INDEX_RSI_1] = (float) (a / (a - b) * 100d);
+//            } else {
+//                points[indexInterval * i + Constants.INDEX_RSI_1] = Float.MIN_VALUE;
+//            }
 
+
+            float rsiOne = point.getRsiOne();
+            temp += i + "  " + rsiOne;
+            points[indexInterval * i + Constants.INDEX_RSI_1] = rsiOne;
+//
         }
-
+        LogUtil.e(temp);
         return points;
     }
+
+    public static void calculateRSI(float[] points, List<? extends KLineEntity> klineInfos,
+                                    int n) {
+        if (klineInfos.size() > n) {
+            double firstValue = klineInfos.get(n - 1).getRsiOne();
+            if (firstValue != 0 && firstValue != Float.MIN_VALUE) {
+                calculateRSIChange(points, klineInfos, n, findStartIndex(klineInfos),
+                        klineInfos.size());
+            } else {
+                calculateRSIChange(points, klineInfos, n, 0, klineInfos.size());
+            }
+        }
+
+    }
+
+
+    private static void calculateRSIChange(float[] points, List<? extends KLineEntity> klineInfos,
+                                           int n, int start, int end) {
+        double upPriceRma = 0;
+        double downPriceRma = 0;
+
+        String s = "";
+
+        for (int i = start; i < end; i++) {
+            double rsi = Float.MIN_VALUE;
+            if (i == n) {
+                double upPrice = 0;
+                double downPrice = 0;
+                for (int k = 1; k <= n; k++) {
+                    KLineEntity kLineEntity = klineInfos.get(k);
+                    double close = kLineEntity.getClosePrice();
+                    double lastClose = klineInfos.get(k - 1).getClosePrice();
+                    upPrice += Math.max(close - lastClose, 0);
+                    downPrice += Math.max(lastClose - close, 0);
+                }
+                upPriceRma = upPrice / n;
+                downPriceRma = downPrice / n;
+                rsi = calculateRSI(upPriceRma, downPriceRma);
+            } else if (i > n) {
+                double close = klineInfos.get(i).getClosePrice();
+                double lastClose = klineInfos.get(i - 1).getClosePrice();
+
+                double upPrice = Math.max(close - lastClose, 0);
+                double downPrice = Math.max(lastClose - close, 0);
+
+                upPriceRma = (upPrice + (n - 1) * upPriceRma) / n;
+                downPriceRma = (downPrice + (n - 1) * downPriceRma) / n;
+                rsi = calculateRSI(upPriceRma, downPriceRma);
+            }
+            klineInfos.get(i).setrOne((float) rsi);
+            points[Constants.getCount() * i + Constants.INDEX_RSI_1] = (float) rsi;
+        }
+    }
+
+    private static double calculateRSI(double upPriceRma, double downPriceRma) {
+        if (downPriceRma == 0) {
+            return 100;
+        } else {
+            if (upPriceRma == 0) {
+                return 0;
+            } else {
+                return 100 - (100 / (1 + upPriceRma / downPriceRma));
+            }
+        }
+    }
+
+    private static int findStartIndex(List<? extends KLineEntity> klineInfos) {
+        int startIndex = 0;
+        for (int i = klineInfos.size() - 1; i > 0; i--) {
+            float maValue = klineInfos.get(i).getRsiOne();
+            //double  float 互转有精度问题无法精确判断,使用-1000判断 Rsi没有这个值
+            if (maValue < -1000) {
+                startIndex = i + 1;
+                break;
+            }
+        }
+        return startIndex;
+    }
+
 
     private static float getValueWR(List<? extends KLineEntity> dataList, int wr1, int i) {
         float valueWR;

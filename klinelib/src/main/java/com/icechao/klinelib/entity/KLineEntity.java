@@ -133,41 +133,41 @@ public abstract class KLineEntity implements IKLine {
         return MA10Volume;
     }
 
-    private float maOne;
+    private float maOne = Float.MIN_VALUE;
 
-    private float maTwo;
+    private float maTwo = Float.MIN_VALUE;
 
-    private float maThree;
+    private float maThree = Float.MIN_VALUE;
 
-    private float dea;
+    private float dea = Float.MIN_VALUE;
 
-    private float dif;
+    private float dif = Float.MIN_VALUE;
 
-    private float macd;
+    private float macd = Float.MIN_VALUE;
 
-    private float k;
+    private float k = Float.MIN_VALUE;
 
-    private float d;
+    private float d = Float.MIN_VALUE;
 
-    private float j;
+    private float j = Float.MIN_VALUE;
 
-    private double rOne;
-    private double rTwo;
-    private double rThree;
+    private double rOne = Float.MIN_VALUE;
+    private double rTwo = Float.MIN_VALUE;
+    private double rThree = Float.MIN_VALUE;
 
-    private double wrOne;
-    private float wrTwo;
-    private float wrThree;
+    private double wrOne = Float.MIN_VALUE;
+    private float wrTwo = Float.MIN_VALUE;
+    private float wrThree = Float.MIN_VALUE;
 
-    private float up;
+    private float up = Float.MIN_VALUE;
 
-    private float mb;
+    private float mb = Float.MIN_VALUE;
 
-    private float dn;
+    private float dn = Float.MIN_VALUE;
 
-    private float MA5Volume;
+    private float MA5Volume = Float.MIN_VALUE;
 
-    private float MA10Volume;
+    private float MA10Volume = Float.MIN_VALUE;
 
 
     @Override
