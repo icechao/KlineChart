@@ -851,7 +851,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         //左侧框
         float boxTop = y - r;
         float boXBottom = y + r;
-        if (getX(selectedIndex - screenLeftIndex) > width / 2) {
+        if (getX(selectedIndex - screenLeftIndex) < width / 2) {
             x = -canvasTranslateX;
             path = new Path();
             path.moveTo(x, boxTop);
