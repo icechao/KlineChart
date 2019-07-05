@@ -139,16 +139,11 @@
            RSI, 
            WR;
 
-### X坐标是否始终显示在屏幕内
+### 设置是适应X左右边轴坐标的位置
 
-    /**
-     * 设置是否自适应X左右边轴坐标的位置,默认true
-     *
-     * @param betterX true会自动缩进左右两边的label更好的展示
-     */
-      public void setBetterX(boolean betterX) {
-        this.betterX = betterX;
-      }
+        chartView.setBetterX(boolean betterX);
+           默认值true  X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内
+           传入false显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
            
 ### K线与分时线切换
 
