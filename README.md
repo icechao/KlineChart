@@ -112,15 +112,16 @@
            
            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
 
+# 查看全部点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
-# 部分API介绍 查看全部点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加入QQ群询问
-        
-### Loadding展示
+# 部分API 
+     
+ ### Loadding展示
 
        justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
        showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
 
-### 主图MA/BOLL切换
+ ### 主图MA/BOLL切换
         
         chartView为KLineChartView对象
         chartView.changeMainDrawType(MainStatus.MA);
@@ -129,7 +130,7 @@
               MainStatus.BOLL, //显示boll
               MainStatus.NONE //只显示CandleLine
 
-### 子图指标图切换
+ ### 子图指标图切换
 
         chartView为KLineChartView对象
         chartView.setChildDraw(ChildStatus.MACD);
@@ -139,7 +140,7 @@
            RSI, 
            WR;
 
-### 设置是适应X左右边轴坐标的位置
+ ### 设置是适应X左右边轴坐标的位置
 
         chartView.setBetterX(boolean betterX);
            默认值true  X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内
@@ -152,7 +153,7 @@
            传入true显示折线的
            传入false显示为CandleLine 
            
-### 十字线跟随模式
+ ### 十字线跟随模式
 
         chartView为KLineChartView对象
         chartView.setCrossFollowTouch(boolean crossFollowTouch) ;
