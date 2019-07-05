@@ -138,6 +138,17 @@
            KDJ, 
            RSI, 
            WR;
+
+### X坐标是否始终显示在屏幕内
+
+    /**
+     * 设置是否自适应X左右边轴坐标的位置,默认true
+     *
+     * @param betterX true会自动缩进左右两边的label更好的展示
+     */
+      public void setBetterX(boolean betterX) {
+        this.betterX = betterX;
+      }
            
 ### K线与分时线切换
 
@@ -181,6 +192,7 @@
       - 重写网格绘制算法
       - 添加设置LoadingView的方法,loadingView可以在调用show/Hide  Loading时执行一些动画
       - 添加手指出动时十字线的绘制方式(Y值跟随手指,Y轴指向最新价)
+      - 优化左右两边X坐标显示
 
   
 # 效果图
