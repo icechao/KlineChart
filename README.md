@@ -199,5 +199,5 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
 
 
-修改自:https://github.com/tifezh/KChartView
+
 
