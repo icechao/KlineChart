@@ -112,7 +112,7 @@
            
            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
 
-# 查看全部点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
+# 查看全部API点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
 # 部分API 
      
