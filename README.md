@@ -153,7 +153,7 @@
            传入true显示折线的
            传入false显示为CandleLine 
            
- ### 十字线跟随模式
+ ### 十字线跟随手指
 
         chartView为KLineChartView对象
         chartView.setCrossFollowTouch(boolean crossFollowTouch) ;
