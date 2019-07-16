@@ -36,7 +36,9 @@ import java.util.List;
 public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     //是否以动画的方式绘制最后一根线
-    public boolean isAnimationLast = true;
+    protected boolean isAnimationLast = true;
+
+    protected boolean loadDataWithAnim = true;
 
     /**
      * 是否正在显示loading
@@ -1401,7 +1403,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
         if (null != childRect)
             childScaleY = childRect.height() * 1f / (childMaxValue - mChildMinValue);
-        if (showAnim.isRunning()) {
+        if (showAnim.isRunning() && loadDataWithAnim) {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
         }

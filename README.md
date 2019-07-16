@@ -114,81 +114,93 @@
 
 # 查看全部API点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
-# 部分API 
+# 部分API   kLineChartView为KLineChartView对象
      
- ### Loadding展示
+  ### Loadding展示
 
-       justShowLoading :  一个只显示loading不会显示后面的K线loading慢时可能会是一个底色页面
-       showLoading : 显示loading的同时,只有当重置数据k线才会变化,不然k线依旧会展示在loading的下层
-
- ### 主图MA/BOLL切换
-        
-        chartView为KLineChartView对象
-        chartView.changeMainDrawType(MainStatus.MA);
+       kLineChartView.justShowLoading() ;
+       
+            只显示loading不会显示后面的K线,K线部队只显示背景
             
-              MainStatus.MA, //显示ma
-              MainStatus.BOLL, //显示boll
-              MainStatus.NONE //只显示CandleLine
+       kLineChartView.showLoading();
+       
+            显示loading的同时显示K线
 
- ### 子图指标图切换
+  ### 主图MA/BOLL切换
+        
+        kLineChartView.changeMainDrawType(MainStatus.MA);
+            参数    
+            MainStatus.MA, : 显示ma  <b>默认值</b> 
+            MainStatus.BOLL: 显示boll
+            MainStatus.NONE: 只显示CandleLine
 
-        chartView为KLineChartView对象
-        chartView.setChildDraw(ChildStatus.MACD);
-           NONE,//隐藏子图
-           MACD,
-           KDJ, 
-           RSI, 
-           WR;
+  ### 子图指标图切换
 
- ### 设置是适应X左右边轴坐标的位置
+        kLineChartView.setChildDraw(ChildStatus.MACD);
+            参数
+            NONE : //不显示子图  <b>默认值</b>
+            MACD : macd
+            KDJ  : kdj
+            RSI  : rsi
+            WR   : wr
 
-        chartView.setBetterX(boolean betterX);
-           默认值true  X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内
-           传入false显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
+  ### 设置是适应X左右边轴坐标的位置
+
+        kLineChartView.setBetterX(boolean betterX);
+            参数
+            true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内 <b>默认值</b>
+            false: 显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
            
-### K线与分时线切换
+  ### K线与分时线切换
 
-        chartView为KLineChartView对象
-        chartView.setMainDrawLine(false);
-           传入true显示折线的
-           传入false显示为CandleLine 
+        kLineChartView.setMainDrawLine(false);
+            参数
+            true : 显示折线的
+            false: 显示为CandleLine <b>默认值</b>
            
- ### 十字线跟随手指
+  ### 十字线跟随手指
 
-        chartView为KLineChartView对象
-        chartView.setCrossFollowTouch(boolean crossFollowTouch) ;
-           传入true跟随手指
-           传入false显示为收盘价
-          
+        kLineChartView.setCrossFollowTouch(boolean crossFollowTouch) ;
+            参数
+            true : 跟随手指
+            false: 显示为收盘价 <b>默认值</b>
+           
+  ### 动画加载加载数据时(默认是左到右的加载动画 可以加载数据前设置不使用动画)
+        
+        kLineChartView.setAnimLoadData(boolean withAnim) ;
+            参数
+            true : 执行加载数据动画 <b>默认值</b>
+            false: 不执行加载数据动画
        
 ### 功能及优化
 
-      - 修改十字线绘制
-      - 修改分时线绘制
-      - 重写CandleLine绘制
-      - 重写滑动计算方式
-      - 重写放大计算方式
-      - 添加深度图
-      - 添加分时线尾呼吸灯效果
-      - 添加K线数据变化时动画效果
-      - 添加当前价格的时间线
+      - 重写分时线绘制
+      - 重写十字线绘制
       - 重写选中的绘制
-      - 重写数据计算
-      - 优化当前页面K线数目的计算
-      - 重写Y轴label的绘制
       - 重写网格的绘制
-      - 添加最新价格和屏幕右侧指示线
+      - 重写背景网格绘制
+      - 重写Y轴label的绘制
       - 重写十字线纵线的绘制
-      - 重写选中框的计算方式
-      - 添加追加尾部数据的方法
-      - 优化成交量柱状图的绘制
-      - 删除加载更多逻辑
-      - 添加时间和值的动态格式化
+      - 重写CandleLine绘制
+      - 重写成交量柱状图的绘制
+      - 重写数据计算
+      - 重写滑动计算
+      - 重写放大计算
+      - 重写选中框的计算
       - 重写指标线的算法
-      - 网格绘制优化
-      - 添加LoadingView设置,loadingView显示隐藏show/Hide 特效自定义
-      - 添加十字线模式开关(Y值跟随手指,Y轴指向最新价)
+      - 重写当前页面K线数目的计算
+      - 添加深度图
+      - 添加当前价格的时间线
+      - 添加分时线尾呼吸灯效果
+      - 添加追加尾部数据的方法
+      - 添加时间和值的动态格式化
+      - 添加K线数据变化时动画效果
+      - 添加加载数据的动画执行开关
+      - 添加最新价格和屏幕右侧指示线
+      - 添加十字线模式开关(选中Y值跟随手指或指向最新价)
+      - 添加LoadingView设置(可以自定义View并自定义动画)
       - 添加X轴左右坐标显示模式开关(相对坐标点居中,屏幕内  默认屏幕内显示)
+      - 删除加载更多逻辑(重置设置数据不需要加载更多)
 
   
 # 效果图

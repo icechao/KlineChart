@@ -1013,6 +1013,16 @@ public class KLineChartView extends BaseKLineChartView {
         notifyChanged();
     }
 
+
+    /**
+     * 设置加载数据时是否使用动画
+     *
+     * @param withAnim true load data with anim ; default  true
+     */
+    public void setAnimLoadData(boolean withAnim) {
+        loadDataWithAnim = withAnim;
+    }
+
     /**
      * 获取当前主图状态
      *

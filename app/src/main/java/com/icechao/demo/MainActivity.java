@@ -103,6 +103,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         adapter = new KLineChartAdapter();
         chartView = findViewById(R.id.kLineChartView);
         chartView.setAdapter(adapter);
+        chartView.setAnimLoadData(false);
         chartView.setDateTimeFormatter(new DateFormatter());
         chartView.setGridColumns(5);
         chartView.setGridRows(5);
