@@ -114,7 +114,7 @@
 
 # 查看全部API点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
-# 部分API   kLineChartView为KLineChartView对象
+# 部分API  ________  kLineChartView为KLineChartView对象
      
   ### Loadding展示
 
