@@ -130,7 +130,7 @@
         
         kLineChartView.changeMainDrawType(MainStatus.MA);
             参数    
-            MainStatus.MA, : 显示ma  <b>默认值</b> 
+            MainStatus.MA, : 显示ma  默认值
             MainStatus.BOLL: 显示boll
             MainStatus.NONE: 只显示CandleLine
 
@@ -138,7 +138,7 @@
 
         kLineChartView.setChildDraw(ChildStatus.MACD);
             参数
-            NONE : //不显示子图  <b>默认值</b>
+            NONE : //不显示子图  默认值
             MACD : macd
             KDJ  : kdj
             RSI  : rsi
@@ -148,7 +148,7 @@
 
         kLineChartView.setBetterX(boolean betterX);
             参数
-            true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内 ``` 默认值 ```
+            true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内  默认值  
             false: 显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
            
   ### K线与分时线切换
@@ -156,20 +156,20 @@
         kLineChartView.setMainDrawLine(false);
             参数
             true : 显示折线的
-            false: 显示为CandleLine <b>默认值</b>
+            false: 显示为CandleLine  默认值
            
   ### 十字线跟随手指
 
         kLineChartView.setCrossFollowTouch(boolean crossFollowTouch) ;
             参数
             true : 跟随手指
-            false: 显示为收盘价 <b>默认值</b>
+            false: 显示为收盘价  默认值
            
   ### 动画加载加载数据时(默认是左到右的加载动画 可以加载数据前设置不使用动画)
         
         kLineChartView.setAnimLoadData(boolean withAnim) ;
             参数
-            true : 执行加载数据动画 <b>默认值</b>
+            true : 执行加载数据动画  默认值
             false: 不执行加载数据动画
        
 ### 功能及优化
