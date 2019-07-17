@@ -148,7 +148,7 @@
 
         kLineChartView.setBetterX(boolean betterX);
             参数
-            true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内 <b>默认值</b>
+            true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内 ``` 默认值 ```
             false: 显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
            
   ### K线与分时线切换
