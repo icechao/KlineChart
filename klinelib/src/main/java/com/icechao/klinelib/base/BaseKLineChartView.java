@@ -586,7 +586,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         drawLogo(canvas);
         if (!isShowLoading && width != 0 && 0 != itemsCount && null != points && points.length != 0) {
             try {
-                initValues();
+                calcValues();
                 drawYLabels(canvas);
                 drawXLabels(canvas);
                 drawK(canvas);
@@ -1311,7 +1311,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 计算当前显示的数据以及显示的数据的最大最小值
      */
-    private void initValues() {
+    private void calcValues() {
         float scaleWidth = chartItemWidth * scaleX;
 
         if (canvasTranslateX <= scaleWidth / 2) {
@@ -1320,7 +1320,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 screenLeftIndex = 0;
             }
             screenRightIndex = (int) (screenLeftIndex + width / scaleWidth + 0.5) + 1;
-
         } else {
             screenLeftIndex = 0;
             screenRightIndex = itemsCount - 1;
