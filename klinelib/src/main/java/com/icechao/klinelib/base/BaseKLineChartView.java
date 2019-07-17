@@ -40,6 +40,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     protected boolean loadDataWithAnim = true;
 
+    protected Bitmap logoBitmap;
+
     /**
      * 是否正在显示loading
      */
@@ -163,6 +165,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 视图背景画笔
      */
     protected Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint logoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     protected Paint backgroundFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
@@ -331,7 +334,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
                 if (screenRightIndex == itemsCount - 2) {
-                    setTranslatedX(canvasTranslateX - chartItemWidth * getScaleX());
+                    changeTranslated(canvasTranslateX - chartItemWidth * getScaleX());
                 }
                 setItemCount(dataCount);
             } else if (itemsCount == dataCount) {
@@ -394,7 +397,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * K线显示动画
      */
-    private ValueAnimator showAnim;
+    protected ValueAnimator showAnim;
 
     protected float overScrollRange = 0;
 
@@ -403,7 +406,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 主视图
      */
-    private Rect mainRect;
+    protected Rect mainRect;
 
     /**
      * 量视图
@@ -570,12 +573,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             mainRect = new Rect(0, topPadding, width, topPadding + mMainHeight);
             volRect = new Rect(0, mainRect.bottom + childPadding, width, mainRect.bottom + mVolHeight);
         }
+
+        if (-1 == logoTop && null != logoBitmap) {
+            logoTop = mainRect.bottom - logoBitmap.getHeight();
+        }
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         drawBackground(canvas);
         drawGirdLines(canvas);
+        drawLogo(canvas);
         if (!isShowLoading && width != 0 && 0 != itemsCount && null != points && points.length != 0) {
             try {
                 initValues();
@@ -588,6 +596,15 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    protected float logoLeft, logoTop = -1;
+
+    private void drawLogo(Canvas canvas) {
+        if (null != logoBitmap) {
+            canvas.drawBitmap(logoBitmap, logoLeft, logoTop, logoPaint);
         }
     }
 
@@ -630,7 +647,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param itemCount items count
      */
-    public void setItemCount(int itemCount) {
+    protected void setItemCount(int itemCount) {
         //数据个数为0时重置本地保存数据,重置平移
         if (itemCount == 0) {
             resetValues();
@@ -1138,7 +1155,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public void notifyChanged() {
         if (resetTranslate && width != 0 && itemsCount != 0) {
-            setTranslatedX(getMinTranslate());
+            changeTranslated(getMinTranslate());
             resetTranslate = false;
         }
     }
@@ -1239,7 +1256,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        setTranslatedX(canvasTranslateX + (l - oldl));
+        changeTranslated(canvasTranslateX + (l - oldl));
         if (isLine && getX(screenRightIndex) + canvasTranslateX <= width) {
             startFreshPage();
         } else {
@@ -1259,12 +1276,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         float oldCount = (width / chartItemWidth / oldScale);
         float difCount = (newCount - oldCount) / 2;
         if (screenLeftIndex != 0) {
-            setTranslatedX(canvasTranslateX / oldScale * scale + difCount * tempWidth);
+            changeTranslated(canvasTranslateX / oldScale * scale + difCount * tempWidth);
         } else {
             if (getDataLength() < width) {
-                setTranslatedX(-(width - getDataLength()));
+                changeTranslated(-(width - getDataLength()));
             } else {
-                setTranslatedX(getMaxTranslate());
+                changeTranslated(getMaxTranslate());
             }
         }
         invalidate();
@@ -1274,21 +1291,21 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 设置当前平移
      *
-     * @param mTranslateX canvasTranslateX
+     * @param translateX canvasTranslateX
      */
-    private void setTranslatedX(float mTranslateX) {
-        if (mTranslateX < getMinTranslate()) {
-            mTranslateX = getMinTranslate();
-            if (null != slidListener && mTranslateX == getMinTranslate()) {
+    private void changeTranslated(float translateX) {
+        if (translateX < getMinTranslate()) {
+            translateX = getMinTranslate();
+            if (null != slidListener && translateX == getMinTranslate()) {
                 slidListener.onSlidRight();
             }
-        } else if (mTranslateX > getMaxTranslate()) {
-            mTranslateX = getMaxTranslate();
+        } else if (translateX > getMaxTranslate()) {
+            translateX = getMaxTranslate();
             if (null != slidListener) {
                 slidListener.onSlidLeft();
             }
         }
-        this.canvasTranslateX = mTranslateX;
+        this.canvasTranslateX = translateX;
     }
 
     /**
@@ -1595,17 +1612,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     /**
-     * 设置动画时间
-     */
-    @SuppressWarnings("unused")
-    public void setAnimationDuration(long duration) {
-        if (null != showAnim) {
-            showAnim.setDuration(duration);
-        }
-    }
-
-
-    /**
      * view中的x转化为TranslateX
      *
      * @param x x
@@ -1772,8 +1778,4 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         return this.status;
     }
 
-
-    public void setSlidListener(SlidListener slidListener) {
-        this.slidListener = slidListener;
-    }
 }

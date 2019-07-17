@@ -107,6 +107,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         chartView.setDateTimeFormatter(new DateFormatter());
         chartView.setGridColumns(5);
         chartView.setGridRows(5);
+        chartView.setLogoResouce(R.drawable.line_chart);
         chartView.setValueFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
@@ -121,8 +122,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         });
         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
         chartView.showLoading();
-
-
         chartView.setSlidListener(new SlidListener() {
             @Override
             public void onSlidLeft() {

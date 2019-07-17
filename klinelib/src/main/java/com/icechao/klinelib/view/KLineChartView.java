@@ -2,6 +2,8 @@ package com.icechao.klinelib.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.ColorRes;
@@ -21,6 +23,7 @@ import com.icechao.klinelib.draw.*;
 import com.icechao.klinelib.utils.ChildStatus;
 import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.MainStatus;
+import com.icechao.klinelib.utils.SlidListener;
 
 /*************************************************************************
  * Description   :
@@ -805,7 +808,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置上方padding
      *
-     * @param topPadding topPadding
+     * @param topPadding topPadding 横线网格和K线会绘制在这个位置的下方
      */
     @SuppressWarnings("unused")
     public void setTopPadding(int topPadding) {
@@ -1052,5 +1055,66 @@ public class KLineChartView extends BaseKLineChartView {
         layoutParams.addRule(CENTER_IN_PARENT);
         progressBar.setVisibility(INVISIBLE);
         addView(progressBar, layoutParams);
+    }
+
+    /**
+     * 设置滑动监听
+     *
+     * @param slidListener 监听对象
+     */
+    public void setSlidListener(SlidListener slidListener) {
+        this.slidListener = slidListener;
+    }
+
+    /**
+     * 设置加载数据动画时间
+     */
+    @SuppressWarnings("unused")
+    public void setAnimationDuration(long duration) {
+        if (null != showAnim) {
+            showAnim.setDuration(duration);
+        }
+    }
+
+
+    /**
+     * add logo in Kline View
+     *
+     * @param bitmap logo bitmap
+     */
+    public void setLogoBigmap(Bitmap bitmap) {
+        if (null != bitmap) {
+            this.logoBitmap = bitmap;
+        }
+    }
+
+    /**
+     * add logo in Kline View
+     *
+     * @param bitmapRes logo resource
+     */
+    public void setLogoResouce(int bitmapRes) {
+        setLogoBigmap(BitmapFactory.decodeResource(
+                getContext().getResources(), bitmapRes));
+    }
+
+    /**
+     * 设置logo透明度
+     *
+     * @param alpha set the alpha component [0..255] of the paint's color.
+     */
+    public void setLogoAlpha(int alpha) {
+        logoPaint.setAlpha(alpha);
+    }
+
+    /**
+     * set logo location  defual left bottom
+     *
+     * @param left logo left location default 0
+     * @param top  logo top location default (main view bottom) - (bitmap height)
+     */
+    public void setLogoLeftTop(float left, float top) {
+        logoLeft = left;
+        logoTop = top;
     }
 }

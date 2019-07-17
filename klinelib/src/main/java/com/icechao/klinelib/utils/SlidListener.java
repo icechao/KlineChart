@@ -12,7 +12,13 @@ package com.icechao.klinelib.utils;
  *************************************************************************/
 public interface SlidListener {
 
+    /**
+     * the kline slid to left
+     */
     void onSlidLeft();
 
+    /**
+     * the kline slid to right
+     */
     void onSlidRight();
 }
