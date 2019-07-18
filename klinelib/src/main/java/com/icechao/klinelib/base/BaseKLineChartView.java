@@ -573,10 +573,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             mainRect = new Rect(0, topPadding, width, topPadding + mMainHeight);
             volRect = new Rect(0, mainRect.bottom + childPadding, width, mainRect.bottom + mVolHeight);
         }
-
-        if (-1 == logoTop && null != logoBitmap) {
-            logoTop = mainRect.bottom - logoBitmap.getHeight();
-        }
     }
 
     @Override
@@ -604,6 +600,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     private void drawLogo(Canvas canvas) {
         if (null != logoBitmap) {
+            if (-1 == logoTop) {
+                logoTop = mainRect.bottom - logoBitmap.getHeight();
+            }
             canvas.drawBitmap(logoBitmap, logoLeft, logoTop, logoPaint);
         }
     }

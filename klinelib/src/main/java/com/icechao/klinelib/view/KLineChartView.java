@@ -1111,7 +1111,7 @@ public class KLineChartView extends BaseKLineChartView {
      * set logo location  defual left bottom
      *
      * @param left logo left location default 0
-     * @param top  logo top location default (main view bottom) - (bitmap height)
+     * @param top  logo top location default  -1 when top is -1 the logo will show in bottom
      */
     public void setLogoLeftTop(float left, float top) {
         logoLeft = left;
