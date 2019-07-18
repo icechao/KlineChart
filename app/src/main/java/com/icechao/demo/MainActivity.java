@@ -1,6 +1,8 @@
 package com.icechao.demo;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -107,7 +109,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         chartView.setDateTimeFormatter(new DateFormatter());
         chartView.setGridColumns(5);
         chartView.setGridRows(5);
-        chartView.setLogoResouce(R.drawable.line_chart);
+//        getResources().
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 3;
+        Bitmap bitmap = BitmapFactory.decodeResource(
+                getResources(), R.drawable.icechao, opts);
+        chartView.setLogoBigmap(bitmap);
+        chartView.setLogoAlpha(100);
         chartView.setValueFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
