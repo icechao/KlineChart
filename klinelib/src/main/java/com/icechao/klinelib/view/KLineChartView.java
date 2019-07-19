@@ -1128,10 +1128,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * set cross line show modle
      *
-     * @param klineTouchModle {@link KlineTouchModle} default SELECT_BOTH
+     * @param showCrossModle {@link ShowCrossModle} default SELECT_BOTH
      */
-    public void setSelectedTouchModle(KlineTouchModle klineTouchModle) {
-        this.modle = klineTouchModle;
+    public void setSelectedTouchModle(ShowCrossModle showCrossModle) {
+        this.modle = showCrossModle;
     }
 
 
