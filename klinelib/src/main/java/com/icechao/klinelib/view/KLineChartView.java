@@ -1138,7 +1138,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * set KlineChartView right Padding
      *
-     * @param klineRightPadding
+     * @param klineRightPadding default 0
      */
     public void setKlineRightPadding(float klineRightPadding) {
         this.klinePaddingRight = klineRightPadding;
