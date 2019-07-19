@@ -350,10 +350,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (dataCount > itemsCount) {
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
-                if (screenRightIndex == itemsCount - 2) {
+                setItemCount(dataCount);
+                if (screenRightIndex >= itemsCount - 2) {
                     changeTranslated(canvasTranslateX - chartItemWidth * getScaleX());
                 }
-                setItemCount(dataCount);
             } else if (itemsCount == dataCount) {
                 laseChange();
             }

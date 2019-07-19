@@ -171,7 +171,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
     private void changeLast() {
         handler.postDelayed(() -> {
-            int i = random.nextInt() * 1123 % 400;
+            int i = random.nextInt((int) (SystemClock.currentThreadTimeMillis() % 100)) * 1123 % 400;
             KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
             KChartBean kLineEntity1 = new KChartBean();
             kLineEntity1.setDate(kLineEntity.date);
@@ -190,7 +190,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
 
 
-            if (i++ % 10 == 0) {
+            if (i++ % 3 == 0) {
                 kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
                 adapter.addLast(kLineEntity1);
             } else {

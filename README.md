@@ -169,10 +169,54 @@
            
   ### 动画加载加载数据时(默认是左到右的加载动画 可以加载数据前设置不使用动画)
         
-        kLineChartView.setAnimLoadData(boolean withAnim) ;
+        kLineChartView.setAnimLoadData(boolean withAnim);
             参数
             true : 执行加载数据动画  默认值
             false: 不执行加载数据动画
+   
+  ### K线右侧内边距
+  
+        kLineChartView.setKlineRightPadding(float klineRightPadding);
+            参数
+            float : 内边距
+  
+  ### 设置十字线显示模式
+  
+        kLineChartView.setSelectedTouchModle(ShowCrossModle showCrossModle);
+            参数 
+            ShowCrossModle.SELECT_TOUCHE : 点击显示
+            ShowCrossModle.SELECT_PRESS  : 长按显示
+            ShowCrossModle.SELECT_BOTH   : 点击长按混合
+            
+  ### 添加logo
+  
+        kLineChartView.setLogoBigmap(Bitmap bitmap);
+            参数
+            Bitmap : 图片Bitmap 可以设置好大后传入
+        
+        kLineChartView.setLogoResouce(int bitmapRes);
+            参数
+            bitmapRes : 资源id 原大小显示
+            
+  ### logo透明度设置
+        
+        kLineChartView.setLogoAlpha(int alpha);
+            参数
+            alpha : 0-255 logo画笔透明度
+            
+  ### logo位置是指
+        
+        kLineChartView.setLogoLeftTop(float left, float top);
+            参数
+            left : logo的左侧坐标,相对KlineChartView
+            top  : logo的顶部坐标,相对KlineChartView
+            
+  ### K线滑动监听
+        
+        kLineChartView.setSlidListener(SlidListener slidListener);
+            参数
+            slidListener : SlidListener对象 监听滑动到最左和最右
+            
        
 ### 功能及优化
 
