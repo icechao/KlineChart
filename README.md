@@ -216,6 +216,7 @@
         kLineChartView.setSlidListener(SlidListener slidListener);
             参数
             slidListener : SlidListener对象 监听滑动到最左和最右
+
             
        
 ### 功能及优化
@@ -236,6 +237,8 @@
   - 重写指标线的算法
   - 重写当前页面K线数目的计算
   - 添加深度图
+  - 添加k线与右侧间距
+  - 添加十字线选中模式
   - 添加当前价格的时间线
   - 添加分时线尾呼吸灯效果
   - 添加追加尾部数据的方法
