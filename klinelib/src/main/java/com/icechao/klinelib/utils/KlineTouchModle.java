@@ -13,9 +13,10 @@ package com.icechao.klinelib.utils;
 public enum KlineTouchModle {
     SELECT_TOUCHE(0),//touch modle
     SELECT_PRESS(1),//long press modle
-    SELECT_BOTH(2);//both of modle
+    SELECT_BOTH(2);//both modle
     private int model;
 
     KlineTouchModle(int model) {
         this.model = model;
-    }}
+    }
+}
