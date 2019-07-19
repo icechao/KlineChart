@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
-import android.view.View;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
@@ -167,7 +166,7 @@ public class MainDraw extends BaseDraw {
             }
         }
 
-        if (view.isLongPress() && position == view.getSelectedIndex()) {
+        if (view.getShowSelected() && position == view.getSelectedIndex()) {
             view.drawSelected(canvas, curX);
         }
     }
@@ -232,7 +231,7 @@ public class MainDraw extends BaseDraw {
                 }
             }
         }
-        if (view.isLongPress()) {
+        if (view.getShowSelected()) {
             drawSelector(view, canvas, values);
         }
     }
@@ -324,10 +323,10 @@ public class MainDraw extends BaseDraw {
         width += padding * 2;
 
         float x = view.translateXtoX(view.getX(index));
-        if (x > view.getChartWidth() / 2) {
+        if (x > view.getViewWidth() / 2) {
             left = margin;
         } else {
-            left = view.getChartWidth() - width - margin;
+            left = view.getViewWidth() - width - margin;
         }
 
         float right = left + width;

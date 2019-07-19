@@ -67,7 +67,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     private float canvasTranslateX;
 
-    protected int width = 0;
+    protected float width = 0;
 
     /**
      * 整体上部的padding
@@ -165,7 +165,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 视图背景画笔
      */
     protected Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    /**
+     * logo paint
+     */
     protected Paint logoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    /**
+     * back ground fill paint
+     */
     protected Paint backgroundFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
@@ -177,6 +184,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected Paint selectedCrossPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    /**
+     * 十字线大圆画笔
+     */
     protected Paint selectedbigCrossPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
@@ -224,7 +234,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 价格线右侧虚线画笔
      */
     protected Paint priceLineBoxRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
 
     /**
      * 价格框高度
@@ -311,6 +320,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected SlidListener slidListener;
 
+    /**
+     * kline right padding
+     */
+    protected float klinePaddingRight = 0;
+
+    /**
+     * refresh time limit
+     */
     private long time;
 
 
@@ -564,19 +581,20 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             int tempMainHeight = (int) (displayHeight * mainPresent / 10f);
             int tempVolHeight = (int) (displayHeight * volPresent / 10f);
             int tempChildHeight = (int) (displayHeight * childPresent / 10f);
-            mainRect = new Rect(0, topPadding, width, topPadding + tempMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childPadding, width, mainRect.bottom + tempVolHeight);
-            childRect = new Rect(0, volRect.bottom + childPadding, width, volRect.bottom + tempChildHeight);
+            mainRect = new Rect(0, topPadding, (int) width, topPadding + tempMainHeight);
+            volRect = new Rect(0, mainRect.bottom + childPadding, (int) width, mainRect.bottom + tempVolHeight);
+            childRect = new Rect(0, volRect.bottom + childPadding, (int) width, volRect.bottom + tempChildHeight);
         } else {
             int mMainHeight = (int) (displayHeight * 0.8f);
             int mVolHeight = (int) (displayHeight * 0.2f);
-            mainRect = new Rect(0, topPadding, width, topPadding + mMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childPadding, width, mainRect.bottom + mVolHeight);
+            mainRect = new Rect(0, topPadding, (int) width, topPadding + mMainHeight);
+            volRect = new Rect(0, mainRect.bottom + childPadding, (int) width, mainRect.bottom + mVolHeight);
         }
     }
 
     @Override
     public void onDraw(Canvas canvas) {
+        long l = System.currentTimeMillis();
         drawBackground(canvas);
         drawGirdLines(canvas);
         drawLogo(canvas);
@@ -588,7 +606,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 drawK(canvas);
 //                drawSelected(canvas);
                 drawPriceLine(canvas);
-                drawValue(canvas, isLongPress ? selectedIndex : screenRightIndex);
+                drawValue(canvas, getShowSelected() ? selectedIndex : screenRightIndex);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -596,11 +614,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
 
-    protected float logoLeft, logoTop = -1;
+    protected float logoLeft, logoTop = Float.MIN_VALUE;
 
     private void drawLogo(Canvas canvas) {
         if (null != logoBitmap) {
-            if (-1 == logoTop) {
+            if (Float.MIN_VALUE == logoTop) {
                 logoTop = mainRect.bottom - logoBitmap.getHeight();
             }
             canvas.drawBitmap(logoBitmap, logoLeft, logoTop, logoPaint);
@@ -613,12 +631,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas canvas
      */
     private void drawBackground(Canvas canvas) {
-        int mid = width >> 1;
-        backgroundPaint.setAlpha(18);
-        backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainRect.bottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
-        canvas.drawRect(0, 0, width, mainRect.bottom, backgroundPaint);
-        backgroundPaint.setShader(new LinearGradient(mid, volRect.top - topPadding, mid, volRect.bottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
-        canvas.drawRect(0, mainRect.bottom, width, volRect.bottom, backgroundPaint);
+        float mid = width / 2;
+        int mainBottom = mainRect.bottom;
+        backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
+        canvas.drawRect(0, 0, width, mainBottom, backgroundPaint);
+        int volBottom = volRect.bottom;
+        backgroundPaint.setShader(new LinearGradient(mid, volRect.top - topPadding, mid, volBottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
+        canvas.drawRect(0, mainBottom, width, volBottom, backgroundPaint);
         if (null != childDraw) {
             backgroundPaint.setShader(new LinearGradient(mid, childRect.top - topPadding, mid, childRect.bottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
             canvas.drawRect(0, childRect.top, width, childRect.bottom, backgroundPaint);
@@ -962,7 +981,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
         }
 
-        int tempYLabelX = width - yLabelMarginRight;
+        float tempYLabelX = width - yLabelMarginRight;
         //Y轴上网络的值
         for (int i = 0; i <= gridRowCount; i++) {
             String text = formatValue(mainMaxValue - i * rowValue);
@@ -1073,7 +1092,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             canvas.drawLine(i, y, i + 8, y, priceLineBoxRightPaint);
         }
         float textY = fixTextYBaseBottom(y);
-        backgroundFillPaint.setAlpha(150);
         canvas.drawRect(new Rect((int) textLeft, (int) (y - textHeight / 2), (int) (textLeft + textWidth), (int) (y + textHeight / 2)), backgroundFillPaint);
         canvas.drawText(priceString, textLeft, textY, priceLineBoxRightPaint);
         //绘制价格圆点
@@ -1206,8 +1224,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private float selectedY = 0;
 
     @Override
-    public void onLongPress(MotionEvent e) {
-        super.onLongPress(e);
+    public void onSelectedChange(MotionEvent e) {
         int lastIndex = selectedIndex;
         calculateSelectedX(e.getX());
         selectedY = e.getY();
@@ -1318,7 +1335,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             if (screenLeftIndex < 0) {
                 screenLeftIndex = 0;
             }
-            screenRightIndex = (int) (screenLeftIndex + width / scaleWidth + 0.5) + 1;
+            screenRightIndex = (int) (screenLeftIndex + ((width - klinePaddingRight) / scaleWidth) + 0.5) + 1;
         } else {
             screenLeftIndex = 0;
             screenRightIndex = itemsCount - 1;
@@ -1632,8 +1649,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 是否长按
      */
-    public boolean isLongPress() {
-        return isLongPress;
+    public boolean getShowSelected() {
+        return showSelected;
     }
 
     /**
@@ -1667,7 +1684,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     public float getTranslationScreenMid() {
-        return getX(screenLeftIndex) + (width >> 1);
+        return getX(screenLeftIndex) + (width / 2);
     }
 
     /**
@@ -1763,7 +1780,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @return 宽度
      */
-    public int getChartWidth() {
+    public float getViewWidth() {
         return width;
     }
 

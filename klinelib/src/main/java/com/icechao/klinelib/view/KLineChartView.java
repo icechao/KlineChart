@@ -20,10 +20,7 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IDateTimeFormatter;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.draw.*;
-import com.icechao.klinelib.utils.ChildStatus;
-import com.icechao.klinelib.utils.Dputil;
-import com.icechao.klinelib.utils.MainStatus;
-import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.utils.*;
 
 /*************************************************************************
  * Description   :
@@ -95,8 +92,9 @@ public class KLineChartView extends BaseKLineChartView {
 
         setEndPointColor(Color.WHITE);
         setLineEndPointWidth(Dputil.Dp2Px(context, 4));
-
         setBackgroundFillColor(getContext().getResources().getColor(R.color.color_131F30));
+        setBackGroundAlpha(18);
+        setBackGroudFillAlpha(150);
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -210,7 +208,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 隐藏选择器内容
      */
     public void hideSelectData() {
-        isLongPress = false;
+        showSelected = false;
     }
 
 
@@ -408,9 +406,9 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onSelectedChange(MotionEvent e) {
         if (!isShowLoading) {
-            super.onLongPress(e);
+            super.onSelectedChange(e);
         }
     }
 
@@ -889,8 +887,8 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @return 宽度
      */
-    public int getChartWidth() {
-        return super.getChartWidth();
+    public float getViewWidth() {
+        return super.getViewWidth();
     }
 
 
@@ -1116,5 +1114,42 @@ public class KLineChartView extends BaseKLineChartView {
     public void setLogoLeftTop(float left, float top) {
         logoLeft = left;
         logoTop = top;
+    }
+
+    /**
+     * set view backGround alpha
+     *
+     * @param alpha default 18
+     */
+    public void setBackGroundAlpha(int alpha) {
+        backgroundPaint.setAlpha(alpha);
+    }
+
+    /**
+     * set cross line show modle
+     *
+     * @param klineTouchModle {@link KlineTouchModle} default SELECT_BOTH
+     */
+    public void setSelectedTouchModle(KlineTouchModle klineTouchModle) {
+        this.modle = klineTouchModle;
+    }
+
+
+    /**
+     * set KlineChartView right Padding
+     *
+     * @param klineRightPadding
+     */
+    public void setKlineRightPadding(float klineRightPadding) {
+        this.klinePaddingRight = klineRightPadding;
+    }
+
+    /**
+     * set background fill color alpha
+     *
+     * @param alpha default 150
+     */
+    public void setBackGroudFillAlpha(int alpha) {
+        backgroundFillPaint.setAlpha(alpha);
     }
 }

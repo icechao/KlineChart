@@ -16,26 +16,28 @@ public class Constants {
 
     public static final long LONG_PRESS_TIME = 1000L;
 
-    public static final String KDJ_TOP_TEXT_TAMPLATE = "KDJ(%s,%s,%s)  ";
-    public static final int KDJ_K = 14;
-    public static final int KDJ_D = 1;
-    public static final int KDJ_J = 3;
-    public static final String MACD_TOP_TEXT_TAMPLATE = "MACD(%s,%s,%s)  ";
-    //"MACD(12,26,9)  ";
-    public static final int MACD_S = 12;
-    public static final int MACD_L = 26;
-    public static final int MACD_M = 9;
-    public static final String RSI_TOP_TEXT_TAMPLATE = "RSI(%s)  ";
-    public static final int RSI_1 = 14;
-    public static final String WR_TOP_TEXT_TEMPLATE = "WR(%s):";
-    public static final int WR_1 = 14;
-    public static final int K_MA_NUMBER_1 = 5;
-    public static final int K_MA_NUMBER_2 = 10;
-    public static final int K_MA_NUMBER_3 = 30;
+    public static String KDJ_TOP_TEXT_TAMPLATE = "KDJ(%s,%s,%s)  ";
+    public static int KDJ_K = 14;
+    public static int KDJ_D = 1;
+    public static int KDJ_J = 3;
 
+    public static String MACD_TOP_TEXT_TAMPLATE = "MACD(%s,%s,%s)  ";
+    public static int MACD_S = 12;
+    public static int MACD_L = 26;
+    public static int MACD_M = 9;
 
-    public static final int K_VOL_MA_NUMBER_1 = 5;
-    public static final int K_VOL_MA_NUMBER_2 = 10;
+    public static String RSI_TOP_TEXT_TAMPLATE = "RSI(%s)  ";
+    public static int RSI_1 = 14;
+
+    public static String WR_TOP_TEXT_TEMPLATE = "WR(%s):";
+    public static int WR_1 = 14;
+
+    public static int K_MA_NUMBER_1 = 5;
+    public static int K_MA_NUMBER_2 = 10;
+    public static int K_MA_NUMBER_3 = 30;
+
+    public static int K_VOL_MA_NUMBER_1 = 5;
+    public static int K_VOL_MA_NUMBER_2 = 10;
 
 
     private static int i = 0;
@@ -69,7 +71,7 @@ public class Constants {
 
 
     public static int getCount() {
-        return INDEX_WR_3 + 1;
+        return i;
     }
 
 }

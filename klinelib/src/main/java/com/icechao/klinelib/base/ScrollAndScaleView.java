@@ -1,7 +1,6 @@
 package com.icechao.klinelib.base;
 
 import android.content.Context;
-import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -9,8 +8,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
-
-import com.icechao.klinelib.utils.LogUtil;
+import com.icechao.klinelib.utils.KlineTouchModle;
 
 /*************************************************************************
  * Description   :
@@ -29,7 +27,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     protected GestureDetectorCompat gestureDetector;
     protected ScaleGestureDetector scaleDetector;
 
-    protected boolean isLongPress = false;
+    protected boolean showSelected = false;
 
     protected int selectedIndex = -1;
 
@@ -69,6 +67,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         gestureDetector = new GestureDetectorCompat(getContext(), this);
         scaleDetector = new ScaleGestureDetector(getContext(), this);
         overScroller = new OverScroller(getContext());
+
     }
 
     @Override
@@ -81,14 +80,42 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     }
 
+    private boolean isTapShow;
+
+    protected KlineTouchModle modle = KlineTouchModle.SELECT_BOTH;
+
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+
+        switch (modle) {
+            default:
+            case SELECT_PRESS:
+                showSelected = false;
+                return true;
+            case SELECT_BOTH:
+                if (!isTapShow && showSelected) {
+                    showSelected = false;
+                    isTapShow = false;
+                } else {
+                    isTapShow = true;
+                    showSelected = true;
+                    onSelectedChange(e);
+                }
+                return true;
+            case SELECT_TOUCHE:
+                showSelected = true;
+                onSelectedChange(e);
+                return true;
+        }
     }
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (!isLongPress && !isMultipleTouch()) {
+        if (isTapShow) {
+            showSelected = false;
+            isTapShow = false;
+        }
+        if (!showSelected && !isMultipleTouch()) {
             scrollBy(Math.round(distanceX), 0);
             return true;
         }
@@ -97,13 +124,19 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        isLongPress = true;
+        if (modle == KlineTouchModle.SELECT_PRESS || modle == KlineTouchModle.SELECT_BOTH) {
+            showSelected = true;
+            onSelectedChange(e);
+        }
     }
+
+
+    public abstract void onSelectedChange(MotionEvent e);
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-        if (!isTouch() && isScrollEnable()) {
+        if (!showSelected && !isTouch() && isScrollEnable()) {
             overScroller.fling(scrollX, 0
                     , Math.round(velocityX / scaleX / 2), 0,
                     Integer.MIN_VALUE, Integer.MAX_VALUE,
@@ -185,7 +218,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getPointerCount() > 1) {
-            isLongPress = false;
+            showSelected = false;
             selectedIndex = -1;
         }
         if (null != eventLisenter) {
@@ -199,25 +232,20 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
                 break;
             case MotionEvent.ACTION_MOVE:
                 //长按之后移动
-                if (isLongPress) {
-                    onLongPress(event);
+                if (showSelected) {
+                    onSelectedChange(event);
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                if (x == event.getX()) {
-                    if (isLongPress) {
-                        isLongPress = false;
-                        selectedIndex = -1;
-                    }
-                }
+
                 touch = false;
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                isLongPress = false;
+                showSelected = false;
                 selectedIndex = -1;
                 touch = false;
                 invalidate();
