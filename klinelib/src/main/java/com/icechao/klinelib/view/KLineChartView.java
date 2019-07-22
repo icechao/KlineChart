@@ -977,21 +977,18 @@ public class KLineChartView extends BaseKLineChartView {
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public void setChildDraw(ChildStatus position) {
         if (childDrawPosition.getStatu() != position.getStatu()) {
+            switch (position) {
+                case NONE:
+                    childDraw = null;
+                    break;
+                default:
+                    childDraw = mChildDraws.get(position.getStatu());
+                    break;
+            }
             childDrawPosition = position;
-            childDraw = mChildDraws.get(position.getStatu());
             initRect();
             invalidate();
         }
-    }
-
-    /**
-     * 隐藏子图
-     */
-    public void hideChildDraw() {
-        childDrawPosition = ChildStatus.NONE;
-        childDraw = null;
-        initRect();
-        invalidate();
     }
 
     /**

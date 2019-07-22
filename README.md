@@ -216,6 +216,12 @@
         kLineChartView.setSlidListener(SlidListener slidListener);
             参数
             slidListener : SlidListener对象 监听滑动到最左和最右
+            
+  ### K线重置显示位置
+        
+         kLineChartView.setResetTranslate();
+        
+
 
             
        

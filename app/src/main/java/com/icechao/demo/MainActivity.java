@@ -221,7 +221,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_hide_sub:
                 chartView.hideSelectData();
-                chartView.hideChildDraw();
+                chartView.setChildDraw(ChildStatus.NONE);
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
