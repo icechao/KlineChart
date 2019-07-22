@@ -130,21 +130,21 @@
 
   ### 主图MA/BOLL切换
         
-        kLineChartView.changeMainDrawType(MainStatus.MA);
+        kLineChartView.changeMainDrawType(Status.MainStatus.MA);
             参数    
-            MainStatus.MA, : 显示ma  默认值
-            MainStatus.BOLL: 显示boll
-            MainStatus.NONE: 只显示CandleLine
+            Status.MainStatus.MA, : 显示ma  默认值
+            Status.MainStatus.BOLL: 显示boll
+            Status.MainStatus.NONE: 只显示CandleLine
 
   ### 子图指标图切换
 
-        kLineChartView.setChildDraw(ChildStatus.MACD);
+        kLineChartView.setChildDraw(Status.ChildStatus.MACD);
             参数
-            NONE : //不显示子图  默认值
-            MACD : macd
-            KDJ  : kdj
-            RSI  : rsi
-            WR   : wr
+            Status.ChildStatus.NONE : //不显示子图  默认值
+            Status.ChildStatus.MACD : macd
+            Status.ChildStatus. KDJ  : kdj
+            Status.ChildStatus.RSI  : rsi
+            Status.ChildStatus.WR   : wr
 
   ### 设置是适应X左右边轴坐标的位置
 
@@ -155,10 +155,10 @@
            
   ### K线与分时线切换
 
-        kLineChartView.setMainDrawLine(false);
+        chartView.setKlineState(Status.KlineStatus klineStatus);
             参数
-            true : 显示折线的
-            false: 显示为CandleLine  默认值
+            Status.KlineStatus.K_LINE    : 显示K线
+            Status.KlineStatus.TIME_LINE : 显示为分时线
            
   ### 十字线跟随手指
 
@@ -182,11 +182,11 @@
   
   ### 设置十字线显示模式
   
-        kLineChartView.setSelectedTouchModle(ShowCrossModle showCrossModle);
+        kLineChartView.setSelectedTouchModle(Status.ShowCrossModle showCrossModle);
             参数 
-            ShowCrossModle.SELECT_TOUCHE : 点击显示
-            ShowCrossModle.SELECT_PRESS  : 长按显示
-            ShowCrossModle.SELECT_BOTH   : 点击长按混合
+            Status.ShowCrossModle.SELECT_TOUCHE : 点击显示
+            Status.ShowCrossModle.SELECT_PRESS  : 长按显示
+            Status.ShowCrossModle.SELECT_BOTH   : 点击长按混合
             
   ### 添加logo
   
