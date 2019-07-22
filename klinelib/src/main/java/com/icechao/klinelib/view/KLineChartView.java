@@ -1171,9 +1171,9 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * set cross line show modle
      *
-     * @param showCrossModle {@link ShowCrossModle} default SELECT_BOTH
+     * @param showCrossModle {@link Status.ShowCrossModle} default SELECT_BOTH
      */
-    public void setSelectedTouchModle(ShowCrossModle showCrossModle) {
+    public void setSelectedTouchModle(Status.ShowCrossModle showCrossModle) {
         this.modle = showCrossModle;
     }
 

@@ -44,6 +44,17 @@ public class Status {
             return statu;
         }
     }
+
+    public enum ShowCrossModle {
+        SELECT_TOUCHE(0),//touch modle
+        SELECT_PRESS(1),//long press modle
+        SELECT_BOTH(2);//both modle
+        private int model;
+
+        ShowCrossModle(int model) {
+            this.model = model;
+        }
+    }
 }
 
 

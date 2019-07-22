@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
-import com.icechao.klinelib.utils.ShowCrossModle;
+import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
  * Description   :
@@ -82,7 +82,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean isTapShow;
 
-    protected ShowCrossModle modle = ShowCrossModle.SELECT_BOTH;
+    protected Status.ShowCrossModle modle = Status.ShowCrossModle.SELECT_BOTH;
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
@@ -124,7 +124,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (modle == ShowCrossModle.SELECT_PRESS || modle == ShowCrossModle.SELECT_BOTH) {
+        if (modle == Status.ShowCrossModle.SELECT_PRESS || modle == Status.ShowCrossModle.SELECT_BOTH) {
             showSelected = true;
             onSelectedChange(e);
         }
