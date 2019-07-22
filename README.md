@@ -155,10 +155,10 @@
            
   ### K线与分时线切换
 
-        kLineChartView.setMainDrawLine(false);
+        chartView.setKlineState(Status.KlineStatus klineStatus);
             参数
-            true : 显示折线的
-            false: 显示为CandleLine  默认值
+            Status.KlineStatus.K_LINE    : 显示K线
+            Status.KlineStatus.TIME_LINE : 显示为分时线
            
   ### 十字线跟随手指
 
