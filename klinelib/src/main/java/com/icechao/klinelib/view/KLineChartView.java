@@ -119,6 +119,7 @@ public class KLineChartView extends BaseKLineChartView {
 
 
                 //背景添加渐变色
+                setBackgroundColor(array.getColor(R.styleable.kline_background_color, getResources().getColor(R.color.color_1C1E27)));
                 setBackGroundFillTopColor(array.getColor(R.styleable.kline_background_fill_top_color, getResources().getColor(R.color.color_1C1E27)));
                 setBackGroundFillBottomColor(array.getColor(R.styleable.kline_background_fill_bottom_color, getResources().getColor(R.color.color_4B85D6)));
                 setBackGroundAlpha(array.getInt(R.styleable.kline_background_alpha, 18));

@@ -38,6 +38,7 @@
         <!--公共的-->
         <attr name="main_lengend_margin_top" format="dimension"/>
         <attr name="increase_color" format="color"/>
+        <attr name="background_color" format="color"/>
         <attr name="decrease_color" format="color"/>
         <attr name="text_size" format="dimension"/>
         <attr name="text_color" format="color"/>
