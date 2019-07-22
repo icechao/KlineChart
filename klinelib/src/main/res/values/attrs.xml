@@ -1,45 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="KLineChartView">
+    <declare-styleable name="kline">
+
+        <!-- price line-->
+        <attr name="price_line_width" format="dimension"/>
+        <attr name="price_line_color" format="color"/>
+        <attr name="price_line_right_color" format="color"/>
+        <attr name="price_line_box_color" format="color"/>
+
+        <!--cross line -->
+        <attr name="select_x_line_width" format="dimension"/>
+        <attr name="select_y_line_width" format="dimension"/>
+        <attr name="select_x_line_color" format="color"/>
+        <attr name="select_y_line_color" format="color"/>
+        <attr name="select_cross_big_color" format="color"/>
+        <attr name="select_cross_color" format="color"/>
+        <attr name="select_y_color" format="color"/>
+        <attr name="select_line_color" format="color"/>
+        <attr name="select_line_width" format="dimension"/>
+        <attr name="select_cross_point_color" format="color"/>
+        <attr name="select_background_color" format="color"/>
+        <attr name="select_text_size" format="dimension"/>
+
+        <!-- background -->
+        <attr name="background_fill_top_color" format="color"/>
+        <attr name="background_fill_bottom_color" format="color"/>
+        <attr name="background_alpha" format="integer"/>
+        <attr name="background_fill_alpha" format="integer"/>
+
+        <!--time line-->
+        <attr name="time_line_color" format="color"/>
+        <attr name="time_line_fill_top_color" format="color"/>
+        <attr name="time_line_fill_bottom_color" format="color"/>
+        <attr name="time_line_end_point_color" format="color"/>
+        <attr name="time_line_end_point_width" format="dimension"/>
+
         <!--公共的-->
-        <attr name="kc_text_size" format="dimension"/>
-        <attr name="kc_text_color" format="color"/>
-        <attr name="kc_line_width" format="dimension"/>
-        <attr name="kc_background_color" format="color"/>
-        <attr name="kc_selected_line_color" format="color"/>
-        <attr name="kc_selected_line_width" format="dimension"/>
-        <attr name="kc_grid_line_width" format="dimension"/>
-        <attr name="kc_grid_line_color" format="color"/>
-        <attr name="kc_point_width" format="dimension"/>
+        <attr name="main_lengend_margin_top" format="dimension"/>
+        <attr name="increase_color" format="color"/>
+        <attr name="decrease_color" format="color"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="text_color" format="color"/>
+        <attr name="line_width" format="dimension"/>
+        <attr name="kline_item_width" format="dimension"/>
+        <!--k线-->
+        <attr name="candle_width" format="dimension"/>
+        <attr name="candle_line_width" format="dimension"/>
+        <attr name="candle_solid" format="boolean"/>
+        <!--grid line-->
+        <attr name="grid_line_width" format="dimension"/>
+        <attr name="grid_line_color" format="color"/>
         <!--macd-->
-        <attr name="kc_macd_width" format="dimension"/>
-        <attr name="kc_dif_color" format="color"/>
-        <attr name="kc_dea_color" format="color"/>
-        <attr name="kc_macd_color" format="color"/>
+        <attr name="macd_increase_color" format="color"/>
+        <attr name="macd_decrease_color" format="color"/>
+        <attr name="macd_width" format="dimension"/>
+        <attr name="dif_color" format="color"/>
+        <attr name="dea_color" format="color"/>
+        <attr name="macd_color" format="color"/>
         <!--kdj-->
-        <attr name="kc_k_color" format="color"/>
-        <attr name="kc_d_color" format="color"/>
-        <attr name="kc_j_color" format="color"/>
+        <attr name="k_color" format="color"/>
+        <attr name="d_color" format="color"/>
+        <attr name="j_color" format="color"/>
         <!--rsi-->
-        <attr name="kc_rsi1_color" format="color"/>
-        <attr name="kc_rsi2_color" format="color"/>
-        <attr name="kc_ris3_color" format="color"/>
+        <attr name="rsi1_color" format="color"/>
+        <attr name="rsi2_color" format="color"/>
+        <attr name="ris3_color" format="color"/>
         <!--boll-->
-        <attr name="kc_up_color" format="color"/>
-        <attr name="kc_mb_color" format="color"/>
-        <attr name="kc_dn_color" format="color"/>
+        <attr name="up_color" format="color"/>
+        <attr name="mb_color" format="color"/>
+        <attr name="dn_color" format="color"/>
         <!--main-->
-        <attr name="kc_ma5_color" format="color"/>
-        <attr name="kc_ma10_color" format="color"/>
-        <attr name="kc_ma20_color" format="color"/>
-        <attr name="kc_candle_width" format="dimension"/>
-        <attr name="kc_candle_line_width" format="dimension"/>
-        <attr name="kc_selector_background_color" format="color"/>
-        <attr name="kc_selector_text_size" format="dimension"/>
-        <attr name="kc_candle_solid" format="boolean"/>
-        <!--tab-->
-        <attr name="kc_tab_background_color" format="color"/>
-        <attr name="kc_tab_text_color" format="color"/>
-        <attr name="kc_tab_indicator_color" format="color"/>
+        <attr name="ma_one_color" format="color"/>
+        <attr name="ma_two_color" format="color"/>
+        <attr name="ma_three_color" format="color"/>
+
+        <!-- vol -->
+        <attr name="vol_lengend_color" format="color"/>
+        <attr name="vol_lengend_margin_top" format="dimension"/>
     </declare-styleable>
 </resources>

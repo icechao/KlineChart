@@ -566,7 +566,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      *
      */
     private String verticalCoordinatePlace(double f) {
-        return NumberTools.getTradeMarketAmount(valueFormatter.format((float) f));
+        return NumberTools.formatAmount(valueFormatter.format((float) f));
     }
 
 

@@ -40,6 +40,7 @@ public class VolumeDraw extends BaseDraw {
     private String volMaIndex2;
     private String volMaIndex1;
     private String volIndex;
+    private float volLengendMarginTop;
 
     public VolumeDraw(Context context) {
         redPaint.setColor(ContextCompat.getColor(context, R.color.color_03C087));
@@ -103,7 +104,7 @@ public class VolumeDraw extends BaseDraw {
         if (0 != vol && top > bottom - 1) {
             top = bottom - 1;
         }
-        if (view.isLine()) {
+        if (view.klineStatus.showLine()) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);
         } else if (close >= open) {//涨
             canvas.drawRect(curX - r, top, curX + r, bottom, redPaint);
@@ -116,26 +117,27 @@ public class VolumeDraw extends BaseDraw {
     @Override
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
         String text;
+        volLengendMarginTop += volLengendMarginTop;
         if (position == itemsCount - 1 && view.isAnimationLast()) {
-            text = volIndex + NumberTools.getTradeMarketAmount(getValueFormatter().format(view.getLastVol())) + "  ";
+            text = volIndex + NumberTools.formatAmount(getValueFormatter().format(view.getLastVol())) + "  ";
         } else {
-            text = volIndex + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
+            text = volIndex + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
         }
         canvas.drawText(text, x, y, volLeftPaint);
         x += view.getTextPaint().measureText(text);
 
         if (position == itemsCount - 1 && view.isAnimationLast()) {
-            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaOne)) + "  ";
+            text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(endMaOne)) + "  ";
         } else {
-            text = volMaIndex1 + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
+            text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
         }
         canvas.drawText(text, x, y, maOnePaint);
         x += maOnePaint.measureText(text);
         if (position == itemsCount - 1 && view.isAnimationLast()) {
 
-            text = volMaIndex2 + NumberTools.getTradeMarketAmount(getValueFormatter().format(endMaTwo)) + "  ";
+            text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(endMaTwo)) + "  ";
         } else {
-            text = volMaIndex2 + NumberTools.getTradeMarketAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
+            text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
         }
         canvas.drawText(text, x, y, maTwoPaint);
     }
@@ -180,7 +182,7 @@ public class VolumeDraw extends BaseDraw {
      *
      * @param color
      */
-    public void setVolLeftColor(int color) {
+    public void setVolLengendColor(int color) {
         this.volLeftPaint.setColor(color);
     }
 
@@ -226,5 +228,9 @@ public class VolumeDraw extends BaseDraw {
 
     public void setMinuteColor(int color) {
         linePaint.setColor(color);
+    }
+
+    public void setVolLengendMarginTop(float volLengendMarginTop) {
+        this.volLengendMarginTop = volLengendMarginTop;
     }
 }

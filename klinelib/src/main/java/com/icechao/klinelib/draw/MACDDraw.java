@@ -39,9 +39,7 @@ public class MACDDraw extends BaseDraw {
     private String difIndexLabel;
     private String deaIndexLabel;
 
-    public MACDDraw(Context context, int upColor, int downColor) {
-        redPaint.setColor(upColor);
-        greenPaint.setColor(downColor);
+    public MACDDraw(Context context) {
         indexInterval = Constants.getCount();
         macdIndexLabel = context.getString(R.string.k_index_macd);
         difIndexLabel = context.getString(R.string.k_index_dif);
@@ -171,6 +169,11 @@ public class MACDDraw extends BaseDraw {
         deaPaint.setStrokeWidth(width);
         difPaint.setStrokeWidth(width);
         macdPaint.setStrokeWidth(width);
+    }
+
+    public void setMacdChartColor(int increaseColor, int decreaseColor) {
+        redPaint.setColor(increaseColor);
+        greenPaint.setColor(decreaseColor);
     }
 
     /**

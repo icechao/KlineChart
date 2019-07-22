@@ -17,9 +17,8 @@ import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.ChildStatus;
-import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KLineChartView;
 
 import java.util.ArrayList;
@@ -216,61 +215,61 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         switch (v.getId()) {
             case R.id.text_view_hide_master:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(MainStatus.NONE);
+                chartView.changeMainDrawType(Status.MainStatus.NONE);
 
                 break;
             case R.id.text_view_hide_sub:
                 chartView.hideSelectData();
-                chartView.setChildDraw(ChildStatus.NONE);
+                chartView.setChildDraw(Status.ChildStatus.NONE);
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(MainStatus.MA);
+                chartView.changeMainDrawType(Status.MainStatus.MA);
                 break;
             case R.id.text_view_boll:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(MainStatus.BOLL);
+                chartView.changeMainDrawType(Status.MainStatus.BOLL);
                 break;
             case R.id.text_view_macd:
                 chartView.hideSelectData();
-                chartView.setChildDraw(ChildStatus.MACD);
+                chartView.setChildDraw(Status.ChildStatus.MACD);
                 break;
             case R.id.text_view_kdj:
                 chartView.hideSelectData();
-                chartView.setChildDraw(ChildStatus.KDJ);
+                chartView.setChildDraw(Status.ChildStatus.KDJ);
                 break;
             case R.id.text_view_rsi:
                 chartView.hideSelectData();
-                chartView.setChildDraw(ChildStatus.RSI);
+                chartView.setChildDraw(Status.ChildStatus.RSI);
                 break;
             case R.id.text_view_wr:
                 chartView.hideSelectData();
-                chartView.setChildDraw(ChildStatus.WR);
+                chartView.setChildDraw(Status.ChildStatus.WR);
                 break;
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_five_minute:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
 
                 break;
             case R.id.text_view_half_hour:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_one_week:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_one_mounth:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
                 break;
 
@@ -287,29 +286,30 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         switch (checkedId) {
             case R.id.radio_button_time_line:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(true);
+
+                chartView.setKlineState(Status.KlineStatus.TIME_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.radio_button_fifteen:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
 
                 break;
             case R.id.radio_button_one_hour:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(110, 400));
                 break;
             case R.id.radio_button_four_hour:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(150, 450));
 
                 break;
             case R.id.radio_button_one_day:
                 chartView.hideSelectData();
-                chartView.setMainDrawLine(false);
+                chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(10, 320));
                 break;
             case R.id.radio_button_more:

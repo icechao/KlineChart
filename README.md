@@ -221,7 +221,11 @@
         
          kLineChartView.setResetTranslate();
         
-
+  ### K线右侧可左滑的空白距离
+        
+         kLineChartView.setOverScrollRange(float overScrollRange);
+         参数
+         overScrollRange : 滑动距离
 
             
        

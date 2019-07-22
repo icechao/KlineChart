@@ -14,8 +14,8 @@ import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.Dputil;
-import com.icechao.klinelib.utils.MainStatus;
 import com.icechao.klinelib.utils.NumberTools;
+import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
  * Description   :
@@ -34,7 +34,7 @@ public class MainDraw extends BaseDraw {
     private final float margin;
     private String[] strings = new String[8];
     private ValueFormatter valueFormatter = new ValueFormatter();
-    private int indexPaddingTop = 10;
+    private float mainLengendMarginTop = 10;
     private final int indexInterval;
     private String indexMa1;
     private String indexMa2;
@@ -103,7 +103,7 @@ public class MainDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
-        if (view.isLine()) {
+        if (view.klineStatus.showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 view.drawEndLine(canvas, linePaint, lastX, lastClosePrice, curX);
@@ -131,8 +131,8 @@ public class MainDraw extends BaseDraw {
                         values[Constants.INDEX_OPEN + indexInterval],
                         values[Constants.INDEX_CLOSE + indexInterval],
                         position);
-                MainStatus status = view.getStatus();
-                if (status == MainStatus.MA) {
+                Status.MainStatus status = view.getStatus();
+                if (status == Status.MainStatus.MA) {
                     //画第一根ma
                     drawLine(lastX, curX, canvas, view, position,
                             values[Constants.INDEX_MA_1],
@@ -148,7 +148,7 @@ public class MainDraw extends BaseDraw {
                             values[Constants.INDEX_MA_3],
                             maThree, indexPaintThree,
                             values[Constants.INDEX_MA_3 + indexInterval]);
-                } else if (status == MainStatus.BOLL) {
+                } else if (status == Status.MainStatus.BOLL) {
                     //画boll
                     drawLine(lastX, curX, canvas, view, position,
                             values[Constants.INDEX_BOLL_UP],
@@ -197,12 +197,12 @@ public class MainDraw extends BaseDraw {
 
 
         //修改头文字显示在顶部
-        y = maTextHeight + indexPaddingTop;
-        if (view.isLine()) {
+        y = maTextHeight + mainLengendMarginTop;
+        if (view.klineStatus.showLine()) {
 
         } else {
-            MainStatus status = view.getStatus();
-            if (status == MainStatus.MA) {
+            Status.MainStatus status = view.getStatus();
+            if (status == Status.MainStatus.MA) {
                 String text;
                 if (Float.MIN_VALUE != values[Constants.INDEX_MA_1]) {
                     text = indexMa1 + getValueFormatter().format(values[Constants.INDEX_MA_1]) + "  ";
@@ -218,7 +218,7 @@ public class MainDraw extends BaseDraw {
                     text = indexMa3 + getValueFormatter().format(values[Constants.INDEX_MA_3]);
                     canvas.drawText(text, x, y, indexPaintThree);
                 }
-            } else if (status == MainStatus.BOLL) {
+            } else if (status == Status.MainStatus.BOLL) {
                 if (Float.MIN_VALUE != values[Constants.INDEX_BOLL_MB]) {
                     String text = indexBoll + view.formatValue(values[Constants.INDEX_BOLL_MB]) + "  ";
                     canvas.drawText(text, x, y, indexPaintOne);
@@ -309,8 +309,8 @@ public class MainDraw extends BaseDraw {
         strings[4] = (view.getValueFormatter().format(values[Constants.INDEX_CLOSE]));
         float tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
         strings[5] = (view.getValueFormatter().format(tempDiffPrice));
-        strings[6] = NumberTools.roundFormatDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
-        strings[7] = NumberTools.getTradeMarketAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
+        strings[6] = NumberTools.roundDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
+        strings[7] = NumberTools.formatAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
 
         float width = 0, left, top = margin + view.getTopPadding();
         //上下多加两个padding值的间隙
@@ -477,7 +477,7 @@ public class MainDraw extends BaseDraw {
                 view.generaterAnimator(maThree, values[Constants.INDEX_MA_3], animation -> maThree = (float) animation.getAnimatedValue());
                 break;
             case BOLL:
-                if (bollUp == 0 && view.getStatus() == MainStatus.BOLL) {
+                if (bollUp == 0 && view.getStatus() == Status.MainStatus.BOLL) {
                     bollUp = values[Constants.INDEX_BOLL_UP];
                     bollDn = values[Constants.INDEX_BOLL_DN];
                     bollMb = values[Constants.INDEX_BOLL_MB];
@@ -518,13 +518,13 @@ public class MainDraw extends BaseDraw {
     }
 
 
-    public void setUpColor(int color) {
+    public void setIncreaseColor(int color) {
         upPaint.setColor(color);
         upLinePaint.setColor(color);
 
     }
 
-    public void setDownColor(int color) {
+    public void setDecreaseColor(int color) {
         downPaint.setColor(color);
         downLinePaint.setColor(color);
     }
@@ -532,7 +532,7 @@ public class MainDraw extends BaseDraw {
     public void drawMaxMinValue(Canvas canvas, BaseKLineChartView view,
                                 float maxX, float mainHighMaxValue,
                                 float minX, float mainLowMinValue) {
-        if (!view.isLine()) {
+        if (!view.klineStatus.showLine()) {
             //绘制最大值和最小值
             float y = view.getMainY(mainLowMinValue);
             //计算显示位置
@@ -609,9 +609,9 @@ public class MainDraw extends BaseDraw {
     /**
      * top padding main area
      *
-     * @param indexPaddingTop
+     * @param mainLengendMarginTop
      */
-    public void setIndexPaddingTop(int indexPaddingTop) {
-        this.indexPaddingTop = indexPaddingTop;
+    public void setMainLengendMarginTop(float mainLengendMarginTop) {
+        this.mainLengendMarginTop = mainLengendMarginTop;
     }
 }

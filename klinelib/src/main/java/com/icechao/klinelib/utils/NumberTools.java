@@ -24,11 +24,11 @@ public class NumberTools {
      * @param len
      * @return
      */
-    public static String roundFormatDown(double num, int len) {
-        return roundFormatDown(new BigDecimal(num), len);
+    public static String roundDown(double num, int len) {
+        return roundDown(new BigDecimal(num), len);
     }
 
-    public static String roundFormatDown(BigDecimal num, int len) {
+    public static String roundDown(BigDecimal num, int len) {
         String strTemp = "";
         try {
             String string = num.setScale(len + 2, BigDecimal.ROUND_HALF_UP).toPlainString();
@@ -46,7 +46,7 @@ public class NumberTools {
      * @param amount
      * @return
      */
-    public static String getTradeMarketAmount(String amount) {
+    public static String formatAmount(String amount) {
         String result = "";
         if (TextUtils.isEmpty(amount)) {
             return result;

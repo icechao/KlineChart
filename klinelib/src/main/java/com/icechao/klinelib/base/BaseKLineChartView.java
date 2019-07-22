@@ -60,7 +60,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 当前子视图的索引
      */
-    protected ChildStatus childDrawPosition = ChildStatus.NONE;
+    protected Status.ChildStatus childDrawPosition = Status.ChildStatus.NONE;
 
     /**
      * 绘制K线时画板平移的距离
@@ -171,9 +171,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected Paint logoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
-     * back ground fill paint
+     * price line right box paint
      */
-    protected Paint backgroundFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint rightPriceBoxPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 网络画笔
@@ -268,7 +268,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 量视图是否显示为线
      */
-    protected boolean isLine;
+//    protected boolean isLine;
+    public Status.KlineStatus klineStatus = Status.KlineStatus.K_LINE;
 
     /**
      * 数据
@@ -383,7 +384,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         generaterAnimator(lastVol, points[tempIndex + Constants.INDEX_VOL], animation -> lastVol = (Float) animation.getAnimatedValue());
         generaterAnimator(lastPrice, points[tempIndex + Constants.INDEX_CLOSE], animation -> {
             lastPrice = (Float) animation.getAnimatedValue();
-            if (isLine) {
+            if (klineStatus.showLine()) {
                 return;
             }
             animInvalidate();
@@ -448,12 +449,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 分时线填充渐变的上部颜色
      */
-    protected int areaTopColor;
+    protected int timeLineFillTopColor;
 
     /**
      * 分时线填充渐变的下部颜色
      */
-    protected int areaBottomColor;
+    protected int timeLineFillBottomColor;
 
     /**
      * 十字线Y轴的宽度
@@ -468,12 +469,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 背景色渐变上部颜色
      */
-    protected int backGroundTopColor;
+    protected int backGroundFillTopColor;
 
     /**
      * 背景色渐变下部颜色
      */
-    protected int backGroundBottomColor;
+    protected int backGroundFillBottomColor;
 
     /**
      * 网格行间距
@@ -553,7 +554,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         priceLineBoxRightPaint.setStyle(Paint.Style.STROKE);
         priceLineBoxPaint.setColor(Color.WHITE);
         priceLineBoxBgPaint.setColor(Color.BLACK);
-        backgroundFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        rightPriceBoxPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         priceLineBoxPaint.setStyle(Paint.Style.STROKE);
         priceLineBoxPaint.setStrokeWidth(1);
 
@@ -633,13 +634,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private void drawBackground(Canvas canvas) {
         float mid = width / 2;
         int mainBottom = mainRect.bottom;
-        backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
+        backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
         canvas.drawRect(0, 0, width, mainBottom, backgroundPaint);
         int volBottom = volRect.bottom;
-        backgroundPaint.setShader(new LinearGradient(mid, volRect.top - topPadding, mid, volBottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
+        backgroundPaint.setShader(new LinearGradient(mid, volRect.top - topPadding, mid, volBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
         canvas.drawRect(0, mainBottom, width, volBottom, backgroundPaint);
         if (null != childDraw) {
-            backgroundPaint.setShader(new LinearGradient(mid, childRect.top - topPadding, mid, childRect.bottom, backGroundTopColor, backGroundBottomColor, Shader.TileMode.CLAMP));
+            backgroundPaint.setShader(new LinearGradient(mid, childRect.top - topPadding, mid, childRect.bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
             canvas.drawRect(0, childRect.top, width, childRect.bottom, backgroundPaint);
         }
     }
@@ -859,7 +860,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (selectedY < volRect.top) {
                 return;
             } else if (selectedY < volRect.bottom) {
-                text = NumberTools.getTradeMarketAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
+                text = NumberTools.formatAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
             } else if (null != childDraw && selectedY < childRect.bottom) {
                 text = childDraw.getValueFormatter().format((childMaxValue / volRect.height() * (volRect.bottom - selectedY)));
             } else if (null != childDraw && selectedY < childRect.top) {
@@ -992,7 +993,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
 
         //交易量图的Y轴label
-        String maxVol = NumberTools.getTradeMarketAmount(volDraw.getValueFormatter().
+        String maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
                 format(volMaxValue));
         canvas.drawText(maxVol, tempYLabelX -
                 textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
@@ -1085,17 +1086,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     private void drawKlineRightSpace(Canvas canvas, float y, String priceString, float textWidth, float textLeft, float endLineRight) {
         //两个价格图层在点之间所以放在价格线中绘制
-        if (isLine) {
+        if (klineStatus.showLine()) {
             drawEndPoint(canvas, endLineRight);
         }
         for (float i = endLineRight; i < textLeft - 5; i += 12) {
             canvas.drawLine(i, y, i + 8, y, priceLineBoxRightPaint);
         }
         float textY = fixTextYBaseBottom(y);
-        canvas.drawRect(new Rect((int) textLeft, (int) (y - textHeight / 2), (int) (textLeft + textWidth), (int) (y + textHeight / 2)), backgroundFillPaint);
+        canvas.drawRect(new Rect((int) textLeft, (int) (y - textHeight / 2), (int) (textLeft + textWidth), (int) (y + textHeight / 2)), rightPriceBoxPaint);
         canvas.drawText(priceString, textLeft, textY, priceLineBoxRightPaint);
         //绘制价格圆点
-        if (isLine) {
+        if (klineStatus.showLine()) {
             canvas.drawCircle(endLineRight, y, lineEndPointWidth, lineEndFillPointPaint);
         }
     }
@@ -1181,7 +1182,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 当前主视图显示的指标
      */
-    protected MainStatus status = MainStatus.MA;
+    protected Status.MainStatus status = Status.MainStatus.MA;
 
     /**
      * 计算当前选中item的X的坐标
@@ -1264,16 +1265,16 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private float getMaxTranslate() {
         float dataLength = getDataLength();
         if (dataLength >= width) {
-            return isLine ? 0 : chartItemWidth * getScaleX() / 2;
+            return klineStatus.showLine() ? 0 : chartItemWidth * getScaleX() / 2;
         }
-        return width - dataLength + overScrollRange - (isLine ? 0 : chartItemWidth * getScaleX() / 2);
+        return width - dataLength + overScrollRange - (klineStatus.showLine() ? 0 : chartItemWidth * getScaleX() / 2);
     }
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         changeTranslated(canvasTranslateX + (l - oldl));
-        if (isLine && getX(screenRightIndex) + canvasTranslateX <= width) {
+        if (klineStatus.showLine() && getX(screenRightIndex) + canvasTranslateX <= width) {
             startFreshPage();
         } else {
             stopFreshPage();
@@ -1356,7 +1357,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         int tempLeft = screenLeftIndex > 0 ? screenLeftIndex + 1 : 0;
         for (int i = tempLeft; i <= screenRightIndex; i++) {
             int tempIndex = indexInterval * i;
-            mainMaxValue = (status == MainStatus.MA || status == MainStatus.NONE) ?
+            mainMaxValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
                     mainDraw.getMaxValue((float) mainMaxValue,
                             points[tempIndex + Constants.INDEX_HIGH],
                             points[tempIndex + Constants.INDEX_MA_1],
@@ -1367,7 +1368,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                             points[tempIndex + Constants.INDEX_BOLL_DN],
                             points[tempIndex + Constants.INDEX_BOLL_UP],
                             points[tempIndex + Constants.INDEX_BOLL_MB]);
-            mainMinValue = (status == MainStatus.MA || status == MainStatus.NONE) ?
+            mainMinValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
                     mainDraw.getMinValue((float) mainMinValue,
                             points[tempIndex + Constants.INDEX_LOW],
                             points[tempIndex + Constants.INDEX_MA_1],
@@ -1499,7 +1500,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     public void drawEndFill(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
         float y = displayHeight + topPadding + bottomPadding;
         LinearGradient linearGradient = new LinearGradient(startX, topPadding,
-                stopX, y, areaTopColor, areaBottomColor, Shader.TileMode.CLAMP);
+                stopX, y, timeLineFillTopColor, timeLineFillBottomColor, Shader.TileMode.CLAMP);
         paint.setShader(linearGradient);
         Path path = new Path();
         path.moveTo(startX, y);
@@ -1524,7 +1525,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
         float y = displayHeight + topPadding + bottomPadding;
         LinearGradient linearGradient = new LinearGradient(startX, topPadding,
-                stopX, y, areaTopColor, areaBottomColor, Shader.TileMode.CLAMP);
+                stopX, y, timeLineFillTopColor, timeLineFillBottomColor, Shader.TileMode.CLAMP);
         paint.setShader(linearGradient);
         float mainY = getMainY(stopValue);
         Path path = new Path();
@@ -1747,15 +1748,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     /**
-     * 当时显示是否是分时线
-     *
-     * @return isLine
-     */
-    public boolean isLine() {
-        return isLine;
-    }
-
-    /**
      * 获取文字画笔
      *
      * @return textPaint
@@ -1787,9 +1779,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 获取当前主图状态
      *
-     * @return {@link MainStatus}
+     * @return {@link Status.MainStatus}
      */
-    public MainStatus getStatus() {
+    public Status.MainStatus getStatus() {
         return this.status;
     }
 
