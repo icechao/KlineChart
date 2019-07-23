@@ -118,13 +118,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         chartView.setValueFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
-                return String.format("%.3f", value);
+                return String.format("%.03f", value);
             }
         });
         chartView.setVolFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
-                return String.format("%.3f", value);
+                return String.format("%.03f", value);
             }
         });
         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);

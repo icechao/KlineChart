@@ -539,7 +539,7 @@ public class MainDraw extends BaseDraw {
             String LowString;
             float stringWidth, screenMid = view.getTranslationScreenMid();
             if (minX < screenMid) {
-                LowString = "── " + String.format("%f", mainLowMinValue);
+                LowString = "── " + getValueFormatter().format(mainLowMinValue);
             } else {
                 LowString = mainLowMinValue + " ──";
                 stringWidth = maxMinPaint.measureText(LowString);
@@ -551,7 +551,7 @@ public class MainDraw extends BaseDraw {
             String highString;
             y = fixTextYBaseBottom(y);
             if (maxX < screenMid) {
-                highString = "── " + String.format("%f", mainHighMaxValue);
+                highString = "── " + getValueFormatter().format(mainHighMaxValue);
             } else {
                 highString = mainHighMaxValue + " ──";
                 stringWidth = maxMinPaint.measureText(highString);
