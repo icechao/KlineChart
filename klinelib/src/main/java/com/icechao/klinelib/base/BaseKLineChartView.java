@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.*;
+import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -607,7 +608,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     @Override
     public void onDraw(Canvas canvas) {
-        long l = System.currentTimeMillis();
         drawBackground(canvas);
         drawGirdLines(canvas);
         drawLogo(canvas);
@@ -980,20 +980,35 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     }
 
+    private double rowValueNoChild, rowValueWithChild;
+    private int gridRowCountNoChild, gridRowCountWithChild;
+
     /**
      * 绘制Y轴上的所有label
      *
      * @param canvas canvase
      */
     private void drawYLabels(Canvas canvas) {
+        long l = SystemClock.currentThreadTimeMillis();
+        double rowValue;
         int gridRowCount;
-        double rowValue;//当显示子视图时,y轴label减少显示一个
+        //当显示子视图时,y轴label减少显示一个
         if (null != childDraw) {
-            gridRowCount = gridRows - 2;
-            rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
+            if (0 == gridRowCountWithChild) {
+                gridRowCountWithChild = gridRows - 2;
+                rowValueWithChild = (mainMaxValue - mainMinValue) / gridRowCountWithChild;
+            }
+            gridRowCount = gridRowCountWithChild;
+            rowValue = rowValueWithChild;
+
         } else {
-            gridRowCount = gridRows - 1;
-            rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
+            if (0 == gridRowCountNoChild) {
+                gridRowCountNoChild = gridRows - 1;
+                rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
+            }
+            gridRowCount = gridRowCountNoChild;
+            rowValue = rowValueNoChild;
+
         }
 
         float tempYLabelX = width - yLabelMarginRight;
@@ -1006,7 +1021,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
         }
 
-        //交易量图的Y轴label
         String maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
                 format(volMaxValue));
         canvas.drawText(maxVol, tempYLabelX -
@@ -1020,6 +1034,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
 
         }
+        LogUtil.e(SystemClock.currentThreadTimeMillis() - l);
     }
 
 
@@ -1081,8 +1096,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         float halfHeight = textHeight / 2;
         float boxRight = width - priceBoxMarginRight;
         float boxLeft = boxRight - textWidth - priceLineBoxHeight - halfHeight;
-        float boxTop = y - halfPriceBoxHeight;
-        float boxBottom = y + halfPriceBoxHeight;
+        float boxTop = y - halfPriceBoxHeight - 5;
+        float boxBottom = y + halfPriceBoxHeight + 5;
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), halfPriceBoxHeight, halfPriceBoxHeight, priceLineBoxBgPaint);
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), halfPriceBoxHeight, halfPriceBoxHeight, priceLineBoxPaint);
 
@@ -1176,9 +1191,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 格式化值
      */
     public String formatValue(double value) {
-        if (null == valueFormatter) {
-            valueFormatter = new ValueFormatter();
-        }
         return valueFormatter.format((float) value);
     }
 
