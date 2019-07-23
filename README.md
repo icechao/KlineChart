@@ -106,6 +106,10 @@
         | `kline_select_cross_color`| color |选择线相交点颜色 | |
         | `kline_select_price_box_background_color`| color | 先中价格框背景色 | |
         | `kline_select_background_color`| color | 选择框背景色 | |
+        | `kline_select_price_box_horizental_padding`| dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | |
+        | `kline_select_price_box_vertical_padding`| dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | |
+        | `kline_select_info_box_margin`| dimension | 选中弹出框的margin | |
+        | `kline_select_info_box_padding`| dimension | 选中行弹出行情图的padding,上下为此值*2 | |
         | `kline_select_text_size`| dimension | 选择框文字大小 | |
         | `kline_macd_increase_color`| color | macd标准线上柱颜色| |
         | `kline_macd_decrease_color`| color | macd标准线下柱颜色 | |

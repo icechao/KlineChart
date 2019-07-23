@@ -159,10 +159,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 runOnUiThread(() -> {
                     all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all.subList(111, 333));
-                    chartView.setResetTranslate();
+                    adapter.resetData(all.subList(0, 380));
+                    chartView.resetTranslate();
                     chartView.hideLoading();
-                    changeLast();
+//                    changeLast();
                 });
             }
         }.start();

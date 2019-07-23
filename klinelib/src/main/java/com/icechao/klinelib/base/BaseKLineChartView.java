@@ -520,6 +520,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected boolean crossFollowTouch = false;
 
+    /**
+     * 选中价格框横向padding
+     */
+    protected float selectPriceBoxHorizentalPadding;
+    /**
+     * 选中价格框纵向padding
+     */
+    protected float selectPriceBoxVerticalPadding;
 
     public BaseKLineChartView(Context context) {
         super(context);
@@ -609,7 +617,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 drawYLabels(canvas);
                 drawXLabels(canvas);
                 drawK(canvas);
-//                drawSelected(canvas);
                 drawPriceLine(canvas);
                 drawValue(canvas, getShowSelected() ? selectedIndex : screenRightIndex);
             } catch (Exception e) {
@@ -811,13 +818,15 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             }
 
         }
+        if (getShowSelected()) {
+            drawSelected(canvas, getX(selectedIndex));
+        }
         mainDraw.drawMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
         canvas.restore();
     }
 
+
     public void drawSelected(Canvas canvas, float x) {
-        float textHorizentalPadding = Dputil.Dp2Px(getContext(), 5);
-        float textVerticalPadding = Dputil.Dp2Px(getContext(), 3);
         float y, textWidth;
         String text;
         //十字线竖线
@@ -850,8 +859,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
         float halfTextWidth = textWidth / 2;
         float tempLeft = x - halfTextWidth;
-        left = tempLeft - textHorizentalPadding;
-        right = x + halfTextWidth + textHorizentalPadding;
+        left = tempLeft - selectPriceBoxHorizentalPadding;
+        right = x + halfTextWidth + selectPriceBoxHorizentalPadding;
         bottom = y + baseLine + r - 2;
         canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
@@ -890,34 +899,34 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
         // 选中状态下的Y值
         textWidth = textPaint.measureText(text);
-        r = textHeight / 2 + textVerticalPadding;
-        float tempX = textWidth + 2 * textHorizentalPadding;
+        r = textHeight / 2 + selectPriceBoxVerticalPadding;
+        float tempX = textWidth + 2 * selectPriceBoxHorizentalPadding;
         float boxTop = y - r;
         float boXBottom = y + r;
-        if (getX(selectedIndex - screenLeftIndex) < width / 2) {
-            x = -canvasTranslateX + width - textWidth - 1 - 2 * textHorizentalPadding - textVerticalPadding;
+        if (getX(selectedIndex - screenLeftIndex) > width / 2) {
+            x = -canvasTranslateX + width - textWidth - 1 - 2 * selectPriceBoxHorizentalPadding - selectPriceBoxVerticalPadding;
             path = new Path();
             path.moveTo(x, y);
-            path.lineTo(x + textVerticalPadding * 2, boXBottom);
+            path.lineTo(x + selectPriceBoxHorizentalPadding + selectPriceBoxVerticalPadding, boXBottom);
             path.lineTo(-canvasTranslateX + width - 2, boXBottom);
             path.lineTo(-canvasTranslateX + width - 2, boxTop);
-            path.lineTo(x + textVerticalPadding * 2, boxTop);
+            path.lineTo(x + selectPriceBoxHorizentalPadding + selectPriceBoxVerticalPadding, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
             canvas.drawPath(path, selectorFramePaint);
-            canvas.drawText(text, x + textVerticalPadding + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
+            canvas.drawText(text, x + selectPriceBoxVerticalPadding + selectPriceBoxHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         } else {
             x = -canvasTranslateX;
             path = new Path();
             path.moveTo(x, boxTop);
             path.lineTo(x, boXBottom);
             path.lineTo(tempX + x, boXBottom);
-            path.lineTo(tempX + x + textVerticalPadding * 2, y);
+            path.lineTo(tempX + x + selectPriceBoxHorizentalPadding + selectPriceBoxVerticalPadding, y);
             path.lineTo(tempX + x, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
             canvas.drawPath(path, selectorFramePaint);
-            canvas.drawText(text, x + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
+            canvas.drawText(text, x + selectPriceBoxHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         }
     }
 

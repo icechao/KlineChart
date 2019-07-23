@@ -30,8 +30,8 @@ import com.icechao.klinelib.utils.Status;
 public class MainDraw extends BaseDraw {
 
     private int itemCount;
-    private final float padding;
-    private final float margin;
+    private float padding;
+    private float margin;
     private String[] strings = new String[8];
     private IValueFormatter valueFormatter = new ValueFormatter();
     private float mainLengendMarginTop = 10;
@@ -75,8 +75,6 @@ public class MainDraw extends BaseDraw {
         downPaint.setStyle(Paint.Style.FILL);
         downLinePaint.setStyle(Paint.Style.STROKE);
         downLinePaint.setAntiAlias(true);
-        padding = Dputil.Dp2Px(context, 5);
-        margin = Dputil.Dp2Px(context, 5);
         marketInfoText[0] = ("时间   ");
         marketInfoText[1] = ("开     ");
         marketInfoText[2] = ("高     ");
@@ -164,10 +162,6 @@ public class MainDraw extends BaseDraw {
                             values[Constants.INDEX_BOLL_DN + indexInterval]);
                 }
             }
-        }
-
-        if (view.getShowSelected() && position == view.getSelectedIndex()) {
-            view.drawSelected(canvas, curX);
         }
     }
 
@@ -612,5 +606,13 @@ public class MainDraw extends BaseDraw {
      */
     public void setMainLengendMarginTop(float mainLengendMarginTop) {
         this.mainLengendMarginTop = mainLengendMarginTop;
+    }
+
+    public void setSelectInfoBoxMargin(float margin) {
+        this.margin = margin;
+    }
+
+    public void setSelectInfoBoxPadding(float padding) {
+        this.padding = padding;
     }
 }

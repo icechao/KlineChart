@@ -20,6 +20,10 @@
         <attr name="select_price_box_background_color" format="color"/>
         <attr name="select_background_color" format="color"/>
         <attr name="select_text_size" format="dimension"/>
+        <attr name="select_price_box_horizental_padding" format="dimension"/>
+        <attr name="select_price_box_vertical_padding" format="dimension"/>
+        <attr name="select_info_box_padding" format="dimension"/>
+        <attr name="select_info_box_margin" format="dimension"/>
 
         <!-- background -->
         <attr name="background_fill_top_color" format="color"/>

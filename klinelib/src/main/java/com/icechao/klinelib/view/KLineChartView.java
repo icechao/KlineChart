@@ -111,6 +111,11 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectPriceBoxBackgroundColor(array.getColor(R.styleable.kline_select_price_box_background_color, getColor(R.color.color_081724)));
                 setSelectorBackgroundColor(array.getColor(R.styleable.kline_select_background_color, getColor(R.color.color_EA111725)));
                 setSelectorTextSize(array.getDimension(R.styleable.kline_select_text_size, getDimension(R.dimen.chart_selector_text_size)));
+                setSelectPriceBoxHorizentalPadding(array.getDimension(R.styleable.kline_select_price_box_horizental_padding, getDimension(R.dimen.price_box_horizental)));
+                setSelectPriceboxVerticalPadding(array.getDimension(R.styleable.kline_select_price_box_vertical_padding, getDimension(R.dimen.price_box_vertical)));
+
+                setSelectInfoBoxMargin(array.getDimension(R.styleable.kline_select_info_box_margin, getDimension(R.dimen.price_box_horizental)));
+                setSelectInfoBoxPadding(array.getDimension(R.styleable.kline_select_info_box_padding, getDimension(R.dimen.price_box_horizental)));
 
                 //K线
                 setIncreaseColor(array.getColor(R.styleable.kline_increase_color, getResources().getColor(R.color.color_03C087)));
@@ -534,7 +539,7 @@ public class KLineChartView extends BaseKLineChartView {
                     break;
             }
             setItemCount(0);
-            setResetTranslate();
+            resetTranslate();
             invalidate();
         }
     }
@@ -563,7 +568,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置选中框前面的文本
      *
-     * @param marketInfoText 默认中文
+     * @param marketInfoText 默认中文 国际化手动调用
      */
     @SuppressWarnings("unused")
     public void setMarketInfoText(String[] marketInfoText) {
@@ -862,7 +867,7 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * 设置上方padding
+     * 设置上方padding,行
      *
      * @param topPadding topPadding 横线网格和K线会绘制在这个位置的下方
      */
@@ -1064,7 +1069,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置K线跳转回最右侧
      */
-    public void setResetTranslate() {
+    public void resetTranslate() {
         this.resetTranslate = true;
         notifyChanged();
     }
@@ -1220,4 +1225,39 @@ public class KLineChartView extends BaseKLineChartView {
         return klineStatus.showLine();
     }
 
+    /**
+     * 选中时价格5边弄的横向padding
+     *
+     * @param padding padding, 带角的3角形的高为 横+纵padding
+     */
+    public void setSelectPriceBoxHorizentalPadding(float padding) {
+        this.selectPriceBoxHorizentalPadding = padding;
+    }
+
+    /**
+     * 选中时价格5边弄的纵向padding
+     *
+     * @param padding padding 带角的3角形的高为 横+纵padding
+     */
+    public void setSelectPriceboxVerticalPadding(float padding) {
+        this.selectPriceBoxVerticalPadding = padding;
+    }
+
+    /**
+     * 选中行弹出行情图的margin
+     *
+     * @param margin
+     */
+    public void setSelectInfoBoxMargin(float margin) {
+        mainDraw.setSelectInfoBoxMargin(margin);
+    }
+
+    /**
+     * 选中行弹出行情图的padding,上下为此值*2
+     *
+     * @param padding
+     */
+    public void setSelectInfoBoxPadding(float padding) {
+        mainDraw.setSelectInfoBoxPadding(padding);
+    }
 }
