@@ -118,13 +118,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         chartView.setValueFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
-                return String.format("%.2f", value);
+                return String.format("%.3f", value);
             }
         });
         chartView.setVolFormatter(new ValueFormatter() {
             @Override
             public String format(float value) {
-                return String.format("%.2f", value);
+                return String.format("%.3f", value);
             }
         });
         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
@@ -170,7 +170,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
     private void changeLast() {
         handler.postDelayed(() -> {
-            int i = random.nextInt((int) (SystemClock.currentThreadTimeMillis() % 100)) * 1123 % 400;
+            int i = random.nextInt() * 1123 % 400;
             KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
             KChartBean kLineEntity1 = new KChartBean();
             kLineEntity1.setDate(kLineEntity.date);

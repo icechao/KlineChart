@@ -33,7 +33,7 @@ public class MainDraw extends BaseDraw {
     private final float padding;
     private final float margin;
     private String[] strings = new String[8];
-    private ValueFormatter valueFormatter = new ValueFormatter();
+    private IValueFormatter valueFormatter = new ValueFormatter();
     private float mainLengendMarginTop = 10;
     private final int indexInterval;
     private String indexMa1;
@@ -239,13 +239,12 @@ public class MainDraw extends BaseDraw {
 
     @Override
     public IValueFormatter getValueFormatter() {
-
         return valueFormatter;
     }
 
     @Override
     public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
+        this.valueFormatter = valueFormatter;
     }
 
     /**
