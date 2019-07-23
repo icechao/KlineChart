@@ -208,7 +208,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 十字线相交点画笔
      */
-    protected Paint selectedPointPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint selectedPriceBoxBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 十字线边框画笔
@@ -439,7 +439,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 分时线尾部点半径
      */
-    protected float lineEndPointWidth;
+    protected float lineEndRadiu;
+    /**
+     * 分时线尾部点半径
+     */
+    protected float lineEndMaxMultiply;
 
     /**
      * 最新数据变化的执行动画
@@ -464,7 +468,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 十字线Y轴的颜色
      */
-    protected int selectedYColor;
+    protected int selectedYColor = -1;
 
     /**
      * 背景色渐变上部颜色
@@ -827,10 +831,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         path.lineTo(right, bottom);
         path.lineTo(left, bottom);
         path.close();
-        LinearGradient linearGradient = new LinearGradient(x, topPadding, x, bottom,
-                new int[]{Color.TRANSPARENT, selectedYColor, selectedYColor, Color.TRANSPARENT},
-                new float[]{0f, 0.2f, 0.8f, 1f}, Shader.TileMode.CLAMP);
-        selectedYLinePaint.setShader(linearGradient);
+        if (-1 != selectedYColor) {
+            LinearGradient linearGradient = new LinearGradient(x, topPadding, x, bottom,
+                    new int[]{Color.TRANSPARENT, selectedYColor, selectedYColor, Color.TRANSPARENT},
+                    new float[]{0f, 0.2f, 0.8f, 1f}, Shader.TileMode.CLAMP);
+            selectedYLinePaint.setShader(linearGradient);
+        }
         canvas.drawPath(path, selectedYLinePaint);
 
         //画X值
@@ -847,7 +853,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         left = tempLeft - textHorizentalPadding;
         right = x + halfTextWidth + textHorizentalPadding;
         bottom = y + baseLine + r - 2;
-        canvas.drawRect(left, y, right, bottom, selectedPointPaint);
+        canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
         canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
         //十字线Y值判断
@@ -886,22 +892,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         textWidth = textPaint.measureText(text);
         r = textHeight / 2 + textVerticalPadding;
         float tempX = textWidth + 2 * textHorizentalPadding;
-        //左侧框
         float boxTop = y - r;
         float boXBottom = y + r;
         if (getX(selectedIndex - screenLeftIndex) < width / 2) {
-            x = -canvasTranslateX;
-            path = new Path();
-            path.moveTo(x, boxTop);
-            path.lineTo(x, boXBottom);
-            path.lineTo(tempX + x, boXBottom);
-            path.lineTo(tempX + x + textVerticalPadding * 2, y);
-            path.lineTo(tempX + x, boxTop);
-            path.close();
-            canvas.drawPath(path, selectedPointPaint);
-            canvas.drawPath(path, selectorFramePaint);
-            canvas.drawText(text, x + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
-        } else {//右侧框
             x = -canvasTranslateX + width - textWidth - 1 - 2 * textHorizentalPadding - textVerticalPadding;
             path = new Path();
             path.moveTo(x, y);
@@ -910,9 +903,21 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             path.lineTo(-canvasTranslateX + width - 2, boxTop);
             path.lineTo(x + textVerticalPadding * 2, boxTop);
             path.close();
-            canvas.drawPath(path, selectedPointPaint);
+            canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
             canvas.drawPath(path, selectorFramePaint);
             canvas.drawText(text, x + textVerticalPadding + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
+        } else {
+            x = -canvasTranslateX;
+            path = new Path();
+            path.moveTo(x, boxTop);
+            path.lineTo(x, boXBottom);
+            path.lineTo(tempX + x, boXBottom);
+            path.lineTo(tempX + x + textVerticalPadding * 2, y);
+            path.lineTo(tempX + x, boxTop);
+            path.close();
+            canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
+            canvas.drawPath(path, selectorFramePaint);
+            canvas.drawText(text, x + textHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         }
     }
 
@@ -1018,7 +1023,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     public void drawEndPoint(Canvas canvas, float stopX) {
         RadialGradient radialGradient = new RadialGradient(stopX, getMainY(lastPrice), endShadowLayerWidth, lineEndPointPaint.getColor(), Color.TRANSPARENT, Shader.TileMode.CLAMP);
         lineEndPointPaint.setShader(radialGradient);
-        canvas.drawCircle(stopX, getMainY(lastPrice), lineEndPointWidth * 4, lineEndPointPaint);
+        canvas.drawCircle(stopX, getMainY(lastPrice), lineEndRadiu * lineEndMaxMultiply, lineEndPointPaint);
 
     }
 
@@ -1097,7 +1102,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawText(priceString, textLeft, textY, priceLineBoxRightPaint);
         //绘制价格圆点
         if (klineStatus.showLine()) {
-            canvas.drawCircle(endLineRight, y, lineEndPointWidth, lineEndFillPointPaint);
+            canvas.drawCircle(endLineRight, y, lineEndRadiu, lineEndFillPointPaint);
         }
     }
 
@@ -1118,7 +1123,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (null != valueAnimator && valueAnimator.isRunning()) {
             return;
         }
-        valueAnimator = ValueAnimator.ofFloat(lineEndPointWidth, lineEndPointWidth * 4);
+        valueAnimator = ValueAnimator.ofFloat(lineEndRadiu, lineEndRadiu * lineEndMaxMultiply);
         valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
         valueAnimator.setDuration(duration);
         valueAnimator.setRepeatCount(10000);

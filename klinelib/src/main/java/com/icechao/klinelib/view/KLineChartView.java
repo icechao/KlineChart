@@ -76,6 +76,8 @@ public class KLineChartView extends BaseKLineChartView {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.kline);
         if (null != array) {
             try {
+
+                setLogoResouce(array.getResourceId(R.styleable.kline_logo, 0));
                 //最大最小值
                 mainDraw.setLimitTextSize(array.getDimension(R.styleable.kline_text_size, getDimension(R.dimen.chart_text_size)));
                 mainDraw.setLimitTextColor(array.getColor(R.styleable.kline_text_color, getColor(R.color.color_6D87A8)));
@@ -104,19 +106,19 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectedYColor(array.getColor(R.styleable.kline_select_y_color, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedXLineWidth(array.getDimension(R.styleable.kline_select_x_line_width, getDimension(R.dimen.chart_line_width)));
                 setSelectedYLineWidth(array.getDimension(R.styleable.kline_select_y_line_width, getDimension(R.dimen.chart_point_width)));
-                setSelectedXLineColor(array.getColor(R.styleable.kline_select_x_line_color, getResources().getColor(R.color.color_CFD3E9)));
+                setSelectedXLineColor(array.getColor(R.styleable.kline_select_y_color, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedYLineColor(array.getColor(R.styleable.kline_select_y_line_color, getResources().getColor(R.color.color_1ACFD3E9)));
-                setSelectPointColor(array.getColor(R.styleable.kline_select_cross_point_color, getColor(R.color.color_081724)));
+                setSelectPriceBoxBackgroundColor(array.getColor(R.styleable.kline_select_price_box_background_color, getColor(R.color.color_081724)));
                 setSelectorBackgroundColor(array.getColor(R.styleable.kline_select_background_color, getColor(R.color.color_EA111725)));
                 setSelectorTextSize(array.getDimension(R.styleable.kline_select_text_size, getDimension(R.dimen.chart_selector_text_size)));
 
                 //K线
                 setIncreaseColor(array.getColor(R.styleable.kline_increase_color, getResources().getColor(R.color.color_03C087)));
                 setDecreaseColor(array.getColor(R.styleable.kline_decrease_color, getResources().getColor(R.color.color_FF605A)));
-                setChartItemWidth(array.getDimension(R.styleable.kline_kline_item_width, getDimension(R.dimen.chart_point_width)));
+                setChartItemWidth(array.getDimension(R.styleable.kline_item_width, getDimension(R.dimen.chart_point_width)));
                 setCandleWidth(array.getDimension(R.styleable.kline_candle_width, getDimension(R.dimen.chart_candle_width)));
                 setCandleLineWidth(array.getDimension(R.styleable.kline_candle_line_width, getDimension(R.dimen.chart_candle_line_width)));
-
+                setKlineRightPadding(array.getDimension(R.styleable.kline_candle_right_padding, 0));
 
                 //背景添加渐变色
                 setBackgroundColor(array.getColor(R.styleable.kline_background_color, getResources().getColor(R.color.color_1C1E27)));
@@ -129,8 +131,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setTimeLineColor(array.getColor(R.styleable.kline_time_line_color, getResources().getColor(R.color.color_4B85D6)));
                 setTimeLineFillTopColor(array.getColor(R.styleable.kline_time_line_fill_top_color, getResources().getColor(R.color.color_404B85D6)));
                 setTimeLineFillBottomColor(array.getColor(R.styleable.kline_time_line_fill_bottom_color, getResources().getColor(R.color.color_004B85D6)));
-                setTimeLineEndPointColor(array.getColor(R.styleable.kline_time_line_end_point_color, Color.WHITE));
-                setTimeLineEndPointWidth(array.getDimension(R.styleable.kline_time_line_end_point_width, Dputil.Dp2Px(context, 4)));
+                setTimeLineEndColor(array.getColor(R.styleable.kline_time_line_end_point_color, Color.WHITE));
+                setTimeLineEndRadiu(array.getDimension(R.styleable.kline_time_line_end_radiu, Dputil.Dp2Px(context, 4)));
+                setTimeLineEndMultiply(array.getFloat(R.styleable.kline_time_line_end_multiply, 3f));
 
 
                 //macd
@@ -145,9 +148,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setDColor(array.getColor(R.styleable.kline_dea_color, getColor(R.color.color_61D1C0)));
                 setJColor(array.getColor(R.styleable.kline_macd_color, getColor(R.color.color_CB92FE)));
                 //wr
-                setR1Color(array.getColor(R.styleable.kline_dif_color, getColor(R.color.color_F6DC93)));
-                setR2Color(array.getColor(R.styleable.kline_dif_color, getColor(R.color.color_61D1C0)));
-                setR3Color(array.getColor(R.styleable.kline_dif_color, getColor(R.color.color_CB92FE)));
+                setR1Color(array.getColor(R.styleable.kline_wr_1_color, getColor(R.color.color_F6DC93)));
+                setR2Color(array.getColor(R.styleable.kline_wr_2_color, getColor(R.color.color_61D1C0)));
+                setR3Color(array.getColor(R.styleable.kline_wr_3_color, getColor(R.color.color_CB92FE)));
                 //rsi
                 setRSI1Color(array.getColor(R.styleable.kline_dif_color, getColor(R.color.color_F6DC93)));
                 setRSI2Color(array.getColor(R.styleable.kline_dea_color, getColor(R.color.color_61D1C0)));
@@ -236,6 +239,11 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
+    /**
+     * 设置是否可以缩放
+     *
+     * @param scaleEnable
+     */
     @Override
     public void setScaleEnable(boolean scaleEnable) {
         super.setScaleEnable(scaleEnable);
@@ -326,7 +334,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setMaOneColor(int color) {
         mainDraw.setMaOneColor(color);
-        volDraw.setMa5Color(color);
+        volDraw.setMaOneColor(color);
     }
 
     /**
@@ -336,7 +344,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setMaTwoColor(int color) {
         mainDraw.setMaTwoColor(color);
-        volDraw.setMa10Color(color);
+        volDraw.setMaTwoColor(color);
     }
 
     /**
@@ -515,7 +523,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param klineState {@link Status.KlineStatus}
      */
     public void setKlineState(Status.KlineStatus klineState) {
-        if (this.klineStatus != klineStatus) {
+        if (this.klineStatus != klineState) {
+            this.klineStatus = klineState;
             switch (klineState) {
                 case K_LINE:
                     stopFreshPage();
@@ -772,7 +781,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color pop color
      */
-    public void setTimeLineEndPointColor(int color) {
+    public void setTimeLineEndColor(int color) {
         lineEndPointPaint.setColor(color);
         lineEndFillPointPaint.setColor(color);
     }
@@ -782,10 +791,13 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param width pop width
      */
-    public void setTimeLineEndPointWidth(float width) {
-        this.lineEndPointWidth = width;
+    public void setTimeLineEndRadiu(float width) {
+        this.lineEndRadiu = width;
     }
 
+    public void setTimeLineEndMultiply(float multiply) {
+        this.lineEndMaxMultiply = multiply;
+    }
 
     /**
      * 设置价格线的宽度
@@ -832,8 +844,8 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置选中point 值显示背景
      */
-    public void setSelectPointColor(int color) {
-        selectedPointPaint.setColor(color);
+    public void setSelectPriceBoxBackgroundColor(int color) {
+        selectedPriceBoxBackgroundPaint.setColor(color);
     }
 
 
@@ -1135,6 +1147,9 @@ public class KLineChartView extends BaseKLineChartView {
      * @param bitmapRes logo resource
      */
     public void setLogoResouce(int bitmapRes) {
+        if (bitmapRes == 0) {
+            logoBitmap = null;
+        }
         setLogoBigmap(BitmapFactory.decodeResource(
                 getContext().getResources(), bitmapRes));
     }

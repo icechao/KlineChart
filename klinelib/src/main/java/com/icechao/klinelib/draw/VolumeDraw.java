@@ -173,7 +173,7 @@ public class VolumeDraw extends BaseDraw {
      *
      * @param color
      */
-    public void setMa5Color(int color) {
+    public void setMaOneColor(int color) {
         this.maOnePaint.setColor(color);
     }
 
@@ -192,7 +192,7 @@ public class VolumeDraw extends BaseDraw {
      *
      * @param color
      */
-    public void setMa10Color(int color) {
+    public void setMaTwoColor(int color) {
         this.maTwoPaint.setColor(color);
     }
 

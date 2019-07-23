@@ -65,6 +65,73 @@
               自定义属性查看:
              
         [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
+        
+        | 名称 | 值 | 属性 | 备注 | 
+        | ------ | ------ | ------ | ------ |  
+        | `kline_main_lengend_margin_top`| dimension | 主视图Lengend上边距 | |
+        | `kline_logo`| resource | 主视图logo | |
+        | `kline_candle_right_padding`| dimension | 主视图与右侧内边距 | |
+        | `kline_increase_color`| color | 涨颜色| |
+        | `kline_background_color` | color | 背景色  | |
+        | `kline_decrease_color`| color | 跌颜色| |
+        | `kline_text_size`| dimension | 文字大小| |
+        | `kline_text_color`| color | 文字颜色| |
+        | `kline_line_width`| dimension | 指标线线宽 | |
+        | `kline_kline_item_width`| dimension | 蜡烛图加外围空隙宽| |
+        | `kline_candle_width`| dimension | 蜡烛图柱宽 | |
+        | `kline_candle_line_width`| dimension | K线空心时宽度 | |
+        | `kline_price_line_width`| dimension | 价格线宽 | |
+        | `kline_price_line_color`| color | 价格线颜色 | |
+        | `kline_price_line_right_color`| color | 价格只显示在右侧时颜色 | |
+        | `kline_price_line_box_color`| color | 当前价格背景色| |
+        | `kline_background_fill_top_color`| color |背景渐变上部颜色 | |
+        | `kline_background_fill_bottom_color`| color |背景渐变下部颜色 | |
+        | `kline_background_alpha`| integer | 背景色透明度| |
+        | `kline_background_fill_alpha`| integer | 背景色填充透明度 | |
+        | `kline_time_line_color` | color| 分时线颜色| |
+        | `kline_time_line_fill_top_color`| color | 分时线填充渐变上部颜色 | |
+        | `kline_time_line_fill_bottom_color`| color |背景色渐变下部颜色 | |
+        | `kline_time_line_end_point_color`| color | 分时线尾颜色 | |
+        | `kline_time_line_end_multiply`| int | 分时线尾圆变化最大倍数 | |
+        | `kline_time_line_end_radiu`| dimension | 分时线尾圆半径 | |
+        | `kline_candle_solid`| boolean | K线是否空心| false |
+        | `kline_grid_line_width`| dimension | 网格线宽| |
+        | `kline_grid_line_color`| color | 网格颜色 | |
+        | `kline_select_x_line_width`| dimension | 十字线X轴线宽| |
+        | `kline_select_y_line_width`| dimension | 十字线Y轴线宽| |
+        | `kline_select_x_line_color`| color |选择线X线颜色 | |
+        | `kline_select_y_line_color`| color |  选择线Y线颜色| |
+        | `kline_select_y_color`| color | 选择线Y渐变色,Y线最好半透明透明| |
+        | `kline_select_cross_big_color`| color | 选择线相交点圆颜色| |
+        | `kline_select_cross_color`| color |选择线相交点颜色 | |
+        | `kline_select_price_box_background_color`| color | 先中价格框背景色 | |
+        | `kline_select_background_color`| color | 选择框背景色 | |
+        | `kline_select_text_size`| dimension | 选择框文字大小 | |
+        | `kline_macd_increase_color`| color | macd标准线上柱颜色| |
+        | `kline_macd_decrease_color`| color | macd标准线下柱颜色 | |
+        | `kline_macd_width`| dimension | macd线宽度 | |
+        | `kline_dif_color`| color | dif线颜色 | |
+        | `kline_dea_color`| color | dea线颜色 | |
+        | `kline_macd_color`| color | macd线颜色 | |
+        | `kline_k_color`| color | k线的颜色 | |
+        | `kline_d_color`| color | d线的颜色 | |
+        | `kline_j_color`| color | j线的颜色 | |
+        | `kline_rsi1_color`| color | 第1根rsi线的颜色 | |
+        | `kline_rsi2_color`| color |第2根rsi线的颜色 | 暂无 |
+        | `kline_ris3_color`| color | 第3根rsi线的颜色 | 暂无 |
+        | `kline_up_color`| color | up线颜色 | |
+        | `kline_mb_color`| color | mb线颜色 | |
+        | `kline_dn_color`| color | dn线颜色 | |
+        | `kline_wr_1_color`| color | 第1根wr线的颜色| |
+        | `kline_wr_2_color`| color | 第2根wr线的颜色| 暂无 |
+        | `kline_wr_3_color`| color | 第3根wr线的颜色| 暂无 |
+        | `kline_ma_one_color`| color | 第1根ma线的颜色 | |
+        | `kline_ma_two_color`| color | 第2根ma线的颜色 | |
+        | `kline_ma_three_color`| color | 第3根ma线的颜色 | |
+        | `kline_vol_lengend_color` | color| 成交量图例颜色 | |
+        | `kline_vol_lengend_margin_top`| dimension | 成交量图例距离成交量顶部距离 | 0 |
+        
+
               
   3. <b>初始化k线</b>
   

@@ -17,8 +17,7 @@
         <attr name="select_cross_color" format="color"/>
         <attr name="select_y_color" format="color"/>
         <attr name="select_line_color" format="color"/>
-        <attr name="select_line_width" format="dimension"/>
-        <attr name="select_cross_point_color" format="color"/>
+        <attr name="select_price_box_background_color" format="color"/>
         <attr name="select_background_color" format="color"/>
         <attr name="select_text_size" format="dimension"/>
 
@@ -33,7 +32,8 @@
         <attr name="time_line_fill_top_color" format="color"/>
         <attr name="time_line_fill_bottom_color" format="color"/>
         <attr name="time_line_end_point_color" format="color"/>
-        <attr name="time_line_end_point_width" format="dimension"/>
+        <attr name="time_line_end_radiu" format="integer"/>
+        <attr name="time_line_end_multiply" format="float"/>
 
         <!--公共的-->
         <attr name="main_lengend_margin_top" format="dimension"/>
@@ -43,8 +43,10 @@
         <attr name="text_size" format="dimension"/>
         <attr name="text_color" format="color"/>
         <attr name="line_width" format="dimension"/>
-        <attr name="kline_item_width" format="dimension"/>
+        <attr name="item_width" format="dimension"/>
+        <attr name="logo" format="reference"/>
         <!--k线-->
+        <attr name="candle_right_padding" format="dimension"/>
         <attr name="candle_width" format="dimension"/>
         <attr name="candle_line_width" format="dimension"/>
         <attr name="candle_solid" format="boolean"/>
@@ -58,6 +60,12 @@
         <attr name="dif_color" format="color"/>
         <attr name="dea_color" format="color"/>
         <attr name="macd_color" format="color"/>
+
+        <!--wr-->
+        <attr name="wr_1_color" format="color"/>
+        <attr name="wr_2_color" format="color"/>
+        <attr name="wr_3_color" format="color"/>
+
         <!--kdj-->
         <attr name="k_color" format="color"/>
         <attr name="d_color" format="color"/>
