@@ -161,7 +161,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     all = DataRequest.getALL(MainActivity.this);
                     adapter.resetData(all.subList(0, 380));
                     chartView.hideLoading();
-//                    changeLast();
+                    changeLast();
                 });
             }
         }.start();

@@ -13,7 +13,6 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 

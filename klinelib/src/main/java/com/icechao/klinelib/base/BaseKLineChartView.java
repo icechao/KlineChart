@@ -354,6 +354,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     changeTranslated(getMinTranslate());
                     dataAdapter.setResetShowPosition(false);
                 }
+                lastPrice = points[temp + Constants.INDEX_CLOSE];
+                lastVol = points[temp + Constants.INDEX_VOL];
             } else if (dataCount > itemsCount) {
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
@@ -795,7 +797,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float curX = getX(i);
             int nextTemp = indexInterval * i + indexInterval;
             if (i == 0) {
-
                 mainDraw.drawTranslated(canvas, curX, curX, this, i,
                         Arrays.copyOfRange(points, 0, indexInterval)
                 );
@@ -806,6 +807,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                             Arrays.copyOfRange(points, 0, indexInterval));
                 }
             } else {
+
+                if (i == itemsCount - 1) {
+                    int a = 1;
+                    long l = SystemClock.currentThreadTimeMillis();
+                }
+
                 float lastX = getX(i - 1);
                 int lastTemp = indexInterval * i - indexInterval;
                 mainDraw.drawTranslated(canvas, lastX, curX, this, i,
@@ -991,7 +998,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas canvase
      */
     private void drawYLabels(Canvas canvas) {
-        long l = SystemClock.currentThreadTimeMillis();
         double rowValue;
         int gridRowCount;
         //当显示子视图时,y轴label减少显示一个
@@ -1036,7 +1042,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
 
         }
-        LogUtil.e(SystemClock.currentThreadTimeMillis() - l);
     }
 
 
