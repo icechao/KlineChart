@@ -86,6 +86,15 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         notifyDataSetChanged();
     }
 
+
+    /**
+     * 通知K线显示位置发和变化,需要重置时可以先设置resetShowPosition后手动调用
+     */
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
     /**
      * 重置K线数据
      *
