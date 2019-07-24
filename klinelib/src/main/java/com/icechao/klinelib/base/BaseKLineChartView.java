@@ -807,12 +807,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                             Arrays.copyOfRange(points, 0, indexInterval));
                 }
             } else {
-
-                if (i == itemsCount - 1) {
-                    int a = 1;
-                    long l = SystemClock.currentThreadTimeMillis();
-                }
-
                 float lastX = getX(i - 1);
                 int lastTemp = indexInterval * i - indexInterval;
                 mainDraw.drawTranslated(canvas, lastX, curX, this, i,
@@ -825,7 +819,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                             Arrays.copyOfRange(points, lastTemp, nextTemp));
                 }
             }
-
         }
         if (getShowSelected()) {
             drawSelected(canvas, getX(selectedIndex));
