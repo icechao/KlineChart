@@ -70,7 +70,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      * 重置K线数据
      *
      * @param data              K线数据
-     * @param resetShowPosition 重置K线显示位置default true
+     * @param resetShowPosition 重置K线显示位置default true,如不需重置K线传入false
      */
     public void resetData(List<T> data, boolean resetShowPosition) {
         notifyDataWillChanged();
@@ -86,15 +86,6 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         notifyDataSetChanged();
     }
 
-
-    /**
-     * 通知K线显示位置发和变化,需要重置时可以先设置resetShowPosition后手动调用
-     */
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
     /**
      * 重置K线数据
      *
@@ -102,6 +93,14 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void resetData(List<T> data) {
         resetData(data, true);
+    }
+
+    /**
+     * 通知K线显示位置发和变化,需要重置时需先设置resetShowPosition为true后调用此方法
+     */
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     /**
