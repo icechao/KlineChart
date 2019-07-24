@@ -278,6 +278,7 @@
                         android:id="@+id/kLineChartView"
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
+                        app:background_fill_alpha="255"
                         app:background_color="#555555"
                         app:background_fill_top_color="#ffffff"
                         app:background_fill_bottom_color="#666666"
