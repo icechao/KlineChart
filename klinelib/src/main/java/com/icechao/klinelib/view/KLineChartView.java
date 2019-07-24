@@ -539,7 +539,7 @@ public class KLineChartView extends BaseKLineChartView {
                     break;
             }
             setItemCount(0);
-            resetTranslate();
+            dataAdapter.setResetShowPosition(true);
             invalidate();
         }
     }
@@ -1065,15 +1065,6 @@ public class KLineChartView extends BaseKLineChartView {
             invalidate();
         }
     }
-
-    /**
-     * 设置K线跳转回最右侧
-     */
-    public void resetTranslate() {
-        this.resetTranslate = true;
-        notifyChanged();
-    }
-
 
     /**
      * 设置加载数据时是否使用动画

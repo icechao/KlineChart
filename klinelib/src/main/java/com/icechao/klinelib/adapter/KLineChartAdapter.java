@@ -16,6 +16,20 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
 
     private int dataCount;
 
+    private boolean resetShowPosition;
+
+    public boolean getResetShowPosition() {
+        return resetShowPosition;
+    }
+
+    public void setResetShowPosition(boolean resetShowPosition) {
+        this.resetShowPosition = resetShowPosition;
+    }
+
+    public List<T> getDatas() {
+        return datas;
+    }
+
     private List<T> datas = new ArrayList<>();
     private float[] points;
 
@@ -52,17 +66,33 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     }
 
 
-    public void resetData(List<T> data) {
+    /**
+     * 重置K线数据
+     *
+     * @param data              K线数据
+     * @param resetShowPosition 重置K线显示位置default true
+     */
+    public void resetData(List<T> data, boolean resetShowPosition) {
         notifyDataWillChanged();
         datas = data;
         if (null != data && data.size() > 0) {
             this.dataCount = datas.size();
-            points = DataTools.calculate((List<KLineEntity>) datas);
-            notifyDataSetChanged();
+            points = DataTools.calculate(datas);
         } else {
             points = new float[]{};
             this.dataCount = 0;
         }
+        this.resetShowPosition = resetShowPosition;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 重置K线数据
+     *
+     * @param data K线数据
+     */
+    public void resetData(List<T> data) {
+        resetData(data, true);
     }
 
     /**
@@ -73,7 +103,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         if (null != entity) {
             datas.add(entity);
             this.dataCount++;
-            points = DataTools.calculate((List<KLineEntity>) datas);
+            points = DataTools.calculate(datas);
             notifyDataSetChanged();
         }
     }
@@ -85,7 +115,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void changeItem(int position, T data) {
         datas.set(position, data);
-        points = DataTools.calculate((List<KLineEntity>) datas);
+        points = DataTools.calculate(datas);
         notifyDataSetChanged();
     }
 }

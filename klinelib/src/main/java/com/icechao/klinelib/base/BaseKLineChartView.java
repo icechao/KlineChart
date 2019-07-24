@@ -348,7 +348,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             int temp = (dataAdapter.getCount() - 1) * indexInterval;
             if (dataCount == 0) {
                 setItemCount(0);
-                notifyChanged();
+            } else if (itemsCount == 0) {
+                setItemCount(dataCount);
+                if (dataAdapter.getResetShowPosition() && width != 0) {
+                    changeTranslated(getMinTranslate());
+                    dataAdapter.setResetShowPosition(false);
+                }
             } else if (dataCount > itemsCount) {
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
@@ -359,7 +364,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (itemsCount == dataCount) {
                 laseChange();
             }
-            notifyChanged();
         }
 
         @Override
@@ -370,8 +374,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             postDelayed(action, 500);
         }
     };
-
-    protected boolean resetTranslate = true;
 
 
     /**
@@ -1192,16 +1194,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public String formatValue(double value) {
         return valueFormatter.format((float) value);
-    }
-
-    /**
-     * 重新计算并刷新线条
-     */
-    public void notifyChanged() {
-        if (resetTranslate && width != 0 && itemsCount != 0) {
-            changeTranslated(getMinTranslate());
-            resetTranslate = false;
-        }
     }
 
 
