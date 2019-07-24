@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#131F30"
@@ -277,6 +278,9 @@
                         android:id="@+id/kLineChartView"
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
+                        app:background_color="#555555"
+                        app:background_fill_top_color="#ffffff"
+                        app:background_fill_bottom_color="#666666"
                         android:background="@color/color_081734"/>
 
                 <include

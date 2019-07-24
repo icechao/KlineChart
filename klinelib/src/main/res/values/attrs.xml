@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="kline">
+    <declare-styleable name="KLineChartView">
 
         <!-- price line-->
         <attr name="price_line_width" format="dimension"/>
