@@ -1,6 +1,9 @@
-# kline(尽量用配置去改写避免改动源码,方便修复bug重新依赖)
+# kline(尽量避免改动源码,方便修复bug重新依赖)
 
-借鉴开源项目,重写K线,优化性能
+## 效果图
+复用历史数据会导致K线看起来有点乱,数据问题
+<img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
+
 
 
 
@@ -335,13 +338,6 @@
   - 删除加载更多逻辑(重置设置数据不需要加载更多)
 
   
-# 效果图
-后面复用历史数据会导致K线看起来有点乱,数据问题
-
-
-
-<img src="https://github.com/icechao/KlineChart/blob/master/7i7by-qncwl.gif" width="300" hegiht="500" align=center />
-
 
 
 
