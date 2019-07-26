@@ -2,93 +2,111 @@
 <resources>
     <declare-styleable name="KLineChartView">
 
-        <!-- price line-->
-        <attr name="price_line_width" format="dimension"/>
-        <attr name="price_line_color" format="color"/>
-        <attr name="price_line_right_color" format="color"/>
-        <attr name="price_line_box_color" format="color"/>
+
+        <attr name="priceLineBoxMarginRight" format="dimension"/>
+        <attr name="priceLineBoxShapeWidth" format="dimension"/>
+        <attr name="priceLineBoxShapeHeight" format="dimension"/>
+        <attr name="priceLineBoxHeight" format="dimension"/>
+        <attr name="priceLineBoxPadding" format="dimension"/>
+        <attr name="priceLineBoxShapeTextMargin" format="dimension"/>
+        <attr name="priceLineWidth" format="dimension"/>
+        <attr name="priceLineColor" format="color"/>
+        <attr name="priceLineBackgroundColor" format="color"/>
+        <attr name="priceLineRightColor" format="color"/>
+        <attr name="priceLineBoxColor" format="color"/>
+        <attr name="priceLineBoxBorderColor" format="color"/>
+        <attr name="priceLineBoxBorderWidth" format="dimension"/>
 
         <!--cross line -->
-        <attr name="select_x_line_width" format="dimension"/>
-        <attr name="select_y_line_width" format="dimension"/>
-        <attr name="select_x_line_color" format="color"/>
-        <attr name="select_y_line_color" format="color"/>
-        <attr name="select_cross_big_color" format="color"/>
-        <attr name="select_cross_color" format="color"/>
-        <attr name="select_y_color" format="color"/>
-        <attr name="select_line_color" format="color"/>
-        <attr name="select_price_box_background_color" format="color"/>
-        <attr name="select_background_color" format="color"/>
-        <attr name="select_text_size" format="dimension"/>
-        <attr name="select_price_box_horizental_padding" format="dimension"/>
-        <attr name="select_price_box_vertical_padding" format="dimension"/>
-        <attr name="select_info_box_padding" format="dimension"/>
-        <attr name="select_info_box_margin" format="dimension"/>
+        <attr name="selectXLineWidth" format="dimension"/>
+        <attr name="selectYLineWidth" format="dimension"/>
+        <attr name="selectXLineColor" format="color"/>
+        <attr name="selectYLineColor" format="color"/>
+        <attr name="selectCrossBigColor" format="color"/>
+        <attr name="selectCrossPointRadiu" format="dimension"/>
+        <attr name="selectCrossPointColor" format="color"/>
+        <attr name="selectYColor" format="color"/>
+        <attr name="selectLineColor" format="color"/>
+        <attr name="selectPriceBoxBackgroundColor" format="color"/>
+        <attr name="selectBackgroundColor" format="color"/>
+        <attr name="selectTextSize" format="dimension"/>
+        <attr name="selectPriceBoxHorizentalPadding" format="dimension"/>
+        <attr name="selectPriceBoxVerticalPadding" format="dimension"/>
+        <attr name="selectInfoBoxPadding" format="dimension"/>
+        <attr name="selectInfoBoxMargin" format="dimension"/>
+        <attr name="selectInfoBoxTextColor" format="color"/>
+        <attr name="selectInfoBoxBorderColor" format="color"/>
+        <attr name="selectInfoBoxBackgroundColor" format="color"/>
+        <attr name="selectLabelBoderWidth" format="dimension"/>
+        <attr name="selectLabelBoderColor" format="color"/>
 
         <!-- background -->
-        <attr name="background_fill_top_color" format="color"/>
-        <attr name="background_fill_bottom_color" format="color"/>
-        <attr name="background_alpha" format="integer"/>
-        <attr name="background_fill_alpha" format="integer"/>
+        <attr name="yLabelMarginRight" format="dimension"/>
+        <attr name="backgroundFillTopLolor" format="color"/>
+        <attr name="backgroundFillBottomColor" format="color"/>
+        <attr name="backgroundAlpha" format="integer"/>
+        <attr name="backgroundFillAlpha" format="integer"/>
 
         <!--time line-->
-        <attr name="time_line_color" format="color"/>
-        <attr name="time_line_fill_top_color" format="color"/>
-        <attr name="time_line_fill_bottom_color" format="color"/>
-        <attr name="time_line_end_point_color" format="color"/>
-        <attr name="time_line_end_radiu" format="integer"/>
-        <attr name="time_line_end_multiply" format="float"/>
+        <attr name="timeLineColor" format="color"/>
+        <attr name="timeLineFillTopColor" format="color"/>
+        <attr name="timeLineFillBottomColor" format="color"/>
+        <attr name="timeLineEndPointColor" format="color"/>
+        <attr name="timeLineEndRadiu" format="integer"/>
+        <attr name="timeLineEndMultiply" format="float"/>
 
         <!--公共的-->
-        <attr name="main_lengend_margin_top" format="dimension"/>
-        <attr name="increase_color" format="color"/>
-        <attr name="background_color" format="color"/>
-        <attr name="decrease_color" format="color"/>
-        <attr name="text_size" format="dimension"/>
-        <attr name="text_color" format="color"/>
-        <attr name="line_width" format="dimension"/>
-        <attr name="item_width" format="dimension"/>
-        <attr name="logo" format="reference"/>
+        <attr name="mainLengendMarginTop" format="dimension"/>
+        <attr name="increaseColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="decreaseColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingBottom" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="itemWidth" format="dimension"/>
+        <attr name="chartLogo" format="reference"/>
         <!--k线-->
-        <attr name="candle_right_padding" format="dimension"/>
-        <attr name="candle_width" format="dimension"/>
-        <attr name="candle_line_width" format="dimension"/>
-        <attr name="candle_solid" format="boolean"/>
+        <attr name="candleRightPadding" format="dimension"/>
+        <attr name="candleWidth" format="dimension"/>
+        <attr name="candleLineWidth" format="dimension"/>
+        <attr name="candleSolid" format="boolean"/>
         <!--grid line-->
-        <attr name="grid_line_width" format="dimension"/>
-        <attr name="grid_line_color" format="color"/>
+        <attr name="gridLineWidth" format="dimension"/>
+        <attr name="gridLineColor" format="color"/>
         <!--macd-->
-        <attr name="macd_increase_color" format="color"/>
-        <attr name="macd_decrease_color" format="color"/>
-        <attr name="macd_width" format="dimension"/>
-        <attr name="dif_color" format="color"/>
-        <attr name="dea_color" format="color"/>
-        <attr name="macd_color" format="color"/>
+        <attr name="macdIncreaseColor" format="color"/>
+        <attr name="macdDecreaseColor" format="color"/>
+        <attr name="macdWidth" format="dimension"/>
+        <attr name="difColor" format="color"/>
+        <attr name="deaColor" format="color"/>
+        <attr name="macdColor" format="color"/>
 
         <!--wr-->
-        <attr name="wr_1_color" format="color"/>
-        <attr name="wr_2_color" format="color"/>
-        <attr name="wr_3_color" format="color"/>
+        <attr name="wr1Color" format="color"/>
+        <attr name="wr2Color" format="color"/>
+        <attr name="wr3Color" format="color"/>
 
         <!--kdj-->
-        <attr name="k_color" format="color"/>
-        <attr name="d_color" format="color"/>
-        <attr name="j_color" format="color"/>
+        <attr name="kColor" format="color"/>
+        <attr name="dColor" format="color"/>
+        <attr name="jColor" format="color"/>
         <!--rsi-->
-        <attr name="rsi1_color" format="color"/>
-        <attr name="rsi2_color" format="color"/>
-        <attr name="ris3_color" format="color"/>
+        <attr name="rsi1Color" format="color"/>
+        <attr name="rsi2Color" format="color"/>
+        <attr name="ris3Color" format="color"/>
         <!--boll-->
-        <attr name="up_color" format="color"/>
-        <attr name="mb_color" format="color"/>
-        <attr name="dn_color" format="color"/>
+        <attr name="upColor" format="color"/>
+        <attr name="mbColor" format="color"/>
+        <attr name="dnColor" format="color"/>
         <!--main-->
-        <attr name="ma_one_color" format="color"/>
-        <attr name="ma_two_color" format="color"/>
-        <attr name="ma_three_color" format="color"/>
+        <attr name="ma1Color" format="color"/>
+        <attr name="ma2Color" format="color"/>
+        <attr name="ma3Color" format="color"/>
 
         <!-- vol -->
-        <attr name="vol_lengend_color" format="color"/>
-        <attr name="vol_lengend_margin_top" format="dimension"/>
+        <attr name="volLengendColor" format="color"/>
+        <attr name="volLengendMarginTop" format="dimension"/>
     </declare-styleable>
 </resources>

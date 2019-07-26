@@ -22,6 +22,7 @@ import com.icechao.klinelib.utils.Constants;
  *************************************************************************/
 public class RSIDraw extends BaseDraw {
 
+    private final String lengentText;
     private Paint mRSI1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mRSI2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mRSI3Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -30,6 +31,8 @@ public class RSIDraw extends BaseDraw {
 
     public RSIDraw(Context context) {
         indexInterval = Constants.getCount();
+        lengentText = String.format(Constants.RSI_TOP_TEXT_TAMPLATE, Constants.RSI_1);
+
     }
 
 
@@ -45,11 +48,10 @@ public class RSIDraw extends BaseDraw {
     @Override
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
         if (Float.MIN_VALUE != values[Constants.INDEX_RSI_1]) {
-            String text = String.format(Constants.RSI_TOP_TEXT_TAMPLATE, Constants.RSI_1);
             Paint textPaint = view.getTextPaint();
-            canvas.drawText(text, x, y, textPaint);
-            x += textPaint.measureText(text);
-            text = view.formatValue(values[Constants.INDEX_RSI_1]);
+            canvas.drawText(lengentText, x, y, textPaint);
+            x += textPaint.measureText(lengentText);
+            String text = view.formatValue(values[Constants.INDEX_RSI_1]);
             canvas.drawText(text, x, y, mRSI1Paint);
         }
     }

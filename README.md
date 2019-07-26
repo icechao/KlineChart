@@ -68,8 +68,10 @@
         
         | 名称 | 值 | 属性 | 默认 | 
         | ------ | ------ | ------ | ------ |  
-        | `main_lengend_margin_top`| dimension | 主视图Lengend上边距 | |
-        | `logo`| resource | 主视图logo | |
+        | `main_lengend_margin_top`| dimension | 主视图Lengend上边距 | 10 |
+        | `padding_bottom`| dimension | chart上部内容边距 | 30,第一个网格的位置 |
+        | `padding_top`| dimension | 主视图Lengend上边距 | 15底部显示X轴label空间 |
+        | `chart_logo`| resource | 主视图logo | |
         | `candle_right_padding`| dimension | 主视图与右侧内边距 | |
         | `increase_color`| color | 涨颜色| |
         | `background_color` | color | 背景色  | |
@@ -80,14 +82,23 @@
         | `kline_item_width`| dimension | 蜡烛图加外围空隙宽| |
         | `candle_width`| dimension | 蜡烛图柱宽 | |
         | `candle_line_width`| dimension | K线空心时宽度 | |
-        | `price_line_width`| dimension | 价格线宽 | |
+        | `price_line_width`| dimension | 价格线宽 | 1dp |
         | `price_line_color`| color | 价格线颜色 | |
         | `price_line_right_color`| color | 价格只显示在右侧时颜色 | |
-        | `price_line_box_color`| color | 当前价格背景色| |
+        | `price_line_background_color`| color | 价格线横框背景色 | #CFD3A9 |
+        | `price_line_box_margin_right`| dimension | 价格框右边距 | 120 |
+        | `price_line_box_shape_width`| dimension | 价格线框内三角形占宽| 10 |
+        | `price_line_box_shape_height`| dimension | 价格线框内三角形占高| 20 |
+        | `price_line_box_height`| dimension | 价格线上的框高度| 40 |
+        | `price_line_box_padding`| dimension | 价格线上的框的内边距| 20 |
+        | `price_line_box_shape_text_margin`| dimension | 价格框文字与图形距离| 10 |
+        | `price_line_box_border_width`| dimension | 价格线框边框宽度| 1 |
+        | `price_line_box_border_color`| dimension | 价格线框边框颜色| |
         | `background_fill_top_color`| color |背景渐变上部颜色 | |
         | `background_fill_bottom_color`| color |背景渐变下部颜色 | |
         | `background_alpha`| integer | 背景色透明度| |
         | `background_fill_alpha`| integer | 背景色填充透明度 | |
+        | `y_label_margin_right`| dimension | y轴上label与右侧边距 |10 |
         | `time_line_color` | color| 分时线颜色| |
         | `time_line_fill_top_color`| color | 分时线填充渐变上部颜色 | |
         | `time_line_fill_bottom_color`| color |背景色渐变下部颜色 | |
@@ -98,18 +109,24 @@
         | `grid_line_width`| dimension | 网格线宽| |
         | `grid_line_color`| color | 网格颜色 | |
         | `select_x_line_width`| dimension | 十字线X轴线宽| |
+        | `select_label_boder_width`| dimension | 选中坐标边框线宽| 2 |
+        | `select_label_boder_color`| color | 选中坐标边框颜色| |
         | `select_y_line_width`| dimension | 十字线Y轴线宽| |
         | `select_x_line_color`| color |选择线X线颜色 | |
         | `select_y_line_color`| color |  选择线Y线颜色| |
         | `select_y_color`| color | 选择线Y渐变色,Y线最好半透明透明| |
         | `select_cross_big_color`| color | 选择线相交点圆颜色| |
-        | `select_cross_color`| color |选择线相交点颜色 | |
+        | `select_cross_point_color`| color |选择线相交点颜色 | |
+        | `select_cross_point_radiu`| color |选择线相交点小圆半径 | |
         | `select_price_box_background_color`| color | 先中价格框背景色 | |
         | `select_background_color`| color | 选择框背景色 | |
-        | `select_price_box_horizental_padding`| dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | |
-        | `select_price_box_vertical_padding`| dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | |
+        | `select_price_box_horizental_padding`| dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
+        | `select_price_box_vertical_padding`| dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
         | `select_info_box_margin`| dimension | 选中弹出框的margin | |
-        | `select_info_box_padding`| dimension | 选中行弹出行情图的padding,上下为此值*2 | |
+        | `select_info_box_padding`| dimension | 选中行弹出行情行间距,上下为此值*2 | |
+        | `select_info_box_text_color`| dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
+        | `select_info_box_border_color`| dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
+        | `select_info_box_background_color`| dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
         | `select_text_size`| dimension | 选择框文字大小 | |
         | `macd_increase_color`| color | macd标准线上柱颜色| |
         | `macd_decrease_color`| color | macd标准线下柱颜色 | |
@@ -133,7 +150,7 @@
         | `ma_two_color`| color | 第2根ma线的颜色 | |
         | `ma_three_color`| color | 第3根ma线的颜色 | |
         | `vol_lengend_color` | color| 成交量图例颜色 | |
-        | `vol_lengend_margin_top`| dimension | 成交量图例距离成交量顶部距离 | 0 |
+        | `vol_lengend_margin_top`| dimension | 成交量图例距离成交量顶部距离 | 10 |
         
 
               

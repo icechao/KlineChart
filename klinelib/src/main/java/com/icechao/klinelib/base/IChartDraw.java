@@ -14,7 +14,7 @@ import android.support.annotation.NonNull;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public interface IChartDraw<T> {
+public interface IChartDraw {
 
     /**
      * 绘制

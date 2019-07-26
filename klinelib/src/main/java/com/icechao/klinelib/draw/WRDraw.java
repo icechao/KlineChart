@@ -27,9 +27,12 @@ public class WRDraw extends BaseDraw {
     private Paint r3Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
+    private final String lengentText;
 
     public WRDraw(Context context) {
         indexInterval = Constants.getCount();
+        lengentText = String.format(Constants.WR_TOP_TEXT_TEMPLATE, Constants.WR_1);
+
     }
 
 
@@ -47,11 +50,10 @@ public class WRDraw extends BaseDraw {
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float... values) {
 //        IWR point = (IWR) view.getItem(position);
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
-            String text = String.format(Constants.WR_TOP_TEXT_TEMPLATE, Constants.WR_1);
-            canvas.drawText(text, x, y, view.getTextPaint());
-            x += view.getTextPaint().measureText(text);
-            text = view.formatValue(values[Constants.INDEX_WR_1]) + " ";
-            canvas.drawText(text, x, y, r1Paint);
+            canvas.drawText(lengentText, x, y, view.getTextPaint());
+            x += view.getTextPaint().measureText(lengentText);
+            String temp = view.formatValue(values[Constants.INDEX_WR_1]) + " ";
+            canvas.drawText(temp, x, y, r1Paint);
         }
     }
 

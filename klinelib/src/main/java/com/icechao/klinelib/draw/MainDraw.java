@@ -3,7 +3,6 @@ package com.icechao.klinelib.draw;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
@@ -90,11 +89,6 @@ public class MainDraw extends BaseDraw {
         indexBoll = context.getString(R.string.k_index_boll);
         indexUb = context.getString(R.string.k_index_ub);
         indexLb = context.getString(R.string.k_index_lb);
-
-        selectorTextPaint.setColor(Color.WHITE);
-        selectorBorderPaint.setColor(Color.BLACK);
-        selectorBackgroundPaint.setColor(Color.DKGRAY);
-
     }
 
 
@@ -304,7 +298,7 @@ public class MainDraw extends BaseDraw {
         strings[6] = NumberTools.roundDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
         strings[7] = NumberTools.formatAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
 
-        float width = 0, left, top = margin + view.getTopPadding();
+        float width = 0, left, top = margin + view.getChartPaddingTop();
         //上下多加两个padding值的间隙
         int length = strings.length;
         float height = padding * ((length - 1) + 4) + selectedTextHeight * length;
@@ -391,13 +385,16 @@ public class MainDraw extends BaseDraw {
     }
 
     /**
-     * 设置选择器文字颜色 selected popupwindow text color
+     * 设置选择器弹出框相关颜色 selected popupwindow text color
      *
-     * @param color color
+     * @param textColor       文字
+     * @param boderColor      边框
+     * @param backgroundColor 背景
      */
-    public void setSelectorTextColor(int color) {
-        selectorTextPaint.setColor(color);
-        selectorBorderPaint.setColor(color);
+    public void setSelectorTextColor(int textColor, int boderColor, int backgroundColor) {
+        selectorTextPaint.setColor(textColor);
+        selectorBorderPaint.setColor(boderColor);
+        selectorBackgroundPaint.setColor(backgroundColor);
     }
 
     private float selectedTextHeight;

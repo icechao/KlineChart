@@ -278,10 +278,10 @@
                         android:id="@+id/kLineChartView"
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
-                        app:background_fill_alpha="255"
-                        app:background_color="#555555"
-                        app:background_fill_top_color="#ffffff"
-                        app:background_fill_bottom_color="#666666"
+                        app:backgroundFillAlpha="55"
+                        app:backgroundColor="#555555"
+                        app:backgroundFillTopLolor="#ffffff"
+                        app:backgroundFillBottomColor="#666666"
                         android:background="@color/color_081734"/>
 
                 <include
@@ -298,7 +298,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@color/color_081734"
+                    android:background="@color/color_111725"
                     android:orientation="horizontal"
                     android:padding="5dp">
 
