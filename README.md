@@ -66,7 +66,7 @@
              
         [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
         
-        | 名称 | 值 | 属性 | 默认值 | 
+        | 名称 | 值 | 属性 | 默认 | 
         | ------ | ------ | ------ | ------ |  
         | `main_lengend_margin_top`| dimension | 主视图Lengend上边距 | |
         | `logo`| resource | 主视图logo | |
