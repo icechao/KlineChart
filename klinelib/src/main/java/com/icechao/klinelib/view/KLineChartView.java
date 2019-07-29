@@ -726,6 +726,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setIncreaseColor(int color) {
         mainDraw.setIncreaseColor(color);
+        volDraw.setIncreaseColor(color);
     }
 
     /**
@@ -735,6 +736,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setDecreaseColor(int color) {
         mainDraw.setDecreaseColor(color);
+        volDraw.setDecreaseColor(color);
     }
 
     /**

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
@@ -27,25 +26,18 @@ import com.icechao.klinelib.utils.NumberTools;
 public class VolumeDraw extends BaseDraw {
 
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint greenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint increasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint decreasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint maOnePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint maTwoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint volLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float volWidth = 0;
+    private float volWidth, lineVolWidth, volLengendMarginTop;
     private IValueFormatter valueFormatter = new ValueFormatter();
-    private float lineVolWidth;
     private int itemsCount;
     private final int indexInterval;
-    private String volMaIndex2;
-    private String volMaIndex1;
-    private String volIndex;
-    private float volLengendMarginTop;
+    private String volMaIndex1, volMaIndex2, volIndex;
 
     public VolumeDraw(Context context) {
-        redPaint.setColor(ContextCompat.getColor(context, R.color.color_03C087));
-        greenPaint.setColor(ContextCompat.getColor(context, R.color.color_FF605A));
-        volWidth = Dputil.Dp2Px(context, 4);
         indexInterval = Constants.getCount();
         volIndex = context.getString(R.string.k_index_vol);
         String temp = context.getString(R.string.k_index_vol_ma);
@@ -107,9 +99,9 @@ public class VolumeDraw extends BaseDraw {
         if (view.klineStatus.showLine()) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);
         } else if (close >= open) {//涨
-            canvas.drawRect(curX - r, top, curX + r, bottom, redPaint);
+            canvas.drawRect(curX - r, top, curX + r, bottom, increasePaint);
         } else {
-            canvas.drawRect(curX - r, top, curX + r, bottom, greenPaint);
+            canvas.drawRect(curX - r, top, curX + r, bottom, decreasePaint);
         }
 
     }
@@ -207,7 +199,7 @@ public class VolumeDraw extends BaseDraw {
     /**
      * 设置文字大小
      *
-     * @param textSize
+     * @param textSize textSize
      */
     public void setTextSize(float textSize) {
         this.maOnePaint.setTextSize(textSize);
@@ -232,5 +224,13 @@ public class VolumeDraw extends BaseDraw {
 
     public void setVolLengendMarginTop(float volLengendMarginTop) {
         this.volLengendMarginTop = volLengendMarginTop;
+    }
+
+    public void setIncreaseColor(int color) {
+        this.increasePaint.setColor(color);
+    }
+
+    public void setDecreaseColor(int color) {
+        this.decreasePaint.setColor(color);
     }
 }
