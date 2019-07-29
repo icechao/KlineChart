@@ -31,7 +31,7 @@ public class VolumeDraw extends BaseDraw {
     private Paint maOnePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint maTwoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint volLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float volWidth, lineVolWidth, volLengendMarginTop;
+    private float volWidth, lineVolWidth, volLengendMarginTop, endMaOne, endMaTwo;
     private IValueFormatter valueFormatter = new ValueFormatter();
     private int itemsCount;
     private final int indexInterval;
@@ -45,8 +45,6 @@ public class VolumeDraw extends BaseDraw {
         volMaIndex2 = String.format(temp, Constants.K_VOL_MA_NUMBER_2);
     }
 
-    private float endMaOne = 0;
-    private float endMaTwo = 0;
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {

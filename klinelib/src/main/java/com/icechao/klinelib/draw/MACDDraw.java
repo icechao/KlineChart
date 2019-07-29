@@ -35,9 +35,7 @@ public class MACDDraw extends BaseDraw {
     private float macdWidth = 0;
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
-    private String macdIndexLabel;
-    private String difIndexLabel;
-    private String deaIndexLabel;
+    private String macdIndexLabel, difIndexLabel, deaIndexLabel;
 
     public MACDDraw(Context context) {
         indexInterval = Constants.getCount();

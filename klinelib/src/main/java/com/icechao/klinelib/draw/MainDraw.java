@@ -28,24 +28,17 @@ import com.icechao.klinelib.utils.Status;
 public class MainDraw extends BaseDraw {
 
     private int itemCount;
-    private float padding;
-    private float margin;
     private String[] strings = new String[8];
     private IValueFormatter valueFormatter = new ValueFormatter();
-    private float mainLengendMarginTop = 10;
+    private float candleWidth, margin, padding, mainLengendMarginTop,
+            maOne, maTwo, maThree, bollUp, bollMb, bollDn;
     private final int indexInterval;
-    private String indexMa1;
-    private String indexMa2;
-    private String indexMa3;
-    private String indexBoll;
-    private String indexUb;
-    private String indexLb;
+    private String indexMa1, indexMa2, indexMa3, indexBoll, indexUb, indexLb;
 
     public void setItemCount(int mItemCount) {
         itemCount = mItemCount;
     }
 
-    private float candleWidth = 0;
     private Paint lineAreaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint upPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -63,6 +56,7 @@ public class MainDraw extends BaseDraw {
     private Paint selectorBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private String[] marketInfoText = new String[8];
+
 
     public MainDraw(Context context) {
         indexInterval = Constants.getCount();
@@ -167,15 +161,6 @@ public class MainDraw extends BaseDraw {
             }
         }
     }
-
-
-    private float maOne;
-    private float maTwo;
-    private float maThree;
-
-    private float bollUp;
-    private float bollMb;
-    private float bollDn;
 
 
     @Override

@@ -23,9 +23,7 @@ public class KDJDraw extends BaseDraw {
     private Paint mJPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
-    private String kIndexLabel;
-    private String dIndexLabel;
-    private String jIndexLabel;
+    private String kIndexLabel,dIndexLabel,jIndexLabel;
 
     public KDJDraw(Context context) {
         indexInterval = Constants.getCount();
