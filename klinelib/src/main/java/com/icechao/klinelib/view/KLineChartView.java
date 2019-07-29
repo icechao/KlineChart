@@ -472,10 +472,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置十字线跟随手势移动
      *
-     * @param model {@link com.icechao.klinelib.utils.Status.TouchCrossModel} default  SHOW_CLOSE
+     * @param model {@link Status.CrossTouchModel} default  SHOW_CLOSE
      */
-    public void setCrossFollowTouch(Status.TouchCrossModel model) {
-        this.touchCrossModel = model;
+    public void setCrossFollowTouch(Status.CrossTouchModel model) {
+        this.crossTouchModel = model;
     }
 
     public void setRSI1Color(int color) {

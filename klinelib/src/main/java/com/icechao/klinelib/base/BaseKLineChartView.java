@@ -552,7 +552,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 是否十字线跟随手指移动(Y轴)
      */
-    protected Status.TouchCrossModel touchCrossModel = Status.TouchCrossModel.FOLLOW_FINGERS;
+    protected Status.CrossTouchModel crossTouchModel = Status.CrossTouchModel.FOLLOW_FINGERS;
 
     /**
      * 选中价格框横向padding
@@ -899,7 +899,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
         //十字线Y值判断
         //十字线横线
-        if (touchCrossModel.getStateValue()) {
+        if (crossTouchModel.getStateValue()) {
             y = selectedY;
             if (selectedY < mainRect.top + chartPaddingTop) {
                 return;

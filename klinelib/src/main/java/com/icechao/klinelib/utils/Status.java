@@ -16,13 +16,13 @@ public class Status {
         MA, BOLL, NONE
     }
 
-    public enum TouchCrossModel {
+    public enum CrossTouchModel {
         FOLLOW_FINGERS(true),//跟随手指移动
         SHOW_CLOSE(false); //y值显示当前价格
 
         private boolean state;
 
-        TouchCrossModel(boolean state) {
+        CrossTouchModel(boolean state) {
             this.state = state;
         }
 
