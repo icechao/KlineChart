@@ -112,8 +112,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceBoxShapeTextMargin(array.getDimension(R.styleable.KLineChartView_priceLineBoxShapeTextMargin, 10));
                 //十字线
                 setSelectCrossBigColor(array.getColor(R.styleable.KLineChartView_selectCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
-                setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointRadiu, getResources().getColor(R.color.color_CFD3E9)));
-                setSelectedPointRadius(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, getResources().getColor(R.color.color_CFD3E9)));
+                setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointRadiu, Color.WHITE));
+                setSelectedPointRadius(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, 5));
+                setSelectedShowCrossPoint(array.getBoolean(R.styleable.KLineChartView_selectShowCrossPoint, true));
                 setSelectedYColor(array.getColor(R.styleable.KLineChartView_selectYColor, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KLineChartView_selectXLineWidth, getDimension(R.dimen.chart_line_width)));
                 setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBoderWidth, 2));
@@ -178,9 +179,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setRSI2Color(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
                 setRSI3Color(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
                 //main
-                setMaOneColor(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
-                setMaTwoColor(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
-                setMaThreeColor(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
+                setMa1Color(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
+                setMa2Color(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
+                setMa3Color(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
 
                 setCandleSolid(array.getBoolean(R.styleable.KLineChartView_candleSolid, false));
 
@@ -191,6 +192,15 @@ public class KLineChartView extends BaseKLineChartView {
                 array.recycle();
             }
         }
+    }
+
+    /**
+     * 设置选中时是否显示十字线的交点圆
+     *
+     * @param showCrossPoint default true
+     */
+    private void setSelectedShowCrossPoint(boolean showCrossPoint) {
+        this.showCrossPoint = showCrossPoint;
     }
 
     /**
@@ -390,7 +400,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMaOneColor(int color) {
+    public void setMa1Color(int color) {
         mainDraw.setMaOneColor(color);
         volDraw.setMaOneColor(color);
     }
@@ -400,7 +410,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMaTwoColor(int color) {
+    public void setMa2Color(int color) {
         mainDraw.setMaTwoColor(color);
         volDraw.setMaTwoColor(color);
     }
@@ -410,7 +420,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMaThreeColor(int color) {
+    public void setMa3Color(int color) {
         mainDraw.setMaThreeColor(color);
     }
 
@@ -462,10 +472,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置十字线跟随手势移动
      *
-     * @param crossFollowTouch true跟随false不跟随,十字线的指示框只会显示当前K线的收盘价
+     * @param model {@link com.icechao.klinelib.utils.Status.TouchCrossModel} default  SHOW_CLOSE
      */
-    public void setCrossFollowTouch(boolean crossFollowTouch) {
-        this.crossFollowTouch = crossFollowTouch;
+    public void setCrossFollowTouch(Status.TouchCrossModel model) {
+        this.touchCrossModel = model;
     }
 
     public void setRSI1Color(int color) {
@@ -499,7 +509,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 设置主视图Y轴上的Label向上的便宜量
+     * 设置主视图Y轴上的Label向上的偏移量
      *
      * @param mainYMoveUpInterval default 5
      */
@@ -509,7 +519,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 设置y轴上Label距离右侧的空隙
+     * 设置y轴上Label与视图右边距
      *
      * @param yLabelMarginRight default 10
      */

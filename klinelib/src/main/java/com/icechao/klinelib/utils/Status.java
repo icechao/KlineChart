@@ -16,6 +16,22 @@ public class Status {
         MA, BOLL, NONE
     }
 
+    public enum TouchCrossModel {
+        FOLLOW_FINGERS(true),//跟随手指移动
+        SHOW_CLOSE(false); //y值显示当前价格
+
+        private boolean state;
+
+        TouchCrossModel(boolean state) {
+            this.state = state;
+        }
+
+        public boolean getStateValue() {
+            return state;
+        }
+
+    }
+
     public enum ChildStatus {
         NONE(-1), MACD(0), KDJ(1), RSI(2), WR(3);
         private int statu;

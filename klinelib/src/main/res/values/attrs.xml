@@ -25,6 +25,7 @@
         <attr name="selectCrossBigColor" format="color"/>
         <attr name="selectCrossPointRadiu" format="dimension"/>
         <attr name="selectCrossPointColor" format="color"/>
+        <attr name="selectShowCrossPoint" format="boolean"/>
         <attr name="selectYColor" format="color"/>
         <attr name="selectLineColor" format="color"/>
         <attr name="selectPriceBoxBackgroundColor" format="color"/>

@@ -57,7 +57,7 @@
   
             <com.icechao.klinelib.view.KLineChartView
               android:id="@+id/kLineChartView"
-              android:layout_width="match_parent"
+              android:layout_width="matchParent"
               android:layout_height="580dp"
               android:background="@color/color_081734" />
              
@@ -72,14 +72,14 @@
   | paddingBottom  | dimension | chart上部内容边距 | 30,第一个网格的位置 |
   | paddingTop  | dimension | 主视图Lengend上边距 | 15底部显示X轴label空间 |
   | chartLogo  | resource | 主视图logo | |
-  | candleRight_padding  | dimension | 主视图与右侧内边距 | |
+  | candleRightPadding  | dimension | 主视图与右侧内边距 | |
   | increaseColor  | color | 涨颜色| |
   | backgroundColor   | color | 背景色  | |
   | decreaseColor  | color | 跌颜色| |
   | textSize  | dimension | 文字大小| |
   | textColor  | color | 文字颜色| |
   | lineWidth  | dimension | 指标线线宽 | |
-  | kline_itemWidth  | dimension | 蜡烛图加外围空隙宽| |
+  | klineItemWidth  | dimension | 蜡烛图加外围空隙宽| |
   | candleWidth  | dimension | 蜡烛图柱宽 | |
   | candleLineWidth  | dimension | K线空心时宽度 | |
   | priceLineWidth  | dimension | 价格线宽 | 1dp |
@@ -90,7 +90,7 @@
   | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |
   | priceLineBoxShapeHeight  | dimension | 价格线框内三角形占高| 20 |
   | priceLineBoxHeight  | dimension | 价格线上的框高度| 40 |
-  | priceLineBox_padding  | dimension | 价格线上的框的内边距| 20 |
+  | priceLineBoxPadding  | dimension | 价格线上的框的内边距| 20 |
   | priceLineBoxShapeTextMargin  | dimension | 价格框文字与图形距离| 10 |
   | priceLineBoxBorderWidth  | dimension | 价格线框边框宽度| 1 |
   | priceLineBoxBorderColor  | dimension | 价格线框边框颜色| |
@@ -102,34 +102,35 @@
   | timeLineColor   | color| 分时线颜色| |
   | timeLineFillTopColor  | color | 分时线填充渐变上部颜色 | |
   | timeLineFillBottomColor  | color |背景色渐变下部颜色 | |
-  | timeLine_end_pointColor  | color | 分时线尾颜色 | |
+  | timeLine_endPointColor  | color | 分时线尾颜色 | |
   | timeLine_endMultiply  | int | 分时线尾圆变化最大倍数 | |
   | timeLine_endRadiu  | dimension | 分时线尾圆半径 | |
   | candleSolid  | boolean | K线是否空心| false |
   | gridLineWidth  | dimension | 网格线宽| |
   | gridLineColor  | color | 网格颜色 | |
-  | select_xLineWidth  | dimension | 十字线X轴线宽| |
+  | selectXLineWidth  | dimension | 十字线X轴线宽| |
   | selectLabelBoderWidth  | dimension | 选中坐标边框线宽| 2 |
   | selectLabelBoderColor  | color | 选中坐标边框颜色| |
-  | select_yLineWidth  | dimension | 十字线Y轴线宽| |
-  | select_xLineColor  | color |选择线X线颜色 | |
-  | select_yLineColor  | color |  选择线Y线颜色| |
-  | select_yColor  | color | 选择线Y渐变色,Y线最好半透明透明| |
+  | selectYLineWidth  | dimension | 十字线Y轴线宽| |
+  | selectXLineColor  | color |选择线X线颜色 | |
+  | selectYLineColor  | color |  选择线Y线颜色| |
+  | selectYColor  | color | 选择线Y渐变色,Y线最好半透明透明| |
   | selectCrossBigColor  | color | 选择线相交点圆颜色| |
-  | selectCross_pointColor  | color |选择线相交点颜色 | |
-  | selectCross_pointRadiu  | color |选择线相交点小圆半径 | |
-  | select_priceBoxBackgroundColor  | color | 先中价格框背景色 | |
+  | selectCrossPointColor  | color | 选择线相交点圆颜色 | |
+  | selectShowCrossPoint  | color | 是否显示相交点圆 | |
+  | selectCrossPointRadiu  | color | 选择线相交点小圆半径 | |
+  | selectPriceBoxBackgroundColor  | color | 先中价格框背景色 | |
   | selectBackgroundColor  | color | 选择框背景色 | |
-  | select_priceBoxHorizental_padding  | dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
-  | select_priceBox_vertical_padding  | dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
-  | select_infoBoxMargin  | dimension | 选中弹出框的margin | |
-  | select_infoBox_padding  | dimension | 选中行弹出行情行间距,上下为此值*2 | |
-  | select_infoBoxTextColor  | dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
-  | select_infoBoxBorderColor  | dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
-  | select_infoBoxBackgroundColor  | dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
+  | selectPriceBoxHorizentalPadding  | dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
+  | selectPriceBox_verticalPadding  | dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
+  | selectInfoBoxMargin  | dimension | 选中弹出框的margin | |
+  | selectInfoBoxPadding  | dimension | 选中行弹出行情行间距,上下为此值*2 | |
+  | selectInfoBoxTextColor  | dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
+  | selectInfoBoxBorderColor  | dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
+  | selectInfoBoxBackgroundColor  | dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
   | selectTextSize  | dimension | 选择框文字大小 | |
-  | macd_increaseColor  | color | macd标准线上柱颜色| |
-  | macd_decreaseColor  | color | macd标准线下柱颜色 | |
+  | macdIncreaseColor  | color | macd标准线上柱颜色| |
+  | macdDecreaseColor  | color | macd标准线下柱颜色 | |
   | macdWidth  | dimension | macd柱状图宽度 | |
   | difColor  | color | dif线颜色 | |
   | deaColor  | color | dea线颜色 | |
@@ -249,10 +250,10 @@
            
   ### 十字线跟随手指
 
-        kLineChartView.setCrossFollowTouch(boolean crossFollowTouch) ;
+        kLineChartView.setCrossFollowTouch(Status.TouchCrossModel model) ;
             参数
-            true : 跟随手指
-            false: 显示为收盘价  默认值
+            TouchCrossModel.FOLLOW_FIGNERS : 跟随手指
+            TouchCrossModel.SHOW_CLOSE     : 显示为收盘价  默认值
            
   ### 动画加载加载数据时(默认是左到右的加载动画 可以加载数据前设置不使用动画)
         
@@ -272,7 +273,7 @@
         kLineChartView.setSelectedTouchModle(Status.ShowCrossModle showCrossModle);
             参数 
             Status.ShowCrossModle.SELECT_TOUCHE : 点击显示
-            Status.ShowCrossModle.SELECT_PRESS  : 长按显示
+            Status.ShowCrossModle.SELECTPRESS  : 长按显示
             Status.ShowCrossModle.SELECT_BOTH   : 点击长按混合
             
   ### 添加logo
@@ -313,6 +314,68 @@
          kLineChartView.setOverScrollRange(float overScrollRange);
          参数
          overScrollRange : 滑动距离
+                 
+  ### 设置选中时是否显示十字线的交点圆
+        
+         kLineChartView.setSelectedShowCrossPoint(boolean showCrossPoint);
+         参数
+        true  : 显示
+        false : 隐藏
+                 
+  ### 选中时坐标边框线宽
+        
+         kLineChartView.setSelectedLabelBorderWidth(float width);
+         参数
+         width : label边框线宽 
+                 
+  ### 选中时坐标边框线颜色
+        
+         kLineChartView.setSelectedLabelBorderColor(int color);
+         参数
+         color : 颜色值
+                 
+  ### 价格线框边框宽度
+        
+         kLineChartView.setPricelineBoxBorderWidth(float width);
+         参数
+         width : 价格线浮框的线宽
+                 
+  ### 价格线框边框颜色
+        
+         kLineChartView.setPricelineBoxBorderColor(int color);
+         参数
+         color : 价格线浮框的边框颜色
+
+  ### 价格线框边框颜色
+        
+         kLineChartView.setMacdChartColor(int inColor, int deColor);
+         参数
+         inColor : >0 波段的颜色
+         deColor : <0 波段的颜色
+
+  ### 隐藏选择器内容
+        
+         kLineChartView.hideSelectData();
+         
+         隐藏选中的信息
+         
+  ### 主视图所占高度比例
+        
+         kLineChartView.setMainPercent(float mainPresent);
+         
+         mainPresent : : 占比,用0-1之间的数表示
+         
+  ### 量视图所占高度比例
+        
+         kLineChartView.setVolPercent(float volPresent);
+         
+         volPresent : : 占比,用0-1之间的数表示
+         
+  ### 子视图所占高度比例
+        
+         kLineChartView.setChildPercent(float childPresent);
+         
+         childPresent : 占比,用0-1之间的数表示
 
             
        

@@ -329,7 +329,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * Y轴label与右边缘距离
      */
-    protected float yLabelMarginRight = 10;
+    protected float yLabelMarginRight;
 
     /**
      * 分时线阴影的半径
@@ -339,7 +339,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 十字线相交点圆半径
      */
-    protected float selectedPointRadius = 5;
+    protected float selectedPointRadius;
 
     /**
      * 滑动监听
@@ -349,7 +349,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * kline right padding
      */
-    protected float klinePaddingRight = 0;
+    protected float klinePaddingRight;
 
     /**
      * refresh time limit
@@ -361,6 +361,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected int backGroundColor;
 
 
+    protected boolean showCrossPoint;
     /**
      * 数据观察者,当数据变化
      */
@@ -551,7 +552,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 是否十字线跟随手指移动(Y轴)
      */
-    protected boolean crossFollowTouch = false;
+    protected Status.TouchCrossModel touchCrossModel = Status.TouchCrossModel.FOLLOW_FINGERS;
 
     /**
      * 选中价格框横向padding
@@ -897,7 +898,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
         canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
         //十字线Y值判断
-        if (crossFollowTouch) {
+        //十字线横线
+        if (touchCrossModel.getStateValue()) {
             y = selectedY;
             if (selectedY < mainRect.top + chartPaddingTop) {
                 return;
@@ -918,16 +920,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             text = formatValue(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
             y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
         }
-
-        //十字线横线
         canvas.drawLine(-canvasTranslateX, y, -canvasTranslateX + width, y, selectedXLinePaint);
-
         //十字线交点
-        if (!crossFollowTouch) {
+        if (showCrossPoint) {
             canvas.drawCircle(x, y, chartItemWidth, selectedbigCrossPaint);
             canvas.drawCircle(x, y, selectedPointRadius, selectedCrossPaint);
         }
-
         // 选中状态下的Y值
         textWidth = textPaint.measureText(text);
         r = textHeight / 2 + selectPriceBoxVerticalPadding;
