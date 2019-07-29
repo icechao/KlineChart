@@ -65,6 +65,7 @@
               自定义属性查看:
              
         [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
+        
 | 名称 | 值 | 属性 | 默认 | 
 | ------ | ------ | ------ | ------ |  
 | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
