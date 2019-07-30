@@ -156,7 +156,7 @@
               
   3. <b>初始化k线</b>
   
-          private void initKline() {
+           private void initKline() {
              //设置K线的数据适配器
              chartView.setAdapter(new KLineChartAdapter());
              //设置X轴时间格式化对象,根据不同波段可以重新设置
@@ -183,7 +183,7 @@
              chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
              //显示loading
              chartView.showLoading();
-          }
+           }
 
          
   4.<b>使用KLineChartAdapter设置数据</b>
