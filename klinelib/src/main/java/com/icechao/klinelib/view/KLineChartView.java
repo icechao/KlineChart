@@ -1067,7 +1067,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     @SuppressWarnings("unused")
     public float getChildPadding() {
-        return childPadding;
+        return volPaddingTop;
     }
 
 

@@ -8,7 +8,6 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.MainDraw;
 import com.icechao.klinelib.draw.VolumeDraw;
@@ -73,7 +72,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 最视图和子试图上方padding
      */
-    protected int childPadding;
+    protected int volPaddingTop;
     /**
      * 整体底部padding
      */
@@ -591,9 +590,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         indexInterval = Constants.getCount();
         gestureDetector = new GestureDetectorCompat(getContext(), this);
         scaleDetector = new ScaleGestureDetector(getContext(), this);
-        chartPaddingTop = (int) getResources().getDimension(R.dimen.chart_top_padding);
-        childPadding = (int) getResources().getDimension(R.dimen.child_top_padding);
-        chartPaddingBottom = (int) getResources().getDimension(R.dimen.chart_bottom_padding);
 
         showAnim = ValueAnimator.ofFloat(0f, 1f);
         showAnim.setDuration(duration);
@@ -630,13 +626,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             int tempVolHeight = (int) (displayHeight * volPercent / 10f);
             int tempChildHeight = (int) (displayHeight * childPercsent / 10f);
             mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childPadding, (int) width, mainRect.bottom + tempVolHeight);
-            childRect = new Rect(0, volRect.bottom + childPadding, (int) width, volRect.bottom + tempChildHeight);
+            volRect = new Rect(0, mainRect.bottom + volPaddingTop, (int) width, mainRect.bottom + tempVolHeight);
+            childRect = new Rect(0, volRect.bottom + volPaddingTop, (int) width, volRect.bottom + tempChildHeight);
         } else {
             int mMainHeight = (int) (displayHeight * 0.8f);
             int mVolHeight = (int) (displayHeight * 0.2f);
             mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + mMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childPadding, (int) width, mainRect.bottom + mVolHeight);
+            volRect = new Rect(0, mainRect.bottom + volPaddingTop, (int) width, mainRect.bottom + mVolHeight);
         }
     }
 
