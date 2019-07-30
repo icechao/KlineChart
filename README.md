@@ -156,34 +156,34 @@
               
   3. <b>初始化k线</b>
   
-         private void initKline() {
-           //设置K线的数据适配器
-           chartView.setAdapter(new KLineChartAdapter());
-           //设置X轴时间格式化对象,根据不同波段可以重新设置
-           chartView.setDateTimeFormatter(new DateFormatter());
-           //背景网络列
-           chartView.setGridColumns(5);
-           //背景网络行
-           chartView.setGridRows(5);
-           //设置Y轴值格式化对象,默认保留两位小数
-           chartView.setValueFormatter(new ValueFormatter() {
-               @Override
-               public String format(float value) {
-                   return String.format("%.2f", value);
-               }
-           });
-           //设置交易量格式化对象,默认保留两位小数
-           chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
-               @Override
-               public String format(float value) {
-                   return String.format("%.2f", value);
-               }
-           });
-           //设置K线左侧滑动的超出距离
-           chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
-           //显示loading
-           chartView.showLoading();
-         }
+    private void initKline() {
+         //设置K线的数据适配器
+         chartView.setAdapter(new KLineChartAdapter());
+         //设置X轴时间格式化对象,根据不同波段可以重新设置
+         chartView.setDateTimeFormatter(new DateFormatter());
+         //背景网络列
+         chartView.setGridColumns(5);
+         //背景网络行
+         chartView.setGridRows(5);
+         //设置Y轴值格式化对象,默认保留两位小数
+         chartView.setValueFormatter(new ValueFormatter() {
+             @Override
+             public String format(float value) {
+                 return String.format("%.2f", value);
+             }
+         });
+         //设置交易量格式化对象,默认保留两位小数
+         chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
+             @Override
+             public String format(float value) {
+                 return String.format("%.2f", value);
+             }
+         });
+         //设置K线左侧滑动的超出距离
+         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
+         //显示loading
+         chartView.showLoading();
+       }
 
          
   4.<b>使用KLineChartAdapter设置数据</b>
