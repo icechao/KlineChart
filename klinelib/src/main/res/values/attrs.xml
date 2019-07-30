@@ -13,6 +13,7 @@
         <attr name="priceLineColor" format="color"/>
         <attr name="priceLineBackgroundColor" format="color"/>
         <attr name="priceLineRightColor" format="color"/>
+        <attr name="priceLineRightTextColor" format="color"/>
         <attr name="priceLineBoxColor" format="color"/>
         <attr name="priceLineBoxBorderColor" format="color"/>
         <attr name="priceLineBoxBorderWidth" format="dimension"/>
@@ -59,6 +60,7 @@
         <!--公共的-->
         <attr name="mainLengendMarginTop" format="dimension"/>
         <attr name="increaseColor" format="color"/>
+        <attr name="fitXLabel" format="boolean"/>
         <attr name="backgroundColor" format="color"/>
         <attr name="decreaseColor" format="color"/>
         <attr name="textSize" format="dimension"/>

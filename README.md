@@ -68,6 +68,7 @@
         
   | 名称 | 值 | 属性 | 默认 | 
   | ------ | ------ | ------ | ------ |  
+  | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
   | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
   | paddingBottom  | dimension | chart上部内容边距 | 30,第一个网格的位置 |
   | paddingTop  | dimension | 主视图Lengend上边距 | 15底部显示X轴label空间 |
@@ -84,7 +85,8 @@
   | candleLineWidth  | dimension | K线空心时宽度 | |
   | priceLineWidth  | dimension | 价格线宽 | 1dp |
   | priceLineColor  | color | 价格线颜色 | |
-  | priceLineRightColor  | color | 价格只显示在右侧时颜色 | |
+  | priceLineRightColor  | color | 价格线右侧虚线时颜色 | |
+  | priceLineRightTextColor  | color | 价格线右侧虚线价格文字颜色 | |
   | priceLineBackgroundColor  | color | 价格线横框背景色 | #CFD3A9 |
   | priceLineBoxMarginRight  | dimension | 价格框右边距 | 120 |
   | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |

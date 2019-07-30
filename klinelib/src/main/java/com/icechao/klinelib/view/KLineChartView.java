@@ -82,6 +82,7 @@ public class KLineChartView extends BaseKLineChartView {
                 mainDraw.setLimitTextSize(array.getDimension(R.styleable.KLineChartView_textSize, getDimension(R.dimen.chart_text_size)));
                 mainDraw.setLimitTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
                 //全局
+                setBetterX(array.getBoolean(R.styleable.KLineChartView_fitXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
                 setLineWidth(array.getDimension(R.styleable.KLineChartView_lineWidth, getDimension(R.dimen.chart_line_width)));
                 setTextSize(array.getDimension(R.styleable.KLineChartView_textSize, getDimension(R.dimen.chart_text_size)));
@@ -100,6 +101,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceLineWidth(array.getDimension(R.styleable.KLineChartView_priceLineWidth, Dputil.Dp2Px(context, 1)));
                 setPriceLineColor(array.getColor(R.styleable.KLineChartView_priceLineColor, getResources().getColor(R.color.color_6D87A8)));
                 setPriceLineRightColor(array.getColor(R.styleable.KLineChartView_priceLineRightColor, getResources().getColor(R.color.color_4B85D6)));
+                setPriceLineRightTextColor(array.getColor(R.styleable.KLineChartView_priceLineRightTextColor, getResources().getColor(R.color.color_4B85D6)));
                 setPriceBoxColor(array.getColor(R.styleable.KLineChartView_priceLineBoxColor, getContext().getResources().getColor(R.color.color_131F30)));
                 setPriceLineBoxBgColor(array.getColor(R.styleable.KLineChartView_priceLineBackgroundColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
                 setPricelineBoxBorderColor(array.getColor(R.styleable.KLineChartView_priceLineBoxBorderColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
@@ -826,8 +828,18 @@ public class KLineChartView extends BaseKLineChartView {
      * @param color price line right color
      */
     public void setPriceLineRightColor(int color) {
-        priceLineBoxRightPaint.setColor(color);
+        priceLineRightPaint.setColor(color);
     }
+
+    /**
+     * 价格线右侧价格文字的颜色
+     *
+     * @param color price line right color
+     */
+    public void setPriceLineRightTextColor(int color) {
+        priceLineRightTextPaint.setColor(color);
+    }
+
 
     public float getOverScrollRange() {
         return overScrollRange;
@@ -898,7 +910,9 @@ public class KLineChartView extends BaseKLineChartView {
         textHeight = fm.descent - fm.ascent;
         textDecent = fm.descent;
         baseLine = (textHeight - fm.bottom - fm.top) / 2;
-        priceLineBoxRightPaint.setTextSize(textSize);
+
+        priceLineRightPaint.setTextSize(textSize);
+        priceLineRightTextPaint.setTextSize(textSize);
 
         mainDraw.setTextSize(textSize);
         rsiDraw.setTextSize(textSize);

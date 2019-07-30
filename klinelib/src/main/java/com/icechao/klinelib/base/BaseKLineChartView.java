@@ -230,7 +230,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 价格线右侧虚线画笔
      */
-    protected Paint priceLineBoxRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint priceLineRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    /**
+     * 价格线右侧虚线画笔
+     */
+    protected Paint priceLineRightTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 价格框高度
@@ -547,7 +552,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 是否适配X label
      */
-    protected boolean betterX = true;
+    protected boolean betterX;
 
     /**
      * 是否十字线跟随手指移动(Y轴)
@@ -595,7 +600,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         showAnim.addUpdateListener(animation -> invalidate());
         selectorFramePaint.setStyle(Paint.Style.STROKE);
         priceLinePaint.setAntiAlias(true);
-        priceLineBoxRightPaint.setStyle(Paint.Style.STROKE);
+        priceLineRightPaint.setStyle(Paint.Style.STROKE);
         rightPriceBoxPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         priceLineBoxPaint.setStyle(Paint.Style.STROKE);
 
@@ -1145,11 +1150,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             drawEndPoint(canvas, endLineRight);
         }
         for (float i = endLineRight; i < textLeft - 5; i += 12) {
-            canvas.drawLine(i, y, i + 8, y, priceLineBoxRightPaint);
+            canvas.drawLine(i, y, i + 8, y, priceLineRightPaint);
         }
         float textY = fixTextYBaseBottom(y);
         canvas.drawRect(new Rect((int) textLeft, (int) (y - textHeight / 2), (int) (textLeft + textWidth), (int) (y + textHeight / 2)), rightPriceBoxPaint);
-        canvas.drawText(priceString, textLeft, textY, priceLineBoxRightPaint);
+        canvas.drawText(priceString, textLeft, textY, priceLineRightTextPaint);
         //绘制价格圆点
         if (klineStatus.showLine()) {
             canvas.drawCircle(endLineRight, y, lineEndRadiu, lineEndFillPointPaint);
