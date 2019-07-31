@@ -116,14 +116,14 @@ public class VolumeDraw extends BaseDraw {
         canvas.drawText(text, x, y, volLeftPaint);
         x += view.getTextPaint().measureText(text);
 
-        if (position == itemsCount - 1 && view.isAnimationLast()) {
+        if (position == itemsCount - 1 && view.isAnimationLast() && 0 != endMaOne) {
             text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(endMaOne)) + "  ";
         } else {
             text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
         }
         canvas.drawText(text, x, y, maOnePaint);
         x += maOnePaint.measureText(text);
-        if (position == itemsCount - 1 && view.isAnimationLast()) {
+        if (position == itemsCount - 1 && view.isAnimationLast() && 0 != endMaOne) {
 
             text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(endMaTwo)) + "  ";
         } else {
