@@ -648,7 +648,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 drawXLabels(canvas);
                 drawK(canvas);
                 drawPriceLine(canvas);
-                drawValue(canvas, getShowSelected() ? selectedIndex : screenRightIndex);
+                drawValue(canvas, getShowSelected() ? selectedIndex : itemsCount - 1);
             } catch (Exception e) {
                 e.printStackTrace();
             }

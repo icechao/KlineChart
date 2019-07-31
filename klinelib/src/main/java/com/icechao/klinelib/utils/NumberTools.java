@@ -47,9 +47,9 @@ public class NumberTools {
      * @return
      */
     public static String formatAmount(String amount) {
-        String result;
+
         if (TextUtils.isEmpty(amount)) {
-            result = "0";
+            return "0";
         } else {
             BigDecimal amountBigDecimal = new BigDecimal(amount);
             String tAmoutString = amountBigDecimal.toPlainString();
@@ -58,18 +58,18 @@ public class NumberTools {
                 if (tAmoutString.length() > 5) {
                     String temp = tAmoutString.substring(0, 5);
                     if (new BigDecimal(temp).compareTo(BigDecimal.ZERO) > 0) {
-                        result = temp;
+                        return temp;
                     } else {
-                        result = "0";
+                        return "0";
                     }
                 } else {
-                    result = tAmoutString;
+                    return tAmoutString;
                 }
             } else if (amountBigDecimal.compareTo(new BigDecimal(1000)) < 0) {
                 if (tAmoutString.length() > 5) {
-                    result = tAmoutString.substring(0, 5);
+                    return tAmoutString.substring(0, 5);
                 } else {
-                    result = tAmoutString;
+                    return tAmoutString;
                 }
             } else if (amountBigDecimal.compareTo(new BigDecimal(1000000)) < 0) {
                 BigDecimal tAmountBigDecimal = amountBigDecimal.divide(new BigDecimal(1000));
@@ -77,12 +77,12 @@ public class NumberTools {
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {//如果截取前四位后的数值最后一位是"."，则只截取前三位
-                        result = tAmoutString.substring(0, 3) + "K";
+                        return tAmoutString.substring(0, 3) + "K";
                     } else {
-                        result = tAmoutString.substring(0, 4) + "K";
+                        return tAmoutString.substring(0, 4) + "K";
                     }
                 } else {
-                    result = tAmountBigDecimal.toPlainString() + "K";
+                    return tAmountBigDecimal.toPlainString() + "K";
                 }
             } else if (amountBigDecimal.compareTo(new BigDecimal(1000000000)) < 0) {
 
@@ -91,12 +91,12 @@ public class NumberTools {
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {
-                        result = tAmoutString.substring(0, 3) + "M";
+                        return tAmoutString.substring(0, 3) + "M";
                     } else {
-                        result = tAmoutString.substring(0, 4) + "M";
+                        return tAmoutString.substring(0, 4) + "M";
                     }
                 } else {
-                    result = tAmountBigDecimal.toPlainString() + "M";
+                    return tAmountBigDecimal.toPlainString() + "M";
                 }
             } else {
                 BigDecimal tAmountBigDecimal = amountBigDecimal.divide(new BigDecimal(1000000000));
@@ -104,17 +104,15 @@ public class NumberTools {
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {
-                        result = tAmoutString.substring(0, 3) + "B";
+                        return tAmoutString.substring(0, 3) + "B";
                     } else {
-                        result = tAmoutString.substring(0, 4) + "B";
+                        return tAmoutString.substring(0, 4) + "B";
                     }
                 } else {
-                    result = tAmountBigDecimal.toPlainString() + "B";
+                    return tAmountBigDecimal.toPlainString() + "B";
                 }
             }
         }
-
-        return result;
     }
 
 }
