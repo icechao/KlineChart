@@ -73,6 +73,7 @@ public class NumberTools {
                 }
             } else if (amountBigDecimal.compareTo(new BigDecimal(1000000)) < 0) {
                 BigDecimal tAmountBigDecimal = amountBigDecimal.divide(new BigDecimal(1000));
+                tAmoutString = tAmountBigDecimal.stripTrailingZeros().toPlainString();
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {//如果截取前四位后的数值最后一位是"."，则只截取前三位
@@ -86,7 +87,7 @@ public class NumberTools {
             } else if (amountBigDecimal.compareTo(new BigDecimal(1000000000)) < 0) {
 
                 BigDecimal tAmountBigDecimal = amountBigDecimal.divide(new BigDecimal(1000000));
-
+                tAmoutString = tAmountBigDecimal.stripTrailingZeros().toPlainString();
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {
@@ -99,7 +100,7 @@ public class NumberTools {
                 }
             } else {
                 BigDecimal tAmountBigDecimal = amountBigDecimal.divide(new BigDecimal(1000000000));
-
+                tAmoutString = tAmountBigDecimal.stripTrailingZeros().toPlainString();
                 if (tAmoutString.length() > 4) {
                     String sub = tAmoutString.substring(0, 4);
                     if (sub.endsWith(".")) {
