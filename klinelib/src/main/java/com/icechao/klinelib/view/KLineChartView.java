@@ -530,8 +530,8 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
-    public void setMainPercent(float mainPresent) {
-        this.mainPercent = mainPresent;
+    public void setMainPercent(float mainPercent) {
+        this.mainPercent = mainPercent;
     }
 
     public void setVolPercent(float volPresent) {
@@ -967,10 +967,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置下方padding
      *
-     * @param chartPaddingTop chatPaddingTop 横线网格和K线会绘制在这个位置的下方
+     * @param chartPaddingBottom chatPaddingTop 横线网格和K线会绘制在这个位置的下方
      */
-    public void setChartPaddingBottom(float chartPaddingTop) {
-        this.chartPaddingTop = (int) chartPaddingTop;
+    public void setChartPaddingBottom(float chartPaddingBottom) {
+        this.chartPaddingBottom = (int) chartPaddingBottom;
     }
 
 
@@ -1067,7 +1067,7 @@ public class KLineChartView extends BaseKLineChartView {
      */
     @SuppressWarnings("unused")
     public float getChildPadding() {
-        return volPaddingTop;
+        return childViewPaddingTop;
     }
 
 
