@@ -70,8 +70,8 @@
   | ------ | ------ | ------ | ------ |  
   | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
   | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
-  | paddingBottom  | dimension | chart上部内容边距 | 30,第一个网格的位置 |
-  | paddingTop  | dimension | 主视图Lengend上边距 | 15,底部显示X轴label空间 |
+  | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
+  | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
   | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
   | chartLogo  | resource | 主视图logo | |
   | candleRightPadding  | dimension | 主视图与右侧内边距 | |
