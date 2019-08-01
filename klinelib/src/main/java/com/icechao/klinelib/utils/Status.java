@@ -64,7 +64,8 @@ public class Status {
     public enum ShowCrossModle {
         SELECT_TOUCHE(0),//touch modle
         SELECT_PRESS(1),//long press modle
-        SELECT_BOTH(2);//both modle
+        SELECT_BOTH(2),//both modle
+        SELECT_NONE(3);
         private int model;
 
         ShowCrossModle(int model) {
