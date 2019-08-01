@@ -72,7 +72,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 最视图和子试图上方padding
      */
-    protected int volPaddingTop;
+    protected int childViewPaddingTop;
     /**
      * 整体底部padding
      */
@@ -626,13 +626,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             int tempVolHeight = (int) (displayHeight * volPercent / 10f);
             int tempChildHeight = (int) (displayHeight * childPercsent / 10f);
             mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
-            volRect = new Rect(0, mainRect.bottom + volPaddingTop, (int) width, mainRect.bottom + tempVolHeight);
-            childRect = new Rect(0, volRect.bottom + volPaddingTop, (int) width, volRect.bottom + tempChildHeight);
+            volRect = new Rect(0, mainRect.bottom + childViewPaddingTop, (int) width, mainRect.bottom + tempVolHeight);
+            childRect = new Rect(0, volRect.bottom + childViewPaddingTop, (int) width, volRect.bottom + tempChildHeight);
         } else {
             int mMainHeight = (int) (displayHeight * 0.8f);
             int mVolHeight = (int) (displayHeight * 0.2f);
             mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + mMainHeight);
-            volRect = new Rect(0, mainRect.bottom + volPaddingTop, (int) width, mainRect.bottom + mVolHeight);
+            volRect = new Rect(0, mainRect.bottom + childViewPaddingTop, (int) width, mainRect.bottom + mVolHeight);
         }
     }
 

@@ -146,7 +146,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         TextView textView = new TextView(this);
         textView.setText("正在加载...");
 
-        chartView.setProgressBar(textView);
+        chartView.setLoadingView(textView);
     }
 
     int i = 0;

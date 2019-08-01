@@ -274,7 +274,7 @@ public class KLineChartView extends BaseKLineChartView {
                 });
             }
         } else {
-            setProgressBar(new ProgressBar(getContext()));
+            setLoadingView(new ProgressBar(getContext()));
             showLoading();
         }
     }
@@ -1186,7 +1186,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param progressBar loading View
      */
-    public void setProgressBar(View progressBar) {
+    public void setLoadingView(View progressBar) {
         this.progressBar = progressBar;
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(CENTER_IN_PARENT);
