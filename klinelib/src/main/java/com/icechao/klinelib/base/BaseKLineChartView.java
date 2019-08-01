@@ -56,7 +56,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 当前子视图的索引
      */
-    protected Status.ChildStatus childDrawPosition = Status.ChildStatus.NONE;
+    protected Status.IndexStatus indexDrawPosition = Status.IndexStatus.NONE;
 
     /**
      * 绘制K线时画板平移的距离
@@ -72,7 +72,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 最视图和子试图上方padding
      */
-    protected int childViewPaddingTop;
+    protected float childViewPaddingTop;
     /**
      * 整体底部padding
      */
@@ -89,7 +89,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 子视图y轴缩放比例
      */
-    private float childScaleY = 1;
+    private float indexScaleY = 1;
 
     /**
      * 主视图的最大值
@@ -124,7 +124,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 成交量最小值
      */
-    protected float childMaxValue = Float.MAX_VALUE;
+    protected float indexMaxValue = Float.MAX_VALUE;
     /**
      * 当前显示K线最左侧的索引
      */
@@ -282,7 +282,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 所有子视图
      */
-    protected IChartDraw childDraw;
+    protected IChartDraw indexDraw;
 
     /**
      * 当前K线的最新价
@@ -438,7 +438,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 当前数据个数
      */
     protected int itemsCount;
-    protected List<IChartDraw> childDraws = new ArrayList<>();
+    protected List<IChartDraw> indexDraws = new ArrayList<>();
 
     /**
      * Y轴上值的格式化
@@ -472,7 +472,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 子视图
      */
-    private Rect childRect;
+    private Rect indexRect;
 
     /**
      * 分时线尾部点半径
@@ -536,7 +536,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 主图占比
      */
-    protected float mainPercent = 6f;
+    protected float mainPercent = 8f;
 
     /**
      * 交易量图占比
@@ -546,7 +546,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 子图占比
      */
-    protected float childPercsent = 2f;
+    protected float IndexPercent = 2f;
 
     /**
      * 是否适配X label
@@ -614,6 +614,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         columnSpace = width / gridColumns;
     }
 
+    protected Status.ChildStatus chartShowStatue = Status.ChildStatus.MAIN_VOL;
+
     /**
      * 初始化视图区域
      * 主视图
@@ -621,18 +623,35 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 子视图
      */
     protected void initRect() {
-        if (null != childDraw) {
-            int tempMainHeight = (int) (displayHeight * mainPercent / 10f);
-            int tempVolHeight = (int) (displayHeight * volPercent / 10f);
-            int tempChildHeight = (int) (displayHeight * childPercsent / 10f);
-            mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childViewPaddingTop, (int) width, mainRect.bottom + tempVolHeight);
-            childRect = new Rect(0, volRect.bottom + childViewPaddingTop, (int) width, volRect.bottom + tempChildHeight);
-        } else {
-            int mMainHeight = (int) (displayHeight * 0.8f);
-            int mVolHeight = (int) (displayHeight * 0.2f);
-            mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + mMainHeight);
-            volRect = new Rect(0, mainRect.bottom + childViewPaddingTop, (int) width, mainRect.bottom + mVolHeight);
+        int tempMainHeight, tempVolHeight, tempChildHeight;
+        switch (chartShowStatue) {
+            case MAIN_VOL:
+                tempMainHeight = (int) (displayHeight * mainPercent / 10f);
+                tempVolHeight = (int) (displayHeight * IndexPercent / 10f);
+                mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
+                volRect = new Rect(0, (int) (mainRect.bottom + childViewPaddingTop), (int) width, mainRect.bottom + tempVolHeight);
+                indexRect = null;
+                break;
+            case MAIN_ONLY:
+                mainRect = new Rect(0, chartPaddingTop, (int) width, (int) (chartPaddingTop + displayHeight));
+                volRect = null;
+                indexRect = null;
+                break;
+            case MAIN_INDEX:
+                tempMainHeight = (int) (displayHeight * mainPercent / 10f);
+                tempChildHeight = (int) (displayHeight * IndexPercent / 10f);
+                mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
+                indexRect = new Rect(0, (int) (mainRect.bottom + childViewPaddingTop), (int) width, mainRect.bottom + tempChildHeight);
+                volRect = null;
+                break;
+            case MAIN_VOL_INDEX:
+                tempChildHeight = (int) (displayHeight * IndexPercent / 10f);
+                tempVolHeight = (int) (displayHeight * volPercent / 10f);
+                tempMainHeight = (int) (displayHeight * (10 - volPercent - IndexPercent) / 10f);
+                mainRect = new Rect(0, chartPaddingTop, (int) width, chartPaddingTop + tempMainHeight);
+                volRect = new Rect(0, (int) (mainRect.bottom + childViewPaddingTop), (int) width, mainRect.bottom + tempVolHeight);
+                indexRect = new Rect(0, (int) (volRect.bottom + childViewPaddingTop), (int) width, volRect.bottom + tempChildHeight);
+                break;
         }
     }
 
@@ -673,22 +692,36 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas canvas
      */
     private void drawBackground(Canvas canvas) {
-        float mid = width / 2;
+        float mid = width / 2, bottom;
         int mainBottom = mainRect.bottom;
         backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
         canvas.drawRect(0, 0, width, mainBottom, backgroundPaint);
-        if (childDrawPosition == Status.ChildStatus.NONE) {
-            int volBottom = volRect.bottom + chartPaddingBottom;
-            backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, volBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
-            canvas.drawRect(0, mainBottom, width, volBottom, backgroundPaint);
-        } else {
-            int volBottom = volRect.bottom;
-            backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, volBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
-            canvas.drawRect(0, mainBottom, width, volBottom, backgroundPaint);
-            int bottom = childRect.bottom + chartPaddingBottom;
-            backgroundPaint.setShader(new LinearGradient(mid, volBottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
-            canvas.drawRect(0, volBottom, width, bottom, backgroundPaint);
+        switch (chartShowStatue) {
+            case MAIN_VOL:
+                bottom = volRect.bottom + chartPaddingBottom;
+                backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, mainBottom, width, bottom, backgroundPaint);
+                break;
+            case MAIN_INDEX:
+                bottom = indexRect.bottom + chartPaddingBottom;
+                backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, mainBottom, width, indexRect.bottom, backgroundPaint);
+                break;
+            case MAIN_VOL_INDEX:
+                bottom = volRect.bottom;
+                backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, mainBottom, width, bottom, backgroundPaint);
+                bottom = indexRect.bottom + chartPaddingBottom;
+                backgroundPaint.setShader(new LinearGradient(mid, bottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, bottom, width, bottom, backgroundPaint);
+                break;
+            case MAIN_ONLY:
+                backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, 0, width, mainBottom, backgroundPaint);
+                break;
         }
+
+
     }
 
     /**
@@ -722,9 +755,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         mainDraw.resetValues();
         volDraw.setItemCount(itemsCount);
         volDraw.resetValues();
-        int size = childDraws.size();
+        int size = indexDraws.size();
         for (int i = 0; i < size; i++) {
-            IChartDraw iChartDraw = childDraws.get(i);
+            IChartDraw iChartDraw = indexDraws.get(i);
             iChartDraw.setItemCount(0);
             iChartDraw.resetValues();
         }
@@ -779,11 +812,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return location y
      */
     public float getChildY(float value) {
-        float v = childMaxValue - value;
+        float v = indexMaxValue - value;
         if (v < 0) {
-            return childRect.top;
+            return indexRect.top;
         }
-        return borderCheck(v * childScaleY + childRect.top, childRect.bottom);
+        return borderCheck(v * indexScaleY + indexRect.top, indexRect.bottom);
     }
 
     /**
@@ -804,14 +837,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float y = rowSpace * i + chartPaddingTop;
             canvas.drawLine(0, y, width, y, gridPaint);
         }
-        canvas.drawLine(0, volRect.bottom, width, volRect.bottom, gridPaint);
+//        canvas.drawLine(0, volRect.bottom, width, volRect.bottom, gridPaint);
         for (int i = 1; i < gridColumns; i++) {
             float stopX = columnSpace * i;
-            canvas.drawLine(stopX, 0, stopX, mainRect.bottom, gridPaint);
-            canvas.drawLine(stopX, mainRect.bottom, stopX, volRect.bottom, gridPaint);
-            if (null != childDraw) {
-                canvas.drawLine(stopX, volRect.bottom, stopX, childRect.bottom, gridPaint);
-            }
+            canvas.drawLine(stopX, 0, stopX, displayHeight + chartPaddingTop, gridPaint);
         }
     }
 
@@ -825,31 +854,34 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.save();
         canvas.translate(canvasTranslateX, 0);
         for (int i = screenLeftIndex; i <= screenRightIndex && i >= 0; i++) {
-            float curX = getX(i);
+            float curX = getX(i), lastX;
+            int lastTemp = 0;
             int nextTemp = indexInterval * i + indexInterval;
+            float[] values;
             if (i == 0) {
-                mainDraw.drawTranslated(canvas, curX, curX, this, i,
-                        Arrays.copyOfRange(points, 0, indexInterval)
-                );
-                volDraw.drawTranslated(canvas, curX, curX, this, i,
-                        Arrays.copyOfRange(points, 0, indexInterval));
-                if (null != childDraw) {
-                    childDraw.drawTranslated(canvas, curX, curX, this, i,
-                            Arrays.copyOfRange(points, 0, indexInterval));
-                }
+                lastX = curX;
+                values = Arrays.copyOfRange(points, lastTemp, indexInterval);
             } else {
-                float lastX = getX(i - 1);
-                int lastTemp = indexInterval * i - indexInterval;
-                mainDraw.drawTranslated(canvas, lastX, curX, this, i,
-                        Arrays.copyOfRange(points, lastTemp, nextTemp)
-                );
-                volDraw.drawTranslated(canvas, lastX, curX, this, i,
-                        Arrays.copyOfRange(points, lastTemp, nextTemp));
-                if (null != childDraw) {
-                    childDraw.drawTranslated(canvas, lastX, curX, this, i,
-                            Arrays.copyOfRange(points, lastTemp, nextTemp));
-                }
+                lastX = getX(i - 1);
+                lastTemp = indexInterval * i - indexInterval;
+                values = Arrays.copyOfRange(points, lastTemp, nextTemp);
             }
+
+            switch (chartShowStatue) {
+                case MAIN_VOL_INDEX:
+                    indexDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                case MAIN_VOL:
+                    volDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                case MAIN_ONLY:
+                    mainDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    break;
+                case MAIN_INDEX:
+                    indexDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    mainDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    break;
+            }
+
+
         }
         if (getShowSelected()) {
             drawSelected(canvas, getX(selectedIndex));
@@ -885,11 +917,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         String date = formatDateTime(dataAdapter.getDate(selectedIndex));
         textWidth = textPaint.measureText(date);
         float r = textHeight / 2;
-        if (null != childDraw) {
-            y = childRect.bottom;
-        } else {
-            y = volRect.bottom;
-        }
+        y = chartPaddingTop + displayHeight;
         float halfTextWidth = textWidth / 2;
         float tempLeft = x - halfTextWidth;
         left = tempLeft - selectPriceBoxHorizentalPadding;
@@ -906,13 +934,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 return;
             } else if (selectedY < mainRect.bottom) {
                 text = valueFormatter.format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - chartPaddingTop) * (mainRect.bottom - selectedY)));
-            } else if (selectedY < volRect.top) {
+            } else if (null != volRect && selectedY < volRect.top) {
                 return;
-            } else if (selectedY < volRect.bottom) {
+            } else if (null != volRect && selectedY < volRect.bottom) {
                 text = NumberTools.formatAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
-            } else if (null != childDraw && selectedY < childRect.bottom) {
-                text = childDraw.getValueFormatter().format((childMaxValue / volRect.height() * (volRect.bottom - selectedY)));
-            } else if (null != childDraw && selectedY < childRect.top) {
+            } else if (null != indexDraw && selectedY < indexRect.bottom) {
+                text = getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
+            } else if (null != indexDraw && selectedY < indexRect.top) {
                 return;
             } else {
                 return;
@@ -968,12 +996,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     private void drawXLabels(Canvas canvas) {
 
-        float y;
-        if (null != childDraw) {
-            y = childRect.bottom + baseLine + 5;
-        } else {
-            y = volRect.bottom + baseLine + 5;
-        }
+        float y = chartPaddingTop + displayHeight + baseLine;
+
 
         float halfWidth = chartItemWidth / 2 * getScaleX();
         float startX = getX(screenLeftIndex) - halfWidth;
@@ -1020,49 +1044,115 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     private void drawYLabels(Canvas canvas) {
         double rowValue;
+        float tempYLabelX;
         int gridRowCount;
+        String maxVol, childLable;
         //当显示子视图时,y轴label减少显示一个
-        if (null != childDraw) {
-            if (0 == gridRowCountWithChild) {
-                gridRowCountWithChild = gridRows - 2;
-                rowValueWithChild = (mainMaxValue - mainMinValue) / gridRowCountWithChild;
-            }
-            gridRowCount = gridRowCountWithChild;
-            rowValue = rowValueWithChild;
+//        if (null != childDraw) {
+        switch (chartShowStatue) {
+            case MAIN_VOL_INDEX:
+                if (0 == gridRowCountWithChild) {
+                    gridRowCountWithChild = gridRows - 2;
+                    rowValueWithChild = (mainMaxValue - mainMinValue) / gridRowCountWithChild;
+                }
+                gridRowCount = gridRowCountWithChild;
+                rowValue = rowValueWithChild;
+                tempYLabelX = width - yLabelMarginRight;
+                //Y轴上网络的值
+                for (int i = 0; i <= gridRowCount; i++) {
+                    String text = formatValue(mainMaxValue - i * rowValue);
+                    float v = rowSpace * i + chartPaddingTop;
+                    canvas.drawText(text, tempYLabelX -
+                            textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
 
-        } else {
-            if (0 == gridRowCountNoChild) {
-                gridRowCountNoChild = gridRows - 1;
-                rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
-            }
-            gridRowCount = gridRowCountNoChild;
-            rowValue = rowValueNoChild;
+                }
 
+                maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
+                        format(volMaxValue));
+                canvas.drawText(maxVol, tempYLabelX -
+                        textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
+
+
+                //子图Y轴label
+
+                childLable = indexDraw.getValueFormatter().format(indexMaxValue);
+                canvas.drawText(childLable, tempYLabelX -
+                        textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
+
+
+                break;
+            case MAIN_VOL:
+                if (0 == gridRowCountNoChild) {
+                    gridRowCountNoChild = gridRows - 1;
+                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
+                }
+                gridRowCount = gridRowCountNoChild;
+                rowValue = rowValueNoChild;
+
+                tempYLabelX = width - yLabelMarginRight;
+                //Y轴上网络的值
+                for (int i = 0; i <= gridRowCount; i++) {
+                    String text = formatValue(mainMaxValue - i * rowValue);
+                    float v = rowSpace * i + chartPaddingTop;
+                    canvas.drawText(text, tempYLabelX -
+                            textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
+
+                }
+
+                maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
+                        format(volMaxValue));
+                canvas.drawText(maxVol, tempYLabelX -
+                        textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
+
+
+            case MAIN_ONLY:
+                if (0 == gridRowCountNoChild) {
+                    gridRowCountNoChild = gridRows;
+                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
+                }
+                gridRowCount = gridRowCountNoChild;
+                rowValue = rowValueNoChild;
+
+                tempYLabelX = width - yLabelMarginRight;
+                //Y轴上网络的值
+                for (int i = 0; i <= gridRowCount; i++) {
+                    String text = formatValue(mainMaxValue - i * rowValue);
+                    float v = rowSpace * i + chartPaddingTop;
+                    canvas.drawText(text, tempYLabelX -
+                            textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
+                }
+                break;
+            case MAIN_INDEX:
+                if (0 == gridRowCountNoChild) {
+                    gridRowCountNoChild = gridRows - 1;
+                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
+                }
+                gridRowCount = gridRowCountNoChild;
+                rowValue = rowValueNoChild;
+
+                tempYLabelX = width - yLabelMarginRight;
+                //Y轴上网络的值
+                for (int i = 0; i <= gridRowCount; i++) {
+                    String text = formatValue(mainMaxValue - i * rowValue);
+                    float v = rowSpace * i + chartPaddingTop;
+                    canvas.drawText(text, tempYLabelX - textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
+                }
+                childLable = indexDraw.getValueFormatter().format(indexMaxValue);
+                canvas.drawText(childLable, tempYLabelX -
+                        textPaint.measureText(childLable), indexRect.top - childViewPaddingTop + baseLine, textPaint);
+
+
+                break;
         }
 
-        float tempYLabelX = width - yLabelMarginRight;
-        //Y轴上网络的值
-        for (int i = 0; i <= gridRowCount; i++) {
-            String text = formatValue(mainMaxValue - i * rowValue);
-            float v = rowSpace * i + chartPaddingTop;
-            canvas.drawText(text, tempYLabelX -
-                    textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
 
-        }
-
-        String maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
-                format(volMaxValue));
-        canvas.drawText(maxVol, tempYLabelX -
-                textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
+//        }
+//        else {
+//
+//
+//        }
 
 
-        //子图Y轴label
-        if (null != childDraw) {
-            String childLable = childDraw.getValueFormatter().format(childMaxValue);
-            canvas.drawText(childLable, tempYLabelX -
-                    textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
-
-        }
     }
 
 
@@ -1206,10 +1296,18 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (temp < points.length && position >= 0) {
             float[] tempValues = Arrays.copyOfRange(points, temp, temp + indexInterval);
             float x = getPaddingLeft();
-            mainDraw.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
-            volDraw.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
-            if (null != childDraw) {
-                childDraw.drawText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
+            switch (chartShowStatue) {
+                case MAIN_INDEX:
+                    mainDraw.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    indexDraw.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                    break;
+                case MAIN_VOL_INDEX:
+                    indexDraw.drawText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
+                case MAIN_VOL:
+                    volDraw.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                case MAIN_ONLY:
+                    mainDraw.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    break;
             }
         }
     }
@@ -1368,7 +1466,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         mainMinValue = Float.MAX_VALUE;
         volMaxValue = Float.MIN_VALUE;
         float volMinValue = Float.MAX_VALUE;
-        childMaxValue = Float.MIN_VALUE;
+        indexMaxValue = Float.MIN_VALUE;
         float mChildMinValue = Float.MAX_VALUE;
         mainMaxIndex = screenLeftIndex;
         mainMinIndex = screenLeftIndex;
@@ -1411,28 +1509,36 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 mainLowMinValue = min;
                 mainMinIndex = i;
             }
-            float volume = points[tempIndex + Constants.INDEX_VOL];
-//
-            volMaxValue = volDraw.getMaxValue(
-                    volMaxValue,
-                    points[tempIndex + Constants.INDEX_VOL],
-                    points[tempIndex + Constants.INDEX_VOL_MA_1],
-                    points[tempIndex + Constants.INDEX_VOL_MA_2]);
-            //当最新的K
-            if (screenRightIndex != itemsCount - 1) {
-                volMinValue = volDraw.getMinValue(volMinValue,
-                        points[tempIndex + Constants.INDEX_VOL],
-                        points[tempIndex + Constants.INDEX_VOL_MA_1],
-                        points[tempIndex + Constants.INDEX_VOL_MA_2]);
-            }
-            if (volume < volMinValue) {
-                volMinValue = volume;
+
+            switch (chartShowStatue) {
+                case MAIN_VOL_INDEX:
+                case MAIN_VOL:
+                    float volume = points[tempIndex + Constants.INDEX_VOL];
+                    volMaxValue = volDraw.getMaxValue(
+                            volMaxValue,
+                            points[tempIndex + Constants.INDEX_VOL],
+                            points[tempIndex + Constants.INDEX_VOL_MA_1],
+                            points[tempIndex + Constants.INDEX_VOL_MA_2]);
+                    if (screenRightIndex != itemsCount - 1) {
+                        volMinValue = volDraw.getMinValue(volMinValue,
+                                points[tempIndex + Constants.INDEX_VOL],
+                                points[tempIndex + Constants.INDEX_VOL_MA_1],
+                                points[tempIndex + Constants.INDEX_VOL_MA_2]);
+                    }
+                    if (volume < volMinValue) {
+                        volMinValue = volume;
+                    }
+                    if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {
+                        break;
+                    }
+                case MAIN_INDEX:
+                    indexMaxValue = Math.max(indexMaxValue, indexDraw.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    mChildMinValue = Math.min(mChildMinValue, indexDraw.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    break;
+
             }
 
-            if (null != childDraw) {
-                childMaxValue = Math.max(childMaxValue, childDraw.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
-                mChildMinValue = Math.min(mChildMinValue, childDraw.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
-            }
+
         }
         if (mainMaxValue == mainMinValue) {
             //当最大值和最小值都相等的时候 分别增大最大值和 减小最小值
@@ -1442,20 +1548,27 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         double padding = (mainMaxValue - mainMinValue) * 0.05f;
         mainMaxValue += padding;
         mainMinValue -= padding;
-        if (volMaxValue < 0.001) {
-            volMaxValue = 0.1f;
-        }
-        if (null != childDraw) {
-            childMaxValue += Math.abs(childMaxValue * 0.03f);
-            mChildMinValue -= Math.abs(mChildMinValue * 0.03f);
-            if (childMaxValue == 0) {
-                childMaxValue = 1f;
-            }
+        switch (chartShowStatue) {
+            case MAIN_VOL_INDEX:
+            case MAIN_VOL:
+                if (volMaxValue < 0.001) {
+                    volMaxValue = 0.1f;
+                }
+                volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
+                if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {
+                    break;
+                }
+
+            case MAIN_INDEX:
+                indexMaxValue += Math.abs(indexMaxValue * 0.03f);
+                mChildMinValue -= Math.abs(mChildMinValue * 0.03f);
+                if (indexMaxValue == 0) {
+                    indexMaxValue = 1f;
+                }
+                indexScaleY = indexRect.height() * 1f / (indexMaxValue - mChildMinValue);
+                break;
         }
         mainScaleY = mainRect.height() * 1f / (mainMaxValue - mainMinValue);
-        volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
-        if (null != childRect)
-            childScaleY = childRect.height() * 1f / (childMaxValue - mChildMinValue);
         if (showAnim.isRunning() && loadDataWithAnim) {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
@@ -1619,8 +1732,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param childDraw IChartDraw
      */
-    public void addChildDraw(IChartDraw childDraw) {
-        childDraws.add(childDraw);
+    public void addIndexDraw(IChartDraw childDraw) {
+        indexDraws.add(childDraw);
     }
 
     /**

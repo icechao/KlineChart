@@ -71,7 +71,8 @@
   | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
   | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
   | paddingBottom  | dimension | chart上部内容边距 | 30,第一个网格的位置 |
-  | paddingTop  | dimension | 主视图Lengend上边距 | 15底部显示X轴label空间 |
+  | paddingTop  | dimension | 主视图Lengend上边距 | 15,底部显示X轴label空间 |
+  | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
   | chartLogo  | resource | 主视图logo | |
   | candleRightPadding  | dimension | 主视图与右侧内边距 | |
   | increaseColor  | color | 涨颜色| |
@@ -228,7 +229,7 @@
 
   ### 子图指标图切换
 
-        kLineChartView.setChildDraw(Status.ChildStatus.MACD);
+        kLineChartView.setIndexdDraw(Status.ChildStatus.MACD);
             参数
             Status.ChildStatus.NONE : //不显示子图  默认值
             Status.ChildStatus.MACD : macd
@@ -314,46 +315,46 @@
   ### K线右侧可左滑的空白距离
         
          kLineChartView.setOverScrollRange(float overScrollRange);
-         参数
-         overScrollRange : 滑动距离
+            参数
+            overScrollRange : 滑动距离
                  
   ### 设置选中时是否显示十字线的交点圆
         
          kLineChartView.setSelectedShowCrossPoint(boolean showCrossPoint);
-         参数
-        true  : 显示
-        false : 隐藏
+            参数
+            true  : 显示
+            false : 隐藏
                  
   ### 选中时坐标边框线宽
         
          kLineChartView.setSelectedLabelBorderWidth(float width);
-         参数
-         width : label边框线宽 
+            参数
+            width : label边框线宽 
                  
   ### 选中时坐标边框线颜色
         
          kLineChartView.setSelectedLabelBorderColor(int color);
-         参数
-         color : 颜色值
+            参数
+            color : 颜色值
                  
   ### 价格线框边框宽度
         
          kLineChartView.setPricelineBoxBorderWidth(float width);
-         参数
-         width : 价格线浮框的线宽
+            参数
+            width : 价格线浮框的线宽
                  
   ### 价格线框边框颜色
         
          kLineChartView.setPricelineBoxBorderColor(int color);
-         参数
-         color : 价格线浮框的边框颜色
+            参数
+            color : 价格线浮框的边框颜色
 
   ### 价格线框边框颜色
         
          kLineChartView.setMacdChartColor(int inColor, int deColor);
-         参数
-         inColor : >0 波段的颜色
-         deColor : <0 波段的颜色
+            参数
+            inColor : >0 波段的颜色
+            deColor : <0 波段的颜色
 
   ### 隐藏选择器内容
         
@@ -364,21 +365,30 @@
   ### 主视图所占高度比例
         
          kLineChartView.setMainPercent(float mainPresent);
-         
-         mainPresent : : 占比,用0-1之间的数表示
+            参数 
+            mainPresent : : 占比,用0-1之间的数表示
          
   ### 量视图所占高度比例
         
          kLineChartView.setVolPercent(float volPresent);
-         
-         volPresent : : 占比,用0-1之间的数表示
+            参数 
+            volPresent : : 占比,用0-1之间的数表示
          
   ### 子视图所占高度比例
         
          kLineChartView.setChildPercent(float childPresent);
-         
-         childPresent : 占比,用0-1之间的数表示
+            参数
+            childPresent : 占比,用0-1之间的数表示
 
+  ### 设置主图显示模式,如果选择一个不显示交易量的模式,必需要手动调用方法才会显示交易量
+        
+         public void setChartChildState(Status.ChildStatus state) 
+            参数
+            Status.ChildStatus.MAIN_ONLY         :只显示主图
+            Status.ChildStatus.MAIN_VOL          :显示主图量视图  默认值
+            Status.ChildStatus.MAIN_INDEX        :主图指标图
+            Status.ChildStatus.MAIN_VOL_INDEX(3) :主图交易量指标图
+         
             
        
 ### 功能及优化

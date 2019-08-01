@@ -33,10 +33,27 @@ public class Status {
     }
 
     public enum ChildStatus {
+        MAIN_ONLY(0), //只显示主图
+        MAIN_VOL(1), //显示主图量视图
+        MAIN_INDEX(2), //主图指标图
+        MAIN_VOL_INDEX(3);//主图交易量指标图
+
+        ChildStatus(int statu) {
+            this.statu = statu;
+        }
+
+        private int statu;
+
+        public int getStatu() {
+            return statu;
+        }
+    }
+
+    public enum IndexStatus {
         NONE(-1), MACD(0), KDJ(1), RSI(2), WR(3);
         private int statu;
 
-        ChildStatus(int statu) {
+        IndexStatus(int statu) {
             this.statu = statu;
         }
 
@@ -65,7 +82,7 @@ public class Status {
         SELECT_TOUCHE(0),//touch modle
         SELECT_PRESS(1),//long press modle
         SELECT_BOTH(2),//both modle
-        SELECT_NONE(3);
+        SELECT_NONE(3);// can't touch
         private int model;
 
         ShowCrossModle(int model) {

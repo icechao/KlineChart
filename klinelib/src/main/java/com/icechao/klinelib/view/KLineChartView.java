@@ -65,10 +65,10 @@ public class KLineChartView extends BaseKLineChartView {
         wrDraw = new WRDraw(context);
         kdjDraw = new KDJDraw(context);
         rsiDraw = new RSIDraw(context);
-        addChildDraw(macdDraw);
-        addChildDraw(kdjDraw);
-        addChildDraw(rsiDraw);
-        addChildDraw(wrDraw);
+        addIndexDraw(macdDraw);
+        addIndexDraw(kdjDraw);
+        addIndexDraw(rsiDraw);
+        addIndexDraw(wrDraw);
 
     }
 
@@ -88,6 +88,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setTextSize(array.getDimension(R.styleable.KLineChartView_textSize, getDimension(R.dimen.chart_text_size)));
                 setTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
                 setChartPaddingTop(array.getDimension(R.styleable.KLineChartView_paddingTop, getDimension(R.dimen.chart_top_padding)));
+                setChildPaddingTop(array.getDimension(R.styleable.KLineChartView_childPaddingTop, getDimension(R.dimen.child_top_padding)));
                 setChartPaddingBottom(array.getDimension(R.styleable.KLineChartView_paddingBottom, getDimension(R.dimen.chart_bottom_padding)));
                 //网格
                 setGridLineWidth(array.getDimension(R.styleable.KLineChartView_gridLineWidth, getDimension(R.dimen.chart_grid_line_width)));
@@ -212,6 +213,15 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setSelectedLabelBorderWidth(float width) {
         selectorFramePaint.setStrokeWidth(width);
+    }
+
+    /**
+     * 子视图的padding
+     *
+     * @param childViewPaddingTop padding
+     */
+    public void setChildPaddingTop(float childViewPaddingTop) {
+        this.childViewPaddingTop = childViewPaddingTop;
     }
 
     /**
@@ -538,8 +548,8 @@ public class KLineChartView extends BaseKLineChartView {
         this.volPercent = volPresent;
     }
 
-    public void setChildPercent(float childPresent) {
-        this.childPercsent = childPresent;
+    public void setIndexPercent(float childPresent) {
+        this.IndexPercent = childPresent;
     }
 
 
@@ -560,8 +570,8 @@ public class KLineChartView extends BaseKLineChartView {
     public void setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
         mainDraw.setValueFormatter(valueFormatter);
-        for (int i = 0; i < childDraws.size(); i++) {
-            childDraws.get(i).setValueFormatter(valueFormatter);
+        for (int i = 0; i < indexDraws.size(); i++) {
+            indexDraws.get(i).setValueFormatter(valueFormatter);
         }
     }
 
@@ -687,11 +697,6 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setSelectCrossBigColor(int color) {
         selectedbigCrossPaint.setColor(color);
-    }
-
-
-    public void setPriceBoxBorderColor(int color) {
-        priceLineBoxPaint.setColor(color);
     }
 
     /**
@@ -1135,19 +1140,31 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置当前显示子图
      *
-     * @param position {@link Status.ChildStatus}
+     * @param position {@link Status.IndexStatus}
      */
-    public void setChildDraw(Status.ChildStatus position) {
-        if (childDrawPosition.getStatu() != position.getStatu()) {
-            if (position == Status.ChildStatus.NONE) {
-                childDraw = null;
-            } else {
-                childDraw = childDraws.get(position.getStatu());
-            }
-            childDrawPosition = position;
-            initRect();
-            invalidate();
+    public void setIndexDraw(Status.IndexStatus position) {
+        if (indexDrawPosition.getStatu() == position.getStatu()) {
+            return;
         }
+
+        if (position == Status.IndexStatus.NONE) {
+            indexDraw = null;
+            if (chartShowStatue == Status.ChildStatus.MAIN_INDEX) {
+                chartShowStatue = Status.ChildStatus.MAIN_ONLY;
+            } else if (chartShowStatue == Status.ChildStatus.MAIN_VOL_INDEX) {
+                chartShowStatue = Status.ChildStatus.MAIN_VOL;
+            }
+        } else {
+            indexDraw = indexDraws.get(position.getStatu());
+            if (chartShowStatue == Status.ChildStatus.MAIN_ONLY) {
+                chartShowStatue = Status.ChildStatus.MAIN_INDEX;
+            } else if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {
+                chartShowStatue = Status.ChildStatus.MAIN_VOL_INDEX;
+            }
+        }
+        indexDrawPosition = position;
+        initRect();
+        invalidate();
     }
 
     /**
@@ -1338,5 +1355,32 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public void setSelectInfoBoxPadding(float padding) {
         mainDraw.setSelectInfoBoxPadding(padding);
+    }
+
+    /**
+     * 当前指标图状态
+     *
+     * @return {@link Status.IndexStatus}
+     */
+    public Status.IndexStatus getIndexDrawPosition() {
+        return indexDrawPosition;
+    }
+
+    /**
+     * 设置主图显示模式,如果选择一个不显示交易量的模式,必需要手动调用方法才会显示交易量
+     *
+     * @param state {@link Status.ChildStatus} defualt {@link Status.ChildStatus.MAIN_VOL}
+     */
+    public void setChartChildState(Status.ChildStatus state) {
+        chartShowStatue = state;
+    }
+
+    /**
+     * 获取当前主图显示模式
+     *
+     * @return {@link Status.ChildStatus}
+     */
+    public Status.ChildStatus getChartChildState() {
+        return chartShowStatue;
     }
 }

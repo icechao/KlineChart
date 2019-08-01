@@ -219,7 +219,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_hide_sub:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.ChildStatus.NONE);
+                chartView.setChildDraw(Status.IndexStatus.NONE);
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
@@ -231,19 +231,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_macd:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.ChildStatus.MACD);
+                chartView.setChildDraw(Status.IndexStatus.MACD);
                 break;
             case R.id.text_view_kdj:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.ChildStatus.KDJ);
+                chartView.setChildDraw(Status.IndexStatus.KDJ);
                 break;
             case R.id.text_view_rsi:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.ChildStatus.RSI);
+                chartView.setChildDraw(Status.IndexStatus.RSI);
                 break;
             case R.id.text_view_wr:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.ChildStatus.WR);
+                chartView.setChildDraw(Status.IndexStatus.WR);
                 break;
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();

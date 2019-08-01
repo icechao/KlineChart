@@ -65,6 +65,7 @@
         <attr name="decreaseColor" format="color"/>
         <attr name="textSize" format="dimension"/>
         <attr name="paddingTop" format="dimension"/>
+        <attr name="childPaddingTop" format="dimension"/>
         <attr name="paddingBottom" format="dimension"/>
         <attr name="textColor" format="color"/>
         <attr name="lineWidth" format="dimension"/>
