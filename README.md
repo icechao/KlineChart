@@ -16,25 +16,27 @@
             
             项目的build.gradle中
 
-            buildscript {
+                        buildscript {
 
-               repositories {
-                  ...
-                   jcenter()
+                           repositories {
+                              ...
+                               jcenter()
 
-               }
-               ...
-            }
+                           }
+                           ...
+                        }
 
-            allprojects {
-               repositories {
-               ...
-                   jcenter()
-               }
-            }
+                        allprojects {
+                           repositories {
+                           ...
+                               jcenter()
+                           }
+                        }
+            
+            
             工程的build.gradle中
 
-            implementation 'com.icechao.klinelib:klinelib:0.0.1'
+                        implementation 'com.icechao.klinelib:klinelib:0.0.1'
 
             
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
