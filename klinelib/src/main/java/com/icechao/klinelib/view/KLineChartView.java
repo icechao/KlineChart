@@ -147,7 +147,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setKlineRightPadding(array.getDimension(R.styleable.KLineChartView_candleRightPadding, 0));
 
                 //背景添加渐变色
-                setBackgroundColor(array.getColor(R.styleable.KLineChartView_backgroundColor, getResources().getColor(R.color.color_1C1E27)));
+                setBgColor(array.getColor(R.styleable.KLineChartView_backgroundColor, getResources().getColor(R.color.color_1C1E27)));
                 setBackGroundFillTopColor(array.getColor(R.styleable.KLineChartView_backgroundFillTopLolor, getResources().getColor(R.color.color_1C1E27)));
                 setBackGroundFillBottomColor(array.getColor(R.styleable.KLineChartView_backgroundFillBottomColor, getResources().getColor(R.color.color_4B85D6)));
                 setBackGroundAlpha(array.getInt(R.styleable.KLineChartView_backgroundAlpha, 18));
@@ -202,8 +202,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param showCrossPoint default true
      */
-    private void setSelectedShowCrossPoint(boolean showCrossPoint) {
+    private KLineChartView setSelectedShowCrossPoint(boolean showCrossPoint) {
         this.showCrossPoint = showCrossPoint;
+        return this;
     }
 
     /**
@@ -211,8 +212,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param width width
      */
-    public void setSelectedLabelBorderWidth(float width) {
+    public KLineChartView setSelectedLabelBorderWidth(float width) {
         selectorFramePaint.setStrokeWidth(width);
+        return this;
     }
 
     /**
@@ -220,8 +222,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param childViewPaddingTop padding
      */
-    public void setChildPaddingTop(float childViewPaddingTop) {
+    public KLineChartView setChildPaddingTop(float childViewPaddingTop) {
         this.childViewPaddingTop = childViewPaddingTop;
+        return this;
     }
 
     /**
@@ -229,8 +232,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setSelectedLabelBorderColor(int color) {
+    public KLineChartView setSelectedLabelBorderColor(int color) {
         selectorFramePaint.setColor(color);
+        return this;
     }
 
 
@@ -239,8 +243,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param width width
      */
-    public void setPricelineBoxBorderWidth(float width) {
+    public KLineChartView setPricelineBoxBorderWidth(float width) {
         priceLineBoxPaint.setStrokeWidth(width);
+        return this;
     }
 
     /**
@@ -248,18 +253,19 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setPricelineBoxBorderColor(int color) {
+    public KLineChartView setPricelineBoxBorderColor(int color) {
         priceLineBoxPaint.setColor(color);
+        return this;
     }
 
     /**
      * 设置macd 柱状图颜色
-     *
-     * @param inColor 上升颜色
+     *  @param inColor 上升颜色
      * @param deColor 下降颜色
      */
-    public void setMacdChartColor(int inColor, int deColor) {
+    public KLineChartView setMacdChartColor(int inColor, int deColor) {
         macdDraw.setMacdChartColor(inColor, deColor);
+        return this;
     }
 
 
@@ -275,7 +281,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 仅显示LoadingView同时显示K线,如果调用方法前没设置过setProgressBar 会自动加载一个progressBar
      */
-    public void showLoading() {
+    public KLineChartView showLoading() {
         if (null != progressBar) {
             if (progressBar.getVisibility() != View.VISIBLE) {
                 post(() -> {
@@ -287,14 +293,16 @@ public class KLineChartView extends BaseKLineChartView {
             setLoadingView(new ProgressBar(getContext()));
             showLoading();
         }
+        return this;
     }
 
     /**
      * 仅显示LoadingView不显示K线
      */
-    public void justShowLoading() {
+    public KLineChartView justShowLoading() {
         showLoading();
         isShowLoading = true;
+        return this;
     }
 
 
@@ -302,20 +310,22 @@ public class KLineChartView extends BaseKLineChartView {
      * 切换时可能会引起动画效果
      * 延迟500换秒隐藏动画以免动画效果显示
      */
-    public void hideLoading() {
+    public KLineChartView hideLoading() {
         if (null != progressBar && progressBar.getVisibility() == View.VISIBLE) {
             post(() -> {
                 progressBar.setVisibility(View.GONE);
                 isShowLoading = false;
             });
         }
+        return this;
     }
 
     /**
      * 隐藏选择器内容
      */
-    public void hideSelectData() {
+    public KLineChartView hideSelectData() {
         showSelected = false;
+        return this;
     }
 
 
@@ -325,35 +335,39 @@ public class KLineChartView extends BaseKLineChartView {
      * @param scaleEnable
      */
     @Override
-    public void setScaleEnable(boolean scaleEnable) {
+    public KLineChartView setScaleEnable(boolean scaleEnable) {
         super.setScaleEnable(scaleEnable);
-
+        return this;
     }
 
     @Override
-    public void setScrollEnable(boolean scrollEnable) {
+    public KLineChartView setScrollEnable(boolean scrollEnable) {
         super.setScrollEnable(scrollEnable);
+        return this;
     }
 
     /**
      * 设置DIF颜色
      */
-    public void setDIFColor(int color) {
+    public KLineChartView setDIFColor(int color) {
         macdDraw.setDIFColor(color);
+        return this;
     }
 
     /**
      * 设置DEA颜色
      */
-    public void setDEAColor(int color) {
+    public KLineChartView setDEAColor(int color) {
         macdDraw.setDEAColor(color);
+        return this;
     }
 
     /**
      * 设置MACD颜色
      */
-    public void setMACDColor(int color) {
+    public KLineChartView setMACDColor(int color) {
         macdDraw.setMACDColor(color);
+        return this;
     }
 
     /**
@@ -361,50 +375,57 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param MACDWidth width
      */
-    public void setMACDWidth(float MACDWidth) {
+    public KLineChartView setMACDWidth(float MACDWidth) {
         macdDraw.setMACDWidth(MACDWidth);
+        return this;
     }
 
     /**
      * 设置K颜色
      */
-    public void setKColor(int color) {
+    public KLineChartView setKColor(int color) {
         kdjDraw.setKColor(color);
+        return this;
     }
 
     /**
      * 设置D颜色
      */
-    public void setDColor(int color) {
+    public KLineChartView setDColor(int color) {
         kdjDraw.setDColor(color);
+        return this;
     }
 
     /**
      * 设置J颜色
      */
-    public void setJColor(int color) {
+    public KLineChartView setJColor(int color) {
         kdjDraw.setJColor(color);
+        return this;
     }
 
     /**
      * 设置R颜色
      */
-    public void setR1Color(int color) {
+    public KLineChartView setR1Color(int color) {
         wrDraw.setR1Color(color);
+        return this;
     }
 
     /**
      * 设置R颜色
      */
-    public void setR2Color(int color) {
+    public KLineChartView setR2Color(int color) {
         wrDraw.setR2Color(color);
+        return this;
     }
 
     /**
      * 设置R颜色
      */
-    public void setR3Color(int color) {
+    public KLineChartView setR3Color(int color) {
         wrDraw.setR3Color(color);
+        return this;
     }
 
     /**
@@ -412,9 +433,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMa1Color(int color) {
+    public KLineChartView setMa1Color(int color) {
         mainDraw.setMaOneColor(color);
         volDraw.setMaOneColor(color);
+        return this;
     }
 
     /**
@@ -422,9 +444,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMa2Color(int color) {
+    public KLineChartView setMa2Color(int color) {
         mainDraw.setMaTwoColor(color);
         volDraw.setMaTwoColor(color);
+        return this;
     }
 
     /**
@@ -432,8 +455,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setMa3Color(int color) {
+    public KLineChartView setMa3Color(int color) {
         mainDraw.setMaThreeColor(color);
+        return this;
     }
 
     /**
@@ -441,8 +465,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param textSize textsize
      */
-    public void setSelectorTextSize(float textSize) {
+    public KLineChartView setSelectorTextSize(float textSize) {
         mainDraw.setSelectorTextSize(textSize);
+        return this;
     }
 
     /**
@@ -450,8 +475,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color Color
      */
-    public void setSelectorBackgroundColor(int color) {
+    public KLineChartView setSelectorBackgroundColor(int color) {
         mainDraw.setSelectorBackgroundColor(color);
+        return this;
     }
 
     /**
@@ -459,9 +485,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param candleWidth candleWidth
      */
-    public void setCandleWidth(float candleWidth) {
+    public KLineChartView setCandleWidth(float candleWidth) {
         mainDraw.setCandleWidth(candleWidth);
         volDraw.setBarWidth(candleWidth);
+        return this;
     }
 
     /**
@@ -469,15 +496,17 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param candleLineWidth candleLineWidth
      */
-    public void setCandleLineWidth(float candleLineWidth) {
+    public KLineChartView setCandleLineWidth(float candleLineWidth) {
         mainDraw.setCandleLineWidth(candleLineWidth);
+        return this;
     }
 
     /**
      * 蜡烛是否空心
      */
-    public void setCandleSolid(boolean candleSolid) {
+    public KLineChartView setCandleSolid(boolean candleSolid) {
         mainDraw.setStroke(candleSolid);
+        return this;
     }
 
 
@@ -486,30 +515,35 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param model {@link Status.CrossTouchModel} default  SHOW_CLOSE
      */
-    public void setCrossFollowTouch(Status.CrossTouchModel model) {
+    public KLineChartView setCrossFollowTouch(Status.CrossTouchModel model) {
         this.crossTouchModel = model;
+        return this;
     }
 
-    public void setRSI1Color(int color) {
+    public KLineChartView setRSI1Color(int color) {
         rsiDraw.setRSI1Color(color);
+        return this;
     }
 
-    public void setRSI2Color(int color) {
+    public KLineChartView setRSI2Color(int color) {
         rsiDraw.setRSI2Color(color);
+        return this;
     }
 
-    public void setRSI3Color(int color) {
+    public KLineChartView setRSI3Color(int color) {
         rsiDraw.setRSI3Color(color);
+        return this;
     }
 
 
-    public void setLineWidth(float lineWidth) {
+    public KLineChartView setLineWidth(float lineWidth) {
         mainDraw.setLineWidth(lineWidth);
         rsiDraw.setLineWidth(lineWidth);
         macdDraw.setLineWidth(lineWidth);
         kdjDraw.setLineWidth(lineWidth);
         wrDraw.setLineWidth(lineWidth);
         volDraw.setLineWidth(lineWidth);
+        return this;
     }
 
 
@@ -526,8 +560,9 @@ public class KLineChartView extends BaseKLineChartView {
      * @param mainYMoveUpInterval default 5
      */
     @SuppressWarnings("unused")
-    public void setMainYMoveUpInterval(int mainYMoveUpInterval) {
+    public KLineChartView setMainYMoveUpInterval(int mainYMoveUpInterval) {
         this.mainYMoveUpInterval = mainYMoveUpInterval;
+        return this;
     }
 
     /**
@@ -535,21 +570,25 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param yLabelMarginRight default 10
      */
-    public void setyLabelMarginRight(float yLabelMarginRight) {
+    public KLineChartView setyLabelMarginRight(float yLabelMarginRight) {
         this.yLabelMarginRight = yLabelMarginRight;
+        return this;
     }
 
 
-    public void setMainPercent(float mainPercent) {
+    public KLineChartView setMainPercent(float mainPercent) {
         this.mainPercent = mainPercent;
+        return this;
     }
 
-    public void setVolPercent(float volPresent) {
+    public KLineChartView setVolPercent(float volPresent) {
         this.volPercent = volPresent;
+        return this;
     }
 
-    public void setIndexPercent(float childPresent) {
+    public KLineChartView setIndexPercent(float childPresent) {
         this.IndexPercent = childPresent;
+        return this;
     }
 
 
@@ -567,12 +606,13 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param valueFormatter value格式化器
      */
-    public void setValueFormatter(IValueFormatter valueFormatter) {
+    public KLineChartView setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
         mainDraw.setValueFormatter(valueFormatter);
         for (int i = 0; i < indexDraws.size(); i++) {
             indexDraws.get(i).setValueFormatter(valueFormatter);
         }
+        return this;
     }
 
     /**
@@ -589,8 +629,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param dateTimeFormatter 时间格式化器
      */
-    public void setDateTimeFormatter(IDateTimeFormatter dateTimeFormatter) {
+    public KLineChartView setDateTimeFormatter(IDateTimeFormatter dateTimeFormatter) {
         this.dateTimeFormatter = dateTimeFormatter;
+        return this;
     }
 
     /**
@@ -598,7 +639,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param klineState {@link Status.KlineStatus}
      */
-    public void setKlineState(Status.KlineStatus klineState) {
+    public KLineChartView setKlineState(Status.KlineStatus klineState) {
         if (this.klineStatus != klineState) {
             this.klineStatus = klineState;
             switch (klineState) {
@@ -613,6 +654,7 @@ public class KLineChartView extends BaseKLineChartView {
             dataAdapter.setResetShowPosition(true);
             invalidate();
         }
+        return this;
     }
 
 
@@ -621,37 +663,41 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param priceBoxMarginRight priceLIneBoxMarginRight
      */
-    public void setPriceLineBoxMarginRight(float priceBoxMarginRight) {
+    public KLineChartView setPriceLineBoxMarginRight(float priceBoxMarginRight) {
         this.priceLineBoxMarginRight = priceBoxMarginRight;
+        return this;
     }
 
     /**
      * 价格框内边距
      */
-    public void setPriceLineBoxePadding(float padding) {
+    public KLineChartView setPriceLineBoxePadding(float padding) {
         this.priceLineBoxPadidng = padding;
-
+        return this;
     }
 
     /**
      * 价格线图形的高
      */
-    public void setPriceLineShapeHeight(float priceLineShapeHeight) {
+    public KLineChartView setPriceLineShapeHeight(float priceLineShapeHeight) {
         this.priceShapeHeight = priceLineShapeHeight;
+        return this;
     }
 
     /**
      * 价格线图形的宽
      */
-    public void setPriceLineShapeWidth(float width) {
+    public KLineChartView setPriceLineShapeWidth(float width) {
         this.priceShapeWidth = width;
+        return this;
     }
 
     /**
      * 价格线文字与图形的间隔
      */
-    public void setPriceBoxShapeTextMargin(float margin) {
+    public KLineChartView setPriceBoxShapeTextMargin(float margin) {
         this.priceBoxShapeTextMargin = margin;
+        return this;
     }
 
     /**
@@ -659,8 +705,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param priceLineBoxHeight priceLineBoxHeight
      */
-    public void setPriceLineBoxHeight(float priceLineBoxHeight) {
+    public KLineChartView setPriceLineBoxHeight(float priceLineBoxHeight) {
         this.priceLineBoxHeight = priceLineBoxHeight;
+        return this;
     }
 
     /**
@@ -668,8 +715,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param marketInfoText 默认中文 国际化手动调用
      */
-    public void setMarketInfoText(String[] marketInfoText) {
+    public KLineChartView setMarketInfoText(String[] marketInfoText) {
         mainDraw.setMarketInfoText(marketInfoText);
+        return this;
     }
 
     /**
@@ -677,8 +725,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color default black
      */
-    public void setPriceLineBoxBgColor(int color) {
+    public KLineChartView setPriceLineBoxBgColor(int color) {
         priceLineBoxBgPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -686,8 +735,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color default wihte
      */
-    public void setSelectedPointColor(int color) {
+    public KLineChartView setSelectedPointColor(int color) {
         selectedCrossPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -695,8 +745,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color default wihte
      */
-    public void setSelectCrossBigColor(int color) {
+    public KLineChartView setSelectCrossBigColor(int color) {
         selectedbigCrossPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -704,8 +755,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param radius selected circle radius
      */
-    public void setSelectedPointRadius(float radius) {
+    public KLineChartView setSelectedPointRadius(float radius) {
         selectedPointRadius = radius;
+        return this;
     }
 
 
@@ -714,8 +766,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color select y color
      */
-    public void setSelectedYColor(int color) {
+    public KLineChartView setSelectedYColor(int color) {
         this.selectedYColor = color;
+        return this;
     }
 
     /**
@@ -723,8 +776,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color backgroud linearGrident top
      */
-    public void setBackGroundFillTopColor(int color) {
+    public KLineChartView setBackGroundFillTopColor(int color) {
         this.backGroundFillTopColor = color;
+        return this;
     }
 
     /**
@@ -732,8 +786,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color backgroud linearGrident bottom
      */
-    public void setBackGroundFillBottomColor(int color) {
+    public KLineChartView setBackGroundFillBottomColor(int color) {
         this.backGroundFillBottomColor = color;
+        return this;
     }
 
     /**
@@ -741,9 +796,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color increase color
      */
-    public void setIncreaseColor(int color) {
+    public KLineChartView setIncreaseColor(int color) {
         mainDraw.setIncreaseColor(color);
         volDraw.setIncreaseColor(color);
+        return this;
     }
 
     /**
@@ -751,9 +807,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color decrease color
      */
-    public void setDecreaseColor(int color) {
+    public KLineChartView setDecreaseColor(int color) {
         mainDraw.setDecreaseColor(color);
         volDraw.setDecreaseColor(color);
+        return this;
     }
 
     /**
@@ -761,9 +818,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color time line color
      */
-    public void setTimeLineColor(int color) {
+    public KLineChartView setTimeLineColor(int color) {
         mainDraw.setMinuteLineColor(color);
         volDraw.setMinuteColor(color);
+        return this;
     }
 
     /**
@@ -771,8 +829,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color time line top fill color
      */
-    public void setTimeLineFillTopColor(int color) {
+    public KLineChartView setTimeLineFillTopColor(int color) {
         this.timeLineFillTopColor = color;
+        return this;
     }
 
     /**
@@ -780,8 +839,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color time line bottom fill color
      */
-    public void setTimeLineFillBottomColor(int color) {
+    public KLineChartView setTimeLineFillBottomColor(int color) {
         this.timeLineFillBottomColor = color;
+        return this;
     }
 
 
@@ -790,8 +850,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param mainLengendMarginTop Lengend margin top , default 0
      */
-    public void setMainLengendMarginTop(float mainLengendMarginTop) {
+    public KLineChartView setMainLengendMarginTop(float mainLengendMarginTop) {
         mainDraw.setMainLengendMarginTop(mainLengendMarginTop);
+        return this;
     }
 
     /**
@@ -799,9 +860,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param volLengendMarginTop margin default 0
      */
-    private void setVolLengendMarginTop(float volLengendMarginTop) {
+    private KLineChartView setVolLengendMarginTop(float volLengendMarginTop) {
         volDraw.setVolLengendMarginTop(volLengendMarginTop);
-
+        return this;
     }
 
     /**
@@ -809,8 +870,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color color
      */
-    public void setVolLengendColor(int color) {
+    public KLineChartView setVolLengendColor(int color) {
         volDraw.setVolLengendColor(color);
+        return this;
     }
 
     /**
@@ -818,12 +880,14 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param betterX true会自动缩进左右两边的label更好的展示
      */
-    public void setBetterX(boolean betterX) {
+    public KLineChartView setBetterX(boolean betterX) {
         this.betterX = betterX;
+        return this;
     }
 
-    public void setPriceBoxColor(int backgroundFillPaint) {
+    public KLineChartView setPriceBoxColor(int backgroundFillPaint) {
         this.rightPriceBoxPaint.setColor(backgroundFillPaint);
+        return this;
     }
 
 
@@ -832,8 +896,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color price line right color
      */
-    public void setPriceLineRightColor(int color) {
+    public KLineChartView setPriceLineRightColor(int color) {
         priceLineRightPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -841,8 +906,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color price line right color
      */
-    public void setPriceLineRightTextColor(int color) {
+    public KLineChartView setPriceLineRightTextColor(int color) {
         priceLineRightTextPaint.setColor(color);
+        return this;
     }
 
 
@@ -853,8 +919,9 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置每个点的宽度
      */
-    public void setChartItemWidth(float pointWidth) {
+    public KLineChartView setChartItemWidth(float pointWidth) {
         chartItemWidth = pointWidth;
+        return this;
     }
 
     /**
@@ -872,9 +939,10 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param color pop color
      */
-    public void setTimeLineEndColor(int color) {
+    public KLineChartView setTimeLineEndColor(int color) {
         lineEndPointPaint.setColor(color);
         lineEndFillPointPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -882,8 +950,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param width pop width
      */
-    public void setTimeLineEndRadiu(float width) {
+    public KLineChartView setTimeLineEndRadiu(float width) {
         this.lineEndRadiu = width;
+        return this;
     }
 
     /**
@@ -891,8 +960,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param multiply 倍数
      */
-    public void setTimeLineEndMultiply(float multiply) {
+    public KLineChartView setTimeLineEndMultiply(float multiply) {
         this.lineEndMaxMultiply = multiply;
+        return this;
     }
 
     /**
@@ -900,16 +970,17 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param lineWidth price line width
      */
-    public void setPriceLineWidth(float lineWidth) {
+    public KLineChartView setPriceLineWidth(float lineWidth) {
         priceLinePaint.setStrokeWidth(lineWidth);
         priceLinePaint.setStyle(Paint.Style.STROKE);
+        return this;
     }
 
 
     /**
      * 统一设置设置文字大小
      */
-    public void setTextSize(float textSize) {
+    public KLineChartView setTextSize(float textSize) {
         textPaint.setTextSize(textSize);
         Paint.FontMetrics fm = textPaint.getFontMetrics();
         textHeight = fm.descent - fm.ascent;
@@ -925,38 +996,43 @@ public class KLineChartView extends BaseKLineChartView {
         kdjDraw.setTextSize(textSize);
         wrDraw.setTextSize(textSize);
         volDraw.setTextSize(textSize);
+        return this;
     }
 
-    public void setPriceLineColor(int color) {
+    public KLineChartView setPriceLineColor(int color) {
         priceLinePaint.setColor(color);
+        return this;
     }
 
 
     /**
      * 设置背景颜色
      */
-    public void setBackgroundColor(int color) {
+    public KLineChartView setBgColor(int color) {
         this.backgroundPaint.setColor(color);
         backGroundColor = color;
+        return this;
     }
 
     /**
      * 设置选中point 值显示背景
      */
-    public void setSelectPriceBoxBackgroundColor(int color) {
+    public KLineChartView setSelectPriceBoxBackgroundColor(int color) {
         selectedPriceBoxBackgroundPaint.setColor(color);
+        return this;
     }
 
 
     /**
      * 设置超出右方后可滑动的范围
      */
-    public void setOverScrollRange(float overScrollRange) {
+    public KLineChartView setOverScrollRange(float overScrollRange) {
         if (overScrollRange < 0) {
             overScrollRange = 0;
         }
         this.overScrollRange = overScrollRange;
         setScrollX((int) -overScrollRange);
+        return this;
     }
 
 
@@ -965,8 +1041,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param chartPaddingTop chatPaddingTop 横线网格和K线会绘制在这个位置的下方
      */
-    public void setChartPaddingTop(float chartPaddingTop) {
+    public KLineChartView setChartPaddingTop(float chartPaddingTop) {
         this.chartPaddingTop = (int) chartPaddingTop;
+        return this;
     }
 
     /**
@@ -974,8 +1051,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param chartPaddingBottom chatPaddingTop 横线网格和K线会绘制在这个位置的下方
      */
-    public void setChartPaddingBottom(float chartPaddingBottom) {
+    public KLineChartView setChartPaddingBottom(float chartPaddingBottom) {
         this.chartPaddingBottom = (int) chartPaddingBottom;
+        return this;
     }
 
 
@@ -985,57 +1063,65 @@ public class KLineChartView extends BaseKLineChartView {
      * @param chartPaddingBottom chartPaddingBottom
      */
     @SuppressWarnings("unused")
-    public void setChartPaddingBottom(int chartPaddingBottom) {
+    public KLineChartView setChartPaddingBottom(int chartPaddingBottom) {
         this.chartPaddingBottom = chartPaddingBottom;
+        return this;
     }
 
     /**
      * 设置表格线宽度
      */
-    public void setGridLineWidth(float width) {
+    public KLineChartView setGridLineWidth(float width) {
         gridPaint.setStrokeWidth(width);
+        return this;
     }
 
     /**
      * 设置表格线颜色
      */
-    public void setGridLineColor(int color) {
+    public KLineChartView setGridLineColor(int color) {
         gridPaint.setColor(color);
+        return this;
     }
 
     /**
      * 设置选择器横线宽度
      */
-    public void setSelectedXLineWidth(float width) {
+    public KLineChartView setSelectedXLineWidth(float width) {
         selectedXLinePaint.setStrokeWidth(width);
+        return this;
     }
 
     /**
      * 设置选择器横线颜色
      */
-    public void setSelectedXLineColor(int color) {
+    public KLineChartView setSelectedXLineColor(int color) {
         selectedXLinePaint.setColor(color);
+        return this;
     }
 
     /**
      * 设置选择器竖线宽度
      */
-    public void setSelectedYLineWidth(float width) {
+    public KLineChartView setSelectedYLineWidth(float width) {
         selectedWidth = width;
+        return this;
     }
 
     /**
      * 设置选择器竖线颜色
      */
-    public void setSelectedYLineColor(int color) {
+    public KLineChartView setSelectedYLineColor(int color) {
         selectedYLinePaint.setColor(color);
+        return this;
     }
 
     /**
      * 设置文字颜色
      */
-    public void setTextColor(int color) {
+    public KLineChartView setTextColor(int color) {
         textPaint.setColor(color);
+        return this;
     }
 
     /**
@@ -1045,8 +1131,9 @@ public class KLineChartView extends BaseKLineChartView {
      * @param borderColor     边框
      * @param backgroundColor 背景
      */
-    public void setSelectedInfoBoxColors(int textColor, int borderColor, int backgroundColor) {
+    public KLineChartView setSelectedInfoBoxColors(int textColor, int borderColor, int backgroundColor) {
         mainDraw.setSelectorTextColor(textColor, borderColor, backgroundColor);
+        return this;
     }
 
 
@@ -1079,23 +1166,25 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置表格行数
      */
-    public void setGridRows(int gridRows) {
+    public KLineChartView setGridRows(int gridRows) {
         if (gridRows < 1) {
             gridRows = 1;
         }
         rowSpace = displayHeight / gridRows;
         this.gridRows = gridRows;
+        return this;
     }
 
     /**
      * 设置表格列数
      */
-    public void setGridColumns(int gridColumns) {
+    public KLineChartView setGridColumns(int gridColumns) {
         if (gridColumns < 1) {
             gridColumns = 1;
         }
         columnSpace = width / gridColumns;
         this.gridColumns = gridColumns;
+        return this;
     }
 
     /**
@@ -1103,28 +1192,29 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @return IChartDraw
      */
-    public void setVolFormatter(IValueFormatter valueFormatter) {
+    public KLineChartView setVolFormatter(IValueFormatter valueFormatter) {
         volDraw.setValueFormatter(valueFormatter);
+        return this;
     }
 
 
     /**
      * 设置数据适配器
      */
-    public void setAdapter(KLineChartAdapter adapter) {
+    public KLineChartView setAdapter(KLineChartAdapter adapter) {
         if (null != dataAdapter && null != dataSetObserver) {
             dataAdapter.unregisterDataSetObserver(dataSetObserver);
         }
         dataAdapter = adapter;
         if (null == dataAdapter || null == dataSetObserver) {
             itemsCount = 0;
-            return;
-
+        } else {
+            dataAdapter.registerDataSetObserver(dataSetObserver);
+            if (dataAdapter.getCount() > 0) {
+                dataAdapter.notifyDataSetChanged();
+            }
         }
-        dataAdapter.registerDataSetObserver(dataSetObserver);
-        if (dataAdapter.getCount() > 0) {
-            dataAdapter.notifyDataSetChanged();
-        }
+        return this;
     }
 
 
@@ -1132,8 +1222,9 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选择监听
      */
     @SuppressWarnings("unused")
-    public void setOnSelectedChangedListener(OnSelectedChangedListener l) {
+    public KLineChartView setOnSelectedChangedListener(OnSelectedChangedListener l) {
         this.mOnSelectedChangedListener = l;
+        return this;
     }
 
 
@@ -1142,9 +1233,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param position {@link Status.IndexStatus}
      */
-    public void setIndexDraw(Status.IndexStatus position) {
+    public KLineChartView setIndexDraw(Status.IndexStatus position) {
         if (indexDrawPosition.getStatu() == position.getStatu()) {
-            return;
+            return null;
         }
 
         if (position == Status.IndexStatus.NONE) {
@@ -1165,6 +1256,7 @@ public class KLineChartView extends BaseKLineChartView {
         indexDrawPosition = position;
         initRect();
         invalidate();
+        return this;
     }
 
     /**
@@ -1172,11 +1264,12 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param status {@link Status.MainStatus}
      */
-    public void changeMainDrawType(Status.MainStatus status) {
+    public KLineChartView changeMainDrawType(Status.MainStatus status) {
         if (this.status != status) {
             this.status = status;
             invalidate();
         }
+        return this;
     }
 
     /**
@@ -1184,8 +1277,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param withAnim true load data with anim ; default  true
      */
-    public void setAnimLoadData(boolean withAnim) {
+    public KLineChartView setAnimLoadData(boolean withAnim) {
         loadDataWithAnim = withAnim;
+        return this;
     }
 
     /**
@@ -1203,12 +1297,13 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param progressBar loading View
      */
-    public void setLoadingView(View progressBar) {
+    public KLineChartView setLoadingView(View progressBar) {
         this.progressBar = progressBar;
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(CENTER_IN_PARENT);
         progressBar.setVisibility(INVISIBLE);
         addView(progressBar, layoutParams);
+        return this;
     }
 
     /**
@@ -1216,18 +1311,20 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param slidListener 监听对象
      */
-    public void setSlidListener(SlidListener slidListener) {
+    public KLineChartView setSlidListener(SlidListener slidListener) {
         this.slidListener = slidListener;
+        return this;
     }
 
     /**
      * 设置加载数据动画时间
      */
     @SuppressWarnings("unused")
-    public void setAnimationDuration(long duration) {
+    public KLineChartView setAnimationDuration(long duration) {
         if (null != showAnim) {
             showAnim.setDuration(duration);
         }
+        return this;
     }
 
 
@@ -1236,10 +1333,11 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param bitmap logo bitmap
      */
-    public void setLogoBigmap(Bitmap bitmap) {
+    public KLineChartView setLogoBigmap(Bitmap bitmap) {
         if (null != bitmap) {
             this.logoBitmap = bitmap;
         }
+        return this;
     }
 
     /**
@@ -1247,12 +1345,13 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param bitmapRes logo resource
      */
-    public void setLogoResouce(int bitmapRes) {
+    public KLineChartView setLogoResouce(int bitmapRes) {
         if (bitmapRes == 0) {
             logoBitmap = null;
         }
         setLogoBigmap(BitmapFactory.decodeResource(
                 getContext().getResources(), bitmapRes));
+        return this;
     }
 
     /**
@@ -1260,8 +1359,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param alpha set the alpha component [0..255] of the paint's color.
      */
-    public void setLogoAlpha(int alpha) {
+    public KLineChartView setLogoAlpha(int alpha) {
         logoPaint.setAlpha(alpha);
+        return this;
     }
 
     /**
@@ -1270,9 +1370,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @param left logo left location default 0
      * @param top  logo top location default  -1 when top is -1 the logo will show in bottom
      */
-    public void setLogoLeftTop(float left, float top) {
+    public KLineChartView setLogoLeftTop(float left, float top) {
         logoLeft = left;
         logoTop = top;
+        return this;
     }
 
     /**
@@ -1280,8 +1381,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param alpha default 18
      */
-    public void setBackGroundAlpha(int alpha) {
+    public KLineChartView setBackGroundAlpha(int alpha) {
         backgroundPaint.setAlpha(alpha);
+        return this;
     }
 
     /**
@@ -1289,8 +1391,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param showCrossModle {@link Status.ShowCrossModle} default SELECTBOTH
      */
-    public void setSelectedTouchModle(Status.ShowCrossModle showCrossModle) {
+    public KLineChartView setSelectedTouchModle(Status.ShowCrossModle showCrossModle) {
         this.modle = showCrossModle;
+        return this;
     }
 
 
@@ -1299,8 +1402,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param klineRightPadding default 0
      */
-    public void setKlineRightPadding(float klineRightPadding) {
+    public KLineChartView setKlineRightPadding(float klineRightPadding) {
         this.klinePaddingRight = klineRightPadding;
+        return this;
     }
 
     /**
@@ -1308,8 +1412,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param alpha default 150
      */
-    public void setBackGroudFillAlpha(int alpha) {
+    public KLineChartView setBackGroudFillAlpha(int alpha) {
         rightPriceBoxPaint.setAlpha(alpha);
+        return this;
     }
 
     /**
@@ -1326,8 +1431,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param padding padding, 带角的3角形的高为 横+纵padding
      */
-    public void setSelectPriceBoxHorizentalPadding(float padding) {
+    public KLineChartView setSelectPriceBoxHorizentalPadding(float padding) {
         this.selectPriceBoxHorizentalPadding = padding;
+        return this;
     }
 
     /**
@@ -1335,8 +1441,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param padding padding 带角的3角形的高为 横+纵padding
      */
-    public void setSelectPriceboxVerticalPadding(float padding) {
+    public KLineChartView setSelectPriceboxVerticalPadding(float padding) {
         this.selectPriceBoxVerticalPadding = padding;
+        return this;
     }
 
     /**
@@ -1344,8 +1451,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param margin
      */
-    public void setSelectInfoBoxMargin(float margin) {
+    public KLineChartView setSelectInfoBoxMargin(float margin) {
         mainDraw.setSelectInfoBoxMargin(margin);
+        return this;
     }
 
     /**
@@ -1353,8 +1461,9 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param padding
      */
-    public void setSelectInfoBoxPadding(float padding) {
+    public KLineChartView setSelectInfoBoxPadding(float padding) {
         mainDraw.setSelectInfoBoxPadding(padding);
+        return this;
     }
 
     /**
