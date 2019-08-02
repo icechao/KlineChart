@@ -336,19 +336,13 @@ public class KLineChartView extends BaseKLineChartView {
      * @param scaleEnable
      */
 
-    public KLineChartView setScaleEnable(boolean scaleEnable) {
+    public void setScaleEnable(boolean scaleEnable) {
         this.isScaleEnable = scaleEnable;
-        return this;
     }
 
-    /**
-     * 设置是否可以滚动
-     *
-     * @param scrollEnable
-     */
-    public KLineChartView setScrollEnable(boolean scrollEnable) {
+
+    public void setScrollEnable(boolean scrollEnable) {
         this.isScrollEnable = scrollEnable;
-        return this;
     }
 
     /**

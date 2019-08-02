@@ -43,9 +43,9 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean isMultipleTouch = false;
 
-    protected boolean isScrollEnable = true;
+    private boolean isScrollEnable = true;
 
-    protected boolean isScaleEnable = true;
+    private boolean isScaleEnable = true;
 
     public ScrollAndScaleView(Context context) {
         super(context);
@@ -317,6 +317,20 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
      */
     public void setScaleXMin(float scaleXMin) {
         this.scaleXMin = scaleXMin;
+    }
+
+    /**
+     * 设置是否可以滑动
+     */
+    public void setScrollEnable(boolean scrollEnable) {
+        isScrollEnable = scrollEnable;
+    }
+
+    /**
+     * 设置是否可以缩放
+     */
+    public void setScaleEnable(boolean scaleEnable) {
+        isScaleEnable = scaleEnable;
     }
 
 
