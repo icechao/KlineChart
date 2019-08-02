@@ -1,93 +1,8 @@
 apply plugin: 'com.android.library'
-
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-version = "0.0.1"//定义版本标识
-
-
-def siteUrl = 'https://github.com/icechao/KlineChart'                        // #CONFIG# // project homepage
-def gitUrl = 'https://github.com/icechao/KlineChart.git'                     // #CONFIG# // project git
-group = "com.icechao.klinelib"
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                // Add your description here
-                description 'android kline view'
-                name 'klinechart'  // 可默认，项目描述
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer { //  可默认，开发者信息
-                        id 'YOUR_ID'
-                        name 'YOUR NAME'
-                        email 'YOUR EMAIL'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-}
-
-task androidJavadocsJar(type: Jar) {
-    classifier = 'javadoc'
-    from androidJavadocs.destinationDir
-}
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-
-artifacts {
-    archives androidSourcesJar
-    archives androidJavadocsJar
-
-}
-Properties properties = new Properties()
-// 加载本地配置
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//这个是和你bintray上面创建的package(项目)是对应的
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "icechao"  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
-        name = "com.icechao.klinelib"  //需更改，这个名字就是你在Bintray上创建Package的名字，这里会查询，如果此包不存在就会创建一个。
-        userOrg = 'icechliu'    //组织名称 organization
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
-
-
-
+apply from: rootProject.getRootDir().getAbsolutePath() + "/maven.gradle"
 
 android {
     compileSdkVersion 28
-
 
     defaultConfig {
         minSdkVersion 15
@@ -96,8 +11,6 @@ android {
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
-
 
     buildTypes {
         release {
@@ -109,17 +22,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-
 }
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.orhanobut:logger:2.2.0'
 }
