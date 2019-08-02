@@ -247,6 +247,11 @@
     changeItem(KlineEntry);
     
     如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
+    
+  5<b>(可选)解决滑动冲突</b>
+  
+    滑动布局使用 com.icechao.klinelib.view.ScrollView
+    
 
 # 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
