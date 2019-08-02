@@ -380,14 +380,18 @@
             参数
             childPresent : 占比,用0-1之间的数表示
 
-  ### 设置主图显示模式,如果选择一个不显示交易量的模式,必需要手动调用方法才会显示交易量
+  ### 切换显示/隐藏交易量
         
-         public void setChartChildState(Status.ChildStatus state) 
+         public void setChartChildState(boolean state);
             参数
-            Status.ChildStatus.MAIN_ONLY         :只显示主图
-            Status.ChildStatus.MAIN_VOL          :显示主图量视图  默认值
-            Status.ChildStatus.MAIN_INDEX        :主图指标图
-            Status.ChildStatus.MAIN_VOL_INDEX(3) :主图交易量指标图
+            true : 显示 
+            false: 隐藏
+            
+  ### 获取当前显示/隐藏交易量
+        
+         public void getChartChildState();
+            
+            
          
             
        
@@ -411,6 +415,7 @@
   - 重写当前页面K线数目的计算
   - 添加深度图
   - 添加设置logo
+  - 添加隐藏深度图
   - 添加k线与右侧间距
   - 添加十字线选中模式
   - 添加当前价格的时间线

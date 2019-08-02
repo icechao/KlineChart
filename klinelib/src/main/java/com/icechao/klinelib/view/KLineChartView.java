@@ -1367,20 +1367,43 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 设置主图显示模式,如果选择一个不显示交易量的模式,必需要手动调用方法才会显示交易量
+     * 切换显示/隐藏交易量
      *
-     * @param state {@link Status.ChildStatus} defualt {@link Status.ChildStatus.MAIN_VOL}
+     * @param show default true
      */
-    public void setChartChildState(Status.ChildStatus state) {
-        chartShowStatue = state;
+    public void setChartVolState(boolean show) {
+        switch (chartShowStatue) {
+            case MAIN_ONLY:
+                if (show) {
+                    chartShowStatue = Status.ChildStatus.MAIN_VOL;
+                }
+                break;
+            case MAIN_INDEX:
+                if (show) {
+                    chartShowStatue = Status.ChildStatus.MAIN_VOL_INDEX;
+                }
+                break;
+            case MAIN_VOL_INDEX:
+                if (!show) {
+                    chartShowStatue = Status.ChildStatus.MAIN_INDEX;
+                }
+                break;
+            case MAIN_VOL:
+                if (!show) {
+                    chartShowStatue = Status.ChildStatus.MAIN_ONLY;
+                }
+                break;
+        }
+        initRect();
     }
 
+
     /**
-     * 获取当前主图显示模式
+     * 当时交易量状态
      *
-     * @return {@link Status.ChildStatus}
+     * @return 显示true 隐藏false
      */
-    public Status.ChildStatus getChartChildState() {
-        return chartShowStatue;
+    public boolean getChartVolState() {
+        return (chartShowStatue == Status.ChildStatus.MAIN_VOL || chartShowStatue == Status.ChildStatus.MAIN_VOL_INDEX);
     }
 }

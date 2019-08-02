@@ -1431,12 +1431,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     private void changeTranslated(float translateX) {
         if (translateX < getMinTranslate()) {
             translateX = getMinTranslate();
-            if (null != slidListener && translateX == getMinTranslate()) {
+            if (null != slidListener && itemsCount > (width / chartItemWidth)) {
                 slidListener.onSlidRight();
             }
         } else if (translateX > getMaxTranslate()) {
             translateX = getMaxTranslate();
-            if (null != slidListener) {
+            if (null != slidListener && itemsCount > (width / chartItemWidth)) {
                 slidListener.onSlidLeft();
             }
         }

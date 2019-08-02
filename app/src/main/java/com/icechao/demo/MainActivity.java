@@ -49,6 +49,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     //    private ReqBean klineReq;
     private DepthFullView depthFullView;
     private List<KChartBean> all;
+    private RadioGroup radioGroup;
 
 
     @Override
@@ -72,6 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         findViewById(R.id.text_view_kdj).setOnClickListener(this);
         findViewById(R.id.text_view_rsi).setOnClickListener(this);
         findViewById(R.id.text_view_wr).setOnClickListener(this);
+        findViewById(R.id.text_view_show_hide_vol).setOnClickListener(this);
 
 
         findViewById(R.id.text_view_one_minute).setOnClickListener(this);
@@ -91,7 +93,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         textViewLowPriceText = findViewById(R.id.low_price_text);
         textViewVolumeSumText = findViewById(R.id.volume_sum_text);
 
-        RadioGroup radioGroup = findViewById(R.id.radio_group_defalt_index);
+        radioGroup = findViewById(R.id.radio_group_defalt_index);
         radioGroup.setOnCheckedChangeListener(this);
 
         initKline();
@@ -212,6 +214,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         moreIndex.setVisibility(View.GONE);
 
         switch (v.getId()) {
+            case R.id.text_view_show_hide_vol:
+                chartView.setChartVolState(!chartView.getChartVolState());
+                break;
             case R.id.text_view_hide_master:
                 chartView.hideSelectData();
                 chartView.changeMainDrawType(Status.MainStatus.NONE);
@@ -219,7 +224,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_hide_sub:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.IndexStatus.NONE);
+                chartView.setIndexDraw(Status.IndexStatus.NONE);
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
@@ -231,19 +236,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_macd:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.IndexStatus.MACD);
+                chartView.setIndexDraw(Status.IndexStatus.MACD);
                 break;
             case R.id.text_view_kdj:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.IndexStatus.KDJ);
+                chartView.setIndexDraw(Status.IndexStatus.KDJ);
                 break;
             case R.id.text_view_rsi:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.IndexStatus.RSI);
+                chartView.setIndexDraw(Status.IndexStatus.RSI);
                 break;
             case R.id.text_view_wr:
                 chartView.hideSelectData();
-                chartView.setChildDraw(Status.IndexStatus.WR);
+                chartView.setIndexDraw(Status.IndexStatus.WR);
                 break;
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();
@@ -273,6 +278,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
 
         }
+
+        radioGroup.clearCheck();
+
     }
 
     @Override
@@ -285,7 +293,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         switch (checkedId) {
             case R.id.radio_button_time_line:
                 chartView.hideSelectData();
-
                 chartView.setKlineState(Status.KlineStatus.TIME_LINE);
                 adapter.resetData(all);
                 break;

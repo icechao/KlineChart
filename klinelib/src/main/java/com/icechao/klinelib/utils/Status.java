@@ -33,10 +33,10 @@ public class Status {
     }
 
     public enum ChildStatus {
-        MAIN_ONLY(0), //只显示主图
-        MAIN_VOL(1), //显示主图量视图
-        MAIN_INDEX(2), //主图指标图
-        MAIN_VOL_INDEX(3);//主图交易量指标图
+        MAIN_ONLY(0), //显示主图交易量时隐藏交易量
+        MAIN_VOL(1), //显示主图时显示交易量
+        MAIN_INDEX(2), //显示主图交易量指标图时隐藏交易量
+        MAIN_VOL_INDEX(3);//显示主图指标图时显示交易量
 
         ChildStatus(int statu) {
             this.statu = statu;

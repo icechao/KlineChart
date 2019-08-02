@@ -253,8 +253,11 @@
                         android:textColor="@color/color_6D87A8"
                         android:textSize="12sp"/>
 
-                <View
-                        android:layout_width="0.5dp"
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:text="显/隐 交易量"
+                        android:id="@+id/text_view_show_hide_vol"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:background="@color/color_223349"/>
 
