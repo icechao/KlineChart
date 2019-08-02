@@ -12,6 +12,31 @@
 
 ## 使用步骤: 
 
+  1.添加依赖
+            
+    项目的build.gradle中
+       
+           buildscript {
+             
+               repositories {
+                  ...
+                   jcenter()
+                   
+               }
+               ...
+           }
+           
+           allprojects {
+               repositories {
+               ...
+                   jcenter()
+               }
+           }
+    工程的build.gradle中
+    
+            implementation 'com.icechao.klinelib:klinelib:0.0.1'
+    
+            
   1. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
   
             public class KChartBean extends KLineEntity {
@@ -61,151 +86,169 @@
               android:layout_height="580dp"
               android:background="@color/color_081734" />
              
-          支持自定义属性
-              自定义属性查看:
              
-        [属性列表](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/res/values/attrs.xml)
+              支持自定义属性
+              
         
-  | 名称 | 值 | 属性 | 默认 | 
-  | ------ | ------ | ------ | ------ |  
-  | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
-  | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
-  | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
-  | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
-  | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
-  | chartLogo  | resource | 主视图logo | |
-  | candleRightPadding  | dimension | 主视图与右侧内边距 | |
-  | increaseColor  | color | 涨颜色| |
-  | backgroundColor   | color | 背景色  | |
-  | decreaseColor  | color | 跌颜色| |
-  | textSize  | dimension | 文字大小| |
-  | textColor  | color | 文字颜色| |
-  | lineWidth  | dimension | 指标线线宽 | |
-  | klineItemWidth  | dimension | 蜡烛图加外围空隙宽| |
-  | candleWidth  | dimension | 蜡烛图柱宽 | |
-  | candleLineWidth  | dimension | K线空心时宽度 | |
-  | priceLineWidth  | dimension | 价格线宽 | 1dp |
-  | priceLineColor  | color | 价格线颜色 | |
-  | priceLineRightColor  | color | 价格线右侧虚线时颜色 | |
-  | priceLineRightTextColor  | color | 价格线右侧虚线价格文字颜色 | |
-  | priceLineBackgroundColor  | color | 价格线横框背景色 | #CFD3A9 |
-  | priceLineBoxMarginRight  | dimension | 价格框右边距 | 120 |
-  | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |
-  | priceLineBoxShapeHeight  | dimension | 价格线框内三角形占高| 20 |
-  | priceLineBoxHeight  | dimension | 价格线上的框高度| 40 |
-  | priceLineBoxPadding  | dimension | 价格线上的框的内边距| 20 |
-  | priceLineBoxShapeTextMargin  | dimension | 价格框文字与图形距离| 10 |
-  | priceLineBoxBorderWidth  | dimension | 价格线框边框宽度| 1 |
-  | priceLineBoxBorderColor  | dimension | 价格线框边框颜色| |
-  | backgroundFillTopColor  | color |背景渐变上部颜色 | |
-  | backgroundFillBottomColor  | color |背景渐变下部颜色 | |
-  | backgroundAlpha  | integer | 背景色透明度| |
-  | backgroundFillAlpha  | integer | 背景色填充透明度 | |
-  | yLabelMarginRight  | dimension | y轴上label与右侧边距 |10 |
-  | timeLineColor   | color| 分时线颜色| |
-  | timeLineFillTopColor  | color | 分时线填充渐变上部颜色 | |
-  | timeLineFillBottomColor  | color |背景色渐变下部颜色 | |
-  | timeLine_endPointColor  | color | 分时线尾颜色 | |
-  | timeLine_endMultiply  | int | 分时线尾圆变化最大倍数 | |
-  | timeLine_endRadiu  | dimension | 分时线尾圆半径 | |
-  | candleSolid  | boolean | K线是否空心| false |
-  | gridLineWidth  | dimension | 网格线宽| |
-  | gridLineColor  | color | 网格颜色 | |
-  | selectXLineWidth  | dimension | 十字线X轴线宽| |
-  | selectLabelBoderWidth  | dimension | 选中坐标边框线宽| 2 |
-  | selectLabelBoderColor  | color | 选中坐标边框颜色| |
-  | selectYLineWidth  | dimension | 十字线Y轴线宽| |
-  | selectXLineColor  | color |选择线X线颜色 | |
-  | selectYLineColor  | color |  选择线Y线颜色| |
-  | selectYColor  | color | 选择线Y渐变色,Y线最好半透明透明| |
-  | selectCrossBigColor  | color | 选择线相交点圆颜色| |
-  | selectCrossPointColor  | color | 选择线相交点圆颜色 | |
-  | selectShowCrossPoint  | color | 是否显示相交点圆 | |
-  | selectCrossPointRadiu  | color | 选择线相交点小圆半径 | |
-  | selectPriceBoxBackgroundColor  | color | 先中价格框背景色 | |
-  | selectBackgroundColor  | color | 选择框背景色 | |
-  | selectPriceBoxHorizentalPadding  | dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
-  | selectPriceBox_verticalPadding  | dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
-  | selectInfoBoxMargin  | dimension | 选中弹出框的margin | |
-  | selectInfoBoxPadding  | dimension | 选中行弹出行情行间距,上下为此值*2 | |
-  | selectInfoBoxTextColor  | dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
-  | selectInfoBoxBorderColor  | dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
-  | selectInfoBoxBackgroundColor  | dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
-  | selectTextSize  | dimension | 选择框文字大小 | |
-  | macdIncreaseColor  | color | macd标准线上柱颜色| |
-  | macdDecreaseColor  | color | macd标准线下柱颜色 | |
-  | macdWidth  | dimension | macd柱状图宽度 | |
-  | difColor  | color | dif线颜色 | |
-  | deaColor  | color | dea线颜色 | |
-  | macdColor  | color | macd线颜色 | |
-  | kColor  | color | k线的颜色 | |
-  | dColor  | color | d线的颜色 | |
-  | jColor  | color | j线的颜色 | |
-  | rsi1Color  | color | 第1根rsi线的颜色 | |
-  | rsi2Color  | color |第2根rsi线的颜色 | 暂无 |
-  | ris3Color  | color | 第3根rsi线的颜色 | 暂无 |
-  | upColor  | color | up线颜色 | |
-  | mbColor  | color | mb线颜色 | |
-  | dnColor  | color | dn线颜色 | |
-  | wr1Color  | color | 第1根wr线的颜色| |
-  | wr2Color  | color | 第2根wr线的颜色| 暂无 |
-  | wr3Color  | color | 第3根wr线的颜色| 暂无 |
-  | ma1Color  | color | 第1根ma线的颜色 | |
-  | ma2Color  | color | 第2根ma线的颜色 | |
-  | ma3Color  | color | 第3根ma线的颜色 | |
-  | volLengendColor   | color| 成交量图例颜色 | |
-  | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
+              | 属性名称 | 属性值 | 属性含义 | 默认值 | 
+              | ------ | ------ | ------ | ------ |  
+              | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
+              | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
+              | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
+              | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
+              | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
+              | chartLogo  | resource | 主视图logo | |
+              | candleRightPadding  | dimension | 主视图与右侧内边距 | |
+              | increaseColor  | color | 涨颜色| |
+              | backgroundColor   | color | 背景色  | |
+              | decreaseColor  | color | 跌颜色| |
+              | textSize  | dimension | 文字大小| |
+              | textColor  | color | 文字颜色| |
+              | lineWidth  | dimension | 指标线线宽 | |
+              | klineItemWidth  | dimension | 蜡烛图加外围空隙宽| |
+              | candleWidth  | dimension | 蜡烛图柱宽 | |
+              | candleLineWidth  | dimension | K线空心时宽度 | |
+              | priceLineWidth  | dimension | 价格线宽 | 1dp |
+              | priceLineColor  | color | 价格线颜色 | |
+              | priceLineRightColor  | color | 价格线右侧虚线时颜色 | |
+              | priceLineRightTextColor  | color | 价格线右侧虚线价格文字颜色 | |
+              | priceLineBackgroundColor  | color | 价格线横框背景色 | #CFD3A9 |
+              | priceLineBoxMarginRight  | dimension | 价格框右边距 | 120 |
+              | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |
+              | priceLineBoxShapeHeight  | dimension | 价格线框内三角形占高| 20 |
+              | priceLineBoxHeight  | dimension | 价格线上的框高度| 40 |
+              | priceLineBoxPadding  | dimension | 价格线上的框的内边距| 20 |
+              | priceLineBoxShapeTextMargin  | dimension | 价格框文字与图形距离| 10 |
+              | priceLineBoxBorderWidth  | dimension | 价格线框边框宽度| 1 |
+              | priceLineBoxBorderColor  | dimension | 价格线框边框颜色| |
+              | backgroundFillTopColor  | color |背景渐变上部颜色 | |
+              | backgroundFillBottomColor  | color |背景渐变下部颜色 | |
+              | backgroundAlpha  | integer | 背景色透明度| |
+              | backgroundFillAlpha  | integer | 背景色填充透明度 | |
+              | yLabelMarginRight  | dimension | y轴上label与右侧边距 |10 |
+              | timeLineColor   | color| 分时线颜色| |
+              | timeLineFillTopColor  | color | 分时线填充渐变上部颜色 | |
+              | timeLineFillBottomColor  | color |背景色渐变下部颜色 | |
+              | timeLine_endPointColor  | color | 分时线尾颜色 | |
+              | timeLine_endMultiply  | int | 分时线尾圆变化最大倍数 | |
+              | timeLine_endRadiu  | dimension | 分时线尾圆半径 | |
+              | candleSolid  | boolean | K线是否空心| false |
+              | gridLineWidth  | dimension | 网格线宽| |
+              | gridLineColor  | color | 网格颜色 | |
+              | selectXLineWidth  | dimension | 十字线X轴线宽| |
+              | selectLabelBoderWidth  | dimension | 选中坐标边框线宽| 2 |
+              | selectLabelBoderColor  | color | 选中坐标边框颜色| |
+              | selectYLineWidth  | dimension | 十字线Y轴线宽| |
+              | selectXLineColor  | color |选择线X线颜色 | |
+              | selectYLineColor  | color |  选择线Y线颜色| |
+              | selectYColor  | color | 选择线Y渐变色,Y线最好半透明透明| |
+              | selectCrossBigColor  | color | 选择线相交点圆颜色| |
+              | selectCrossPointColor  | color | 选择线相交点圆颜色 | |
+              | selectShowCrossPoint  | color | 是否显示相交点圆 | |
+              | selectCrossPointRadiu  | color | 选择线相交点小圆半径 | |
+              | selectPriceBoxBackgroundColor  | color | 先中价格框背景色 | |
+              | selectBackgroundColor  | color | 选择框背景色 | |
+              | selectPriceBoxHorizentalPadding  | dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
+              | selectPriceBox_verticalPadding  | dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
+              | selectInfoBoxMargin  | dimension | 选中弹出框的margin | |
+              | selectInfoBoxPadding  | dimension | 选中行弹出行情行间距,上下为此值*2 | |
+              | selectInfoBoxTextColor  | dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
+              | selectInfoBoxBorderColor  | dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
+              | selectInfoBoxBackgroundColor  | dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
+              | selectTextSize  | dimension | 选择框文字大小 | |
+              | macdIncreaseColor  | color | macd标准线上柱颜色| |
+              | macdDecreaseColor  | color | macd标准线下柱颜色 | |
+              | macdWidth  | dimension | macd柱状图宽度 | |
+              | difColor  | color | dif线颜色 | |
+              | deaColor  | color | dea线颜色 | |
+              | macdColor  | color | macd线颜色 | |
+              | kColor  | color | k线的颜色 | |
+              | dColor  | color | d线的颜色 | |
+              | jColor  | color | j线的颜色 | |
+              | rsi1Color  | color | 第1根rsi线的颜色 | |
+              | rsi2Color  | color |第2根rsi线的颜色 | 暂无 |
+              | ris3Color  | color | 第3根rsi线的颜色 | 暂无 |
+              | upColor  | color | up线颜色 | |
+              | mbColor  | color | mb线颜色 | |
+              | dnColor  | color | dn线颜色 | |
+              | wr1Color  | color | 第1根wr线的颜色| |
+              | wr2Color  | color | 第2根wr线的颜色| 暂无 |
+              | wr3Color  | color | 第3根wr线的颜色| 暂无 |
+              | ma1Color  | color | 第1根ma线的颜色 | |
+              | ma2Color  | color | 第2根ma线的颜色 | |
+              | ma3Color  | color | 第3根ma线的颜色 | |
+              | volLengendColor   | color| 成交量图例颜色 | |
+              | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
 
               
   3. <b>初始化k线</b>
   
-    private void initKline() {
-         //设置K线的数据适配器
-         chartView.setAdapter(new KLineChartAdapter());
-         //设置X轴时间格式化对象,根据不同波段可以重新设置
-         chartView.setDateTimeFormatter(new DateFormatter());
-         //背景网络列
-         chartView.setGridColumns(5);
-         //背景网络行
-         chartView.setGridRows(5);
-         //设置Y轴值格式化对象,默认保留两位小数
-         chartView.setValueFormatter(new ValueFormatter() {
-             @Override
-             public String format(float value) {
-                 return String.format("%.2f", value);
-             }
-         });
-         //设置交易量格式化对象,默认保留两位小数
-         chartView.getVolDraw().setValueFormatter(new ValueFormatter() {
-             @Override
-             public String format(float value) {
-                 return String.format("%.2f", value);
-             }
-         });
-         //设置K线左侧滑动的超出距离
-         chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
-         //显示loading
-         chartView.showLoading();
-       }
+    //设置数据适配器
+    chartView.setAdapter(adapter)
+                    //设置开场动画
+                    .setAnimLoadData(false)
+                    //添加日期格式化,可动态修改
+                    .setDateTimeFormatter(new DateFormatter())
+                    //网格列
+                    .setGridColumns(5)
+                    //网格行
+                    .setGridRows(5)
+                    //logo
+                    .setLogoBigmap(bitmap)
+                    //logo透明度
+                    .setLogoAlpha(100)
+                    //左滑超出宽度
+                    .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
+                    //滑动边界监听(可能重复调用)
+                    .setSlidListener(new SlidListener() {
+                        @Override
+                        public void onSlidLeft() {
+                            LogUtil.e("onSlidLeft");
+                        }
+    
+                        @Override
+                        public void onSlidRight() {
+                            LogUtil.e("onSlidRight");
+                        }
+                    })
+                    //Y值精度格式化(可重复设置)
+                    .setValueFormatter(new ValueFormatter() {
+                        @Override
+                        public String format(float value) {
+                            return String.format("%.03f", value);
+                        }
+                    })
+                    //成交量格式化
+                    .setVolFormatter(new ValueFormatter() {
+                        @Override
+                        public String format(float value) {
+                            return String.format("%.03f", value);
+                        }
+                    })
+                    //设置loadingView
+                    .setLoadingView(textView)
+                    //显示loading
+                    .showLoading();
 
          
   4.<b>使用KLineChartAdapter设置数据</b>
   
-           如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
-           chartView.getAdapter()
   
-           填充或重新填充数据
-           resetData(List<KlineEntry>);
-           
-           尾部追加数据 
-           addLast(KlineEntry);
-           
-           修改某个数据 
-           changeItem(KlineEntry);
-           
-           如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
+    如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
+    chartView.getAdapter()
+    
+    填充或重新填充数据
+    resetData(List<KlineEntry>);
+    
+    尾部追加数据 
+    addLast(KlineEntry);
+    
+    修改某个数据 
+    changeItem(KlineEntry);
+    
+    如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
 
-# 查看全部API点击[这里KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
+# 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
 # 部分API  ________  kLineChartView为KLineChartView对象
      

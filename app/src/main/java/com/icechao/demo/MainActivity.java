@@ -117,18 +117,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setGridRows(5)
                 .setLogoBigmap(bitmap)
                 .setLogoAlpha(100)
-                .setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String format(float value) {
-                        return String.format("%.03f", value);
-                    }
-                })
-                .setVolFormatter(new ValueFormatter() {
-                    @Override
-                    public String format(float value) {
-                        return String.format("%.03f", value);
-                    }
-                })
                 .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
                 .showLoading()
                 .setSlidListener(new SlidListener() {
@@ -142,8 +130,21 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         LogUtil.e("onSlidRight");
                     }
                 })
+                .setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String format(float value) {
+                        return String.format("%.03f", value);
+                    }
+                })
+                .setVolFormatter(new ValueFormatter() {
+                    @Override
+                    public String format(float value) {
+                        return String.format("%.03f", value);
+                    }
+                })
                 .setLoadingView(textView);
     }
+
     Random random = new Random();
 
     private void initData() {
