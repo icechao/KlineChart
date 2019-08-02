@@ -14,77 +14,77 @@
 
 1.添加依赖
             
-    项目的build.gradle中
-       
-           buildscript {
-             
+            项目的build.gradle中
+
+            buildscript {
+
                repositories {
                   ...
                    jcenter()
-                   
+
                }
                ...
-           }
-           
-           allprojects {
+            }
+
+            allprojects {
                repositories {
                ...
                    jcenter()
                }
-           }
-    工程的build.gradle中
-    
+            }
+            工程的build.gradle中
+
             implementation 'com.icechao.klinelib:klinelib:0.0.1'
-    
+
             
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
   
-    public class KChartBean extends KLineEntity {
-    
-          @Override
-          public Long getDate() {
+            public class KChartBean extends KLineEntity {
+
+            @Override
+            public Long getDate() {
               try {
                   return new SimpleDateFormat("yyy/MM/dd").parse(date).getTime();
               } catch (ParseException e) {
                   e.printStackTrace();
                   return 0L;
               }
-          }
+            }
 
-          @Override
-          public float getOpenPrice() {
+            @Override
+            public float getOpenPrice() {
               return open;
-          }
+            }
 
-          @Override
-          public float getHighPrice() {
+            @Override
+            public float getHighPrice() {
               return high;
-          }
+            }
 
-          @Override
-          public float getLowPrice() {
+            @Override
+            public float getLowPrice() {
               return low;
-          }
+            }
 
-          @Override
-          public float getClosePrice() {
+            @Override
+            public float getClosePrice() {
               return close;
-          }
+            }
 
-          @Override
-          public float getVolume() {
+            @Override
+            public float getVolume() {
               return volume;
-          }
-          ......
-    }
+            }
+            ......
+            }
           
 3. <b>在布局中使用</b>
   
-                <com.icechao.klinelib.view.KLineChartView
-                  android:id="@+id/kLineChartView"
-                  android:layout_width="matchParent"
-                  android:layout_height="580dp"
-                  android:background="@color/color_081734" />
+            <com.icechao.klinelib.view.KLineChartView
+             android:id="@+id/kLineChartView"
+             android:layout_width="matchParent"
+             android:layout_height="580dp"
+             android:background="@color/color_081734" />
              
              
       支持自定义属性      
@@ -182,8 +182,8 @@
               
 4. <b>初始化k线</b>
   
-    //设置数据适配器
-    chartView.setAdapter(adapter)
+            //设置数据适配器
+            chartView.setAdapter(adapter)
                     //设置开场动画
                     .setAnimLoadData(false)
                     //添加日期格式化,可动态修改
@@ -204,7 +204,7 @@
                         public void onSlidLeft() {
                             LogUtil.e("onSlidLeft");
                         }
-    
+
                         @Override
                         public void onSlidRight() {
                             LogUtil.e("onSlidRight");
@@ -232,24 +232,23 @@
          
 5. <b>使用KLineChartAdapter设置数据</b>
   
-  
-    如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
-    chartView.getAdapter()
-    
-    填充或重新填充数据
-    resetData(List<KlineEntry>);
-    
-    尾部追加数据 
-    addLast(KlineEntry);
-    
-    修改某个数据 
-    changeItem(KlineEntry);
-    
-    如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
+            如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
+            chartView.getAdapter()
+
+            填充或重新填充数据
+            resetData(List<KlineEntry>);
+
+            尾部追加数据 
+            addLast(KlineEntry);
+
+            修改某个数据 
+            changeItem(KlineEntry);
+
+            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
     
 6. <b>(可选)解决滑动冲突</b>
   
-    滑动布局使用 com.icechao.klinelib.view.ScrollView
+            滑动布局使用 com.icechao.klinelib.view.ScrollView
     
 
 # 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
