@@ -103,55 +103,47 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     }
 
     private void initKline() {
-        adapter = new KLineChartAdapter();
-        chartView = findViewById(R.id.kLineChartView);
-        chartView.setAdapter(adapter);
-        chartView.setAnimLoadData(false);
-        chartView.setDateTimeFormatter(new DateFormatter());
-        chartView.setGridColumns(5);
-        chartView.setGridRows(5);
-//        getResources().
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 3;
         Bitmap bitmap = BitmapFactory.decodeResource(
                 getResources(), R.drawable.icechao, opts);
-        chartView.setLogoBigmap(bitmap);
-        chartView.setLogoAlpha(100);
-        chartView.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String format(float value) {
-                return String.format("%.03f", value);
-            }
-        });
-        chartView.setVolFormatter(new ValueFormatter() {
-            @Override
-            public String format(float value) {
-                return String.format("%.03f", value);
-            }
-        });
-        chartView.setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5);
-        chartView.showLoading();
-        chartView.setSlidListener(new SlidListener() {
-            @Override
-            public void onSlidLeft() {
-                LogUtil.e("onSlidLeft");
-            }
-
-            @Override
-            public void onSlidRight() {
-                LogUtil.e("onSlidRight");
-            }
-        });
-
-//        chartView.setCrossFollowTouch(true);
-
         TextView textView = new TextView(this);
         textView.setText("正在加载...");
+        adapter = new KLineChartAdapter();
+        chartView = findViewById(R.id.kLineChartView);
+        chartView.setAdapter(adapter).setAnimLoadData(false)
+                .setDateTimeFormatter(new DateFormatter())
+                .setGridColumns(5)
+                .setGridRows(5)
+                .setLogoBigmap(bitmap)
+                .setLogoAlpha(100)
+                .setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String format(float value) {
+                        return String.format("%.03f", value);
+                    }
+                })
+                .setVolFormatter(new ValueFormatter() {
+                    @Override
+                    public String format(float value) {
+                        return String.format("%.03f", value);
+                    }
+                })
+                .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
+                .showLoading()
+                .setSlidListener(new SlidListener() {
+                    @Override
+                    public void onSlidLeft() {
+                        LogUtil.e("onSlidLeft");
+                    }
 
-        chartView.setLoadingView(textView);
+                    @Override
+                    public void onSlidRight() {
+                        LogUtil.e("onSlidRight");
+                    }
+                })
+                .setLoadingView(textView);
     }
-
-    int i = 0;
     Random random = new Random();
 
     private void initData() {
