@@ -80,11 +80,11 @@
           
 3. <b>在布局中使用</b>
   
-    <com.icechao.klinelib.view.KLineChartView
-      android:id="@+id/kLineChartView"
-      android:layout_width="matchParent"
-      android:layout_height="580dp"
-      android:background="@color/color_081734" />
+                <com.icechao.klinelib.view.KLineChartView
+                  android:id="@+id/kLineChartView"
+                  android:layout_width="matchParent"
+                  android:layout_height="580dp"
+                  android:background="@color/color_081734" />
              
              
       支持自定义属性      
