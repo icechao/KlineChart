@@ -260,7 +260,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置macd 柱状图颜色
-     *  @param inColor 上升颜色
+     *
+     * @param inColor 上升颜色
      * @param deColor 下降颜色
      */
     public KLineChartView setMacdChartColor(int inColor, int deColor) {
@@ -334,15 +335,19 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @param scaleEnable
      */
-    @Override
+
     public KLineChartView setScaleEnable(boolean scaleEnable) {
-        super.setScaleEnable(scaleEnable);
+        this.isScaleEnable = scaleEnable;
         return this;
     }
 
-    @Override
+    /**
+     * 设置是否可以滚动
+     *
+     * @param scrollEnable
+     */
     public KLineChartView setScrollEnable(boolean scrollEnable) {
-        super.setScrollEnable(scrollEnable);
+        this.isScrollEnable = scrollEnable;
         return this;
     }
 

@@ -9,7 +9,6 @@ import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
 import com.icechao.klinelib.utils.Status;
-import com.icechao.klinelib.view.KLineChartView;
 
 /*************************************************************************
  * Description   :
@@ -44,9 +43,9 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean isMultipleTouch = false;
 
-    private boolean isScrollEnable = true;
+    protected boolean isScrollEnable = true;
 
-    private boolean isScaleEnable = true;
+    protected boolean isScaleEnable = true;
 
     public ScrollAndScaleView(Context context) {
         super(context);
@@ -318,22 +317,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
      */
     public void setScaleXMin(float scaleXMin) {
         this.scaleXMin = scaleXMin;
-    }
-
-    /**
-     * 设置是否可以滑动
-     */
-    public KLineChartView setScrollEnable(boolean scrollEnable) {
-        isScrollEnable = scrollEnable;
-        return null;
-    }
-
-    /**
-     * 设置是否可以缩放
-     */
-    public KLineChartView setScaleEnable(boolean scaleEnable) {
-        isScaleEnable = scaleEnable;
-        return null;
     }
 
 
