@@ -1,7 +1,7 @@
 # kline(尽量避免改动源码,方便修复bug重新依赖)
  ****************************************************
  * 有问题可以加群反馈,优化功能会同步到群                  
- * QQ群: __163565953__     <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=578dc312547759f4a308318e159f92ab2354ca4bff7272cf197233e271f2e214"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Android技术交流" title="Android技术交流"></a>                             
+ * QQ群: __163565953__     <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=578dc312547759f4a308318e159f92ab2354ca4bff7272cf197233e271f2e214"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="点击加群" title="点击加群"></a>                             
  * 功能持续优化,好用容易接入的K线                       
  ****************************************************
 ## 效果图
