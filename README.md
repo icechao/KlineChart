@@ -5,9 +5,8 @@
  * 功能持续优化,好用容易接入的K线                       
  ****************************************************
 ## 效果图
-复用历史数据会导致K线看起来有点乱,数据问题
 
-<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="300" hegiht="500" align=center />
+<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="400" hegiht="500" align=center />
 
 
 ## 使用步骤: 
