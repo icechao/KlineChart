@@ -38,7 +38,6 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         this.valueFormatter = valueFormatter;
     }
 
-    private int length;
     /**
      * View宽度
      */
@@ -224,73 +223,67 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     private void initPaint() {
 
         /**初始化边框文本画笔*/
-        if (textPaint == null) {
-            textPaint = new Paint();
-            initPaint(textPaint);
-        }
+        textPaint = new Paint();
+        initPaint(textPaint);
+
         textPaint.setTextSize(borderTextSize);
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_6D87A8));
         /**初始化边框线画笔*/
-        if (borderLinePaint == null) {
-            borderLinePaint = new Paint();
-            initPaint(borderLinePaint);
-        }
+        borderLinePaint = new Paint();
+        initPaint(borderLinePaint);
+
 
         borderLinePaint.setTextSize(borderLineTextSize);
         borderLinePaint.setStrokeWidth(borderWidth);
         borderLinePaint.setColor(borderLineColor);
 
         /**初始化折线画笔*/
-        if (brokenLineBuyPaint == null) {
-            brokenLineBuyPaint = new Paint();
-            initPaint(brokenLineBuyPaint);
-            brokenLineBuyPaint.setStrokeWidth(brokenLineWidth);
-            mBrokenLineBuyColor = ContextCompat.getColor(getContext(), R.color.color_03C087);
-            brokenLineBuyPaint.setColor(mBrokenLineBuyColor);
-        }
 
-        if (brokenLineFillBuyPaint == null) {
-            brokenLineFillBuyPaint = new Paint();
-            brokenLineFillBuyPaint.setAntiAlias(true);
-            brokenLineFillBuyPaint.setStyle(Paint.Style.FILL);
-            brokenLineFillBuyPaint.setStrokeWidth(brokenLineFillWidth);
-            /**
-             * 折线颜色
-             */
-            int mBrokenLineFillBuyColor = ContextCompat.getColor(getContext(), R.color.color_103E41);
-            brokenLineFillBuyPaint.setColor(mBrokenLineFillBuyColor);
-        }
+        brokenLineBuyPaint = new Paint();
+        initPaint(brokenLineBuyPaint);
+        brokenLineBuyPaint.setStrokeWidth(brokenLineWidth);
+        mBrokenLineBuyColor = ContextCompat.getColor(getContext(), R.color.color_03C087);
+        brokenLineBuyPaint.setColor(mBrokenLineBuyColor);
 
-        if (brokenLineSellPaint == null) {
-            brokenLineSellPaint = new Paint();
-            initPaint(brokenLineSellPaint);
-            brokenLineSellPaint.setStrokeWidth(brokenLineWidth);
-            int mBrokenLineSellColor = ContextCompat.getColor(getContext(), R.color.color_FF605A);
-            brokenLineSellPaint.setColor(mBrokenLineSellColor);
-        }
 
-        if (brokenLineFillSellPaint == null) {
-            brokenLineFillSellPaint = new Paint();
-            brokenLineFillSellPaint.setAntiAlias(true);
-            brokenLineFillSellPaint.setStyle(Paint.Style.FILL);
-            brokenLineFillSellPaint.setStrokeWidth(brokenLineFillWidth);
-            int mBrokenLineFillSellColor = ContextCompat.getColor(getContext(), R.color.color_3D2E33);
-            brokenLineFillSellPaint.setColor(mBrokenLineFillSellColor);
-        }
+        brokenLineFillBuyPaint = new Paint();
+        brokenLineFillBuyPaint.setAntiAlias(true);
+        brokenLineFillBuyPaint.setStyle(Paint.Style.FILL);
+        brokenLineFillBuyPaint.setStrokeWidth(brokenLineFillWidth);
+        /**
+         * 折线颜色
+         */
+        int mBrokenLineFillBuyColor = ContextCompat.getColor(getContext(), R.color.color_103E41);
+        brokenLineFillBuyPaint.setColor(mBrokenLineFillBuyColor);
 
-        if (touchBgPaint == null) {
-            touchBgPaint = new Paint();
-            touchBgPaint.setAntiAlias(true);
-            touchBgPaint.setStyle(Paint.Style.FILL);
-            touchBgPaint.setColor(touchRingBgColor);
-        }
+
+        brokenLineSellPaint = new Paint();
+        initPaint(brokenLineSellPaint);
+        brokenLineSellPaint.setStrokeWidth(brokenLineWidth);
+        int mBrokenLineSellColor = ContextCompat.getColor(getContext(), R.color.color_FF605A);
+        brokenLineSellPaint.setColor(mBrokenLineSellColor);
+
+
+        brokenLineFillSellPaint = new Paint();
+        brokenLineFillSellPaint.setAntiAlias(true);
+        brokenLineFillSellPaint.setStyle(Paint.Style.FILL);
+        brokenLineFillSellPaint.setStrokeWidth(brokenLineFillWidth);
+        int mBrokenLineFillSellColor = ContextCompat.getColor(getContext(), R.color.color_3D2E33);
+        brokenLineFillSellPaint.setColor(mBrokenLineFillSellColor);
+
+
+        touchBgPaint = new Paint();
+        touchBgPaint.setAntiAlias(true);
+        touchBgPaint.setStyle(Paint.Style.FILL);
+        touchBgPaint.setColor(touchRingBgColor);
+
 
         /**横线画笔*/
-        if (horizontalLinePaint == null) {
-            horizontalLinePaint = new Paint();
-            initPaint(horizontalLinePaint);
-        }
+
+        horizontalLinePaint = new Paint();
+        initPaint(horizontalLinePaint);
+
 
         horizontalLinePaint.setStrokeWidth(borderTransverseLineWidth);
         horizontalLinePaint.setColor(borderTransverseLineColor);

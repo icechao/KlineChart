@@ -210,10 +210,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     }
 
-    private float x;
-
-    private float y;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -227,8 +223,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 touch = true;
-                x = event.getX();
-                y = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 //长按之后移动
