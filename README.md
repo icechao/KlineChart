@@ -93,7 +93,7 @@
         
       | 属性名称 | 属性值 | 属性含义 | 默认值 | 
       | ------ | ------ | ------ | ------ |  
-      | setBetterX  | boolean | X轴的最两边坐标向内缩进 | true |
+      | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true |
       | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
       | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
       | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
