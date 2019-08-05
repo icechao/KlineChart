@@ -42,7 +42,7 @@
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
   
             public class KChartBean extends KLineEntity {
-
+            //必须复写此方法返回毫秒值
             @Override
             public Long getDate() {
               try {
@@ -52,31 +52,32 @@
                   return 0L;
               }
             }
-
+            //必须复写此方法返回开盘价
             @Override
             public float getOpenPrice() {
               return open;
             }
-
+            //必须复写此方法返回最高价
             @Override
             public float getHighPrice() {
               return high;
             }
-
+            //必须复写此方法返回最高价
             @Override
             public float getLowPrice() {
               return low;
             }
-
+            //必须复写此方法返回收盘价
             @Override
             public float getClosePrice() {
               return close;
             }
-
+            //必须复写此方法返回成交量
             @Override
             public float getVolume() {
               return volume;
             }
+            //其他方法不做限制
             ......
             }
           
@@ -86,14 +87,16 @@
              android:id="@+id/kLineChartView"
              android:layout_width="matchParent"
              android:layout_height="580dp"
-             android:background="@color/color_081734" />
+             android:background="@color/color_081734"
+             //可添加自定义属性设置,也可在代码中设置
+             />
              
              
       支持自定义属性      
         
       | 属性名称 | 属性值 | 属性含义 | 默认值 | 
       | ------ | ------ | ------ | ------ |  
-      | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true |
+      | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
       | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
       | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
       | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
@@ -430,14 +433,14 @@
 
   ### 切换显示/隐藏交易量
         
-         public void setChartChildState(boolean state);
+         kLineChartView.setChartChildState(boolean state);
             参数
             true : 显示 
             false: 隐藏
             
   ### 获取当前显示/隐藏交易量
         
-         public void getChartChildState();
+         kLineChartView.getChartChildState();
             
             
          
