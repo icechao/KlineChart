@@ -249,6 +249,9 @@
             changeItem(KlineEntry);
 
             如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
+            
+            添加完数据后需要手动隐藏loading
+            chartView.hideLoading();
     
 6. <b>(可选)解决滑动冲突</b>
   
