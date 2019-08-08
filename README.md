@@ -286,7 +286,7 @@
             参数
             Status.ChildStatus.NONE : //不显示子图  默认值
             Status.ChildStatus.MACD : macd
-            Status.ChildStatus. KDJ  : kdj
+            Status.ChildStatus. KDJ : kdj
             Status.ChildStatus.RSI  : rsi
             Status.ChildStatus.WR   : wr
 
@@ -329,7 +329,7 @@
         kLineChartView.setSelectedTouchModle(Status.ShowCrossModle showCrossModle);
             参数 
             Status.ShowCrossModle.SELECT_TOUCHE : 点击显示
-            Status.ShowCrossModle.SELECTPRESS  : 长按显示
+            Status.ShowCrossModle.SELECTPRESS   : 长按显示
             Status.ShowCrossModle.SELECT_BOTH   : 点击长按混合
             
   ### 添加logo

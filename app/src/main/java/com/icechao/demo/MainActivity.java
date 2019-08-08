@@ -12,24 +12,19 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
-import com.icechao.klinelib.entity.KLineEntity;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.utils.DataTools;
+import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KLineChartView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
-
-    private List<KLineEntity> datas;
-
 
     private KLineChartAdapter adapter;
 
@@ -58,9 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         setContentView(R.layout.activity_main);
 
         chartView = findViewById(R.id.kLineChartView);
-
         depthFullView = findViewById(R.id.full_depth_view);
-
         attachedOperater = findViewById(R.id.linear_layout_attached_operater);
         masterOperater = findViewById(R.id.linear_layout_master_operater);
         moreIndex = findViewById(R.id.linear_layout_index_more);
@@ -105,20 +98,27 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void initKline() {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 3;
-        Bitmap bitmap = BitmapFactory.decodeResource(
+        Bitmap logoBitmap = BitmapFactory.decodeResource(
                 getResources(), R.drawable.icechao, opts);
-        TextView textView = new TextView(this);
-        textView.setText("正在加载...");
+        TextView loadingView = new TextView(this);
+        loadingView.setText("正在加载...");
         adapter = new KLineChartAdapter();
         chartView = findViewById(R.id.kLineChartView);
-        chartView.setAdapter(adapter).setAnimLoadData(false)
-                .setDateTimeFormatter(new DateFormatter())
+
+        chartView.setAdapter(adapter)
+                //loading anim
+                .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
-                .setLogoBigmap(bitmap)
+                //logo bitmap
+                .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
+                //set right can over range
                 .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
+                //show loading View
+                .setLoadingView(loadingView)
                 .showLoading()
+                //set slid listener
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
@@ -130,19 +130,27 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         LogUtil.e("onSlidRight");
                     }
                 })
+                //set Y label formater
                 .setValueFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
                         return String.format("%.03f", value);
                     }
                 })
+                //set vol y label formater
                 .setVolFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
                         return String.format("%.03f", value);
                     }
                 })
-                .setLoadingView(textView);
+                //set date label formater
+                .setDateTimeFormatter(new DateFormatter() {
+                    @Override
+                    public String format(Date date) {
+                        return DateUtil.HHMMTimeFormat.format(date);
+                    }
+                });
     }
 
     Random random = new Random();
@@ -151,17 +159,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         new Thread() {
             @Override
             public void run() {
+                //使用子线程延迟,防止页面还没有执行SizeChange方法就已经set数据
+                //设置数据 adapter会自动切回子线程,所有可以在子线程中操作
                 SystemClock.sleep(1000);
-                runOnUiThread(() -> {
-                    all = DataRequest.getALL(MainActivity.this);
-                    adapter.resetData(all.subList(0, 380));
-                    chartView.hideLoading();
-                    changeLast();
-                });
+                all = DataRequest.getALL(MainActivity.this);
+                //两种设置数据的方式
+                //adapter.resetData(all.subList(0, 380), true);
+                adapter.resetData(all.subList(0, 380));
+                chartView.hideLoading();
+                changeLast();
             }
         }.start();
     }
 
+    /**
+     * 模拟增量数据
+     */
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
@@ -271,7 +284,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
 
         }
-
         radioGroup.clearCheck();
 
     }
@@ -320,14 +332,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 attachedOperater.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);
                 break;
-
-
         }
     }
 
 
     //-----------------------------------------------------------------------------------------//
-    //下面是深度想着的计算
+    //下面是深度相关的计算
     //-----------------------------------------------------------------------------------------//
 
     private List<MarketTradeItem> askList = new ArrayList<>();
