@@ -70,6 +70,8 @@
         <attr name="lineWidth" format="dimension"/>
         <attr name="itemWidth" format="dimension"/>
         <attr name="chartLogo" format="reference"/>
+        <attr name="limitTextColor" format="color"/>
+        <attr name="limitTextSize" format="dimension"/>
         <!--k线-->
         <attr name="candleRightPadding" format="dimension"/>
         <attr name="candleWidth" format="dimension"/>

@@ -107,6 +107,8 @@
       | decreaseColor  | color | 跌颜色| |
       | textSize  | dimension | 文字大小| |
       | textColor  | color | 文字颜色| |
+      | limitTextColor  | color | 最大最小值文字颜色| |
+      | limitTextSize  | dimension | 最大最小值文字大小| |
       | lineWidth  | dimension | 指标线线宽 | |
       | klineItemWidth  | dimension | 蜡烛图加外围空隙宽| |
       | candleWidth  | dimension | 蜡烛图柱宽 | |

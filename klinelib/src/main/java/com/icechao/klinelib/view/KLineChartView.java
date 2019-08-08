@@ -79,8 +79,8 @@ public class KLineChartView extends BaseKLineChartView {
 
                 setLogoResouce(array.getResourceId(R.styleable.KLineChartView_chartLogo, 0));
                 //最大最小值
-                mainDraw.setLimitTextSize(array.getDimension(R.styleable.KLineChartView_textSize, getDimension(R.dimen.chart_text_size)));
-                mainDraw.setLimitTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
+                mainDraw.setLimitTextSize(array.getDimension(R.styleable.KLineChartView_limitTextSize, getDimension(R.dimen.chart_text_size)));
+                mainDraw.setLimitTextColor(array.getColor(R.styleable.KLineChartView_limitTextColor, getColor(R.color.color_6D87A8)));
                 //全局
                 setBetterX(array.getBoolean(R.styleable.KLineChartView_fitXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
