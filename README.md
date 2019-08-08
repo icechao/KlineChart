@@ -138,26 +138,25 @@
       | candleSolid  | boolean | K线是否空心| false |
       | gridLineWidth  | dimension | 网格线宽| |
       | gridLineColor  | color | 网格颜色 | |
-      | selectXLineWidth  | dimension | 十字线X轴线宽| |
-      | selectLabelBoderWidth  | dimension | 选中坐标边框线宽| 2 |
+      | selectXLineWidth  | dimension | 选中十字线X轴线宽| |
+      | selectLabelBoderWidth  | dimension | 选中十字线label边框线宽| 2 |
       | selectLabelBoderColor  | color | 选中坐标边框颜色| |
       | selectYLineWidth  | dimension | 十字线Y轴线宽| |
-      | selectXLineColor  | color |选择线X线颜色 | |
-      | selectYLineColor  | color |  选择线Y线颜色| |
-      | selectYColor  | color | 选择线Y渐变色,Y线最好半透明透明| |
-      | selectCrossBigColor  | color | 选择线相交点圆颜色| |
-      | selectCrossPointColor  | color | 选择线相交点圆颜色 | |
-      | selectShowCrossPoint  | color | 是否显示相交点圆 | |
-      | selectCrossPointRadiu  | color | 选择线相交点小圆半径 | |
-      | selectPriceBoxBackgroundColor  | color | 先中价格框背景色 | |
-      | selectBackgroundColor  | color | 选择框背景色 | |
-      | selectPriceBoxHorizentalPadding  | dimension | 选择后价格框的横向padding,三角形的高为横+纵padding | 4dp |
-      | selectPriceBox_verticalPadding  | dimension | 选择后价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
-      | selectInfoBoxMargin  | dimension | 选中弹出框的margin | |
-      | selectInfoBoxPadding  | dimension | 选中行弹出行情行间距,上下为此值*2 | |
-      | selectInfoBoxTextColor  | dimension | 选中行弹出行情的文字颜色 | Color.WHITE |
-      | selectInfoBoxBorderColor  | dimension | 选中行弹出行情的边框颜色 | Color.WHITE |
-      | selectInfoBoxBackgroundColor  | dimension | 选中行弹出行情的背景颜色 | Color.DKGRAY |
+      | selectXLineColor  | color |选中十字线X线颜色 | |
+      | selectYLineColor  | color |  选中十字线Y线画笔颜色| |
+      | selectYColor  | color | 选中十字线Y轴渐变色,-1时不绘制渐变| |
+      | selectCrossBigColor  | color | 选中十字线相交点圆颜色| |
+      | selectCrossPointColor  | color | 选中十字线相交点圆颜色 | |
+      | selectShowCrossPoint  | color | 是否显示选中十字线相交点圆 | |
+      | selectCrossPointRadiu  | color | 选中十字线相交点小圆半径 | |
+      | selectPriceBoxBackgroundColor  | color | 选中价格框背景色 | |
+      | selectPriceBoxHorizentalPadding  | dimension | 选中价格框的横向padding,三角形的高为横+纵padding | 4dp |
+      | selectPriceBox_verticalPadding  | dimension | 选中价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
+      | selectInfoBoxMargin  | dimension | 选中行弹出框的margin | |
+      | selectInfoBoxPadding  | dimension | 选中行弹出框行间距,上下为此值*2 | |
+      | selectInfoBoxTextColor  | dimension | 选中行弹出框文字颜色 | Color.WHITE |
+      | selectInfoBoxBorderColor  | dimension | 选中行弹出框边框颜色 | Color.WHITE |
+      | selectInfoBoxBackgroundColor  | dimension | 选中行弹出框背景颜色 | Color.DKGRAY |
       | selectTextSize  | dimension | 选择框文字大小 | |
       | macdIncreaseColor  | color | macd标准线上柱颜色| |
       | macdDecreaseColor  | color | macd标准线下柱颜色 | |

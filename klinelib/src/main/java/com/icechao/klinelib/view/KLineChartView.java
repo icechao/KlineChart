@@ -118,15 +118,15 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointRadiu, Color.WHITE));
                 setSelectedPointRadius(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, 5));
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KLineChartView_selectShowCrossPoint, true));
-                setSelectedYColor(array.getColor(R.styleable.KLineChartView_selectYColor, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KLineChartView_selectXLineWidth, getDimension(R.dimen.chart_line_width)));
                 setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBoderWidth, 2));
                 setSelectedLabelBorderColor(array.getColor(R.styleable.KLineChartView_selectLabelBoderColor, Color.WHITE));
                 setSelectedYLineWidth(array.getDimension(R.styleable.KLineChartView_selectYLineWidth, getDimension(R.dimen.chart_point_width)));
-                setSelectedXLineColor(array.getColor(R.styleable.KLineChartView_selectYColor, getResources().getColor(R.color.color_CFD3E9)));
+                setSelectedXLineColor(array.getColor(R.styleable.KLineChartView_selectXLineColor, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedYLineColor(array.getColor(R.styleable.KLineChartView_selectYLineColor, getResources().getColor(R.color.color_1ACFD3E9)));
+                setSelectedYColor(array.getColor(R.styleable.KLineChartView_selectYColor, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectPriceBoxBackgroundColor(array.getColor(R.styleable.KLineChartView_selectPriceBoxBackgroundColor, getColor(R.color.color_081724)));
-                setSelectorBackgroundColor(array.getColor(R.styleable.KLineChartView_selectBackgroundColor, getColor(R.color.color_EA111725)));
+                setSelectorBackgroundColor(array.getColor(R.styleable.KLineChartView_selectInfoBoxBackgroundColor, getColor(R.color.color_EA111725)));
                 setSelectorTextSize(array.getDimension(R.styleable.KLineChartView_selectTextSize, getDimension(R.dimen.chart_selector_text_size)));
                 setSelectPriceBoxHorizentalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxHorizentalPadding, getDimension(R.dimen.price_box_horizental)));
                 setSelectPriceboxVerticalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxVerticalPadding, getDimension(R.dimen.price_box_vertical)));

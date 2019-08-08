@@ -30,7 +30,6 @@
         <attr name="selectYColor" format="color"/>
         <attr name="selectLineColor" format="color"/>
         <attr name="selectPriceBoxBackgroundColor" format="color"/>
-        <attr name="selectBackgroundColor" format="color"/>
         <attr name="selectTextSize" format="dimension"/>
         <attr name="selectPriceBoxHorizentalPadding" format="dimension"/>
         <attr name="selectPriceBoxVerticalPadding" format="dimension"/>
