@@ -132,7 +132,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectPriceboxVerticalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxVerticalPadding, getDimension(R.dimen.price_box_vertical)));
                 setSelectInfoBoxMargin(array.getDimension(R.styleable.KLineChartView_selectInfoBoxMargin, getDimension(R.dimen.price_box_horizental)));
                 setSelectedInfoBoxColors(
-                        array.getColor(R.styleable.KLineChartView_selectInfoBoxBackgroundColor, Color.WHITE),
+                        array.getColor(R.styleable.KLineChartView_selectInfoBoxTextColor, Color.WHITE),
                         array.getColor(R.styleable.KLineChartView_selectInfoBoxBorderColor, Color.WHITE),
                         array.getColor(R.styleable.KLineChartView_selectInfoBoxBackgroundColor, Color.DKGRAY)
                 );
