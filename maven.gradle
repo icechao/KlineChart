@@ -3,7 +3,7 @@ apply plugin: 'com.jfrog.bintray'
 
 
 //这个是和你bintray上面创建的package(项目)是对应的
-version = "0.0.1"//定义版本标识
+//定义版本标识
 def siteUrl = 'https://github.com/icechao/KlineChart'// #CONFIG# // project homepage
 def gitUrl = 'https://github.com/icechao/KlineChart.git'// #CONFIG# // project git
 
@@ -12,6 +12,7 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 group = properties.getProperty("bintray.group")
+version = properties.getProperty("bintray.version")
 
 install {
     repositories.mavenInstaller {

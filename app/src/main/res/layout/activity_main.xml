@@ -283,6 +283,9 @@
                         android:layout_height="580dp"
                         app:backgroundFillAlpha="55"
                         app:backgroundColor="#555555"
+                        app:selectInfoBoxTextColor="#ff00ff"
+                        app:selectInfoBoxBackgroundColor="#00ffff"
+                        app:selectInfoBoxBorderColor="#ff0000"
                         app:backgroundFillTopLolor="#ffffff"
                         app:backgroundFillBottomColor="#666666"
                         android:background="@color/color_081734"/>
