@@ -278,8 +278,8 @@ public class MainDraw extends BaseDraw {
         strings[2] = (view.getValueFormatter().format(values[Constants.INDEX_HIGH]));
         strings[3] = (view.getValueFormatter().format(values[Constants.INDEX_LOW]));
         strings[4] = (view.getValueFormatter().format(values[Constants.INDEX_CLOSE]));
-        float tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
-        strings[5] = (view.getValueFormatter().format(tempDiffPrice));
+        double tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
+        strings[5] = (view.getValueFormatter().format((float) tempDiffPrice));
         strings[6] = NumberTools.roundDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
         strings[7] = NumberTools.formatAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
 
