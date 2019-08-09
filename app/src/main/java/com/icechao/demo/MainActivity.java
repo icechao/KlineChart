@@ -163,7 +163,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 all = DataRequest.getALL(MainActivity.this);
                 //两种设置数据的方式
                 //adapter.resetData(all.subList(0, 380), true);
-                adapter.resetData(all.subList(0, 380));
+                adapter.resetData(all.subList(0, 50));
                 chartView.hideLoading();
                 changeLast();
             }

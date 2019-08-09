@@ -87,7 +87,7 @@ public class MainDraw extends BaseDraw {
 
     @Override
     public void drawTranslated(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
-        if (view.klineStatus.showLine()) {
+        if (view.getKlineStatus().showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 view.drawEndLine(canvas, linePaint, lastX, lastClosePrice, curX);
@@ -101,12 +101,6 @@ public class MainDraw extends BaseDraw {
             }
 
         } else {
-
-            LogUtil.e("INDEX_HIGH : " + values[Constants.INDEX_HIGH] +
-                    "INDEX_LOW : " + values[Constants.INDEX_LOW] +
-                    "INDEX_OPEN : " + values[Constants.INDEX_OPEN] +
-                    "INDEX_CLOSE : " + values[Constants.INDEX_CLOSE]);
-
             if (position == 0) {
                 drawCandle(view, canvas, curX,
                         values[Constants.INDEX_HIGH],
@@ -172,10 +166,9 @@ public class MainDraw extends BaseDraw {
     @SuppressWarnings("all")
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
 
-
         //修改头文字显示在顶部
         y = maTextHeight + mainLengendMarginTop;
-        if (view.klineStatus.showLine()) {
+        if (view.getKlineStatus().showLine()) {
 
         } else {
             Status.MainStatus status = view.getStatus();
@@ -249,12 +242,6 @@ public class MainDraw extends BaseDraw {
         if (open < close) {//跌
             drawCandle(canvas, x, high, low, open, close, cancleLeft, candleright, downPaint, downLinePaint);
         } else if (open > close) {//涨
-            if (position == itemCount - 1) {
-                LogUtil.e("INDEX_HIGH : " + high +
-                        "   INDEX_LOW : " + low +
-                        "   INDEX_OPEN : " + open +
-                        "   INDEX_CLOSE : " + close);
-            }
             drawCandle(canvas, x, high, low, close, open, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
             drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
@@ -517,7 +504,7 @@ public class MainDraw extends BaseDraw {
     public void drawMaxMinValue(Canvas canvas, BaseKLineChartView view,
                                 float maxX, float mainHighMaxValue,
                                 float minX, float mainLowMinValue) {
-        if (!view.klineStatus.showLine()) {
+        if (!view.getKlineStatus().showLine()) {
             //绘制最大值和最小值
             float y = view.getMainY(mainLowMinValue);
             //计算显示位置

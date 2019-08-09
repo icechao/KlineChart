@@ -297,8 +297,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 量视图是否显示为线
      */
-//    protected boolean isLine;
-    public Status.KlineStatus klineStatus = Status.KlineStatus.K_LINE;
+    protected Status.KlineStatus klineStatus = Status.KlineStatus.K_LINE;
+
+    /**
+     * 量视图是否显示为线
+     */
+    protected Status.VolChartStatus volChartStatus;
 
     /**
      * 数据
@@ -599,7 +603,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         priceLineRightPaint.setStyle(Paint.Style.STROKE);
         rightPriceBoxPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         priceLineBoxPaint.setStyle(Paint.Style.STROKE);
-
+        selectedXLinePaint.setStyle(Paint.Style.STROKE);
 
     }
 
@@ -971,7 +975,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             path.lineTo(x + selectPriceBoxHorizentalPadding + selectPriceBoxVerticalPadding, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
-            canvas.drawPath(path, selectorFramePaint);
+            canvas.drawPath(path, selectedXLinePaint);
             canvas.drawText(text, x + selectPriceBoxVerticalPadding + selectPriceBoxHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         } else {
             x = -canvasTranslateX;
@@ -983,7 +987,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             path.lineTo(tempX + x, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
-            canvas.drawPath(path, selectorFramePaint);
+            canvas.drawPath(path, selectedXLinePaint);
             canvas.drawText(text, x + selectPriceBoxHorizentalPadding, fixTextYBaseBottom(y), textPaint);
         }
     }
@@ -1410,7 +1414,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         float newCount = (width / tempWidth);
         float oldCount = (width / chartItemWidth / oldScale);
         float difCount = (newCount - oldCount) / 2;
-        if (screenLeftIndex != 0) {
+        if (screenLeftIndex > 0) {
             changeTranslated(canvasTranslateX / oldScale * scale + difCount * tempWidth);
         } else {
             if (getDataLength() < width) {
@@ -1741,11 +1745,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param date date
      */
-    @SuppressWarnings("unused")
     public String formatDateTime(Date date) {
-        if (null == dateTimeFormatter) {
-            dateTimeFormatter = new TimeFormatter();
-        }
         return dateTimeFormatter.format(date);
     }
 
@@ -1918,4 +1918,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         return this.status;
     }
 
+    public Status.KlineStatus getKlineStatus() {
+        return klineStatus;
+    }
+
+    public Status.VolChartStatus getVolChartStatus() {
+        return volChartStatus;
+    }
 }

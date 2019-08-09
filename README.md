@@ -182,6 +182,7 @@
       | ma2Color  | color | 第2根ma线的颜色 | |
       | ma3Color  | color | 第3根ma线的颜色 | |
       | volLengendColor   | color| 成交量图例颜色 | |
+      | volLineChartColor  | color | 成交量显示线状图时的颜色 | #4B85D6 |
       | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
 
               
@@ -300,7 +301,7 @@
            
   ### K线与分时线切换
 
-        chartView.setKlineState(Status.KlineStatus klineStatus);
+        kLineChartView.setKlineState(Status.KlineStatus klineStatus);
             参数
             Status.KlineStatus.K_LINE    : 显示K线
             Status.KlineStatus.TIME_LINE : 显示为分时线
@@ -444,7 +445,14 @@
   ### 获取当前显示/隐藏交易量
         
          kLineChartView.getChartChildState();
-            
+             
+  ### 设置交易量绘制BarChart/LineChart 
+        
+         kLineChartView.setVolChartStatues(Status.VolChartStatus volChartStatus);
+            参数 
+            null : defaul , time line show line chart , K line show barChart
+            Status.VolChartStatus.BAR_CHART  : 柱状图
+            Status.VolChartStatus.LINE_CHART : 线状图
             
          
             

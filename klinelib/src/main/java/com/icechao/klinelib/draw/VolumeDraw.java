@@ -10,8 +10,8 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.NumberTools;
+import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
  * Description   :
@@ -94,7 +94,7 @@ public class VolumeDraw extends BaseDraw {
         if (0 != vol && top > bottom - 1) {
             top = bottom - 1;
         }
-        if (view.klineStatus.showLine()) {
+        if ((null == view.getVolChartStatus() && view.getKlineStatus().showLine()) || view.getVolChartStatus() == Status.VolChartStatus.LINE_CHART) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);
         } else if (close >= open) {//涨
             canvas.drawRect(curX - r, top, curX + r, bottom, increasePaint);
@@ -216,7 +216,7 @@ public class VolumeDraw extends BaseDraw {
         endMaTwo = 0;
     }
 
-    public void setMinuteColor(int color) {
+    public void setLineChartColor(int color) {
         linePaint.setColor(color);
     }
 

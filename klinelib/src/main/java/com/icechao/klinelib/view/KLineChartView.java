@@ -97,6 +97,8 @@ public class KLineChartView extends BaseKLineChartView {
                 setVolLengendColor(array.getColor(R.styleable.KLineChartView_volLengendColor, getResources().getColor(R.color.color_6D87A8)));
                 setMainLengendMarginTop(array.getDimension(R.styleable.KLineChartView_mainLengendMarginTop, 10f));
                 setVolLengendMarginTop(array.getDimension(R.styleable.KLineChartView_volLengendMarginTop, 10f));
+                //成交量
+                setVolLineChartColor(array.getColor(R.styleable.KLineChartView_volLineChartColor, getResources().getColor(R.color.color_4B85D6)));
 
                 //价格线
                 setPriceLineWidth(array.getDimension(R.styleable.KLineChartView_priceLineWidth, Dputil.Dp2Px(context, 1)));
@@ -818,7 +820,6 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setTimeLineColor(int color) {
         mainDraw.setMinuteLineColor(color);
-        volDraw.setMinuteColor(color);
         return this;
     }
 
@@ -1512,5 +1513,27 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public boolean getChartVolState() {
         return (chartShowStatue == Status.ChildStatus.MAIN_VOL || chartShowStatue == Status.ChildStatus.MAIN_VOL_INDEX);
+    }
+
+
+    /**
+     * set the color of vol chart show as line chart
+     *
+     * @param color
+     * @return
+     */
+    public KLineChartView setVolLineChartColor(int color) {
+        volDraw.setLineChartColor(color);
+        return this;
+    }
+
+
+    /**
+     * set vol View chart line/or bar
+     *
+     * @param volChartStatus defaul time line show line chart , K line show barChart
+     */
+    public void setVolChartStatues(Status.VolChartStatus volChartStatus) {
+        this.volChartStatus = volChartStatus;
     }
 }

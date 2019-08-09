@@ -63,6 +63,21 @@ public class Status {
 
     }
 
+    public enum VolChartStatus {
+        BAR_CHART(true),//柱状图
+        LINE_CHART(false); //线状图
+
+        private boolean statu;
+
+        VolChartStatus(boolean statu) {
+            this.statu = statu;
+        }
+
+        public boolean showLine() {
+            return statu;
+        }
+    }
+
     public enum KlineStatus {
         TIME_LINE(true),//分时线
         K_LINE(false); //K线

@@ -112,6 +112,7 @@
 
         <!-- vol -->
         <attr name="volLengendColor" format="color"/>
+        <attr name="volLineChartColor" format="color"/>
         <attr name="volLengendMarginTop" format="dimension"/>
     </declare-styleable>
 </resources>
