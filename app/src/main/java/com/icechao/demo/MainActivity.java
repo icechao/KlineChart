@@ -114,7 +114,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
                 //show loading View
                 .setLoadingView(loadingView)
-                .setCandleSolid(true)
+                //full or stroke
+                .setCandleSolid(false)
                 .showLoading()
                 //set slid listener
                 .setSlidListener(new SlidListener() {
@@ -148,7 +149,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     public String format(Date date) {
                         return DateUtil.HHMMTimeFormat.format(date);
                     }
-                });
+                }).setVolChartStatues();
     }
 
     Random random = new Random();
@@ -191,7 +192,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             textViewHighPriceText.setText(kLineEntity1.getHigh() + "");
             textViewLowPriceText.setText(kLineEntity1.getLow() + "");
             textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
-
 
 
             if (i++ % 3 == 0) {

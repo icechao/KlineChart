@@ -21,8 +21,8 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                description 'android kline view'
-                name 'klinechart'  // 可默认，项目描述
+                description properties.getProperty("bintray.desc")
+                name 'klinechart'
                 url siteUrl
                 // Set your license
                 licenses {
@@ -34,8 +34,8 @@ install {
                 developers {
                     developer { //  可默认，开发者信息
                         id 'YOUR_ID'
-                        name 'YOUR NAME'
-                        email 'YOUR EMAIL'
+                        name 'icechao'
+                        email properties.getProperty("bintray.email")
                     }
                 }
                 scm {
