@@ -527,7 +527,7 @@ public class MainDraw extends BaseDraw {
             if (minX < screenMid) {
                 LowString = "── " + getValueFormatter().format(mainLowMinValue);
             } else {
-                LowString = mainLowMinValue + " ──";
+                LowString = getValueFormatter().format(mainLowMinValue) + " ──";
                 stringWidth = maxMinPaint.measureText(LowString);
                 minX -= stringWidth;
             }
@@ -539,7 +539,7 @@ public class MainDraw extends BaseDraw {
             if (maxX < screenMid) {
                 highString = "── " + getValueFormatter().format(mainHighMaxValue);
             } else {
-                highString = mainHighMaxValue + " ──";
+                highString = getValueFormatter().format(mainHighMaxValue) + " ──";
                 stringWidth = maxMinPaint.measureText(highString);
                 maxX -= stringWidth;
             }
