@@ -16,10 +16,7 @@ import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.DataTools;
-import com.icechao.klinelib.utils.DateUtil;
-import com.icechao.klinelib.utils.SlidListener;
-import com.icechao.klinelib.utils.Status;
+import com.icechao.klinelib.utils.*;
 import com.icechao.klinelib.view.KLineChartView;
 
 import java.util.*;
@@ -117,6 +114,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
                 //show loading View
                 .setLoadingView(loadingView)
+                .setCandleSolid(true)
                 .showLoading()
                 //set slid listener
                 .setSlidListener(new SlidListener() {
@@ -186,7 +184,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             kLineEntity1.setOpen(kLineEntity.getOpen());
             kLineEntity1.setLow(kLineEntity.getLow());
             kLineEntity1.setVolume(kLineEntity.getVolume());
-
             textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
             float v = kLineEntity1.getClose() - kLineEntity1.getOpen();
             textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.getOpen()));
@@ -196,14 +193,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
 
 
+
             if (i++ % 3 == 0) {
                 kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
                 adapter.addLast(kLineEntity1);
             } else {
                 kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
                 adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
-
-
             }
             changeLast();
 

@@ -185,7 +185,6 @@ public class KLineChartView extends BaseKLineChartView {
                 setMa1Color(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
                 setMa2Color(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
                 setMa3Color(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
-
                 setCandleSolid(array.getBoolean(R.styleable.KLineChartView_candleSolid, false));
 
 

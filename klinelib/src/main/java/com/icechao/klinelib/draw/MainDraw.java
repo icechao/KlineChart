@@ -12,6 +12,7 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
+import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
@@ -61,10 +62,8 @@ public class MainDraw extends BaseDraw {
     public MainDraw(Context context) {
         indexInterval = Constants.getCount();
         selectorBorderPaint.setStyle(Paint.Style.STROKE);
-        upPaint.setStyle(Paint.Style.FILL);
         upLinePaint.setStyle(Paint.Style.STROKE);
         upLinePaint.setAntiAlias(true);
-        downPaint.setStyle(Paint.Style.FILL);
         downLinePaint.setStyle(Paint.Style.STROKE);
         downLinePaint.setAntiAlias(true);
         marketInfoText[0] = ("时间   ");
@@ -102,6 +101,12 @@ public class MainDraw extends BaseDraw {
             }
 
         } else {
+
+            LogUtil.e("INDEX_HIGH : " + values[Constants.INDEX_HIGH] +
+                    "INDEX_LOW : " + values[Constants.INDEX_LOW] +
+                    "INDEX_OPEN : " + values[Constants.INDEX_OPEN] +
+                    "INDEX_CLOSE : " + values[Constants.INDEX_CLOSE]);
+
             if (position == 0) {
                 drawCandle(view, canvas, curX,
                         values[Constants.INDEX_HIGH],
@@ -241,10 +246,16 @@ public class MainDraw extends BaseDraw {
         float r = candleWidth / 2 * view.getScaleX();
         float cancleLeft = x - r;
         float candleright = x + r;
-        if (open < close) {
-            drawCandle(canvas, x, high, low, close, open, cancleLeft, candleright, downPaint, downLinePaint);
-        } else if (open > close) {
-            drawCandle(canvas, x, high, low, open, close + 1, cancleLeft, candleright, upPaint, upLinePaint);
+        if (open < close) {//跌
+            drawCandle(canvas, x, high, low, open, close, cancleLeft, candleright, downPaint, downLinePaint);
+        } else if (open > close) {//涨
+            if (position == itemCount - 1) {
+                LogUtil.e("INDEX_HIGH : " + high +
+                        "   INDEX_LOW : " + low +
+                        "   INDEX_OPEN : " + open +
+                        "   INDEX_CLOSE : " + close);
+            }
+            drawCandle(canvas, x, high, low, close, open, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
             drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
         }
@@ -252,10 +263,10 @@ public class MainDraw extends BaseDraw {
 
     private void drawCandle(Canvas canvas, float x, float high, float low, float open, float close, float cancleLeft, float candleright, Paint paint, Paint linePaint) {
         canvas.drawRect(cancleLeft, close, candleright, open, paint);
-        if (high != open) {
+        if (high < open) {
             canvas.drawLine(x, high, x, open, linePaint);
         }
-        if (close != low) {
+        if (close < low) {
             canvas.drawLine(x, close, x, low, linePaint);
         }
     }

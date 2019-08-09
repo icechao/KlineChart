@@ -106,4 +106,17 @@ public class KChartBean extends KLineEntity {
     public void setVolume(float volume) {
         this.volume = volume;
     }
+
+
+    @Override
+    public String toString() {
+        return "KChartBean{" +
+                "date='" + date + '\'' +
+                ", open=" + open +
+                ", high=" + high +
+                ", low=" + low +
+                ", close=" + close +
+                ", volume=" + volume +
+                '}';
+    }
 }
