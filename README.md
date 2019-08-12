@@ -6,7 +6,7 @@
  ****************************************************
 ## 效果图
 
-<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="400" hegiht="500" align=center />
+<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="320" hegiht="500" align=center />
 
 
 ## 使用步骤: 
@@ -35,7 +35,7 @@
             
             工程的build.gradle中
 
-                        implementation 'com.icechao.klinelib:klinelib:0.0.3'
+                        implementation 'com.icechao.klinelib:klinelib:0.0.4'
 
             
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
