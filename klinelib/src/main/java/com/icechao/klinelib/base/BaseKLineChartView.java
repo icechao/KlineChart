@@ -735,13 +735,16 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 可能会出现没效果,动画执行过程中,值改变
      */
     protected void resetValues() {
-        lastPrice = 0;
         lastVol = 0;
+        rowSpace = 0;
         lastPrice = 0;
-        selectedIndex = -1;
+        lastPrice = 0;
         itemsCount = 0;
+        selectedIndex = -1;
         screenLeftIndex = 0;
         screenRightIndex = 0;
+        gridRowCountNoChild = 0;
+        gridRowCountWithChild = 0;
     }
 
 
@@ -842,7 +845,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float y = rowSpace * i + chartPaddingTop;
             canvas.drawLine(0, y, width, y, gridPaint);
         }
-//        canvas.drawLine(0, volRect.bottom, width, volRect.bottom, gridPaint);
         for (int i = 1; i < gridColumns; i++) {
             float stopX = columnSpace * i;
             canvas.drawLine(stopX, 0, stopX, displayHeight + chartPaddingTop, gridPaint);
@@ -1120,7 +1122,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 rowValue = rowValueNoChild;
 
                 tempYLabelX = width - yLabelMarginRight;
-                //Y轴上网络的值
+                //Y轴上网格的值
                 for (int i = 0; i <= gridRowCount; i++) {
                     String text = formatValue(mainMaxValue - i * rowValue);
                     float v = rowSpace * i + chartPaddingTop;

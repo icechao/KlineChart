@@ -192,8 +192,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             textViewHighPriceText.setText(kLineEntity1.getHigh() + "");
             textViewLowPriceText.setText(kLineEntity1.getLow() + "");
             textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
-
-
             if (i++ % 3 == 0) {
                 kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
                 adapter.addLast(kLineEntity1);
@@ -295,12 +293,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.radio_button_time_line:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.TIME_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(10, 140));
                 break;
             case R.id.radio_button_fifteen:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(10, 300));
 
                 break;
             case R.id.radio_button_one_hour:
