@@ -102,6 +102,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         adapter = new KLineChartAdapter();
         chartView = findViewById(R.id.kLineChartView);
 
+
         chartView.setAdapter(adapter)
                 //loading anim
                 .setAnimLoadData(false)
@@ -117,6 +118,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //full or stroke
                 .setCandleSolid(false)
                 .showLoading()
+                .setBetterX(false)
                 //set slid listener
                 .setSlidListener(new SlidListener() {
                     @Override

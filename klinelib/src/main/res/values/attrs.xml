@@ -80,6 +80,8 @@
         <!--grid line-->
         <attr name="gridLineWidth" format="dimension"/>
         <attr name="gridLineColor" format="color"/>
+        <attr name="gridLineRows" format="integer"/>
+        <attr name="gridLineColumns" format="integer"/>
         <!--macd-->
         <attr name="macdIncreaseColor" format="color"/>
         <attr name="macdDecreaseColor" format="color"/>

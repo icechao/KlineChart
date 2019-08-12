@@ -92,6 +92,8 @@ public class KLineChartView extends BaseKLineChartView {
                 setChartPaddingBottom(array.getDimension(R.styleable.KLineChartView_paddingBottom, getDimension(R.dimen.chart_bottom_padding)));
                 //网格
                 setGridLineWidth(array.getDimension(R.styleable.KLineChartView_gridLineWidth, getDimension(R.dimen.chart_grid_line_width)));
+                setGridColumns(array.getInteger(R.styleable.KLineChartView_gridLineColumns, 5));
+                setGridRows(array.getInteger(R.styleable.KLineChartView_gridLineRows, 5));
                 setGridLineColor(array.getColor(R.styleable.KLineChartView_gridLineColor, getColor(R.color.color_223349)));
                 //图例
                 setVolLengendColor(array.getColor(R.styleable.KLineChartView_volLengendColor, getResources().getColor(R.color.color_6D87A8)));
@@ -1169,8 +1171,10 @@ public class KLineChartView extends BaseKLineChartView {
         if (gridRows < 1) {
             gridRows = 1;
         }
-        rowSpace = displayHeight / gridRows;
         this.gridRows = gridRows;
+        if (0 != displayHeight) {
+            rowSpace = displayHeight / gridRows;
+        }
         gridRowCountWithChild = 0;
         gridRowCountNoChild = 0;
         return this;
@@ -1183,7 +1187,9 @@ public class KLineChartView extends BaseKLineChartView {
         if (gridColumns < 1) {
             gridColumns = 1;
         }
-        columnSpace = width / gridColumns;
+        if (0 != width) {
+            columnSpace = width / gridColumns;
+        }
         this.gridColumns = gridColumns;
         gridRowCountNoChild = 0;
         gridRowCountWithChild = 0;

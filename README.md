@@ -140,6 +140,8 @@
       | candleSolid  | boolean | K线是否空心| false |
       | gridLineWidth  | dimension | 网格线宽| |
       | gridLineColor  | color | 网格颜色 | |
+      | gridLineColumns  | integer | 网格列数 | |
+      | gridLineRows  | integer | 网格行数 | |
       | selectXLineWidth  | dimension | 选中十字线X轴线宽| |
       | selectLabelBoderWidth  | dimension | 选中十字线label边框线宽| 2 |
       | selectLabelBoderColor  | color | 选中坐标边框颜色| |

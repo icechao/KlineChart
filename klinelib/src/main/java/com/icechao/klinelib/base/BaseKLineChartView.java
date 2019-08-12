@@ -50,7 +50,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 动画执行时长
      */
-    private long duration = 500;
+    private long duration = 300;
 
     /**
      * 当前子视图的索引
@@ -102,19 +102,19 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 主视图K线的的最大值
      */
-    protected float mainHighMaxValue = 0;
+    protected float mainHighMaxValue;
     /**
      * 主视图的K线的最小值
      */
-    protected float mainLowMinValue = 0;
+    protected float mainLowMinValue;
     /**
      * X轴最大值坐标索引
      */
-    protected int mainMaxIndex = 0;
+    protected int mainMaxIndex;
     /**
      * X轴最小值坐标索引
      */
-    protected int mainMinIndex = 0;
+    protected int mainMinIndex;
 
     /**
      * 成交量最大值
@@ -136,17 +136,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * K线宽度
      */
-    protected float chartItemWidth = 6;
+    protected float chartItemWidth;
 
     /**
      * K线网格行数
      */
-    protected int gridRows = 5;
+    protected int gridRows;
 
     /**
      * K线网格列数
      */
-    protected int gridColumns = 5;
+    protected int gridColumns;
 
     /**
      * 尾线画笔
@@ -400,7 +400,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     changeTranslated(canvasTranslateX - chartItemWidth * getScaleX());
                 }
             } else if (itemsCount == dataCount) {
-                laseChange();
+                lastChange();
             }
         }
 
@@ -409,28 +409,29 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             isAnimationLast = false;
             setItemCount(0);
             points = null;
-            postDelayed(action, 500);
+            //延迟400毫秒让动画执行都结束
+            postDelayed(action, 400);
         }
     };
 
 
     /**
-     * 当重置数据时,延时1s显示最后的加载动画
+     * 当重置数据时,延时400ms显示最后的加载动画
      */
     protected Runnable action = () -> isAnimationLast = true;
 
 
-    private void laseChange() {
-        int tempIndex = (itemsCount - 1) * indexInterval;
-        generaterAnimator(lastVol, points[tempIndex + Constants.INDEX_VOL], animation -> lastVol = (Float) animation.getAnimatedValue());
-        generaterAnimator(lastPrice, points[tempIndex + Constants.INDEX_CLOSE], animation -> {
-            lastPrice = (Float) animation.getAnimatedValue();
-            if (klineStatus.showLine()) {
-                return;
-            }
-            animInvalidate();
-        });
+    private void lastChange() {
         if (isAnimationLast) {
+            int tempIndex = (itemsCount - 1) * indexInterval;
+            generaterAnimator(lastVol, points[tempIndex + Constants.INDEX_VOL], animation -> lastVol = (Float) animation.getAnimatedValue());
+            generaterAnimator(lastPrice, points[tempIndex + Constants.INDEX_CLOSE], animation -> {
+                lastPrice = (Float) animation.getAnimatedValue();
+                if (klineStatus.showLine()) {
+                    return;
+                }
+                animInvalidate();
+            });
             float[] tempData = Arrays.copyOfRange(points, tempIndex, points.length);
             mainDraw.startAnim(BaseKLineChartView.this, tempData);
             volDraw.startAnim(BaseKLineChartView.this, tempData);
@@ -736,7 +737,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected void resetValues() {
         lastVol = 0;
-        rowSpace = 0;
         lastPrice = 0;
         lastPrice = 0;
         itemsCount = 0;
@@ -1847,7 +1847,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     @SuppressWarnings("all")
     public ValueAnimator generaterAnimator(Float start, float end, ValueAnimator.AnimatorUpdateListener listener) {
-        ValueAnimator animator = ValueAnimator.ofFloat(0 == start ? end - 0.01f : start, end);
+        ValueAnimator animator = ValueAnimator.ofFloat(0 == start ? end - 0.001f : start, end);
         animator.setDuration(duration);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
