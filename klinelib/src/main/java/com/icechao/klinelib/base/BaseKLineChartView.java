@@ -12,7 +12,6 @@ import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.MainDraw;
 import com.icechao.klinelib.draw.VolumeDraw;
 import com.icechao.klinelib.formatter.DateFormatter;
-import com.icechao.klinelib.formatter.TimeFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberTools;
@@ -613,9 +612,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         super.onSizeChanged(w, h, oldw, oldh);
         this.width = w;
         displayHeight = h - chartPaddingTop - chartPaddingBottom;
-        initRect();
         rowSpace = displayHeight / gridRows;
         columnSpace = width / gridColumns;
+        initRect();
     }
 
     protected Status.ChildStatus chartShowStatue = Status.ChildStatus.MAIN_VOL;
@@ -657,6 +656,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 indexRect = new Rect(0, (int) (volRect.bottom + childViewPaddingTop), (int) width, volRect.bottom + tempChildHeight);
                 break;
         }
+        gridRowCountWithChild = 0;
+        gridRowCountNoChild = 0;
     }
 
     @Override
@@ -1039,7 +1040,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     private double rowValueNoChild, rowValueWithChild;
-    private int gridRowCountNoChild, gridRowCountWithChild;
+    protected int gridRowCountNoChild;
+    protected int gridRowCountWithChild;
 
     /**
      * 绘制Y轴上的所有label
@@ -1144,8 +1146,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 childLable = indexDraw.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLable, tempYLabelX -
                         textPaint.measureText(childLable), indexRect.top - childViewPaddingTop + baseLine, textPaint);
-
-
                 break;
         }
 

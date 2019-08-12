@@ -149,7 +149,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     public String format(Date date) {
                         return DateUtil.HHMMTimeFormat.format(date);
                     }
-                }).setVolChartStatues();
+                });
     }
 
     Random random = new Random();
