@@ -149,7 +149,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setDateTimeFormatter(new DateFormatter() {
                     @Override
                     public String format(Date date) {
-                        return DateUtil.HHMMTimeFormat.format(date);
+                        return DateUtil.yyyyMMddFormat.format(date);
                     }
                 });
     }
