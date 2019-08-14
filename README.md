@@ -105,7 +105,7 @@
       | increaseColor  | color | 涨颜色| |
       | backgroundColor   | color | 背景色  | |
       | decreaseColor  | color | 跌颜色| |
-      | textSize  | dimension | 文字大小| |
+      | chartTextSize  | dimension | 通用文字大小| |
       | textColor  | color | 文字颜色| |
       | limitTextColor  | color | 最大最小值文字颜色| |
       | limitTextSize  | dimension | 最大最小值文字大小| |

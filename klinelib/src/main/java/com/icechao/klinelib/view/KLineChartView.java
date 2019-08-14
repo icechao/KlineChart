@@ -85,7 +85,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setBetterX(array.getBoolean(R.styleable.KLineChartView_fitXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
                 setLineWidth(array.getDimension(R.styleable.KLineChartView_lineWidth, getDimension(R.dimen.chart_line_width)));
-                setTextSize(array.getDimension(R.styleable.KLineChartView_textSize, getDimension(R.dimen.chart_text_size)));
+                setTextSize(array.getDimension(R.styleable.KLineChartView_chartTextSize, getDimension(R.dimen.chart_text_size)));
                 setTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
                 setChartPaddingTop(array.getDimension(R.styleable.KLineChartView_paddingTop, getDimension(R.dimen.chart_top_padding)));
                 setChildPaddingTop(array.getDimension(R.styleable.KLineChartView_childPaddingTop, getDimension(R.dimen.child_top_padding)));
