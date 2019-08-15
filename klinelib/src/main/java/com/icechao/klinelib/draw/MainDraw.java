@@ -138,6 +138,13 @@ public class MainDraw extends BaseDraw {
                             values[Constants.INDEX_BOLL_UP],
                             bollUp, indexPaintTwo,
                             values[Constants.INDEX_BOLL_UP + indexInterval]);
+
+
+                    if (position == itemCount - 1) {
+                        LogUtil.e("=> 原 : " + position + " Up() : " + values[Constants.INDEX_BOLL_UP + indexInterval] + "  Mb() : " + values[Constants.INDEX_BOLL_MB + indexInterval] + "Dn() : " + values[Constants.INDEX_BOLL_DN + indexInterval]);
+                        LogUtil.e("=> 变 : " + position + " Up() : " + bollUp + "  Mb() : " + bollMb + "Dn() : " + bollDn);
+                    }
+
                     drawLine(lastX, curX, canvas, view, position,
                             values[Constants.INDEX_BOLL_MB],
                             bollMb, indexPaintOne,
@@ -438,7 +445,7 @@ public class MainDraw extends BaseDraw {
 
         switch (view.getStatus()) {
             case MA:
-                if (maOne == 0) {
+                if (maOne == 0 || !view.isAnimationLast()) {
                     maOne = values[Constants.INDEX_MA_1];
                     maTwo = values[Constants.INDEX_MA_2];
                     maThree = values[Constants.INDEX_MA_3];
@@ -449,15 +456,16 @@ public class MainDraw extends BaseDraw {
                 view.generaterAnimator(maThree, values[Constants.INDEX_MA_3], animation -> maThree = (float) animation.getAnimatedValue());
                 break;
             case BOLL:
-                if (bollUp == 0 && view.getStatus() == Status.MainStatus.BOLL) {
+                if (bollUp == 0 || !view.isAnimationLast()) {
                     bollUp = values[Constants.INDEX_BOLL_UP];
                     bollDn = values[Constants.INDEX_BOLL_DN];
                     bollMb = values[Constants.INDEX_BOLL_MB];
-                    return;
+
+                } else {
+                    view.generaterAnimator(bollMb, values[Constants.INDEX_BOLL_MB], animation -> bollMb = (float) animation.getAnimatedValue());
+                    view.generaterAnimator(bollDn, values[Constants.INDEX_BOLL_DN], animation -> bollDn = (float) animation.getAnimatedValue());
+                    view.generaterAnimator(bollUp, values[Constants.INDEX_BOLL_UP], animation -> bollUp = (float) animation.getAnimatedValue());
                 }
-                view.generaterAnimator(bollMb, values[Constants.INDEX_BOLL_UP], animation -> bollMb = (float) animation.getAnimatedValue());
-                view.generaterAnimator(bollDn, values[Constants.INDEX_BOLL_DN], animation -> bollDn = (float) animation.getAnimatedValue());
-                view.generaterAnimator(bollUp, values[Constants.INDEX_BOLL_MB], animation -> bollUp = (float) animation.getAnimatedValue());
                 break;
 
         }

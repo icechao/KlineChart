@@ -243,8 +243,8 @@
             如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
             chartView.getAdapter()
 
-            填充或重新填充数据
-            resetData(List<KlineEntry>);
+            填充或重新填充数据,bool表示是否重置展示位
+            resetData(List<KlineEntry>,boolean);
 
             尾部追加数据 
             addLast(KlineEntry);

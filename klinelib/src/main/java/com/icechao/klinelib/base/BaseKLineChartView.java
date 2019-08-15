@@ -1846,7 +1846,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return ValueAnimator
      */
     @SuppressWarnings("all")
-    public ValueAnimator generaterAnimator(Float start, float end, ValueAnimator.AnimatorUpdateListener listener) {
+    public void generaterAnimator(Float start, float end, ValueAnimator.AnimatorUpdateListener listener) {
         ValueAnimator animator = ValueAnimator.ofFloat(0 == start ? end - 0.001f : start, end);
         animator.setDuration(duration);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -1858,7 +1858,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             }
         });
         animator.start();
-        return animator;
     }
 
 

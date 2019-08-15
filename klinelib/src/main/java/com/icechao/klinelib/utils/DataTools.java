@@ -193,6 +193,7 @@ public class DataTools {
                 point.setDn(Float.MIN_VALUE);
             }
 
+
             points[indexInterval * i + Constants.INDEX_BOLL_UP] = point.getUp();
             points[indexInterval * i + Constants.INDEX_BOLL_MB] = point.getMb();
             points[indexInterval * i + Constants.INDEX_BOLL_DN] = point.getDn();
