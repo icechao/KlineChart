@@ -49,7 +49,6 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     @Deprecated
     @Override
     public T getItem(int position) {
-
         if (dataCount == 0 || position < 0 || position >= dataCount) {
             return null;
         }

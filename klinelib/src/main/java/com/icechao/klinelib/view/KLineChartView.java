@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKLineChartView;
@@ -315,11 +316,11 @@ public class KLineChartView extends BaseKLineChartView {
      * 延迟500换秒隐藏动画以免动画效果显示
      */
     public KLineChartView hideLoading() {
-        if (null != progressBar && progressBar.getVisibility() == View.VISIBLE) {
-            post(() -> {
+        if (null != progressBar) {
+            postDelayed(() -> {
                 progressBar.setVisibility(View.GONE);
                 isShowLoading = false;
-            });
+            }, 500);
         }
         return this;
     }
@@ -652,7 +653,7 @@ public class KLineChartView extends BaseKLineChartView {
                     startFreshPage();
                     break;
             }
-            setItemCount(0);
+            setItemsCount(0);
             dataAdapter.setResetShowPosition(true);
             invalidate();
         }

@@ -8,6 +8,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.draw.MainDraw;
 import com.icechao.klinelib.draw.VolumeDraw;
@@ -376,49 +377,63 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         @Override
         public void onChanged() {
             //从没数据变成有数据时,显示动画加载效果
-            if (itemsCount == 0) {
+            int currentCount = BaseKLineChartView.this.itemsCount;
+            if (loadDataWithAnim && currentCount == 0) {
                 startAnimation();
             }
             int dataCount = dataAdapter.getCount();
+            setItemsCount(dataCount);
+            if (dataCount == 0) {
+                return;
+            }
             points = dataAdapter.getPoints();
             int temp = (dataAdapter.getCount() - 1) * indexInterval;
-            if (dataCount == 0) {
-                setItemCount(0);
-            } else if (itemsCount == 0) {
-                setItemCount(dataCount);
-                if (dataAdapter.getResetShowPosition() && width != 0) {
-                    changeTranslated(getMinTranslate());
-                    dataAdapter.setResetShowPosition(false);
-                }
-                lastPrice = points[temp + Constants.INDEX_CLOSE];
-                lastVol = points[temp + Constants.INDEX_VOL];
-            } else if (dataCount > itemsCount) {
-                lastPrice = points[temp + Constants.INDEX_CLOSE];
-                lastVol = points[temp + Constants.INDEX_VOL];
-                setItemCount(dataCount);
-                if (screenRightIndex >= itemsCount - 2) {
+            lastPrice = points[temp + Constants.INDEX_CLOSE];
+            lastVol = points[temp + Constants.INDEX_VOL];
+            setItemsCount(dataCount);
+            if (dataCount > currentCount) {
+                if (screenRightIndex >= currentCount - 2) {
                     changeTranslated(canvasTranslateX - chartItemWidth * getScaleX());
                 }
-            } else if (itemsCount == dataCount) {
+            } else if (currentCount == dataCount) {
                 lastChange();
+            } else {
+                changeTranslated(getMinTranslate());
             }
+            if (!isAnimationLast && !dataAdapter.getResetShowPosition()) {
+                if (dataCount > currentCount) {
+                    changeTranslated(tempTranslation - (dataCount - currentCount) * chartItemWidth * getScaleX());
+                } else {
+                    changeTranslated(getMaxTranslate());
+                }
+            } else if (!isAnimationLast) {
+                changeTranslated(getMinTranslate());
+            }
+            //再次开启动画
+            postDelayed(action, 100);
         }
 
         @Override
         public void onInvalidated() {
+            tempTranslation = canvasTranslateX;
             isAnimationLast = false;
-            setItemCount(0);
-            points = null;
-            //延迟400毫秒让动画执行都结束
-            postDelayed(action, 400);
+            overScroller.forceFinished(true);
+            setScrollEnable(false);
+            setScaleEnable(false);
         }
     };
+
+    private float tempTranslation;
 
 
     /**
      * 当重置数据时,延时400ms显示最后的加载动画
      */
-    protected Runnable action = () -> isAnimationLast = true;
+    protected Runnable action = () -> {
+        isAnimationLast = true;
+        setScrollEnable(true);
+        setScaleEnable(true);
+    };
 
 
     private void lastChange() {
@@ -753,11 +768,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param itemCount items count
      */
-    protected void setItemCount(int itemCount) {
-        //数据个数为0时重置本地保存数据,重置平移
-        if (itemCount == 0) {
-            resetValues();
-        }
+    protected void setItemsCount(int itemCount) {
+
         this.itemsCount = itemCount;
         mainDraw.setItemCount(itemsCount);
         mainDraw.resetValues();
@@ -1438,11 +1450,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (translateX < getMinTranslate()) {
             translateX = getMinTranslate();
             if (null != slidListener && itemsCount > (width / chartItemWidth)) {
+                overScroller.forceFinished(true);
                 slidListener.onSlidRight();
             }
         } else if (translateX > getMaxTranslate()) {
             translateX = getMaxTranslate();
             if (null != slidListener && itemsCount > (width / chartItemWidth)) {
+                overScroller.forceFinished(true);
                 slidListener.onSlidLeft();
             }
         }
@@ -1575,7 +1589,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 break;
         }
         mainScaleY = mainRect.height() * 1f / (mainMaxValue - mainMinValue);
-        if (showAnim.isRunning() && loadDataWithAnim) {
+        if (showAnim.isRunning()) {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
         }

@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
+
 import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
@@ -31,7 +32,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     protected int selectedIndex = -1;
 
-    private OverScroller overScroller;
+    protected OverScroller overScroller;
 
     protected boolean touch = false;
 
@@ -148,7 +149,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     @Override
     public void computeScroll() {
         if (overScroller.computeScrollOffset()) {
-            if (!isTouch()) {
+            if (!isTouch() && isScrollEnable()) {
                 scrollTo(overScroller.getCurrX(), overScroller.getCurrY());
             } else {
                 overScroller.forceFinished(true);

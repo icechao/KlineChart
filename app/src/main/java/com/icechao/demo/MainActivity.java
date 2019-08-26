@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
@@ -123,12 +124,21 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
-                        LogUtil.e("onSlidLeft");
+                        if (!load) {
+                            chartView.showLoading();
+                            LogUtil.e("onSlidLeft");
+                            List<KChartBean> kChartBeans = all.subList(0, 300);
+                            kChartBeans.addAll(adapter.getDatas());
+                            adapter.resetData(kChartBeans, true);
+                            chartView.hideLoading();
+                            load = true;
+                        }
                     }
 
                     @Override
                     public void onSlidRight() {
                         LogUtil.e("onSlidRight");
+
                     }
                 })
                 //set Y label formater
@@ -153,6 +163,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     }
                 });
     }
+
+    private boolean load;
 
     Random random = new Random();
 
