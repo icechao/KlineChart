@@ -65,13 +65,13 @@ public class MACDDraw extends BaseDraw {
         canvas.drawText(text, x, y, view.getTextPaint());
         x += macdPaint.measureText(text);
 
-        text = macdIndexLabel + view.formatValue(values[Constants.INDEX_MACD_MACD]) + "  ";
+        text = macdIndexLabel + getValueFormatter().format(values[Constants.INDEX_MACD_MACD]) + "  ";
         canvas.drawText(text, x, y, macdPaint);
         x += macdPaint.measureText(text);
-        text = difIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DIF]) + "  ";
+        text = difIndexLabel + getValueFormatter().format(values[Constants.INDEX_MACD_DIF]) + "  ";
         canvas.drawText(text, x, y, difPaint);
         x += difPaint.measureText(text);
-        text = deaIndexLabel + view.formatValue(values[Constants.INDEX_MACD_DEA]);
+        text = deaIndexLabel + getValueFormatter().format(values[Constants.INDEX_MACD_DEA]);
         canvas.drawText(text, x, y, deaPaint);
     }
 

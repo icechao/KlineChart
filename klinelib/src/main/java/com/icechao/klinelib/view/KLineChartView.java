@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.IChartDraw;
 import com.icechao.klinelib.base.IDateTimeFormatter;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.draw.*;
@@ -205,6 +206,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选中时是否显示十字线的交点圆
      *
      * @param showCrossPoint default true
+     * @return {@link KLineChartView}
      */
     private KLineChartView setSelectedShowCrossPoint(boolean showCrossPoint) {
         this.showCrossPoint = showCrossPoint;
@@ -215,6 +217,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中时坐标边框线宽
      *
      * @param width width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedLabelBorderWidth(float width) {
         selectorFramePaint.setStrokeWidth(width);
@@ -225,6 +228,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 子视图的padding
      *
      * @param childViewPaddingTop padding
+     * @return {@link KLineChartView}
      */
     public KLineChartView setChildPaddingTop(float childViewPaddingTop) {
         this.childViewPaddingTop = childViewPaddingTop;
@@ -235,6 +239,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中时坐标边框线颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedLabelBorderColor(int color) {
         selectorFramePaint.setColor(color);
@@ -246,6 +251,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 价格线框边框宽度
      *
      * @param width width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPricelineBoxBorderWidth(float width) {
         priceLineBoxPaint.setStrokeWidth(width);
@@ -256,6 +262,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 价格线框边框颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPricelineBoxBorderColor(int color) {
         priceLineBoxPaint.setColor(color);
@@ -285,6 +292,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 仅显示LoadingView同时显示K线,如果调用方法前没设置过setProgressBar 会自动加载一个progressBar
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView showLoading() {
         if (null != progressBar) {
@@ -303,6 +312,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 仅显示LoadingView不显示K线
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView justShowLoading() {
         showLoading();
@@ -314,6 +325,8 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 切换时可能会引起动画效果
      * 延迟500换秒隐藏动画以免动画效果显示
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView hideLoading() {
         if (null != progressBar) {
@@ -327,6 +340,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 隐藏选择器内容
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView hideSelectData() {
         showSelected = false;
@@ -351,6 +366,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置DIF颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setDIFColor(int color) {
         macdDraw.setDIFColor(color);
@@ -359,6 +376,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置DEA颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setDEAColor(int color) {
         macdDraw.setDEAColor(color);
@@ -367,6 +386,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置MACD颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMACDColor(int color) {
         macdDraw.setMACDColor(color);
@@ -377,6 +398,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置MACD的宽度
      *
      * @param MACDWidth width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMACDWidth(float MACDWidth) {
         macdDraw.setMACDWidth(MACDWidth);
@@ -385,6 +407,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置K颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setKColor(int color) {
         kdjDraw.setKColor(color);
@@ -393,6 +417,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置D颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setDColor(int color) {
         kdjDraw.setDColor(color);
@@ -401,6 +427,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置J颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setJColor(int color) {
         kdjDraw.setJColor(color);
@@ -409,6 +437,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置R颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setR1Color(int color) {
         wrDraw.setR1Color(color);
@@ -417,6 +447,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置R颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setR2Color(int color) {
         wrDraw.setR2Color(color);
@@ -425,6 +457,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置R颜色
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setR3Color(int color) {
         wrDraw.setR3Color(color);
@@ -435,6 +469,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置ma5颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMa1Color(int color) {
         mainDraw.setMaOneColor(color);
@@ -446,6 +481,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置ma10颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMa2Color(int color) {
         mainDraw.setMaTwoColor(color);
@@ -457,6 +493,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置ma20颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMa3Color(int color) {
         mainDraw.setMaThreeColor(color);
@@ -467,6 +504,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选择器文字大小
      *
      * @param textSize textsize
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectorTextSize(float textSize) {
         mainDraw.setSelectorTextSize(textSize);
@@ -477,6 +515,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选择器背景
      *
      * @param color Color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectorBackgroundColor(int color) {
         mainDraw.setSelectorBackgroundColor(color);
@@ -487,6 +526,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置蜡烛宽度
      *
      * @param candleWidth candleWidth
+     * @return {@link KLineChartView}
      */
     public KLineChartView setCandleWidth(float candleWidth) {
         mainDraw.setCandleWidth(candleWidth);
@@ -498,6 +538,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置蜡烛线画笔宽度
      *
      * @param candleLineWidth candleLineWidth
+     * @return {@link KLineChartView}
      */
     public KLineChartView setCandleLineWidth(float candleLineWidth) {
         mainDraw.setCandleLineWidth(candleLineWidth);
@@ -506,6 +547,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 蜡烛是否空心
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setCandleSolid(boolean candleSolid) {
         mainDraw.setStroke(candleSolid);
@@ -517,6 +560,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置十字线跟随手势移动
      *
      * @param model {@link Status.CrossTouchModel} default  SHOW_CLOSE
+     * @return {@link KLineChartView}
      */
     public KLineChartView setCrossFollowTouch(Status.CrossTouchModel model) {
         this.crossTouchModel = model;
@@ -561,6 +605,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置主视图Y轴上的Label向上的偏移量
      *
      * @param mainYMoveUpInterval default 5
+     * @return {@link KLineChartView}
      */
     @SuppressWarnings("unused")
     public KLineChartView setMainYMoveUpInterval(int mainYMoveUpInterval) {
@@ -572,6 +617,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置y轴上Label与视图右边距
      *
      * @param yLabelMarginRight default 10
+     * @return {@link KLineChartView}
      */
     public KLineChartView setyLabelMarginRight(float yLabelMarginRight) {
         this.yLabelMarginRight = yLabelMarginRight;
@@ -608,6 +654,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置ValueFormatter,Y轴价格的格式化器
      *
      * @param valueFormatter value格式化器
+     * @return {@link KLineChartView}
      */
     public KLineChartView setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
@@ -631,6 +678,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置dateTimeFormatter,X轴上label的格式化器
      *
      * @param dateTimeFormatter 时间格式化器
+     * @return {@link KLineChartView}
      */
     public KLineChartView setDateTimeFormatter(IDateTimeFormatter dateTimeFormatter) {
         this.dateTimeFormatter = dateTimeFormatter;
@@ -641,6 +689,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置K线的显示状态
      *
      * @param klineState {@link Status.KlineStatus}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setKlineState(Status.KlineStatus klineState) {
         if (this.klineStatus != klineState) {
@@ -665,6 +714,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置价格框离右边的距离
      *
      * @param priceBoxMarginRight priceLIneBoxMarginRight
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineBoxMarginRight(float priceBoxMarginRight) {
         this.priceLineBoxMarginRight = priceBoxMarginRight;
@@ -673,6 +723,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 价格框内边距
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineBoxePadding(float padding) {
         this.priceLineBoxPadidng = padding;
@@ -681,6 +733,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 价格线图形的高
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineShapeHeight(float priceLineShapeHeight) {
         this.priceShapeHeight = priceLineShapeHeight;
@@ -689,6 +743,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 价格线图形的宽
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineShapeWidth(float width) {
         this.priceShapeWidth = width;
@@ -697,6 +753,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 价格线文字与图形的间隔
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceBoxShapeTextMargin(float margin) {
         this.priceBoxShapeTextMargin = margin;
@@ -707,6 +765,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置价格框高度
      *
      * @param priceLineBoxHeight priceLineBoxHeight
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineBoxHeight(float priceLineBoxHeight) {
         this.priceLineBoxHeight = priceLineBoxHeight;
@@ -717,6 +776,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选中框前面的文本
      *
      * @param marketInfoText 默认中文 国际化手动调用
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMarketInfoText(String[] marketInfoText) {
         mainDraw.setMarketInfoText(marketInfoText);
@@ -727,6 +787,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置价格框背景色
      *
      * @param color default black
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineBoxBgColor(int color) {
         priceLineBoxBgPaint.setColor(color);
@@ -737,6 +798,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 十字线交点小圆颜色
      *
      * @param color default wihte
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedPointColor(int color) {
         selectedCrossPaint.setColor(color);
@@ -747,6 +809,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置选中点外圆颜色
      *
      * @param color default wihte
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectCrossBigColor(int color) {
         selectedbigCrossPaint.setColor(color);
@@ -757,6 +820,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置圆点半径
      *
      * @param radius selected circle radius
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedPointRadius(float radius) {
         selectedPointRadius = radius;
@@ -768,6 +832,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中的线的Y轴颜色
      *
      * @param color select y color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedYColor(int color) {
         this.selectedYColor = color;
@@ -778,6 +843,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 背景色顶部颜色
      *
      * @param color backgroud linearGrident top
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBackGroundFillTopColor(int color) {
         this.backGroundFillTopColor = color;
@@ -788,6 +854,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 背景色底部颜色
      *
      * @param color backgroud linearGrident bottom
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBackGroundFillBottomColor(int color) {
         this.backGroundFillBottomColor = color;
@@ -798,6 +865,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置涨的颜色
      *
      * @param color increase color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setIncreaseColor(int color) {
         mainDraw.setIncreaseColor(color);
@@ -809,6 +877,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置跌的颜色
      *
      * @param color decrease color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setDecreaseColor(int color) {
         mainDraw.setDecreaseColor(color);
@@ -820,6 +889,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置分时线颜色
      *
      * @param color time line color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineColor(int color) {
         mainDraw.setMinuteLineColor(color);
@@ -830,6 +900,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置分时线填充渐变的下部颜色
      *
      * @param color time line top fill color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineFillTopColor(int color) {
         this.timeLineFillTopColor = color;
@@ -840,6 +911,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置分时线填充渐变的下部颜色
      *
      * @param color time line bottom fill color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineFillBottomColor(int color) {
         this.timeLineFillBottomColor = color;
@@ -851,6 +923,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置主实图指定文字距离视图上边缘的距离,
      *
      * @param mainLengendMarginTop Lengend margin top , default 0
+     * @return {@link KLineChartView}
      */
     public KLineChartView setMainLengendMarginTop(float mainLengendMarginTop) {
         mainDraw.setMainLengendMarginTop(mainLengendMarginTop);
@@ -861,6 +934,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 交易量图例上边距
      *
      * @param volLengendMarginTop margin default 0
+     * @return {@link KLineChartView}
      */
     private KLineChartView setVolLengendMarginTop(float volLengendMarginTop) {
         volDraw.setVolLengendMarginTop(volLengendMarginTop);
@@ -871,6 +945,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 交易量图例颜色
      *
      * @param color color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setVolLengendColor(int color) {
         volDraw.setVolLengendColor(color);
@@ -881,12 +956,17 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置是否自适应X左右边轴坐标的位置,默认true
      *
      * @param betterX true会自动缩进左右两边的label更好的展示
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBetterX(boolean betterX) {
         this.betterX = betterX;
         return this;
     }
 
+    /**
+     * @param backgroundFillPaint
+     * @return {@link KLineChartView}
+     */
     public KLineChartView setPriceBoxColor(int backgroundFillPaint) {
         this.rightPriceBoxPaint.setColor(backgroundFillPaint);
         return this;
@@ -897,6 +977,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 价格线右侧的颜色
      *
      * @param color price line right color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineRightColor(int color) {
         priceLineRightPaint.setColor(color);
@@ -907,6 +988,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 价格线右侧价格文字的颜色
      *
      * @param color price line right color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineRightTextColor(int color) {
         priceLineRightTextPaint.setColor(color);
@@ -920,6 +1002,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置每个点的宽度
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setChartItemWidth(float pointWidth) {
         chartItemWidth = pointWidth;
@@ -940,6 +1024,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 分时线呼吸灯的颜色
      *
      * @param color pop color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineEndColor(int color) {
         lineEndPointPaint.setColor(color);
@@ -951,6 +1036,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 分时线呼吸灯的颜色半径
      *
      * @param width pop width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineEndRadiu(float width) {
         this.lineEndRadiu = width;
@@ -961,6 +1047,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 分时线尾部呼吸最大倍数
      *
      * @param multiply 倍数
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineEndMultiply(float multiply) {
         this.lineEndMaxMultiply = multiply;
@@ -971,6 +1058,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置价格线的宽度
      *
      * @param lineWidth price line width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineWidth(float lineWidth) {
         priceLinePaint.setStrokeWidth(lineWidth);
@@ -981,6 +1069,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 统一设置设置文字大小
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTextSize(float textSize) {
         textPaint.setTextSize(textSize);
@@ -1009,6 +1099,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置背景颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBgColor(int color) {
         this.backgroundPaint.setColor(color);
@@ -1018,6 +1111,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选中point 值显示背景
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectPriceBoxBackgroundColor(int color) {
         selectedPriceBoxBackgroundPaint.setColor(color);
@@ -1026,7 +1122,9 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * 设置超出右方后可滑动的范围
+     * 设置K线右侧超出范围
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setOverScrollRange(float overScrollRange) {
         if (overScrollRange < 0) {
@@ -1052,6 +1150,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置下方padding
      *
      * @param chartPaddingBottom chatPaddingTop 横线网格和K线会绘制在这个位置的下方
+     * @return {@link KLineChartView}
      */
     public KLineChartView setChartPaddingBottom(float chartPaddingBottom) {
         this.chartPaddingBottom = (int) chartPaddingBottom;
@@ -1063,6 +1162,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置下方padding
      *
      * @param chartPaddingBottom chartPaddingBottom
+     * @return {@link KLineChartView}
      */
     @SuppressWarnings("unused")
     public KLineChartView setChartPaddingBottom(int chartPaddingBottom) {
@@ -1072,6 +1172,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置表格线宽度
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setGridLineWidth(float width) {
         gridPaint.setStrokeWidth(width);
@@ -1080,6 +1182,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置表格线颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setGridLineColor(int color) {
         gridPaint.setColor(color);
@@ -1088,6 +1193,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选择器横线宽度
+     *
+     * @param width width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedXLineWidth(float width) {
         selectedXLinePaint.setStrokeWidth(width);
@@ -1096,6 +1204,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选择器横线颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedXLineColor(int color) {
         selectedXLinePaint.setColor(color);
@@ -1104,6 +1215,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选择器竖线宽度
+     *
+     * @param width width
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedYLineWidth(float width) {
         selectedWidth = width;
@@ -1112,6 +1226,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选择器竖线颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedYLineColor(int color) {
         selectedYLinePaint.setColor(color);
@@ -1120,6 +1237,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置文字颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setTextColor(int color) {
         textPaint.setColor(color);
@@ -1132,6 +1252,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param textColor       文字
      * @param borderColor     边框
      * @param backgroundColor 背景
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedInfoBoxColors(int textColor, int borderColor, int backgroundColor) {
         mainDraw.setSelectorTextColor(textColor, borderColor, backgroundColor);
@@ -1167,6 +1288,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置表格行数
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setGridRows(int gridRows) {
         if (gridRows < 1) {
@@ -1183,6 +1306,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置表格列数
+     *
+     * @return {@link KLineChartView}
      */
     public KLineChartView setGridColumns(int gridColumns) {
         if (gridColumns < 1) {
@@ -1200,7 +1325,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 获取交易量区域的IchartDraw
      *
-     * @return IChartDraw
+     * @return {@link KLineChartView}
      */
     public KLineChartView setVolFormatter(IValueFormatter valueFormatter) {
         volDraw.setValueFormatter(valueFormatter);
@@ -1210,6 +1335,9 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置数据适配器
+     *
+     * @param adapter {@link KLineChartAdapter}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setAdapter(KLineChartAdapter adapter) {
         if (null != dataAdapter && null != dataSetObserver) {
@@ -1230,10 +1358,13 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置选择监听
+     *
+     * @param l {@link OnSelectedChangedListener}
+     * @return {@link KLineChartView}
      */
     @SuppressWarnings("unused")
     public KLineChartView setOnSelectedChangedListener(OnSelectedChangedListener l) {
-        this.mOnSelectedChangedListener = l;
+        this.selectedChangedListener = l;
         return this;
     }
 
@@ -1242,6 +1373,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置当前显示子图
      *
      * @param position {@link Status.IndexStatus}
+     * @return {@link KLineChartView}
      */
     public KLineChartView setIndexDraw(Status.IndexStatus position) {
         if (indexDrawPosition.getStatu() == position.getStatu()) {
@@ -1273,6 +1405,7 @@ public class KLineChartView extends BaseKLineChartView {
      * MA/BOLL切换及隐藏
      *
      * @param status {@link Status.MainStatus}
+     * @return {@link KLineChartView}
      */
     public KLineChartView changeMainDrawType(Status.MainStatus status) {
         if (this.status != status) {
@@ -1286,6 +1419,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置加载数据时是否使用动画
      *
      * @param withAnim true load data with anim ; default  true
+     * @return {@link KLineChartView}
      */
     public KLineChartView setAnimLoadData(boolean withAnim) {
         loadDataWithAnim = withAnim;
@@ -1306,6 +1440,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置加载loading
      *
      * @param progressBar loading View
+     * @return {@link KLineChartView}
      */
     public KLineChartView setLoadingView(View progressBar) {
         this.progressBar = progressBar;
@@ -1320,6 +1455,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置滑动监听
      *
      * @param slidListener 监听对象
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSlidListener(SlidListener slidListener) {
         this.slidListener = slidListener;
@@ -1328,6 +1464,8 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置加载数据动画时间
+     *
+     * @return {@link KLineChartView}
      */
     @SuppressWarnings("unused")
     public KLineChartView setAnimationDuration(long duration) {
@@ -1342,6 +1480,7 @@ public class KLineChartView extends BaseKLineChartView {
      * add logo in Kline View
      *
      * @param bitmap logo bitmap
+     * @return {@link KLineChartView}
      */
     public KLineChartView setLogoBigmap(Bitmap bitmap) {
         if (null != bitmap) {
@@ -1354,6 +1493,7 @@ public class KLineChartView extends BaseKLineChartView {
      * add logo in Kline View
      *
      * @param bitmapRes logo resource
+     * @return {@link KLineChartView}
      */
     public KLineChartView setLogoResouce(int bitmapRes) {
         if (bitmapRes == 0) {
@@ -1368,6 +1508,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 设置logo透明度
      *
      * @param alpha set the alpha component [0..255] of the paint's color.
+     * @return {@link KLineChartView}
      */
     public KLineChartView setLogoAlpha(int alpha) {
         logoPaint.setAlpha(alpha);
@@ -1377,12 +1518,14 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * set logo location  defual left bottom
      *
-     * @param left logo left location default 0
-     * @param top  logo top location default  -1 when top is -1 the logo will show in bottom
+     * @param leftPadding   logo left location default 0
+     * @param bottomPadding logo top location default  -1 when top is -1 the logo will show in bottom
+     * @return {@link KLineChartView}
      */
-    public KLineChartView setLogoLeftTop(float left, float top) {
-        logoLeft = left;
-        logoTop = top;
+    public KLineChartView setLogoPadding(float leftPadding, float bottomPadding) {
+        this.logoPaddingLeft = leftPadding;
+        this.logoPaddingBottom = bottomPadding;
+        logoTop = Float.MIN_VALUE;
         return this;
     }
 
@@ -1390,6 +1533,7 @@ public class KLineChartView extends BaseKLineChartView {
      * set view backGround alpha
      *
      * @param alpha default 18
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBackGroundAlpha(int alpha) {
         backgroundPaint.setAlpha(alpha);
@@ -1400,6 +1544,7 @@ public class KLineChartView extends BaseKLineChartView {
      * set cross line show modle
      *
      * @param showCrossModle {@link Status.ShowCrossModle} default SELECTBOTH
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedTouchModle(Status.ShowCrossModle showCrossModle) {
         this.modle = showCrossModle;
@@ -1411,6 +1556,7 @@ public class KLineChartView extends BaseKLineChartView {
      * set KlineChartView right Padding,Kline will show in this point left
      *
      * @param klineRightPadding default 0
+     * @return {@link KLineChartView}
      */
     public KLineChartView setKlineRightPadding(float klineRightPadding) {
         this.klinePaddingRight = klineRightPadding;
@@ -1421,6 +1567,7 @@ public class KLineChartView extends BaseKLineChartView {
      * set background fill color alpha
      *
      * @param alpha default 150
+     * @return {@link KLineChartView}
      */
     public KLineChartView setBackGroudFillAlpha(int alpha) {
         rightPriceBoxPaint.setAlpha(alpha);
@@ -1440,6 +1587,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中时价格5边弄的横向padding
      *
      * @param padding padding, 带角的3角形的高为 横+纵padding
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectPriceBoxHorizentalPadding(float padding) {
         this.selectPriceBoxHorizentalPadding = padding;
@@ -1450,6 +1598,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中时价格5边弄的纵向padding
      *
      * @param padding padding 带角的3角形的高为 横+纵padding
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectPriceboxVerticalPadding(float padding) {
         this.selectPriceBoxVerticalPadding = padding;
@@ -1460,6 +1609,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中行弹出行情图的margin
      *
      * @param margin
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectInfoBoxMargin(float margin) {
         mainDraw.setSelectInfoBoxMargin(margin);
@@ -1470,6 +1620,7 @@ public class KLineChartView extends BaseKLineChartView {
      * 选中行弹出行情图的padding,上下为此值*2
      *
      * @param padding
+     * @return {@link KLineChartView}
      */
     public KLineChartView setSelectInfoBoxPadding(float padding) {
         mainDraw.setSelectInfoBoxPadding(padding);
@@ -1489,8 +1640,9 @@ public class KLineChartView extends BaseKLineChartView {
      * 切换显示/隐藏交易量
      *
      * @param show default true
+     * @return {@link KLineChartView}
      */
-    public void setChartVolState(boolean show) {
+    public KLineChartView setChartVolState(boolean show) {
         switch (chartShowStatue) {
             case MAIN_ONLY:
                 if (show) {
@@ -1514,6 +1666,7 @@ public class KLineChartView extends BaseKLineChartView {
                 break;
         }
         initRect();
+        return this;
     }
 
 
@@ -1528,10 +1681,10 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * set the color of vol chart show as line chart
+     * set the line color when vol chart show as line
      *
-     * @param color
-     * @return
+     * @param color line color
+     * @return {@link KLineChartView}
      */
     public KLineChartView setVolLineChartColor(int color) {
         volDraw.setLineChartColor(color);
@@ -1543,8 +1696,59 @@ public class KLineChartView extends BaseKLineChartView {
      * set vol View chart line/or bar
      *
      * @param volChartStatus defaul time line show line chart , K line show barChart
+     * @return {@link KLineChartView}
      */
-    public void setVolChartStatues(Status.VolChartStatus volChartStatus) {
+    public KLineChartView setVolChartStatues(Status.VolChartStatus volChartStatus) {
         this.volChartStatus = volChartStatus;
+        return this;
+    }
+
+    /**
+     * 强制隐藏信息框
+     *
+     * @param forceHide 是否隐藏
+     */
+    public KLineChartView hideMarketInfoBox(boolean forceHide) {
+        this.hideMarketInfo = forceHide;
+        animInvalidate();
+        return this;
+    }
+
+
+    /**
+     * 替换MainDraw
+     *
+     * @param t   MainDraw子类对象
+     * @param <T> 泛型控制
+     * @return {@link KLineChartView}
+     */
+    public <T extends MainDraw> KLineChartView resetMainDraw(T t) {
+        this.mainDraw = t;
+        return this;
+    }
+
+
+    /**
+     * 替换volDraw
+     *
+     * @param t   VolumeDraw子类对象
+     * @param <T> 泛型控制
+     * @return {@link KLineChartView}
+     */
+    public <T extends VolumeDraw> KLineChartView resetVoDraw(T t) {
+        this.volDraw = t;
+        return this;
+    }
+
+    /**
+     * 替换IndexDraw
+     *
+     * @param t   IChartDraw子类对象
+     * @param <T> 泛型控制
+     * @return {@link KLineChartView}
+     */
+    public <T extends IChartDraw> KLineChartView resetIndexDraw(Status.IndexStatus status, T t) {
+        indexDraws.set(status.getStatu(), t);
+        return this;
     }
 }

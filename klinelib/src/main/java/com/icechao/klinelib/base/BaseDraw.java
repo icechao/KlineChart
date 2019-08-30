@@ -1,5 +1,7 @@
 package com.icechao.klinelib.base;
 
+import android.graphics.Canvas;
+
 import java.util.Arrays;
 
 /*************************************************************************
@@ -41,5 +43,10 @@ public abstract class BaseDraw implements IChartDraw {
             }
         }
         return 0;
+    }
+
+    public void drawMaxMinValue(Canvas canvas, BaseKLineChartView view,
+                                float maxX, float mainHighMaxValue,
+                                float minX, float mainLowMinValue) {
     }
 }

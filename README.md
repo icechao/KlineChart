@@ -35,7 +35,7 @@
             
             工程的build.gradle中
 
-                        implementation 'com.icechao.klinelib:klinelib:0.0.7'
+                        implementation 'com.icechao.klinelib:klinelib:0.0.9'
 
             
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
@@ -352,12 +352,12 @@
             参数
             alpha : 0-255 logo画笔透明度
             
-  ### logo位置是指
+  ### logo位置是指  --修改方法
         
-        kLineChartView.setLogoLeftTop(float left, float top);
+        kLineChartView.setLogoPadding(float left, float top);
             参数
-            left : logo的左侧坐标,相对KlineChartView
-            top  : logo的顶部坐标,相对KlineChartView
+            left : logo的左侧padding,相对KlineChartView主视图区域
+            top  : logo的顶部padding,相对KlineChartView主视图区域
             
   ### K线滑动监听
         
@@ -456,7 +456,20 @@
             Status.VolChartStatus.BAR_CHART  : 柱状图
             Status.VolChartStatus.LINE_CHART : 线状图
             
-         
+  ### 强制隐藏信息框
+        kLineChartView.hideMarketInfoBox(boolean forceHide)  
+        参数 
+            true  : 隐藏
+            false : 显示       
+  
+  ### 替换MainDraw,继承后自由实现功能
+          kLineChartView.resetMainDraw(T t)
+           
+  ### 替换volDraw,继承后自由实现功能
+          kLineChartView.resetVoDraw(T t)
+                    
+  ### 替换IndexDraw,继承后自由实现功能
+          kLineChartView.resetIndexDraw(Status.IndexStatus status, T t) 
             
        
 ### 功能及优化
@@ -489,10 +502,12 @@
   - 添加K线数据变化时动画效果
   - 添加加载数据的动画执行开关
   - 添加最新价格和屏幕右侧指示线
+  - 添加自由绘制(继承实现绘制方法)
   - 添加十字线模式开关(选中Y值跟随手指或指向最新价)
   - 添加LoadingView设置(可以自定义View并自定义动画)
   - 添加X轴左右坐标显示模式开关(相对坐标点居中,屏幕内  默认屏幕内显示)
   - 删除加载更多逻辑(重置设置数据不需要加载更多)
+  
 
   
 

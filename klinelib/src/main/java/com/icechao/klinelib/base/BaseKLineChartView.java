@@ -51,7 +51,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 动画执行时长
      */
-    private long duration = 300;
+    protected long duration = 300;
 
     /**
      * 当前子视图的索引
@@ -363,13 +363,22 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * refresh time limit
      */
     private long time;
+
     /**
      * 背景颜色
      */
     protected int backGroundColor;
 
-
+    /**
+     * 显示十字线的点
+     */
     protected boolean showCrossPoint;
+
+    /**
+     * 强制隐藏信息框
+     */
+    protected boolean hideMarketInfo;
+
     /**
      * 数据观察者,当数据变化
      */
@@ -457,6 +466,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 当前数据个数
      */
     protected int itemsCount;
+
+
+    /**
+     * 指标视图
+     */
     protected List<IChartDraw> indexDraws = new ArrayList<>();
 
     /**
@@ -474,9 +488,15 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected ValueAnimator showAnim;
 
+    /**
+     * 空白区域
+     */
     protected float overScrollRange = 0;
 
-    protected OnSelectedChangedListener mOnSelectedChangedListener = null;
+    /**
+     * 选中变化监听
+     */
+    protected OnSelectedChangedListener selectedChangedListener = null;
 
     /**
      * 主视图
@@ -604,7 +624,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 初始化
      */
-    private void init() {
+    protected void init() {
         setWillNotDraw(false);
         indexInterval = Constants.getCount();
         gestureDetector = new GestureDetectorCompat(getContext(), this);
@@ -696,14 +716,16 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
 
-    protected float logoLeft, logoTop = Float.MIN_VALUE;
+    protected float logoTop = Float.MIN_VALUE;
 
-    private void drawLogo(Canvas canvas) {
+    protected float logoPaddingLeft, logoPaddingBottom;
+
+    protected void drawLogo(Canvas canvas) {
         if (null != logoBitmap) {
             if (Float.MIN_VALUE == logoTop) {
-                logoTop = mainRect.bottom - logoBitmap.getHeight();
+                logoTop = mainRect.bottom - logoBitmap.getHeight() - logoPaddingBottom;
             }
-            canvas.drawBitmap(logoBitmap, logoLeft, logoTop, logoPaint);
+            canvas.drawBitmap(logoBitmap, logoPaddingLeft, logoTop, logoPaint);
         }
     }
 
@@ -712,7 +734,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvas
      */
-    private void drawBackground(Canvas canvas) {
+    protected void drawBackground(Canvas canvas) {
         float mid = width / 2, bottom;
         int mainBottom = mainRect.bottom;
         backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
@@ -806,7 +828,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return value
      */
 
-    private float borderCheck(double v, int bottom) {
+    protected float borderCheck(double v, int bottom) {
         return v >= bottom ? bottom - 1 : (float) v;
     }
 
@@ -851,7 +873,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvas
      */
-    private void drawGirdLines(Canvas canvas) {
+    protected void drawGirdLines(Canvas canvas) {
 
         for (int i = 0; i <= gridRows; i++) {
             float y = rowSpace * i + chartPaddingTop;
@@ -869,7 +891,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvas
      */
-    private void drawK(Canvas canvas) {
+    protected void drawK(Canvas canvas) {
         canvas.save();
         canvas.translate(canvasTranslateX, 0);
         for (int i = screenLeftIndex; i <= screenRightIndex && i >= 0; i++) {
@@ -965,7 +987,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 return;
             }
         } else {
-            text = formatValue(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
+            text = valueFormatter.format(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
             y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
         }
         canvas.drawLine(-canvasTranslateX, y, -canvasTranslateX + width, y, selectedXLinePaint);
@@ -1013,11 +1035,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvas
      */
-    private void drawXLabels(Canvas canvas) {
+    protected void drawXLabels(Canvas canvas) {
 
         float y = chartPaddingTop + displayHeight + baseLine;
-
-
         float halfWidth = chartItemWidth / 2 * getScaleX();
         float startX = getX(screenLeftIndex) - halfWidth;
         float stopX = getX(screenRightIndex) + halfWidth;
@@ -1062,13 +1082,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvase
      */
-    private void drawYLabels(Canvas canvas) {
+    protected void drawYLabels(Canvas canvas) {
         double rowValue;
         float tempYLabelX;
         int gridRowCount;
         String maxVol, childLable;
-        //当显示子视图时,y轴label减少显示一个
-//        if (null != childDraw) {
         switch (chartShowStatue) {
             case MAIN_VOL_INDEX:
                 if (0 == gridRowCountWithChild) {
@@ -1080,7 +1098,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 tempYLabelX = width - yLabelMarginRight;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = formatValue(mainMaxValue - i * rowValue);
+                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempYLabelX -
                             textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
@@ -1112,7 +1130,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 tempYLabelX = width - yLabelMarginRight;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = formatValue(mainMaxValue - i * rowValue);
+                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempYLabelX -
                             textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
@@ -1136,7 +1154,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 tempYLabelX = width - yLabelMarginRight;
                 //Y轴上网格的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = formatValue(mainMaxValue - i * rowValue);
+                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempYLabelX -
                             textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
@@ -1153,7 +1171,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 tempYLabelX = width - yLabelMarginRight;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = formatValue(mainMaxValue - i * rowValue);
+                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempYLabelX - textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
                 }
@@ -1193,7 +1211,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param canvas canvase
      */
-    private void drawPriceLine(Canvas canvas) {
+    protected void drawPriceLine(Canvas canvas) {
         float y = getMainY(lastPrice);
         String priceString = valueFormatter.format(lastPrice);
         //多加2个像素防止文字宽度有小的变化
@@ -1204,7 +1222,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             drawKlineRightSpace(canvas, y, priceString, textWidth, textLeft, endLineRight);
         } else {
             float halfPriceBoxHeight = priceLineBoxHeight / 2;
-            //修改价格信息框Y轴计算保证,只会绘制在主区域中
+            //要想保证价格框只会绘制在主区域内,取消注释代码
 //            if (lastPrice > mainMaxValue) {
 //                y = mainRect.top + halfPriceBoxHeight;
 //            } else if (lastPrice < mainMinValue) {
@@ -1223,7 +1241,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param textWidth          textWidth
      * @param halfPriceBoxHeight halfPriceBoxHeight
      */
-    private void fullScreenPriceLine(Canvas canvas, float y, String priceString, float textWidth, float halfPriceBoxHeight) {
+    protected void fullScreenPriceLine(Canvas canvas, float y, String priceString, float textWidth, float halfPriceBoxHeight) {
         //绘制右侧虚线
         for (int i = 0; i < width; i += 12) {
             canvas.drawLine(i, y, i + 8, y, priceLinePaint);
@@ -1248,7 +1266,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawText(priceString, boxLeft + priceLineBoxPadidng, (y + (halfHeight - textDecent)), textPaint);
     }
 
-    private void drawKlineRightSpace(Canvas canvas, float y, String priceString, float textWidth, float textLeft, float endLineRight) {
+    protected void drawKlineRightSpace(Canvas canvas, float y, String priceString, float textWidth, float textLeft, float endLineRight) {
         //两个价格图层在点之间所以放在价格线中绘制
         if (klineStatus.showLine()) {
             drawEndPoint(canvas, endLineRight);
@@ -1309,7 +1327,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param canvas   canvas
      * @param position 显示某个点的值
      */
-    private void drawValue(Canvas canvas, int position) {
+    protected void drawValue(Canvas canvas, int position) {
         int temp = indexInterval * position;
         if (temp < points.length && position >= 0) {
             float[] tempValues = Arrays.copyOfRange(points, temp, temp + indexInterval);
@@ -1330,13 +1348,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     }
 
-    /**
-     * 格式化值
-     */
-    public String formatValue(double value) {
-        return valueFormatter.format((float) value);
-    }
-
 
     /**
      * 当前主视图显示的指标
@@ -1348,7 +1359,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param x index of selected item
      */
-    private void calculateSelectedX(float x) {
+    protected void calculateSelectedX(float x) {
         selectedIndex = indexOfTranslateX(xToTranslateX(x));
         if (selectedIndex > screenRightIndex) {
             selectedIndex = screenRightIndex;
@@ -1367,8 +1378,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         selectedY = e.getY();
         if (lastIndex != selectedIndex) {
             int temp = selectedIndex * indexInterval;
-            if (null != this.mOnSelectedChangedListener) {
-                mOnSelectedChangedListener.onSelectedChanged(this, selectedIndex, Arrays.copyOfRange(points, temp, temp + indexInterval));
+            if (null != this.selectedChangedListener) {
+                selectedChangedListener.onSelectedChanged(this, selectedIndex, Arrays.copyOfRange(points, temp, temp + indexInterval));
             }
         }
         invalidate();
@@ -1446,7 +1457,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param translateX canvasTranslateX
      */
-    private void changeTranslated(float translateX) {
+    protected void changeTranslated(float translateX) {
         if (translateX < getMinTranslate()) {
             translateX = getMinTranslate();
             if (null != slidListener && itemsCount > (width / chartItemWidth)) {
@@ -1466,7 +1477,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 计算当前显示的数据以及显示的数据的最大最小值
      */
-    private void calcValues() {
+    protected void calcValues() {
         float scaleWidth = chartItemWidth * scaleX;
 
         if (canvasTranslateX <= scaleWidth / 2) {
@@ -1787,20 +1798,26 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     /**
-     * translateX转化为view中的x
+     * translateX
      *
-     * @param translateX translateX
      * @return x
      */
-    public float translateXtoX(float translateX) {
-        return translateX + canvasTranslateX;
+    public float getTranslateX() {
+        return canvasTranslateX;
     }
 
     /**
-     * 是否长按
+     * 是否显示选中
      */
     public boolean getShowSelected() {
         return showSelected;
+    }
+
+    /**
+     * 是否显示选中
+     */
+    public boolean forceHideMarket() {
+        return hideMarketInfo;
     }
 
     /**
@@ -1811,8 +1828,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
 
-    public Rect getVolRect() {
-        return volRect;
+    public int getVolRectBottom() {
+        return volRect.bottom;
     }
 
     /**
@@ -1883,7 +1900,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             invalidate();
             time = System.currentTimeMillis();
         }
-
     }
 
     /**

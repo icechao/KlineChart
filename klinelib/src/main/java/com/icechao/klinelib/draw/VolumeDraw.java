@@ -85,7 +85,7 @@ public class VolumeDraw extends BaseDraw {
     private void drawHistogram(Canvas canvas, float curX, float vol, float open, float close, BaseKLineChartView view, int position) {
 
         float top, r = volWidth / 2 * view.getScaleX();
-        int bottom = view.getVolRect().bottom;
+        int bottom = view.getVolRectBottom();
         if (position == itemsCount - 1 && view.isAnimationLast()) {
             top = view.getVolY(view.getLastVol());
         } else {

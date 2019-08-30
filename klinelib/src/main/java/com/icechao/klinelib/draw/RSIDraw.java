@@ -51,7 +51,7 @@ public class RSIDraw extends BaseDraw {
             Paint textPaint = view.getTextPaint();
             canvas.drawText(lengentText, x, y, textPaint);
             x += textPaint.measureText(lengentText);
-            String text = view.formatValue(values[Constants.INDEX_RSI_1]);
+            String text = getValueFormatter().format(values[Constants.INDEX_RSI_1]);
             canvas.drawText(text, x, y, mRSI1Paint);
         }
     }

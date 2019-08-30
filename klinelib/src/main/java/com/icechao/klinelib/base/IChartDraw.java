@@ -77,4 +77,9 @@ public interface IChartDraw {
 
     void resetValues();
 
+
+    void drawMaxMinValue(Canvas canvas, BaseKLineChartView view,
+                         float maxX, float mainHighMaxValue,
+                         float minX, float mainLowMinValue);
+
 }

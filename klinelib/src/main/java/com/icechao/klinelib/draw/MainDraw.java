@@ -6,13 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseDraw;
 import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
@@ -139,12 +139,6 @@ public class MainDraw extends BaseDraw {
                             bollUp, indexPaintTwo,
                             values[Constants.INDEX_BOLL_UP + indexInterval]);
 
-
-                    if (position == itemCount - 1) {
-                        LogUtil.e("=> 原 : " + position + " Up() : " + values[Constants.INDEX_BOLL_UP + indexInterval] + "  Mb() : " + values[Constants.INDEX_BOLL_MB + indexInterval] + "Dn() : " + values[Constants.INDEX_BOLL_DN + indexInterval]);
-                        LogUtil.e("=> 变 : " + position + " Up() : " + bollUp + "  Mb() : " + bollMb + "Dn() : " + bollDn);
-                    }
-
                     drawLine(lastX, curX, canvas, view, position,
                             values[Constants.INDEX_BOLL_MB],
                             bollMb, indexPaintOne,
@@ -197,18 +191,18 @@ public class MainDraw extends BaseDraw {
                 }
             } else if (status == Status.MainStatus.BOLL) {
                 if (Float.MIN_VALUE != values[Constants.INDEX_BOLL_MB]) {
-                    String text = indexBoll + view.formatValue(values[Constants.INDEX_BOLL_MB]) + "  ";
+                    String text = indexBoll + valueFormatter.format(values[Constants.INDEX_BOLL_MB]) + "  ";
                     canvas.drawText(text, x, y, indexPaintOne);
                     x += indexPaintOne.measureText(text);
-                    text = indexUb + view.formatValue(values[Constants.INDEX_BOLL_UP]) + "  ";
+                    text = indexUb + valueFormatter.format(values[Constants.INDEX_BOLL_UP]) + "  ";
                     canvas.drawText(text, x, y, indexPaintTwo);
                     x += indexPaintTwo.measureText(text);
-                    text = indexLb + view.formatValue(values[Constants.INDEX_BOLL_DN]);
+                    text = indexLb + valueFormatter.format(values[Constants.INDEX_BOLL_DN]);
                     canvas.drawText(text, x, y, indexPaintThree);
                 }
             }
         }
-        if (view.getShowSelected()) {
+        if (view.getShowSelected() && !view.forceHideMarket()) {
             drawSelector(view, canvas, values);
         }
     }
@@ -273,11 +267,10 @@ public class MainDraw extends BaseDraw {
      * @param values
      */
     @SuppressLint("DefaultLocale")
-    private void drawSelector(BaseKLineChartView view, Canvas canvas, float[] values) {
+    protected void drawSelector(BaseKLineChartView view, Canvas canvas, float[] values) {
 
         int index = view.getSelectedIndex();
 
-//        strings[0] = view.formatDateTime(view.getAdapter().getDate(index));
         strings[0] = view.getTime(index);
         strings[1] = view.getValueFormatter().format(values[Constants.INDEX_OPEN]);
         strings[2] = (view.getValueFormatter().format(values[Constants.INDEX_HIGH]));
@@ -298,7 +291,7 @@ public class MainDraw extends BaseDraw {
         }
         width += padding * 2;
 
-        float x = view.translateXtoX(view.getX(index));
+        float x = view.getX(index) + view.getTranslateX();
         if (x > view.getViewWidth() / 2) {
             left = margin;
         } else {

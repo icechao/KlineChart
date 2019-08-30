@@ -52,7 +52,7 @@ public class WRDraw extends BaseDraw {
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
             canvas.drawText(lengentText, x, y, view.getTextPaint());
             x += view.getTextPaint().measureText(lengentText);
-            String temp = view.formatValue(values[Constants.INDEX_WR_1]) + " ";
+            String temp = getValueFormatter().format(values[Constants.INDEX_WR_1]) + " ";
             canvas.drawText(temp, x, y, r1Paint);
         }
     }

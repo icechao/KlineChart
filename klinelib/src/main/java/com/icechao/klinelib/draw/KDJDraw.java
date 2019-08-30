@@ -63,14 +63,14 @@ public class KDJDraw extends BaseDraw {
             canvas.drawText(text, x, y, view.getTextPaint());
             x += view.getTextPaint().measureText(text);
 
-            text = kIndexLabel + view.formatValue(values[Constants.KDJ_K]) + " ";
+            text = kIndexLabel + getValueFormatter().format(values[Constants.KDJ_K]) + " ";
             canvas.drawText(text, x, y, mKPaint);
             x += mKPaint.measureText(text);
             if (Float.MIN_VALUE != values[Constants.KDJ_D]) {
-                text = dIndexLabel + view.formatValue(values[Constants.KDJ_D]) + " ";
+                text = dIndexLabel + getValueFormatter().format(values[Constants.KDJ_D]) + " ";
                 canvas.drawText(text, x, y, mDPaint);
                 x += mDPaint.measureText(text);
-                text = jIndexLabel + view.formatValue(values[Constants.KDJ_J]) + " ";
+                text = jIndexLabel + getValueFormatter().format(values[Constants.KDJ_J]) + " ";
                 canvas.drawText(text, x, y, mJPaint);
             }
         }
