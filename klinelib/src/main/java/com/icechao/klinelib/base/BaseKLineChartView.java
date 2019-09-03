@@ -1494,6 +1494,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (screenRightIndex > itemsCount - 1) {
             screenRightIndex = itemsCount - 1;
         }
+        final double mainMaxValueLast = mainMaxValue;
+        final double mainMinValueLast = mainMinValue;
         mainMaxValue = Float.MIN_VALUE;
         mainMinValue = Float.MAX_VALUE;
         volMaxValue = Float.MIN_VALUE;
@@ -1578,6 +1580,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             mainMinValue -= Math.abs(mainMinValue * 0.05f);
         }
         double padding = (mainMaxValue - mainMinValue) * 0.05f;
+        //最大值和最小值相差太大会出现负数
+        if (mainMinValue - padding <= 0) {
+            padding = mainMinValue > 0 ? mainMinValue / 2 : 0;
+        }
         mainMaxValue += padding;
         mainMinValue -= padding;
         switch (chartShowStatue) {
@@ -1604,6 +1610,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (showAnim.isRunning()) {
             float value = (float) showAnim.getAnimatedValue();
             this.screenRightIndex = screenLeftIndex + Math.round(value * (this.screenRightIndex - screenLeftIndex));
+        }
+
+        //当前最大最小值和上次最大最小值不相等则重置绘制Y轴上网络值的标记
+        if (mainMaxValueLast != mainMaxValue || mainMinValueLast != mainMinValue) {
+            gridRowCountWithChild = 0;
         }
     }
 

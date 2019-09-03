@@ -12,4 +12,12 @@
     <string name="k_index_ub">UB:</string>
     <string name="k_index_lb">LB:</string>
     <string name="k_index_ma_formater">MA%d:</string>
+    <string name="txtTime">时间</string>
+    <string name="txtOpen">开</string>
+    <string name="txtHigh">高</string>
+    <string name="txtLow">低</string>
+    <string name="txtClose">收</string>
+    <string name="txtChangeAmount">涨跌额</string>
+    <string name="txtQuoteChange">涨跌幅</string>
+    <string name="txtVolume">成交量</string>
 </resources>

@@ -66,14 +66,14 @@ public class MainDraw extends BaseDraw {
         upLinePaint.setAntiAlias(true);
         downLinePaint.setStyle(Paint.Style.STROKE);
         downLinePaint.setAntiAlias(true);
-        marketInfoText[0] = ("时间   ");
-        marketInfoText[1] = ("开     ");
-        marketInfoText[2] = ("高     ");
-        marketInfoText[3] = ("低     ");
-        marketInfoText[4] = ("收     ");
-        marketInfoText[5] = ("涨跌额  ");
-        marketInfoText[6] = ("涨跌幅  ");
-        marketInfoText[7] = ("成交量  ");
+        marketInfoText[0] = (context.getString(R.string.txtTime));
+        marketInfoText[1] = (context.getString(R.string.txtOpen));
+        marketInfoText[2] = (context.getString(R.string.txtHigh));
+        marketInfoText[3] = (context.getString(R.string.txtLow));
+        marketInfoText[4] = (context.getString(R.string.txtClose));
+        marketInfoText[5] = (context.getString(R.string.txtChangeAmount));
+        marketInfoText[6] = (context.getString(R.string.txtQuoteChange));
+        marketInfoText[7] = (context.getString(R.string.txtVolume));
 
         indexMa1 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_1);
         indexMa2 = String.format(context.getString(R.string.k_index_ma_formater), Constants.K_MA_NUMBER_2);
