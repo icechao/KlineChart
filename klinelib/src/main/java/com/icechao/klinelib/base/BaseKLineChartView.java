@@ -662,7 +662,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 子视图
      */
     protected void initRect() {
-        int tempMainHeight, tempVolHeight, tempChildHeight;
+        int tempMainHeight = 0, tempVolHeight, tempChildHeight;
         switch (chartShowStatue) {
             case MAIN_VOL:
                 tempMainHeight = (int) (displayHeight * mainPercent / 10f);
@@ -683,6 +683,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 indexRect = new Rect(0, (int) (mainRect.bottom + childViewPaddingTop), (int) width, mainRect.bottom + tempChildHeight);
                 volRect = null;
                 break;
+            default:
             case MAIN_VOL_INDEX:
                 tempChildHeight = (int) (displayHeight * IndexPercent / 10f);
                 tempVolHeight = (int) (displayHeight * volPercent / 10f);
@@ -691,6 +692,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 volRect = new Rect(0, (int) (mainRect.bottom + childViewPaddingTop), (int) width, mainRect.bottom + tempVolHeight);
                 indexRect = new Rect(0, (int) (volRect.bottom + childViewPaddingTop), (int) width, volRect.bottom + tempChildHeight);
                 break;
+        }
+        if (null != logoBitmap) {
+            logoTop = mainRect.bottom - logoBitmap.getHeight() - logoPaddingBottom;
         }
         gridRowCountWithChild = 0;
         gridRowCountNoChild = 0;
@@ -716,15 +720,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
 
-    protected float logoTop = Float.MIN_VALUE;
+    protected float logoTop;
 
     protected float logoPaddingLeft, logoPaddingBottom;
 
     protected void drawLogo(Canvas canvas) {
         if (null != logoBitmap) {
-            if (Float.MIN_VALUE == logoTop) {
-                logoTop = mainRect.bottom - logoBitmap.getHeight() - logoPaddingBottom;
-            }
             canvas.drawBitmap(logoBitmap, logoPaddingLeft, logoTop, logoPaint);
         }
     }

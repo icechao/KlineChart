@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.tv.TvContract;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
@@ -1485,6 +1486,7 @@ public class KLineChartView extends BaseKLineChartView {
     public KLineChartView setLogoBigmap(Bitmap bitmap) {
         if (null != bitmap) {
             this.logoBitmap = bitmap;
+            initRect();
         }
         return this;
     }
@@ -1525,7 +1527,7 @@ public class KLineChartView extends BaseKLineChartView {
     public KLineChartView setLogoPadding(float leftPadding, float bottomPadding) {
         this.logoPaddingLeft = leftPadding;
         this.logoPaddingBottom = bottomPadding;
-        logoTop = Float.MIN_VALUE;
+        initRect();
         return this;
     }
 
@@ -1750,5 +1752,11 @@ public class KLineChartView extends BaseKLineChartView {
     public <T extends IChartDraw> KLineChartView resetIndexDraw(Status.IndexStatus status, T t) {
         indexDraws.set(status.getStatu(), t);
         return this;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        logoBitmap = null;
+        super.onDetachedFromWindow();
     }
 }
