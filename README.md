@@ -96,6 +96,7 @@
       | 属性名称 | 属性值 | 属性含义 | 默认值 | 
       | ------ | ------ | ------ | ------ |  
       | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
+      | marketInfosLabel  | resource | 行情文字(字符串数组) | 国际化行情文字默认中文 |
       | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
       | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
       | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
@@ -271,12 +272,21 @@
        kLineChartView.justShowLoading() ;
        
             只显示loading不会显示后面的K线,K线部队只显示背景
+            Showing only loading does not show the K-line behind. K-line troops only show the background.
             
        kLineChartView.showLoading();
        
             显示loading的同时显示K线
+            Display loading while displaying K-line
+            
+  ### 国际化 Internationalization
+        
+        kLineChartView.setMarketInfoText(String[] marketInfoText);
+              参数    
+            marketInfoText : 时间 开 高 低 收 涨跌额 涨跌幅 成交量 组成的文字数组
+                             Text Array of Time Opening, High and Low Closing, Rising and Declining Volume, Rising and Declining Volume
 
-  ### 主图MA/BOLL切换
+  ### 主图MA/BOLL切换 MA/BOLL Switching of Main Graph
         
         kLineChartView.changeMainDrawType(Status.MainStatus.MA);
             参数    
@@ -284,7 +294,7 @@
             Status.MainStatus.BOLL: 显示boll
             Status.MainStatus.NONE: 只显示CandleLine
 
-  ### 子图指标图切换
+  ### 子图指标图切换 Subgraph Index Graph Switching
 
         kLineChartView.setIndexdDraw(Status.ChildStatus.MACD);
             参数
@@ -294,41 +304,41 @@
             Status.ChildStatus.RSI  : rsi
             Status.ChildStatus.WR   : wr
 
-  ### 设置是适应X左右边轴坐标的位置
+  ### 设置是适应X左右边轴坐标的位置 Setting is the position that suits the coordinates of the left and right axes of X.
 
         kLineChartView.setBetterX(boolean betterX);
             参数
             true : X轴最左边和最右边label会向中间缩进显示保证label全部显示在屏幕内  默认值  
             false: 显示为X轴最左边和最右边label会以与对方的坐标点中间对齐的方式显示 
            
-  ### K线与分时线切换
+  ### K线与分时线切换 K-line and time-sharing line switching
 
         kLineChartView.setKlineState(Status.KlineStatus klineStatus);
             参数
             Status.KlineStatus.K_LINE    : 显示K线
             Status.KlineStatus.TIME_LINE : 显示为分时线
            
-  ### 十字线跟随手指
+  ### 十字线显示模式 Crossline display mode
 
         kLineChartView.setCrossFollowTouch(Status.TouchCrossModel model) ;
             参数
             TouchCrossModel.FOLLOW_FIGNERS : 跟随手指
             TouchCrossModel.SHOW_CLOSE     : 显示为收盘价  默认值
            
-  ### 动画加载加载数据时(默认是左到右的加载动画 可以加载数据前设置不使用动画)
+  ### 动画加载加载数据(默认是左到右的加载动画) When animation loads data
         
         kLineChartView.setAnimLoadData(boolean withAnim);
             参数
             true : 执行加载数据动画  默认值
             false: 不执行加载数据动画
    
-  ### K线右侧内边距
+  ### K线右侧内边距 K-line right inner margin
   
         kLineChartView.setKlineRightPadding(float klineRightPadding);
             参数
             float : 内边距
   
-  ### 设置十字线显示模式
+  ### 设置十字线触发模式 Setting Crossline Trigger Mode
   
         kLineChartView.setSelectedTouchModle(Status.ShowCrossModle showCrossModle);
             参数 
@@ -336,7 +346,7 @@
             Status.ShowCrossModle.SELECTPRESS   : 长按显示
             Status.ShowCrossModle.SELECT_BOTH   : 点击长按混合
             
-  ### 添加logo
+  ### 添加logo  Add logo
   
         kLineChartView.setLogoBigmap(Bitmap bitmap);
             参数
@@ -346,109 +356,106 @@
             参数
             bitmapRes : 资源id 原大小显示
             
-  ### logo透明度设置
+  ### logo透明度设置 Logo Transparency Settings
         
         kLineChartView.setLogoAlpha(int alpha);
             参数
-            alpha : 0-255 logo画笔透明度
+            alpha : 0-255 logo透明度
             
-  ### logo位置是指  --修改方法
+  ### logo位置    --修改方法   Logo location
         
         kLineChartView.setLogoPadding(float left, float top);
             参数
             left : logo的左侧padding,相对KlineChartView主视图区域
             top  : logo的顶部padding,相对KlineChartView主视图区域
             
-  ### K线滑动监听
+  ### K线滑动监听  K-line Sliding Monitor
         
         kLineChartView.setSlidListener(SlidListener slidListener);
             参数
             slidListener : SlidListener对象 监听滑动到最左和最右
             
-  ### K线重置显示位置
-        
-         kLineChartView.setResetTranslate();
-        
-  ### K线右侧可左滑的空白距离
+
+  ### K线左滑的超出范围 K-Line Left Slip Out of Range
         
          kLineChartView.setOverScrollRange(float overScrollRange);
             参数
             overScrollRange : 滑动距离
                  
-  ### 设置选中时是否显示十字线的交点圆
+  ### 是否显示十字线的交点圆 Whether to show the intersection circle of the cross
         
          kLineChartView.setSelectedShowCrossPoint(boolean showCrossPoint);
             参数
             true  : 显示
             false : 隐藏
                  
-  ### 选中时坐标边框线宽
+  ### 选中坐标边框线宽 Select the coordinate border width
         
          kLineChartView.setSelectedLabelBorderWidth(float width);
             参数
             width : label边框线宽 
                  
-  ### 选中时坐标边框线颜色
+  ### 选中坐标边框线颜色 Select coordinate border color
         
          kLineChartView.setSelectedLabelBorderColor(int color);
             参数
             color : 颜色值
                  
-  ### 价格线框边框宽度
+  ### 价格线框边框宽度 Price wire frame border width
         
          kLineChartView.setPricelineBoxBorderWidth(float width);
             参数
             width : 价格线浮框的线宽
                  
-  ### 价格线框边框颜色
+  ### 价格线框边框颜色 Price wireframe border color
         
          kLineChartView.setPricelineBoxBorderColor(int color);
             参数
             color : 价格线浮框的边框颜色
 
-  ### 价格线框边框颜色
+  ### macd颜色 macd color
         
          kLineChartView.setMacdChartColor(int inColor, int deColor);
             参数
             inColor : >0 波段的颜色
             deColor : <0 波段的颜色
 
-  ### 隐藏选择器内容
+  ### 隐藏选择器内容 Hidden selector content
         
          kLineChartView.hideSelectData();
          
          隐藏选中的信息
          
-  ### 主视图所占高度比例
+  ### 主视图所占高度比例 Proportion of the height of the main view
         
          kLineChartView.setMainPercent(float mainPresent);
             参数 
             mainPresent : : 占比,用0-1之间的数表示
          
-  ### 量视图所占高度比例
+  ### 量视图所占高度比例  Proportion of Height in Quantitative View
         
          kLineChartView.setVolPercent(float volPresent);
             参数 
             volPresent : : 占比,用0-1之间的数表示
          
-  ### 子视图所占高度比例
+  ### 子视图所占高度比例 Subview Height Ratio
         
          kLineChartView.setChildPercent(float childPresent);
             参数
             childPresent : 占比,用0-1之间的数表示
 
-  ### 切换显示/隐藏交易量
+  ### 切换显示/隐藏交易量 Switching Display/Hide Trading Volume
         
          kLineChartView.setChartChildState(boolean state);
             参数
             true : 显示 
             false: 隐藏
             
-  ### 获取当前显示/隐藏交易量
+  ### 获取当前显示/隐藏交易量 Get the current display/hide transaction volume
         
          kLineChartView.getChartChildState();
              
-  ### 设置交易量绘制BarChart/LineChart 
+  ### 设置交易量绘制 BarChart/LineChart  Setting Trading Volume to Draw BarChart/LineChart
         
          kLineChartView.setVolChartStatues(Status.VolChartStatus volChartStatus);
             参数 
@@ -456,19 +463,19 @@
             Status.VolChartStatus.BAR_CHART  : 柱状图
             Status.VolChartStatus.LINE_CHART : 线状图
             
-  ### 强制隐藏信息框
+  ### 强制隐藏信息框 Forced Hiding Information Box
         kLineChartView.hideMarketInfoBox(boolean forceHide)  
         参数 
             true  : 隐藏
             false : 显示       
   
-  ### 替换MainDraw,继承后自由实现功能
+  ### 替换MainDraw,继承后自由实现功能 Replace MainDraw and implement functionality freely after inheritance
           kLineChartView.resetMainDraw(T t)
            
-  ### 替换volDraw,继承后自由实现功能
+  ### 替换volDraw,继承后自由实现功能 Replace volDraw and implement functions freely after inheritance
           kLineChartView.resetVoDraw(T t)
                     
-  ### 替换IndexDraw,继承后自由实现功能
+  ### 替换IndexDraw,继承后自由实现功能 Replace IndexDraw and implement functionality freely after inheritance
           kLineChartView.resetIndexDraw(Status.IndexStatus status, T t) 
             
        

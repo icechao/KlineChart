@@ -418,6 +418,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (!isAnimationLast) {
                 changeTranslated(getMinTranslate());
             }
+            gridRowCountWithChild = 0;
+            gridRowCountNoChild = 0;
             //再次开启动画
             postDelayed(action, 100);
         }
@@ -1427,7 +1429,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         } else {
             stopFreshPage();
         }
-        invalidate();
+        gridRowCountWithChild = 0;
+        gridRowCountNoChild = 0;
+        animInvalidate();
     }
 
     @Override
@@ -1449,7 +1453,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 changeTranslated(getMaxTranslate());
             }
         }
-        invalidate();
+        gridRowCountWithChild = 0;
+        gridRowCountNoChild = 0;
+        animInvalidate();
     }
 
 
@@ -1578,8 +1584,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             mainMinValue -= Math.abs(mainMinValue * 0.05f);
         }
         double padding = (mainMaxValue - mainMinValue) * 0.05f;
+
         mainMaxValue += padding;
-        mainMinValue -= padding;
+        if (padding < mainMinValue) {
+            mainMinValue -= padding;
+        } else {
+            mainMinValue = 0;
+        }
         switch (chartShowStatue) {
             case MAIN_VOL_INDEX:
             case MAIN_VOL:

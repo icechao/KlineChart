@@ -85,6 +85,7 @@ public class KLineChartView extends BaseKLineChartView {
                 mainDraw.setLimitTextSize(array.getDimension(R.styleable.KLineChartView_limitTextSize, getDimension(R.dimen.chart_text_size)));
                 mainDraw.setLimitTextColor(array.getColor(R.styleable.KLineChartView_limitTextColor, getColor(R.color.color_6D87A8)));
                 //全局
+                setMarketInfoText((String[]) array.getTextArray(R.styleable.KLineChartView_marketInfosLabel));
                 setBetterX(array.getBoolean(R.styleable.KLineChartView_fitXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
                 setLineWidth(array.getDimension(R.styleable.KLineChartView_lineWidth, getDimension(R.dimen.chart_line_width)));
@@ -780,7 +781,21 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMarketInfoText(String[] marketInfoText) {
-        mainDraw.setMarketInfoText(marketInfoText);
+        if (null != marketInfoText) {
+            if (marketInfoText.length != 8) {
+                throw new RuntimeException("市场行情信息有且只有八个!请按顺序传入" +
+                        "时间 " +
+                        "开  " +
+                        "高  " +
+                        "低  " +
+                        "收  " +
+                        "涨跌额    " +
+                        "涨跌幅    " +
+                        "成交量  的翻译!");
+            }
+            mainDraw.setMarketInfoText(marketInfoText);
+
+        }
         return this;
     }
 
