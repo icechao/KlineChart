@@ -57,8 +57,11 @@
         <attr name="timeLineEndMultiply" format="float" />
 
         <!--公共的-->
+
+        <attr name="dateLabelVerticalPadding" format="dimension" />
+        <attr name="dateLabelHorizentalPadding" format="dimension" />
         <attr name="marketInfosLabel" format="reference" />
-        <attr name="mainLengendMarginTop" format="dimension" />
+        <attr name="mainLegendMarginTop" format="dimension" />
         <attr name="increaseColor" format="color" />
         <attr name="fitXLabel" format="boolean" />
         <attr name="backgroundColor" format="color" />

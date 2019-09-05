@@ -119,7 +119,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //full or stroke
                 .setCandleSolid(false)
                 .showLoading()
-                .setBetterX(false)
+                .setBetterX(true)
                 //set slid listener
                 .setSlidListener(new SlidListener() {
                     @Override

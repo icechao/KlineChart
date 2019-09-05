@@ -90,8 +90,8 @@ public class MainDraw extends BaseDraw {
         if (view.getKlineStatus().showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
-                view.drawEndLine(canvas, linePaint, lastX, lastClosePrice, curX);
-                view.drawEndFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX);
+                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX,view.getLastPrice());
+                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice,curX ,view.getLastPrice());
 
             } else if (position != 0) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
@@ -582,17 +582,17 @@ public class MainDraw extends BaseDraw {
     /**
      * top padding main area
      *
-     * @param mainLengendMarginTop
+     * @param mainLegendMarginTop top
      */
-    public void setMainLengendMarginTop(float mainLengendMarginTop) {
-        this.mainLengendMarginTop = mainLengendMarginTop;
+    public void setMainLegendMarginTop(float mainLegendMarginTop) {
+        this.mainLengendMarginTop = mainLegendMarginTop;
     }
 
     public void setSelectInfoBoxMargin(float margin) {
         this.margin = margin;
     }
 
-    public void setSelectInfoBoxPadding(float padding) {
+    public void setSelectorInfoBoxPadding(float padding) {
         this.padding = padding;
     }
 }

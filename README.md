@@ -35,7 +35,7 @@
             
             工程的build.gradle中
 
-                        implementation 'com.icechao.klinelib:klinelib:0.0.9'
+                        implementation 'com.icechao.klinelib:klinelib:1.0.1'
 
             
 2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
@@ -97,7 +97,10 @@
       | ------ | ------ | ------ | ------ |  
       | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
       | marketInfosLabel  | resource | 行情文字(字符串数组) | 国际化行情文字默认中文 |
-      | maiLengendMarginTop  | dimension | 主视图Lengend上边距 | 10 |
+      | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
+      | dateLabelHorizentalPadding  | dimension | X轴label横向pading,影响选中时 | 10 |
+      | dateLabelVerticalPadding  | dimension | X轴label纵向pading | 10 |
+      | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
       | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
       | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
       | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
