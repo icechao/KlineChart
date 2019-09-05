@@ -85,14 +85,15 @@ public class KLineChartView extends BaseKLineChartView {
                 setLimitTextColor(array.getColor(R.styleable.KLineChartView_limitTextColor, getColor(R.color.color_6D87A8)));
                 //全局
                 setMarketInfoText((String[]) array.getTextArray(R.styleable.KLineChartView_marketInfosLabel));
-                setBetterX(array.getBoolean(R.styleable.KLineChartView_fitXLabel, true));
+                setBetterX(array.getBoolean(R.styleable.KLineChartView_betterXLabel, true));
+                setBetterSelectedX(array.getBoolean(R.styleable.KLineChartView_betterSelectedXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
                 setLineWidth(array.getDimension(R.styleable.KLineChartView_lineWidth, getDimension(R.dimen.chart_line_width)));
                 setTextSize(array.getDimension(R.styleable.KLineChartView_chartTextSize, getDimension(R.dimen.chart_text_size)));
                 setTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
                 setChartPaddingTop(array.getDimension(R.styleable.KLineChartView_paddingTop, getDimension(R.dimen.chart_top_padding)));
                 setChildPaddingTop(array.getDimension(R.styleable.KLineChartView_childPaddingTop, getDimension(R.dimen.child_top_padding)));
-//                setChartPaddingBottom(array.getDimension(R.styleable.KLineChartView_paddingBottom, getDimension(R.dimen.chart_bottom_padding)));
+                setChartPaddingBottom(array.getDimension(R.styleable.KLineChartView_paddingBottom, 0));
                 //网格
                 setGridLineWidth(array.getDimension(R.styleable.KLineChartView_gridLineWidth, getDimension(R.dimen.chart_grid_line_width)));
                 setGridColumns(array.getInteger(R.styleable.KLineChartView_gridLineColumns, 5));
@@ -994,6 +995,17 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置是否自适应X左右边轴坐标的位置,默认true
      *
+     * @param betterSelectedX true会自动缩进选中两边的label更好的展示
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setBetterSelectedX(boolean betterSelectedX) {
+        this.betterSelectedX = betterSelectedX;
+        return this;
+    }
+
+    /**
+     * 设置是否自适应X左右边轴坐标的位置,默认true
+     *
      * @param betterX true会自动缩进左右两边的label更好的展示
      * @return {@link KLineChartView}
      */
@@ -1003,7 +1015,9 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * @param backgroundFillPaint
+     * 价格线右侧框背景
+     *
+     * @param backgroundFillPaint backgroundFillPaint
      * @return {@link KLineChartView}
      */
     public KLineChartView setPriceBoxColor(int backgroundFillPaint) {
@@ -1187,11 +1201,10 @@ public class KLineChartView extends BaseKLineChartView {
 
     /**
      * 设置下方padding
-     * 方法废弃,底部距离由X轴label决定
-     * @param chartPaddingBottom chartPaddingBottom 横线网格和K线会绘制在这个位置的上方
+     *
+     * @param chartPaddingBottom 默认为0由XLabel高度决定
      * @return {@link KLineChartView}
      */
-    @Deprecated
     public KLineChartView setChartPaddingBottom(float chartPaddingBottom) {
         this.chartPaddingBottom = (int) chartPaddingBottom;
         return this;

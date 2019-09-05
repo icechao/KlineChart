@@ -595,6 +595,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * 是否适配X label
      */
     protected boolean betterX;
+    protected boolean betterSelectedX;
 
     /**
      * 是否十字线跟随手指移动(Y轴)
@@ -659,7 +660,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         this.width = w;
-        chartPaddingBottom = (int) (dateBoxVerticalPadding * 2 + selectorFramePaint.getStrokeWidth() * 2 + textHeight);
+        //如果没设置chartPaddingBottom
+        if (0 == chartPaddingBottom) {
+            chartPaddingBottom = (int) (dateBoxVerticalPadding * 2 + selectorFramePaint.getStrokeWidth() * 2 + textHeight);
+        }
         displayHeight = h - chartPaddingTop - (dateBoxVerticalPadding * 2 + selectorFramePaint.getStrokeWidth() * 2 + textHeight);
         rowSpace = displayHeight / gridRows;
         columnSpace = width / gridColumns;
@@ -971,11 +975,18 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         y = chartPaddingTop + displayHeight + 1;
         float temp = textWidth / 2;
         right = x + temp + dateBoxlHorizentalPadding;
+        left = x - temp - dateBoxlHorizentalPadding;
         float screenRightX = xToTranslateX(width);
-        if (betterX && right > screenRightX) {
-            right = screenRightX;
+        if (betterSelectedX) {
+            if (right > screenRightX) {
+                right = screenRightX;
+                left = right - dateBoxlHorizentalPadding * 2 - textWidth;
+            } else if (left < xToTranslateX(0)) {
+                left = xToTranslateX(0);
+                right = left + dateBoxlHorizentalPadding * 2 + textWidth;
+            }
         }
-        left = right - dateBoxlHorizentalPadding * 2 - textWidth;
+
         bottom = y + textHeight + dateBoxVerticalPadding * 2;
         canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
