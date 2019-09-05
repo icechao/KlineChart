@@ -964,12 +964,22 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         y = chartPaddingTop + displayHeight;
         float halfTextWidth = textWidth / 2;
         float tempLeft = x - halfTextWidth;
+        //屏幕X坐标
+        float xInScreen = getX(selectedIndex - screenLeftIndex);
         left = tempLeft - selectPriceBoxHorizentalPadding;
-        right = x + halfTextWidth + selectPriceBoxHorizentalPadding;
+        //超出左边显示区域
+        if (left < x - xInScreen) {
+            left = -canvasTranslateX;
+        }
+        //超出右边显示区域
+        if (xInScreen + halfTextWidth + selectPriceBoxHorizentalPadding > width) {
+            left = -canvasTranslateX + width - textWidth - 1 - 2 * selectPriceBoxHorizentalPadding - selectPriceBoxVerticalPadding;
+        }
+        right = left + textWidth + selectPriceBoxHorizentalPadding * 2;
         bottom = y + baseLine + r - 2;
         canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
-        canvas.drawText(date, tempLeft, fixTextYBaseBottom((bottom + y) / 2), textPaint);
+        canvas.drawText(date, left + selectPriceBoxHorizentalPadding, fixTextYBaseBottom((bottom + y) / 2), textPaint);
         //十字线Y值判断
         //十字线横线
         if (crossTouchModel.getStateValue()) {
@@ -1005,7 +1015,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         float tempX = textWidth + 2 * selectPriceBoxHorizentalPadding;
         float boxTop = y - r;
         float boXBottom = y + r;
-        if (getX(selectedIndex - screenLeftIndex) > width / 2) {
+        if (xInScreen > width / 2) {
             x = -canvasTranslateX + width - textWidth - 1 - 2 * selectPriceBoxHorizentalPadding - selectPriceBoxVerticalPadding;
             path = new Path();
             path.moveTo(x, y);
