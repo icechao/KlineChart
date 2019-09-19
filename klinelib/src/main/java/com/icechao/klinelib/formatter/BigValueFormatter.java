@@ -34,6 +34,6 @@ public class BigValueFormatter implements IValueFormatter {
             }
             i--;
         }
-        return String.format(Locale.getDefault(),"%.2f", value)+unit;
+        return String.format(Locale.CHINA,"%.2f", value)+unit;
     }
 }
