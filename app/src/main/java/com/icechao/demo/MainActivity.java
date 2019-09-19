@@ -145,14 +145,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setValueFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
-                        return String.format("%.03f", value);
+                        return String.format(Locale.CHINA, "%.03f", value);
                     }
                 })
                 //set vol y label formater
                 .setVolFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
-                        return String.format("%.03f", value);
+                        return String.format(Locale.CHINA, "%.03f", value);
                     }
                 })
                 //set date label formater

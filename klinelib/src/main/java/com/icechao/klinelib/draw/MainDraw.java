@@ -16,6 +16,8 @@ import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
+import java.util.Locale;
+
 /*************************************************************************
  * Description   :
  *

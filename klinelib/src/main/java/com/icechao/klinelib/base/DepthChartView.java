@@ -28,6 +28,7 @@ import com.icechao.klinelib.utils.NumberTools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DepthChartView extends View implements GestureDetector.OnGestureListener {
 

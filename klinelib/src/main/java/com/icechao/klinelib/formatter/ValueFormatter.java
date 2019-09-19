@@ -3,6 +3,8 @@ package com.icechao.klinelib.formatter;
 
 import com.icechao.klinelib.base.IValueFormatter;
 
+import java.util.Locale;
+
 /*************************************************************************
  * Description   :
  *
@@ -17,6 +19,6 @@ import com.icechao.klinelib.base.IValueFormatter;
 public class ValueFormatter implements IValueFormatter {
     @Override
     public String format(float value) {
-        return String.format("%.2f", value);
+        return String.format(Locale.CHINA, "%.2f", value);
     }
 }
