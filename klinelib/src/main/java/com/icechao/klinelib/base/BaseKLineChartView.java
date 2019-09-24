@@ -390,6 +390,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected boolean hideMarketInfo;
 
     /**
+     * 显示右侧虚线
+     */
+//    protected boolean showRightDotLine = true;
+
+    /**
      * 数据观察者,当数据变化
      */
     protected DataSetObserver dataSetObserver = new DataSetObserver() {
@@ -1270,7 +1275,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         RadialGradient radialGradient = new RadialGradient(stopX, getMainY(lastPrice), endShadowLayerWidth, lineEndPointPaint.getColor(), Color.TRANSPARENT, Shader.TileMode.CLAMP);
         lineEndPointPaint.setShader(radialGradient);
         canvas.drawCircle(stopX, getMainY(lastPrice), lineEndRadiu * lineEndMaxMultiply, lineEndPointPaint);
-
     }
 
 
