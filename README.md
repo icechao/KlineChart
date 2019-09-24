@@ -95,7 +95,7 @@
         
       | 属性名称 | 属性值 | 属性含义 | 默认值 | 
       | ------ | ------ | ------ | ------ |  
-      | fitXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
+      | betterXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
       | marketInfosLabel  | resource | 行情文字(字符串数组) | 国际化行情文字默认中文 |
       | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
       | dateLabelHorizentalPadding  | dimension | X轴label横向pading,影响选中时 | 10 |
