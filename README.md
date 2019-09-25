@@ -95,7 +95,8 @@
         
       | 属性名称 | 属性值 | 属性含义 | 默认值 | 
       | ------ | ------ | ------ | ------ |  
-      | betterXLabel  | boolean | X轴的最两边坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
+      | betterXLabel  | boolean | 两边X轴坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
+      | betterSelectedXLabel  | boolean | 选中X坐标在屏幕边缘时向内缩进 | true,可能会引起X轴label重叠可设置为false |
       | marketInfosLabel  | resource | 行情文字(字符串数组) | 国际化行情文字默认中文 |
       | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
       | dateLabelHorizentalPadding  | dimension | X轴label横向pading,影响选中时 | 10 |
@@ -107,7 +108,6 @@
       | chartLogo  | resource | 主视图logo | |
       | candleRightPadding  | dimension | 主视图与右侧内边距 | |
       | increaseColor  | color | 涨颜色| |
-      | backgroundColor   | color | 背景色  | |
       | decreaseColor  | color | 跌颜色| |
       | chartTextSize  | dimension | 通用文字大小| |
       | textColor  | color | 文字颜色| |
@@ -129,11 +129,12 @@
       | priceLineBoxPadding  | dimension | 价格线上的框的内边距| 20 |
       | priceLineBoxShapeTextMargin  | dimension | 价格框文字与图形距离| 10 |
       | priceLineBoxBorderWidth  | dimension | 价格线框边框宽度| 1 |
-      | priceLineBoxBorderColor  | dimension | 价格线框边框颜色| |
-      | backgroundFillTopColor  | color |背景渐变上部颜色 | |
-      | backgroundFillBottomColor  | color |背景渐变下部颜色 | |
-      | backgroundAlpha  | integer | 背景色透明度| |
-      | backgroundFillAlpha  | integer | 背景色填充透明度 | |
+      | priceLineBoxBorderColor  | color | 价格线框边框颜色| #CFD3A9 |
+      | backgroundFillTopColor  | color |背景渐变上部颜色 | #1C1E27 |
+      | backgroundFillBottomColor  | color |背景渐变下部颜色 | 控制背景色 |
+      | backgroundAlpha  | integer | 背景色透明度| 控制背景色 default 18 |
+      | backgroundColor   | color | 背景色  | 控制背景色 |
+      | dotRightPriceBoxBackGroundAlpha  | integer | 虚线右侧最新价格填充透明度 default 150 | |
       | yLabelMarginRight  | dimension | y轴上label与右侧边距 |10 |
       | timeLineColor   | color| 分时线颜色| |
       | timeLineFillTopColor  | color | 分时线填充渐变上部颜色 | |

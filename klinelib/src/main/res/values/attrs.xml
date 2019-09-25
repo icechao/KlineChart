@@ -46,7 +46,7 @@
         <attr name="backgroundFillTopLolor" format="color" />
         <attr name="backgroundFillBottomColor" format="color" />
         <attr name="backgroundAlpha" format="integer" />
-        <attr name="backgroundFillAlpha" format="integer" />
+        <attr name="dotRightPriceBoxBackGroundAlpha" format="integer" />
 
         <!--time line-->
         <attr name="timeLineColor" format="color" />

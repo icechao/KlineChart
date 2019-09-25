@@ -281,7 +281,7 @@
                         android:id="@+id/kLineChartView"
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
-                        app:backgroundFillAlpha="55"
+                        app:dotRightPriceBoxBackGroundAlpha="55"
                         app:backgroundColor="#555555"
                         app:selectInfoBoxTextColor="#ff00ff"
                         app:selectInfoBoxBackgroundColor="#00ffff"

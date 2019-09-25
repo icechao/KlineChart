@@ -161,7 +161,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setBackGroundFillTopColor(array.getColor(R.styleable.KLineChartView_backgroundFillTopLolor, getResources().getColor(R.color.color_1C1E27)));
                 setBackGroundFillBottomColor(array.getColor(R.styleable.KLineChartView_backgroundFillBottomColor, getResources().getColor(R.color.color_4B85D6)));
                 setBackGroundAlpha(array.getInt(R.styleable.KLineChartView_backgroundAlpha, 18));
-                setBackGroudFillAlpha(array.getInt(R.styleable.KLineChartView_backgroundFillAlpha, 150));
+                setDotRightPriceBoxAhpha(array.getInt(R.styleable.KLineChartView_dotRightPriceBoxBackGroundAlpha, 150));
 
                 // time line
                 setTimeLineColor(array.getColor(R.styleable.KLineChartView_timeLineColor, getResources().getColor(R.color.color_4B85D6)));
@@ -1618,12 +1618,12 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * set background fill color alpha
+     *  dot line  right price box background alpha
      *
      * @param alpha default 150
      * @return {@link KLineChartView}
      */
-    public KLineChartView setBackGroudFillAlpha(int alpha) {
+    public KLineChartView setDotRightPriceBoxAhpha(int alpha) {
         rightPriceBoxPaint.setAlpha(alpha);
         return this;
     }
