@@ -30,6 +30,12 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         return datas;
     }
 
+    private DataTools dataTools;
+
+    public <Q extends DataTools> void setDataTools(Q dataTools) {
+        this.dataTools = dataTools;
+    }
+
     private List<T> datas = new ArrayList<>();
     private float[] points;
 
@@ -38,7 +44,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     }
 
     public KLineChartAdapter() {
-
+        dataTools = new DataTools();
     }
 
     @Override
@@ -76,7 +82,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         datas = data;
         if (null != data && data.size() > 0) {
             this.dataCount = datas.size();
-            points = DataTools.calculate(datas);
+            points = dataTools.calculate(datas);
         } else {
             points = new float[]{};
             this.dataCount = 0;
@@ -110,7 +116,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         if (null != entity) {
             datas.add(entity);
             this.dataCount++;
-            points = DataTools.calculate(datas);
+            points = dataTools.calculate(datas);
             notifyDataSetChanged();
         }
     }
@@ -122,7 +128,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void changeItem(int position, T data) {
         datas.set(position, data);
-        points = DataTools.calculate(datas);
+        points = dataTools.calculate(datas);
         notifyDataSetChanged();
     }
 }

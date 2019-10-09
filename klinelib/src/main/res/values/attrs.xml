@@ -117,6 +117,8 @@
         <attr name="ma2Color" format="color" />
         <attr name="ma3Color" format="color" />
 
+        <attr name="volMa1Color" format="color" />
+        <attr name="volMa2Color" format="color" />
         <!-- vol -->
         <attr name="volLengendColor" format="color" />
         <attr name="volLineChartColor" format="color" />

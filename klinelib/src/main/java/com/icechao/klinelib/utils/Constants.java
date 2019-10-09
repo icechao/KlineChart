@@ -106,4 +106,59 @@ public class Constants {
         return i;
     }
 
+    public static int countIncrease() {
+        return i++;
+    }
+
+    public static double getMaNumber1() {
+        return K_MA_NUMBER_1;
+    }
+
+    public static double getMaNumber2() {
+        return K_MA_NUMBER_2;
+    }
+
+    public static double getMaNumber3() {
+        return K_MA_NUMBER_3;
+    }
+
+    public static int getMacdS() {
+        return MACD_S;
+    }
+
+    public static int getMacdL() {
+        return MACD_L;
+    }
+
+    public static int getMacdM() {
+        return MACD_M;
+    }
+
+    public static double getVolMa1() {
+        return K_VOL_MA_NUMBER_1;
+    }
+
+    public static double getVolMa2() {
+        return K_VOL_MA_NUMBER_2;
+    }
+
+    public static int getKdjK() {
+        return KDJ_K;
+    }
+
+    public static int getWr1() {
+        return WR_1;
+    }
+
+    public static int getRsi1() {
+        return RSI_1;
+    }
+
+    public static Object getKdjD() {
+        return KDJ_D;
+    }
+
+    public static Object getKdjJ() {
+        return KDJ_J;
+    }
 }

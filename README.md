@@ -188,6 +188,8 @@
       | ma1Color  | color | 第1根ma线的颜色 | |
       | ma2Color  | color | 第2根ma线的颜色 | |
       | ma3Color  | color | 第3根ma线的颜色 | |
+      | volMa1Color  | color | 第1根量ma线的颜色 | |
+      | volMa2Color  | color | 第2根量ma线的颜色 | |
       | volLengendColor   | color| 成交量图例颜色 | |
       | volLineChartColor  | color | 成交量显示线状图时的颜色 | #4B85D6 |
       | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
@@ -270,6 +272,14 @@
 # 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
 # 部分API  ________  kLineChartView为KLineChartView对象
+
+
+  ### 自定义数据计算方法
+       
+       klineChartView.getAdapter.setDataTools(DataTools tools)
+            
+            不实现此方法会使用默认的计算方法
+
      
   ### Loadding展示
 

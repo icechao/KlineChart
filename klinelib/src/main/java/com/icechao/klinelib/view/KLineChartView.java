@@ -21,8 +21,15 @@ import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.base.IChartDraw;
 import com.icechao.klinelib.base.IDateTimeFormatter;
 import com.icechao.klinelib.base.IValueFormatter;
-import com.icechao.klinelib.draw.*;
-import com.icechao.klinelib.utils.*;
+import com.icechao.klinelib.draw.KDJDraw;
+import com.icechao.klinelib.draw.MACDDraw;
+import com.icechao.klinelib.draw.MainDraw;
+import com.icechao.klinelib.draw.RSIDraw;
+import com.icechao.klinelib.draw.VolumeDraw;
+import com.icechao.klinelib.draw.WRDraw;
+import com.icechao.klinelib.utils.Dputil;
+import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
  * Description   :
@@ -180,23 +187,26 @@ public class KLineChartView extends BaseKLineChartView {
                 setDEAColor(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
                 setMACDColor(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
                 //kdj
-                setKColor(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
-                setDColor(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
-                setJColor(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
+                setKColor(array.getColor(R.styleable.KLineChartView_kColor, getColor(R.color.color_F6DC93)));
+                setDColor(array.getColor(R.styleable.KLineChartView_dColor, getColor(R.color.color_61D1C0)));
+                setJColor(array.getColor(R.styleable.KLineChartView_jColor, getColor(R.color.color_CB92FE)));
                 //wr
                 setR1Color(array.getColor(R.styleable.KLineChartView_wr1Color, getColor(R.color.color_F6DC93)));
                 setR2Color(array.getColor(R.styleable.KLineChartView_wr2Color, getColor(R.color.color_61D1C0)));
                 setR3Color(array.getColor(R.styleable.KLineChartView_wr3Color, getColor(R.color.color_CB92FE)));
                 //rsi
-                setRSI1Color(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
-                setRSI2Color(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
-                setRSI3Color(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
+                setRSI1Color(array.getColor(R.styleable.KLineChartView_rsi1Color, getColor(R.color.color_F6DC93)));
+                setRSI2Color(array.getColor(R.styleable.KLineChartView_rsi2Color, getColor(R.color.color_61D1C0)));
+//                setRSI3Color(array.getColor(R.styleable.KLineChartView_rsi2ColorColor, getColor(R.color.color_CB92FE)));
                 //main
-                setMa1Color(array.getColor(R.styleable.KLineChartView_difColor, getColor(R.color.color_F6DC93)));
-                setMa2Color(array.getColor(R.styleable.KLineChartView_deaColor, getColor(R.color.color_61D1C0)));
-                setMa3Color(array.getColor(R.styleable.KLineChartView_macdColor, getColor(R.color.color_CB92FE)));
-                setCandleSolid(array.getBoolean(R.styleable.KLineChartView_candleSolid, false));
+                setMa1Color(array.getColor(R.styleable.KLineChartView_ma1Color, getColor(R.color.color_F6DC93)));
+                setMa2Color(array.getColor(R.styleable.KLineChartView_ma2Color, getColor(R.color.color_61D1C0)));
+                setMa3Color(array.getColor(R.styleable.KLineChartView_ma3Color, getColor(R.color.color_CB92FE)));
 
+                setVolMa1Color(array.getColor(R.styleable.KLineChartView_volMa1Color, getColor(R.color.color_F6DC93)));
+                setVolMa2Color(array.getColor(R.styleable.KLineChartView_volMa2Color, getColor(R.color.color_61D1C0)));
+
+                setCandleSolid(array.getBoolean(R.styleable.KLineChartView_candleSolid, false));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -491,6 +501,18 @@ public class KLineChartView extends BaseKLineChartView {
         return this;
     }
 
+
+
+    public KLineChartView setVolMa1Color(int color) {
+        volDraw.setMaOneColor(color);
+        return this;
+    }
+
+    public KLineChartView setVolMa2Color(int color) {
+        volDraw.setMaTwoColor(color);
+        return this;
+    }
+
     /**
      * 设置ma5颜色
      *
@@ -499,7 +521,6 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setMa1Color(int color) {
         mainDraw.setMaOneColor(color);
-        volDraw.setMaOneColor(color);
         return this;
     }
 
@@ -511,7 +532,6 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setMa2Color(int color) {
         mainDraw.setMaTwoColor(color);
-        volDraw.setMaTwoColor(color);
         return this;
     }
 
@@ -1618,7 +1638,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     *  dot line  right price box background alpha
+     * dot line  right price box background alpha
      *
      * @param alpha default 150
      * @return {@link KLineChartView}

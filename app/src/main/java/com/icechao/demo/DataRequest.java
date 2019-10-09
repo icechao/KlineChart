@@ -31,7 +31,6 @@ public class DataRequest {
         if (datas == null) {
             final List<KChartBean> data = new Gson().fromJson(getStringFromAssert(context, "ibm.json"), new TypeToken<List<KChartBean>>() {
             }.getType());
-            DataTools.calculate(data);
             datas = data;
         }
         return datas;
