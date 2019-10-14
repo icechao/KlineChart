@@ -786,9 +786,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 bottom = volRect.bottom;
                 backgroundPaint.setShader(new LinearGradient(mid, mainBottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
                 canvas.drawRect(0, mainBottom, width, bottom, backgroundPaint);
-                bottom = indexRect.bottom + chartPaddingBottom;
-                backgroundPaint.setShader(new LinearGradient(mid, bottom, mid, bottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
-                canvas.drawRect(0, bottom, width, bottom, backgroundPaint);
+                float indexBottom = indexRect.bottom;
+                backgroundPaint.setShader(new LinearGradient(mid, bottom, mid, indexBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
+                canvas.drawRect(0, bottom, width, indexBottom, backgroundPaint);
                 break;
             case MAIN_ONLY:
                 backgroundPaint.setShader(new LinearGradient(mid, 0, mid, mainBottom, backGroundFillTopColor, backGroundFillBottomColor, Shader.TileMode.CLAMP));
