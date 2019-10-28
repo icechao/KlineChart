@@ -11,7 +11,7 @@
 
 ## 使用步骤: 
 
-1. 添加依赖
+1. 添加依赖  Add dependency
             
             项目的build.gradle中
 
@@ -38,18 +38,13 @@
                         implementation 'com.icechao.klinelib:klinelib:1.0.6'
 
             
-2. <b>继承KlineEntry实现Bean类,复写对应方法返回 高 开 低 收 量 时间</b>
+2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
   
             public class KChartBean extends KLineEntity {
             //必须复写此方法返回毫秒值
             @Override
             public Long getDate() {
-              try {
-                  return new SimpleDateFormat("yyy/MM/dd").parse(date).getTime();
-              } catch (ParseException e) {
-                  e.printStackTrace();
-                  return 0L;
-              }
+              return date;
             }
             //必须复写此方法返回开盘价
             @Override
@@ -80,7 +75,7 @@
             ......
             }
           
-3. <b>在布局中使用</b>
+3. <b>在布局中使用  Use in layout</b>
   
             <com.icechao.klinelib.view.KLineChartView
              android:id="@+id/kLineChartView"
@@ -93,11 +88,11 @@
              
       支持自定义属性      
         
-      | 属性名称 | 属性值 | 属性含义 | 默认值 | 
+      | Attribute name | Value type | Attribute implication | Default value | 
       | ------ | ------ | ------ | ------ |  
       | betterXLabel  | boolean | 两边X轴坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
       | betterSelectedXLabel  | boolean | 选中X坐标在屏幕边缘时向内缩进 | true,可能会引起X轴label重叠可设置为false |
-      | marketInfosLabel  | resource | 行情文字(字符串数组) | 国际化行情文字默认中文 |
+      | marketInfosLabel  | resource | 行情文字(字符串数组) | 行情文字 默认中文 |
       | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
       | dateLabelHorizentalPadding  | dimension | X轴label横向pading,影响选中时 | 10 |
       | dateLabelVerticalPadding  | dimension | X轴label纵向pading | 10 |
