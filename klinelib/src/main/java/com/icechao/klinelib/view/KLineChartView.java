@@ -1714,7 +1714,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 切换显示/隐藏交易量
      *
-     * @param show default true
+     * @param show true show vol view
      * @return {@link KLineChartView}
      */
     public KLineChartView setVolShowState(boolean show) {

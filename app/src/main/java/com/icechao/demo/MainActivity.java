@@ -17,10 +17,18 @@ import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.*;
+import com.icechao.klinelib.utils.DateUtil;
+import com.icechao.klinelib.utils.LogUtil;
+import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KLineChartView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -106,10 +114,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         chartView.setAdapter(adapter)
                 //loading anim
+                .setChartItemWidth(50)
+                .setCandleWidth(30)
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
-                //logo bitmap
                 .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
@@ -125,13 +134,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     @Override
                     public void onSlidLeft() {
                         if (!load) {
-                            chartView.showLoading();
-                            LogUtil.e("onSlidLeft");
-                            List<KChartBean> kChartBeans = all.subList(0, 300);
-                            kChartBeans.addAll(adapter.getDatas());
-                            adapter.resetData(kChartBeans, true);
-                            chartView.hideLoading();
-                            load = true;
+                           chartView.postDelayed(new Runnable() {
+                               @Override
+                               public void run() {
+                                   chartView.showLoading();
+                                   LogUtil.e("onSlidLeft");
+                                   List<KChartBean> kChartBeans = all.subList(0, 300);
+                                   kChartBeans.addAll(adapter.getDatas());
+                                   adapter.resetData(kChartBeans, true);
+                                   chartView.hideLoading();
+                                   load = true;
+                               }
+                           },2000);
                         }
                     }
 
@@ -162,6 +176,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         return DateUtil.yyyyMMddFormat.format(date);
                     }
                 });
+//        chartView.setSelectedInfoBoxColors(Color.RED,Color.BLUE,Color.YELLOW);
+//        chartView.setChartVolState(false);
+
+        chartView.setScaleXMax(1);
+        chartView.setScaleXMin(0.5f);
+
     }
 
     private boolean load;
@@ -229,7 +249,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         switch (v.getId()) {
             case R.id.text_view_show_hide_vol:
-                chartView.setChartVolState(!chartView.getChartVolState());
+                chartView.setVolShowState(!chartView.getVolShowState());
                 break;
             case R.id.text_view_hide_master:
                 chartView.hideSelectData();
