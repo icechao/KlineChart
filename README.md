@@ -460,14 +460,14 @@
 
   ### 切换显示/隐藏交易量 Switching Display/Hide Trading Volume
         
-         kLineChartView.setChartChildState(boolean state);
+         kLineChartView.setVolShowState(boolean state);
             参数
             true : 显示 
             false: 隐藏
             
   ### 获取当前显示/隐藏交易量 Get the current display/hide transaction volume
         
-         kLineChartView.getChartChildState();
+         kLineChartView.getVolShowState();
              
   ### 设置交易量绘制 BarChart/LineChart  Setting Trading Volume to Draw BarChart/LineChart
         

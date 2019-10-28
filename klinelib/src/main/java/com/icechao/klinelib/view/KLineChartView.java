@@ -502,7 +502,6 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
-
     public KLineChartView setVolMa1Color(int color) {
         volDraw.setMaOneColor(color);
         return this;
@@ -749,7 +748,9 @@ public class KLineChartView extends BaseKLineChartView {
                     break;
             }
             setItemsCount(0);
-            dataAdapter.setResetShowPosition(true);
+            if (null != dataAdapter) {
+                dataAdapter.setResetShowPosition(true);
+            }
             invalidate();
         }
         return this;
@@ -1716,7 +1717,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param show default true
      * @return {@link KLineChartView}
      */
-    public KLineChartView setChartVolState(boolean show) {
+    public KLineChartView setVolShowState(boolean show) {
         switch (chartShowStatue) {
             case MAIN_ONLY:
                 if (show) {
@@ -1749,7 +1750,7 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @return 显示true 隐藏false
      */
-    public boolean getChartVolState() {
+    public boolean getVolShowState() {
         return (chartShowStatue == Status.ChildStatus.MAIN_VOL || chartShowStatue == Status.ChildStatus.MAIN_VOL_INDEX);
     }
 

@@ -282,15 +282,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
                         android:background="@color/color_081734"
-                        app:backgroundColor="#555555"
-                        app:backgroundFillBottomColor="#666666"
-                        app:backgroundFillTopLolor="#ffffff"
+                        app:backgroundFillBottomColor="@android:color/holo_red_dark"
+                        app:backgroundFillTopLolor="@android:color/holo_green_dark"
+                        app:backgroundAlpha="255"
 
-                        app:dotRightPriceBoxBackGroundAlpha="55"
-
-                        app:ma1Color="@android:color/black"
-                        app:ma2Color="@android:color/black"
-                        app:ma3Color="@android:color/black"
                         app:selectInfoBoxBackgroundColor="#00ffff"
                         app:selectInfoBoxBorderColor="#ff0000"
                         app:selectInfoBoxTextColor="#ff00ff" />
