@@ -35,7 +35,7 @@
             
             工程的build.gradle中
 
-                        implementation 'com.icechao.klinelib:klinelib:1.0.6'
+                        implementation 'com.icechao.klinelib:klinelib:1.0.7'
 
             
 2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
@@ -82,7 +82,7 @@
              android:layout_width="matchParent"
              android:layout_height="580dp"
              android:background="@color/color_081734"
-             //可添加自定义属性设置,也可在代码中设置
+             //app:...
              />
              
              
