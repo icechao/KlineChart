@@ -40,7 +40,7 @@ public class MACDDraw extends BaseDraw {
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String macdIndexLabel, difIndexLabel, deaIndexLabel;
-    private Status.MacdStrokeModel macdStrokeModel = Status.MacdStrokeModel.INCREASE_STROKE;
+    private Status.MacdStrokeModel macdStrokeModel = Status.MacdStrokeModel.NONE_STROKE;
 
     public MACDDraw(Context context) {
         indexInterval = Constants.getCount();
