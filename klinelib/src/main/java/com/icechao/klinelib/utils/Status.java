@@ -93,16 +93,30 @@ public class Status {
         }
     }
 
-    public enum ShowCrossModle {
+    public enum ShowCrossModel {
         SELECT_TOUCHE(0),//touch modle
         SELECT_PRESS(1),//long press modle
         SELECT_BOTH(2),//both modle
         SELECT_NONE(3);// can't touch
         private int model;
 
-        ShowCrossModle(int model) {
+        ShowCrossModel(int model) {
             this.model = model;
         }
+    }
+
+    public enum MacdStrokeModel {
+        NONE_STROKE(0),
+        All_STROKE(1),
+        INCREASE_STROKE(2),
+        DECREASE_STROKE(3);
+
+        private int model;
+
+        MacdStrokeModel(int model) {
+            this.model = model;
+        }
+
     }
 }
 

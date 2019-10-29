@@ -88,6 +88,7 @@
         <attr name="gridLineRows" format="integer" />
         <attr name="gridLineColumns" format="integer" />
         <!--macd-->
+        <attr name="macdStrokeWidth" format="color" />
         <attr name="macdIncreaseColor" format="color" />
         <attr name="macdDecreaseColor" format="color" />
         <attr name="macdWidth" format="dimension" />

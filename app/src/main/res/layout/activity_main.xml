@@ -284,11 +284,11 @@
                         android:background="@color/color_081734"
                         app:backgroundFillBottomColor="@android:color/holo_red_dark"
                         app:backgroundFillTopLolor="@android:color/holo_green_dark"
-                        app:backgroundAlpha="255"
-
+                        app:backgroundAlpha="25"
                         app:selectInfoBoxBackgroundColor="#00ffff"
                         app:selectInfoBoxBorderColor="#ff0000"
-                        app:selectInfoBoxTextColor="#ff00ff" />
+                        app:selectInfoBoxTextColor="#ff00ff"
+                        />
 
                 <include
                         android:id="@+id/kline_operater"

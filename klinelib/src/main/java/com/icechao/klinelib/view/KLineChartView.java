@@ -95,7 +95,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setBetterX(array.getBoolean(R.styleable.KLineChartView_betterXLabel, true));
                 setBetterSelectedX(array.getBoolean(R.styleable.KLineChartView_betterSelectedXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
+
                 setLineWidth(array.getDimension(R.styleable.KLineChartView_lineWidth, getDimension(R.dimen.chart_line_width)));
+                setMacdStrockWidth(array.getDimension(R.styleable.KLineChartView_macdStrokeWidth, getDimension(R.dimen.chart_line_width)));
                 setTextSize(array.getDimension(R.styleable.KLineChartView_chartTextSize, getDimension(R.dimen.chart_text_size)));
                 setTextColor(array.getColor(R.styleable.KLineChartView_textColor, getColor(R.color.color_6D87A8)));
                 setChartPaddingTop(array.getDimension(R.styleable.KLineChartView_paddingTop, getDimension(R.dimen.chart_top_padding)));
@@ -628,6 +630,12 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
+    /**
+     * 设置能用线宽
+     *
+     * @param lineWidth
+     * @return
+     */
     public KLineChartView setLineWidth(float lineWidth) {
         mainDraw.setLineWidth(lineWidth);
         rsiDraw.setLineWidth(lineWidth);
@@ -638,6 +646,10 @@ public class KLineChartView extends BaseKLineChartView {
         return this;
     }
 
+    public KLineChartView setMacdStrockWidth(float lineWidth) {
+        macdDraw.setMacdStrokeWidth(lineWidth);
+        return this;
+    }
 
     @Override
     public void onSelectedChange(MotionEvent e) {
@@ -1618,10 +1630,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * set cross line show modle
      *
-     * @param showCrossModle {@link Status.ShowCrossModle} default SELECTBOTH
+     * @param showCrossModle {@link Status.ShowCrossModel} default SELECTBOTH
      * @return {@link KLineChartView}
      */
-    public KLineChartView setSelectedTouchModle(Status.ShowCrossModle showCrossModle) {
+    public KLineChartView setSelectedTouchModle(Status.ShowCrossModel showCrossModle) {
         this.modle = showCrossModle;
         return this;
     }
