@@ -110,7 +110,6 @@ public class Status {
         All_STROKE(1),
         INCREASE_STROKE(2),
         DECREASE_STROKE(3);
-
         private int model;
 
         MacdStrokeModel(int model) {

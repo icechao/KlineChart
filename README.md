@@ -428,6 +428,21 @@
             参数
             inColor : >0 波段的颜色
             deColor : <0 波段的颜色
+            
+  ### macd空心设置 Setting of MACD hollow histogram
+        
+         kLineChartView.setMacdStrokeModel(Status.MacdStrokeModel model);
+            参数
+            NONE_STROKE     :   增长的值实心
+            All_STROKE      :   所有的值空心
+            INCREASE_STROKE :   增长的值空心
+            DECREASE_STROKE :   下跌的值空心
+            
+  ### macd空心时线宽设置 Line width of MACD hollow histogram
+        
+         kLineChartView.setMacdStrockWidth(int lineWidth);
+            参数
+            lineWidth : macd柱子空心时线宽 默认0.8dp
 
   ### 隐藏选择器内容 Hidden selector content
         

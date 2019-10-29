@@ -633,8 +633,8 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置能用线宽
      *
-     * @param lineWidth
-     * @return
+     * @param lineWidth 线宽 defaut 0.8dp
+     * @return {@link KLineChartView}
      */
     public KLineChartView setLineWidth(float lineWidth) {
         mainDraw.setLineWidth(lineWidth);
@@ -646,6 +646,23 @@ public class KLineChartView extends BaseKLineChartView {
         return this;
     }
 
+    /**
+     * 设置macd 线空心模式
+     *
+     * @param model {@link Status.MacdStrokeModel}
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setMacdStrokeModel(Status.MacdStrokeModel model) {
+        macdDraw.setStrokeModel(model);
+        return this;
+    }
+
+    /**
+     * macd空心时线宽
+     *
+     * @param lineWidth 线宽 defaut 0.8dp
+     * @return {@link KLineChartView}
+     */
     public KLineChartView setMacdStrockWidth(float lineWidth) {
         macdDraw.setMacdStrokeWidth(lineWidth);
         return this;
