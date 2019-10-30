@@ -1252,24 +1252,11 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置下方padding
      *
-     * @param chartPaddingBottom 默认为0由XLabel高度决定
+     * @param chartPaddingBottom chartPaddingBottom 默认为0由XLabel高度决定
      * @return {@link KLineChartView}
      */
     public KLineChartView setChartPaddingBottom(float chartPaddingBottom) {
         this.chartPaddingBottom = (int) chartPaddingBottom;
-        return this;
-    }
-
-
-    /**
-     * 设置下方padding
-     *
-     * @param chartPaddingBottom chartPaddingBottom
-     * @return {@link KLineChartView}
-     */
-    @SuppressWarnings("unused")
-    public KLineChartView setChartPaddingBottom(int chartPaddingBottom) {
-        this.chartPaddingBottom = chartPaddingBottom;
         return this;
     }
 
