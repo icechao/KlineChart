@@ -1099,9 +1099,6 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
-    public float getOverScrollRange() {
-        return overScrollRange;
-    }
 
     /**
      * 设置每个点的宽度

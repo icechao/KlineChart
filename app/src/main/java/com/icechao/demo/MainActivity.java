@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
-                .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
+                .setOverScrollRange(0)
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
@@ -134,18 +134,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     @Override
                     public void onSlidLeft() {
                         if (!load) {
-                           chartView.postDelayed(new Runnable() {
-                               @Override
-                               public void run() {
-                                   chartView.showLoading();
-                                   LogUtil.e("onSlidLeft");
-                                   List<KChartBean> kChartBeans = all.subList(0, 300);
-                                   kChartBeans.addAll(adapter.getDatas());
-                                   adapter.resetData(kChartBeans, true);
-                                   chartView.hideLoading();
-                                   load = true;
-                               }
-                           },2000);
+                            chartView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    chartView.showLoading();
+                                    LogUtil.e("onSlidLeft");
+                                    List<KChartBean> kChartBeans = all.subList(0, 300);
+                                    kChartBeans.addAll(adapter.getDatas());
+                                    adapter.resetData(kChartBeans, true);
+                                    chartView.hideLoading();
+                                    load = true;
+                                }
+                            }, 2000);
                         }
                     }
 

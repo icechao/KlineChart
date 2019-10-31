@@ -1295,7 +1295,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     }
 
     protected float getDataLength() {
-        float length = chartItemWidth * getScaleX() * (itemsCount - 1) + overScrollRange;
+        float length = chartItemWidth * getScaleX() * (itemsCount - 1) + getOverScrollRange();
         if (length <= width && isScrollEnable()) {
             setScrollEnable(false);
         } else if (!isScrollEnable() && length > width) {
@@ -1407,8 +1407,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (width == 0) {
             width = getMeasuredWidth();
         }
-        if (dataLength >= width) {
-            return -(dataLength - width);
+        if (dataLength > width) {
+            float minValue = -(dataLength - width);
+            return (getOverScrollRange() == 0) ? minValue - chartItemWidth * getScaleX() / 2 : minValue;
         } else {
             return chartItemWidth * scaleX / 2;
         }
@@ -1422,10 +1423,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     private float getMaxTranslate() {
         float dataLength = getDataLength();
-        if (dataLength >= width) {
+        if (dataLength > width) {
             return klineStatus.showLine() ? 0 : chartItemWidth * getScaleX() / 2;
         }
-        return width - dataLength + overScrollRange - (klineStatus.showLine() ? 0 : chartItemWidth * getScaleX() / 2);
+        return width - dataLength + getOverScrollRange() - (klineStatus.showLine() ? 0 : chartItemWidth * getScaleX() / 2);
     }
 
     @Override
@@ -1958,6 +1959,16 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     public float getViewWidth() {
         return width;
+    }
+
+
+    /**
+     * 获取K线滑动超出范围
+     *
+     * @return
+     */
+    public float getOverScrollRange() {
+        return overScrollRange;
     }
 
     /**
