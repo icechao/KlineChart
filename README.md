@@ -87,9 +87,9 @@
              
 4. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局</b>
              
-## 支持使用属性配置    
 
-      属性  
+
+      使用属性配置   属性  
         
       | Attribute name | Value type | Attribute implication | Default value | 
       | ------ | ------ | ------ | ------ |  
