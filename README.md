@@ -88,7 +88,7 @@
 4. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局</b>
              
              
-      支持自定义属性      
+## 支持自定义属性      
         
       | Attribute name | Value type | Attribute implication | Default value | 
       | ------ | ------ | ------ | ------ |  
@@ -266,9 +266,9 @@
             滑动布局使用 com.icechao.klinelib.view.ScrollView
     
 
-# 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
+## 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
-# 部分API  ________  kLineChartView为KLineChartView对象
+## 部分API  ________  kLineChartView为KLineChartView对象
 
 
   ### 自定义数据计算方法
