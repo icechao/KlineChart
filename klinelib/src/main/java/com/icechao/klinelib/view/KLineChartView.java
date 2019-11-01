@@ -132,8 +132,8 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceBoxShapeTextMargin(array.getDimension(R.styleable.KLineChartView_priceLineBoxShapeTextMargin, 10));
                 //十字线
                 setSelectCrossBigColor(array.getColor(R.styleable.KLineChartView_selectCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
-                setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointRadiu, Color.WHITE));
-                setSelectedPointRadius(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, 5));
+                setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, Color.WHITE));
+                setSelectedPointRadius(array.getFloat(R.styleable.KLineChartView_selectCrossPointRadiu, 5));
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KLineChartView_selectShowCrossPoint, true));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KLineChartView_selectXLineWidth, getDimension(R.dimen.chart_line_width)));
                 setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBoderWidth, 2));
@@ -885,7 +885,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 十字线交点小圆颜色
+     * 设置十字线交点小圆颜色
      *
      * @param color default wihte
      * @return {@link KLineChartView}
@@ -907,7 +907,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 设置圆点半径
+     * 设置十字线相交圆点半径
      *
      * @param radius selected circle radius
      * @return {@link KLineChartView}
@@ -1097,7 +1097,6 @@ public class KLineChartView extends BaseKLineChartView {
         priceLineRightTextPaint.setColor(color);
         return this;
     }
-
 
 
     /**
