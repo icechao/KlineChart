@@ -89,8 +89,8 @@
              
 ## 支持使用属性配置    
 
-      属性
-
+      属性  
+        
       | Attribute name | Value type | Attribute implication | Default value | 
       | ------ | ------ | ------ | ------ |  
       | betterXLabel  | boolean | 两边X轴坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
