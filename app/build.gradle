@@ -40,7 +40,7 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation project(path: ':klinelib')
-//    implementation 'com.icechao.klinelib:klinelib:1.0.8'
+    implementation 'com.icechao.klinelib:klinelib:1.0.9'
 
 
 }

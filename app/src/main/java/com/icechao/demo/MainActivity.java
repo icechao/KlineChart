@@ -3,6 +3,7 @@ package com.icechao.demo;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -116,6 +117,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //loading anim
                 .setChartItemWidth(50)
                 .setCandleWidth(30)
+                .setSelectedPointRadius(20)
+                .setSelectedPointColor(Color.RED)
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
