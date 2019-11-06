@@ -1,19 +1,25 @@
 package com.icechao.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
+import com.icechao.klinelib.base.BaseKLineChartView;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.entity.MarketTradeItem;
 import com.icechao.klinelib.formatter.DateFormatter;
@@ -52,6 +58,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private DepthFullView depthFullView;
     private List<KChartBean> all;
     private RadioGroup radioGroup;
+    private Vibrator vibrator;
 
 
     @Override
@@ -96,6 +103,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         radioGroup = findViewById(R.id.radio_group_defalt_index);
         radioGroup.setOnCheckedChangeListener(this);
 
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         initKline();
         initData();
 
@@ -130,6 +139,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLoadingView(loadingView)
                 //full or stroke
                 .setCandleSolid(false)
+                .setOnSelectedChangedListener(new BaseKLineChartView.OnSelectedChangedListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onSelectedChanged(BaseKLineChartView view, int index, float... values) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(10, 100));
+
+                    }
+                })
                 .showLoading()
                 .setBetterX(true)
                 //set slid listener
@@ -484,4 +501,5 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
     }
+
 }
