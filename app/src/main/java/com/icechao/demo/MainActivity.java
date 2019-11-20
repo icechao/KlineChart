@@ -344,39 +344,54 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         attachedOperater.setVisibility(View.GONE);
         moreIndex.setVisibility(View.GONE);
 
+
         switch (checkedId) {
             case R.id.radio_button_time_line:
+                //计算最大最小值包含收盘价与最新收盘价
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_CLOSE_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.TIME_LINE);
                 adapter.resetData(all.subList(10, 140));
                 break;
             case R.id.radio_button_fifteen:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(10, 300));
 
                 break;
             case R.id.radio_button_one_hour:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(110, 400));
                 break;
             case R.id.radio_button_four_hour:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(150, 450));
 
                 break;
             case R.id.radio_button_one_day:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all.subList(10, 320));
                 break;
             case R.id.radio_button_more:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 moreIndex.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);
                 break;
             case R.id.radio_button_index_setting:
+                //计算最大最小值时包含指标值与最新数据
+                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
                 masterOperater.setVisibility(View.VISIBLE);
                 attachedOperater.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);

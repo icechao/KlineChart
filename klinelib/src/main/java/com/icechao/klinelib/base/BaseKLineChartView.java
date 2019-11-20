@@ -1523,19 +1523,22 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
             case CALC_NORMAL_WITH_LAST:
             case CALC_CLOSE_WITH_LAST:
-                mainMaxValue = lastPrice;
-                mainMinValue = lastPrice;
+                mainMaxValue = getLastPrice();
+                mainMinValue = getLastPrice();
+                mainHighMaxValue = getLastPrice();
+                mainLowMinValue = getLastPrice();
                 break;
             case CALC_CLOSE_WITH_SHOW:
             case CALC_NORMAL_WITH_SHOW:
                 mainMaxValue = Float.MIN_VALUE;
                 mainMinValue = Float.MAX_VALUE;
 
+                mainHighMaxValue = Float.MIN_VALUE;
+                mainLowMinValue = Float.MAX_VALUE;
+
                 break;
         }
 
-        mainHighMaxValue = Float.MIN_VALUE;
-        mainLowMinValue = Float.MAX_VALUE;
 
         int tempLeft = screenLeftIndex > 0 ? screenLeftIndex + 1 : 0;
         for (int i = tempLeft; i <= screenRightIndex; i++) {
@@ -1569,21 +1572,21 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     }
                     break;
                 case CALC_CLOSE_WITH_LAST:
-                    float pointClose = points[tempIndex + Constants.INDEX_CLOSE];
-                    if (mainHighMaxValue < pointClose) {
-                        mainHighMaxValue = pointClose;
-                        mainMaxIndex = i;
-                        if (i != itemsCount - 1) {
+                    float pointClose;
+                    if (i != itemsCount - 1) {
+                        pointClose = points[tempIndex + Constants.INDEX_CLOSE];
+                        if (mainHighMaxValue < pointClose) {
+                            mainHighMaxValue = pointClose;
+                            mainMaxIndex = i;
                             mainMaxValue = pointClose;
                         }
-                    }
-                    if (mainLowMinValue >= pointClose) {
-                        mainLowMinValue = pointClose;
-                        mainMinIndex = i;
-                        if (i != itemsCount - 1) {
+                        if (mainLowMinValue >= pointClose) {
+                            mainLowMinValue = pointClose;
+                            mainMinIndex = i;
                             mainMinValue = pointClose;
                         }
                     }
+
                     break;
                 case CALC_CLOSE_WITH_SHOW:
                     pointClose = points[tempIndex + Constants.INDEX_CLOSE];

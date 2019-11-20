@@ -1846,6 +1846,17 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
+     * 设计最大最小值的计算模式
+     *
+     * @param model {@link Status.MaxMinCalcModel}
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setMaxMinCalcModel(Status.MaxMinCalcModel model) {
+        this.calcModel = model;
+        return this;
+    }
+
+    /**
      * 替换IndexDraw
      *
      * @param t   IChartDraw子类对象
@@ -1862,4 +1873,5 @@ public class KLineChartView extends BaseKLineChartView {
         logoBitmap = null;
         super.onDetachedFromWindow();
     }
+
 }
