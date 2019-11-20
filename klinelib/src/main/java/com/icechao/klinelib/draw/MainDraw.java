@@ -16,8 +16,6 @@ import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
-import java.util.Locale;
-
 /*************************************************************************
  * Description   :
  *
@@ -92,8 +90,8 @@ public class MainDraw extends BaseDraw {
         if (view.getKlineStatus().showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
-                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX,view.getLastPrice());
-                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice,curX ,view.getLastPrice());
+                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX, view.getLastPrice());
+                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, view.getLastPrice());
 
             } else if (position != 0) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
@@ -171,9 +169,7 @@ public class MainDraw extends BaseDraw {
 
         //修改头文字显示在顶部
         y = maTextHeight + mainLengendMarginTop;
-        if (view.getKlineStatus().showLine()) {
-
-        } else {
+        if (!view.getKlineStatus().showLine()) {
             Status.MainStatus status = view.getStatus();
             if (status == Status.MainStatus.MA) {
                 String text;

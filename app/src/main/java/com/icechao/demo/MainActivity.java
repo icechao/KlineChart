@@ -147,6 +147,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
                     }
                 })
+                .setSelectorInfoBoxPadding(40)
+//                .setChartPaddingTop(0)
                 .showLoading()
                 .setBetterX(true)
                 //set slid listener
@@ -154,17 +156,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     @Override
                     public void onSlidLeft() {
                         if (!load) {
-                            chartView.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    chartView.showLoading();
-                                    LogUtil.e("onSlidLeft");
-                                    List<KChartBean> kChartBeans = all.subList(0, 300);
-                                    kChartBeans.addAll(adapter.getDatas());
-                                    adapter.resetData(kChartBeans, true);
-                                    chartView.hideLoading();
-                                    load = true;
-                                }
+                            chartView.postDelayed(() -> {
+                                chartView.showLoading();
+                                LogUtil.e("onSlidLeft");
+                                List<KChartBean> kChartBeans = all.subList(0, 300);
+                                kChartBeans.addAll(adapter.getDatas());
+                                adapter.resetData(kChartBeans, true);
+                                chartView.hideLoading();
+                                load = true;
                             }, 2000);
                         }
                     }
@@ -218,7 +217,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 all = DataRequest.getALL(MainActivity.this);
                 //两种设置数据的方式
                 //adapter.resetData(all.subList(0, 380), true);
-                adapter.resetData(all.subList(0, 50));
+                adapter.resetData(all.subList(0, 100));
                 chartView.hideLoading();
                 changeLast();
             }
@@ -231,11 +230,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private void changeLast() {
         handler.postDelayed(() -> {
             int i = random.nextInt() * 1123 % 400;
-            KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
+//            KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
+            KChartBean kLineEntity = (KChartBean) adapter.getDatas().get(adapter.getCount() - 1);
             KChartBean kLineEntity1 = new KChartBean();
             kLineEntity1.setDate(kLineEntity.date);
-            kLineEntity1.setHigh(kLineEntity.getHigh());
-            kLineEntity1.setClose(kLineEntity.getClose());
+            kLineEntity1.setHigh(kLineEntity.getHigh() + 10f);
+            kLineEntity1.setClose(kLineEntity.getHigh() + 5f);
             kLineEntity1.setOpen(kLineEntity.getOpen());
             kLineEntity1.setLow(kLineEntity.getLow());
             kLineEntity1.setVolume(kLineEntity.getVolume());
@@ -247,13 +247,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             textViewLowPriceText.setText(kLineEntity1.getLow() + "");
             textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
             if (i++ % 3 == 0) {
-                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
+//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
                 adapter.addLast(kLineEntity1);
             } else {
-                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
+//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
                 adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
             }
             changeLast();
+            LogUtil.e(kLineEntity1.toString());
 
         }, 2000);
     }

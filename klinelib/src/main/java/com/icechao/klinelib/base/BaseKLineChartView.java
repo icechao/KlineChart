@@ -388,6 +388,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected boolean hideMarketInfo;
 
+    protected Status.MaxMinCalcModel calcModel = Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST;
+
     /**
      * 显示右侧虚线
      */
@@ -1509,53 +1511,95 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (screenRightIndex > itemsCount - 1) {
             screenRightIndex = itemsCount - 1;
         }
-        mainMaxValue = Float.MIN_VALUE;
-        mainMinValue = Float.MAX_VALUE;
+
         volMaxValue = Float.MIN_VALUE;
         float volMinValue = Float.MAX_VALUE;
         indexMaxValue = Float.MIN_VALUE;
         float mChildMinValue = Float.MAX_VALUE;
         mainMaxIndex = screenLeftIndex;
         mainMinIndex = screenLeftIndex;
+
+        switch (calcModel) {
+
+            case CALC_NORMAL_WITH_LAST:
+            case CALC_CLOSE_WITH_LAST:
+                mainMaxValue = lastPrice;
+                mainMinValue = lastPrice;
+                break;
+            case CALC_CLOSE_WITH_SHOW:
+            case CALC_NORMAL_WITH_SHOW:
+                mainMaxValue = Float.MIN_VALUE;
+                mainMinValue = Float.MAX_VALUE;
+
+                break;
+        }
+
         mainHighMaxValue = Float.MIN_VALUE;
         mainLowMinValue = Float.MAX_VALUE;
+
         int tempLeft = screenLeftIndex > 0 ? screenLeftIndex + 1 : 0;
         for (int i = tempLeft; i <= screenRightIndex; i++) {
             int tempIndex = indexInterval * i;
-            mainMaxValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
-                    mainDraw.getMaxValue((float) mainMaxValue,
-                            points[tempIndex + Constants.INDEX_HIGH],
-                            points[tempIndex + Constants.INDEX_MA_1],
-                            points[tempIndex + Constants.INDEX_MA_2],
-                            points[tempIndex + Constants.INDEX_MA_3]) :
-                    mainDraw.getMaxValue((float) mainMaxValue,
-                            points[tempIndex + Constants.INDEX_HIGH],
-                            points[tempIndex + Constants.INDEX_BOLL_DN],
-                            points[tempIndex + Constants.INDEX_BOLL_UP],
-                            points[tempIndex + Constants.INDEX_BOLL_MB]);
-            mainMinValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
-                    mainDraw.getMinValue((float) mainMinValue,
-                            points[tempIndex + Constants.INDEX_LOW],
-                            points[tempIndex + Constants.INDEX_MA_1],
-                            points[tempIndex + Constants.INDEX_MA_2],
-                            points[tempIndex + Constants.INDEX_MA_3]) :
-                    mainDraw.getMinValue((float) mainMinValue,
-                            points[tempIndex + Constants.INDEX_LOW],
-                            points[tempIndex + Constants.INDEX_BOLL_DN],
-                            points[tempIndex + Constants.INDEX_BOLL_UP],
-                            points[tempIndex + Constants.INDEX_BOLL_MB]);
-            float max = Math.max(points[tempIndex + Constants.INDEX_LOW], points[tempIndex + Constants.INDEX_HIGH]);
-            float min = Math.min(points[tempIndex + Constants.INDEX_LOW], points[tempIndex + Constants.INDEX_HIGH]);
+            switch (calcModel) {
 
+                case CALC_NORMAL_WITH_LAST:
+                    if (i != itemsCount - 1) {
+                        calcMainMaxValue(tempIndex);
+                        calcMainMinValue(tempIndex);
+                    }
+                    if (mainHighMaxValue < points[tempIndex + Constants.INDEX_HIGH]) {
+                        mainHighMaxValue = points[tempIndex + Constants.INDEX_HIGH];
+                        mainMaxIndex = i;
+                    }
+                    if (mainLowMinValue >= points[tempIndex + Constants.INDEX_LOW]) {
+                        mainLowMinValue = points[tempIndex + Constants.INDEX_LOW];
+                        mainMinIndex = i;
+                    }
+                    break;
+                case CALC_NORMAL_WITH_SHOW:
+                    calcMainMaxValue(tempIndex);
+                    calcMainMinValue(tempIndex);
+                    if (mainHighMaxValue < points[tempIndex + Constants.INDEX_HIGH]) {
+                        mainHighMaxValue = points[tempIndex + Constants.INDEX_HIGH];
+                        mainMaxIndex = i;
+                    }
+                    if (mainLowMinValue >= points[tempIndex + Constants.INDEX_LOW]) {
+                        mainLowMinValue = points[tempIndex + Constants.INDEX_LOW];
+                        mainMinIndex = i;
+                    }
+                    break;
+                case CALC_CLOSE_WITH_LAST:
+                    float pointClose = points[tempIndex + Constants.INDEX_CLOSE];
+                    if (mainHighMaxValue < pointClose) {
+                        mainHighMaxValue = pointClose;
+                        mainMaxIndex = i;
+                        if (i != itemsCount - 1) {
+                            mainMaxValue = pointClose;
+                        }
+                    }
+                    if (mainLowMinValue >= pointClose) {
+                        mainLowMinValue = pointClose;
+                        mainMinIndex = i;
+                        if (i != itemsCount - 1) {
+                            mainMinValue = pointClose;
+                        }
+                    }
+                    break;
+                case CALC_CLOSE_WITH_SHOW:
+                    pointClose = points[tempIndex + Constants.INDEX_CLOSE];
+                    if (mainHighMaxValue < pointClose) {
+                        mainHighMaxValue = pointClose;
+                        mainMaxValue = pointClose;
+                        mainMaxIndex = i;
+                    }
+                    if (mainLowMinValue >= pointClose) {
+                        mainLowMinValue = pointClose;
+                        mainMinValue = pointClose;
+                        mainMinIndex = i;
+                    }
+                    break;
+            }
 
-            if (mainHighMaxValue < max) {
-                mainHighMaxValue = max;
-                mainMaxIndex = i;
-            }
-            if (mainLowMinValue >= min) {
-                mainLowMinValue = min;
-                mainMinIndex = i;
-            }
 
             switch (chartShowStatue) {
                 case MAIN_VOL_INDEX:
@@ -1587,6 +1631,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
 
         }
+
+
         if (mainMaxValue == mainMinValue) {
             //当最大值和最小值都相等的时候 分别增大最大值和 减小最小值
             mainMaxValue += Math.abs(mainMaxValue * 0.05f);
@@ -1627,6 +1673,34 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     }
 
+    private void calcMainMinValue(int tempIndex) {
+        mainMinValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
+                mainDraw.getMinValue((float) mainMinValue,
+                        points[tempIndex + Constants.INDEX_LOW],
+                        points[tempIndex + Constants.INDEX_MA_1],
+                        points[tempIndex + Constants.INDEX_MA_2],
+                        points[tempIndex + Constants.INDEX_MA_3]) :
+                mainDraw.getMinValue((float) mainMinValue,
+                        points[tempIndex + Constants.INDEX_LOW],
+                        points[tempIndex + Constants.INDEX_BOLL_DN],
+                        points[tempIndex + Constants.INDEX_BOLL_UP],
+                        points[tempIndex + Constants.INDEX_BOLL_MB]);
+    }
+
+    private void calcMainMaxValue(int tempIndex) {
+        mainMaxValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
+                mainDraw.getMaxValue((float) mainMaxValue,
+                        points[tempIndex + Constants.INDEX_HIGH],
+                        points[tempIndex + Constants.INDEX_MA_1],
+                        points[tempIndex + Constants.INDEX_MA_2],
+                        points[tempIndex + Constants.INDEX_MA_3]) :
+                mainDraw.getMaxValue((float) mainMaxValue,
+                        points[tempIndex + Constants.INDEX_HIGH],
+                        points[tempIndex + Constants.INDEX_BOLL_DN],
+                        points[tempIndex + Constants.INDEX_BOLL_UP],
+                        points[tempIndex + Constants.INDEX_BOLL_MB]);
+    }
+
     /**
      * 通过平移的位置获取X轴上的索引
      *
@@ -1658,45 +1732,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(stopValue), paint);
     }
 
-
-//    /**
-//     * 绘制分时线尾部
-//     *
-//     * @param canvas     canvase
-//     * @param paint      paint
-//     * @param startX     startx
-//     * @param startValue start value
-//     * @param stopX      stopx
-//     */
-//    public void drawEndLine(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
-//        canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(lastPrice), paint);
-//    }
-
-
-//    /**
-//     * 绘制分时线尾部填充色
-//     *
-//     * @param canvas     canvase
-//     * @param paint      paint
-//     * @param startX     start x
-//     * @param startValue start value
-//     * @param stopX      stopx
-//     */
-//    public void drawEndFill(Canvas canvas, Paint paint, float startX, float startValue, float stopX) {
-//        float y = displayHeight + chartPaddingTop + chartPaddingBottom;
-//        LinearGradient linearGradient = new LinearGradient(startX, chartPaddingTop,
-//                stopX, y, timeLineFillTopColor, timeLineFillBottomColor, Shader.TileMode.CLAMP);
-//        paint.setShader(linearGradient);
-//        Path path = new Path();
-//        path.moveTo(startX, y);
-//        path.lineTo(startX, getMainY(startValue));
-//        path.lineTo(stopX, getMainY(lastPrice));
-//        path.lineTo(stopX, y);
-//        path.close();
-//        canvas.drawPath(path, paint);
-//
-//
-//    }
 
     /**
      * 在主区域画分时线

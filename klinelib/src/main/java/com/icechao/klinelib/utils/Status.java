@@ -117,6 +117,14 @@ public class Status {
         }
 
     }
+
+    public enum MaxMinCalcModel {
+
+        CALC_NORMAL_WITH_SHOW,//计算显示的线全部值
+        CALC_CLOSE_WITH_SHOW,//计算显示的线的close值
+        CALC_NORMAL_WITH_LAST,//计算显示的线和最新线的全部值
+        CALC_CLOSE_WITH_LAST,//计算显示的线和最新线的close值
+    }
 }
 
 

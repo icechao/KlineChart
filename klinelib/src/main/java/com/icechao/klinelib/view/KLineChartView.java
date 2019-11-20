@@ -1385,8 +1385,6 @@ public class KLineChartView extends BaseKLineChartView {
         if (0 != displayHeight) {
             rowSpace = displayHeight / gridRows;
         }
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
         return this;
     }
 
@@ -1403,8 +1401,6 @@ public class KLineChartView extends BaseKLineChartView {
             columnSpace = width / gridColumns;
         }
         this.gridColumns = gridColumns;
-        gridRowCountNoChild = 0;
-        gridRowCountWithChild = 0;
         return this;
     }
 
