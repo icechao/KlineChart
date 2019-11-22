@@ -508,10 +508,10 @@
   ### 最大最小值计算模式,影响Y轴的最大最小值 Max min calculation mode, affecting the max min value of Y axis
           kLineChartView.setMaxMinCalcModel(Status.MaxMinCalcModel model)
           参数 
-              MaxMinCalcModel.CALC_NORMAL_WITH_SHOW :   计算显示的线全部值
-              MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
-              MaxMinCalcModel.CALC_NORMAL_WITH_LAST :   计算显示的线和最新线的全部值
+              MaxMinCalcModel.CALC_NORMAL_WITH_LAST :   计算显示的线和最新线的全部值 默认值
               MaxMinCalcModel.CALC_CLOSE_WITH_LAST  :   计算显示的线和最新线的close值
+              MaxMinCalcModel.CALC_NORMAL_WITH_SHOW :   计算显示的线全部值 
+              MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
             
             
        
