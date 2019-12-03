@@ -31,6 +31,8 @@ import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
 
+import javax.crypto.interfaces.PBEKey;
+
 /*************************************************************************
  * Description   :
  *
@@ -224,7 +226,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param color color
      * @return {@link KLineChartView}
      */
-    private KLineChartView setLimitTextColor(int color) {
+    public KLineChartView setLimitTextColor(int color) {
         mainDraw.setLimitTextColor(color);
         return this;
     }
@@ -235,7 +237,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param dimension textSize
      * @return {@link KLineChartView}
      */
-    private KLineChartView setLimitTextSize(float dimension) {
+    public KLineChartView setLimitTextSize(float dimension) {
         mainDraw.setLimitTextSize(dimension);
         return this;
     }
@@ -246,7 +248,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param showCrossPoint default true
      * @return {@link KLineChartView}
      */
-    private KLineChartView setSelectedShowCrossPoint(boolean showCrossPoint) {
+    public KLineChartView setSelectedShowCrossPoint(boolean showCrossPoint) {
         this.showCrossPoint = showCrossPoint;
         return this;
     }

@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
-                .setOverScrollRange(0)
+                .setOverScrollRange(200)
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
@@ -217,9 +217,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 all = DataRequest.getALL(MainActivity.this);
                 //两种设置数据的方式
                 //adapter.resetData(all.subList(0, 380), true);
-                adapter.resetData(all.subList(0, 100));
+                adapter.resetData(all.subList(0, 190));
                 chartView.hideLoading();
-                changeLast();
+//                changeLast();
             }
         }.start();
     }
@@ -313,23 +313,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.text_view_five_minute:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(0, 100));
 
                 break;
             case R.id.text_view_half_hour:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(0, 150));
                 break;
             case R.id.text_view_one_week:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(0, 155));
                 break;
             case R.id.text_view_one_mounth:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
-                adapter.resetData(all);
+                adapter.resetData(all.subList(0, 165));
                 break;
 
         }
