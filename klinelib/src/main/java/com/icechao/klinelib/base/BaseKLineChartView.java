@@ -1644,11 +1644,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         double padding = (mainMaxValue - mainMinValue) * 0.05f;
 
         mainMaxValue += padding;
-        if (padding < mainMinValue) {
-            mainMinValue -= padding;
-        } else {
-            mainMinValue = 0;
-        }
+        mainMinValue = padding < mainMinValue ? mainMinValue -= padding : 0;
+
         switch (chartShowStatue) {
             case MAIN_VOL_INDEX:
             case MAIN_VOL:

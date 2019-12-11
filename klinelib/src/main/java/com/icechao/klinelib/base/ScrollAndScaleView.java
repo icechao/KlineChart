@@ -116,7 +116,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             showSelected = false;
             isTapShow = false;
         }
-        if (!showSelected && !isMultipleTouch()) {
+        if (!showSelected && !isMultipleTouch() && isScrollEnable()) {
             scrollBy(Math.round(distanceX), 0);
             return true;
         }
