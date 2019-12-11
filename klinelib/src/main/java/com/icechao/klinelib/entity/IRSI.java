@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @version      : V1
  *************************************************************************/
 
-@Deprecated
 public interface IRSI extends Serializable {
 
     /**

@@ -12,7 +12,13 @@ package com.icechao.klinelib.base;
  *************************************************************************/
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
@@ -20,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.entity.MarketDepthPercentItem;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -28,7 +35,6 @@ import com.icechao.klinelib.utils.NumberTools;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class DepthChartView extends View implements GestureDetector.OnGestureListener {
 
@@ -138,7 +144,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 横线数量
      */
-    private int numberLine;
+    private int lineCount;
     /**
      * 竖线数量
      */
@@ -223,26 +229,22 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      */
     private void initPaint() {
 
-        /**初始化边框文本画笔*/
-        textPaint = new Paint();
-        initPaint(textPaint);
-
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(borderTextSize);
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_6D87A8));
-        /**初始化边框线画笔*/
-        borderLinePaint = new Paint();
-        initPaint(borderLinePaint);
+        borderLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 
         borderLinePaint.setTextSize(borderLineTextSize);
         borderLinePaint.setStrokeWidth(borderWidth);
         borderLinePaint.setColor(borderLineColor);
 
-        /**初始化折线画笔*/
+        /**
+         * 初始化折线画笔
+         */
 
-        brokenLineBuyPaint = new Paint();
-        initPaint(brokenLineBuyPaint);
+        brokenLineBuyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         brokenLineBuyPaint.setStrokeWidth(brokenLineWidth);
         mBrokenLineBuyColor = ContextCompat.getColor(getContext(), R.color.color_03C087);
         brokenLineBuyPaint.setColor(mBrokenLineBuyColor);
@@ -259,8 +261,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         brokenLineFillBuyPaint.setColor(mBrokenLineFillBuyColor);
 
 
-        brokenLineSellPaint = new Paint();
-        initPaint(brokenLineSellPaint);
+        brokenLineSellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         brokenLineSellPaint.setStrokeWidth(brokenLineWidth);
         int mBrokenLineSellColor = ContextCompat.getColor(getContext(), R.color.color_FF605A);
         brokenLineSellPaint.setColor(mBrokenLineSellColor);
@@ -280,19 +281,14 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         touchBgPaint.setColor(touchRingBgColor);
 
 
-        /**横线画笔*/
-
-        horizontalLinePaint = new Paint();
-        initPaint(horizontalLinePaint);
-
-
+        horizontalLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         horizontalLinePaint.setStrokeWidth(borderTransverseLineWidth);
         horizontalLinePaint.setColor(borderTransverseLineColor);
 
     }
 
     private void init() {
-        numberLine = 5;
+        lineCount = 5;
         horinzontalNumberLine = 3;
         borderWidth = 2;
         borderTextSize = Dputil.Dp2Px(context, 10);
@@ -316,14 +312,6 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         detector = new GestureDetector(getContext(), this);
     }
 
-
-    /**
-     * 初始化画笔默认属性
-     */
-    private void initPaint(Paint paint) {
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -351,12 +339,10 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         buysPoint = getPoints(mBuyDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
         sellsPoint = getPoints(mSellDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
 
-        /**根据数据绘制线*/
         drawBuyLine(canvas);
-
         drawSellLine(canvas);
 
-        DrawBorderLineAndText(canvas);
+        drawBorderText(canvas);
 
 
         if (touchMode) {
@@ -378,26 +364,26 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             float y = brokenLineMarginTop + realDrawHeight;
             float h = getHeight() - y - horizontalLabelMarginBottom;
 
-            Rect valueRect = new Rect();
-            RectF valueRect2 = new RectF();
-            textPaint.getTextBounds(touchVol, 0, touchVol.length(), valueRect);
-            valueRect2.set(0, touchPoint.y, valueRect.width() + 2 * Dputil.Dp2Px(context, 5), touchPoint.y + h);
-            valueRect2.offset(getWidth() - valueRect2.width(), -valueRect2.height() / 2);
-            if (valueRect2.bottom > y) {
-                valueRect2.offset(0, y - valueRect2.bottom);
-            } else if (valueRect2.top < brokenLineMarginTop) {
-                valueRect2.offset(0, brokenLineMarginTop - valueRect2.bottom);
+            Rect rect = new Rect();
+            RectF rect2 = new RectF();
+            textPaint.getTextBounds(touchVol, 0, touchVol.length(), rect);
+            rect2.set(0, touchPoint.y, rect.width() + 2 * Dputil.Dp2Px(context, 5), touchPoint.y + h);
+            rect2.offset(getWidth() - rect2.width(), -rect2.height() / 2);
+            if (rect2.bottom > y) {
+                rect2.offset(0, y - rect2.bottom);
+            } else if (rect2.top < brokenLineMarginTop) {
+                rect2.offset(0, brokenLineMarginTop - rect2.bottom);
             }
 
 
-            Rect volRect = new Rect();
-            RectF volRect2 = new RectF();
-            textPaint.getTextBounds(touchValue, 0, touchValue.length(), volRect);
-            float baseLine = y + h / 2 - volRect.exactCenterY();
+            rect = new Rect();
+            rect2 = new RectF();
+            textPaint.getTextBounds(touchValue, 0, touchValue.length(), rect);
+            float baseLine = y + h / 2 - rect.exactCenterY();
 
-            volRect2.set(0, y, volRect.width() + 2 * Dputil.Dp2Px(context, 5), y + h);
-            float offsetX = Math.min(Math.max(0, touchPoint.x - volRect2.width() / 2), getWidth() - volRect2.width());
-            volRect2.offset(offsetX, 0);
+            rect2.set(0, y, rect.width() + 2 * Dputil.Dp2Px(context, 5), y + h);
+            float offsetX = Math.min(Math.max(0, touchPoint.x - rect2.width() / 2), getWidth() - rect2.width());
+            rect2.offset(offsetX, 0);
 
             center.offset(touchPoint.x, touchPoint.y);
             ring.offset(touchPoint.x, touchPoint.y);
@@ -408,23 +394,23 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
             textPaint.setTextAlign(Paint.Align.RIGHT);
             canvas.save();
-            canvas.clipRect(valueRect2);
+            canvas.clipRect(rect2);
             canvas.drawColor(axisTouchRectBgColor);
             canvas.restore();
             textPaint.setColor(axisTouchRectBoundColor);
-            canvas.drawRect(valueRect2, textPaint);
+            canvas.drawRect(rect2, textPaint);
             textPaint.setColor(axisTouchTextColor);
-            canvas.drawText(touchVol, getWidth() - verticaLabelMarginRight, valueRect2.centerY() - valueRect.centerY(), textPaint);
+            canvas.drawText(touchVol, getWidth() - verticaLabelMarginRight, rect2.centerY() - rect.centerY(), textPaint);
 
             textPaint.setTextAlign(Paint.Align.CENTER);
             canvas.save();
-            canvas.clipRect(volRect2);
+            canvas.clipRect(rect2);
             canvas.drawColor(axisTouchRectBgColor);
             canvas.restore();
             textPaint.setColor(axisTouchRectBoundColor);
-            canvas.drawRect(volRect2, textPaint);
+            canvas.drawRect(rect2, textPaint);
             textPaint.setColor(axisTouchTextColor);
-            canvas.drawText(touchValue, volRect2.centerX(), baseLine, textPaint);
+            canvas.drawText(touchValue, rect2.centerX(), baseLine, textPaint);
 
         }
     }
@@ -444,7 +430,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
     private void calculateAverage() {
         calculateYValue = maxYVlaue - minYValue;
-        averageYValue = calculateYValue / (numberLine - 0.5);
+        averageYValue = calculateYValue / (lineCount - 0.5);
         calculateXValue = maxXVlaue - minXValue;
         averageXValue = calculateXValue / (horinzontalNumberLine - 1);
     }
@@ -454,27 +440,27 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         Path fillPath = new Path();
 
         for (int j = 0; j < buysPoint.length; j++) {
-            PointF startp = buysPoint[j];
-            PointF endp;
+            PointF startPoint = buysPoint[j];
+            PointF endPoint;
             if (j != buysPoint.length - 1) {
-                endp = buysPoint[j + 1];
-                float wt = (startp.x + endp.x) / 2;
+                endPoint = buysPoint[j + 1];
+                float wt = (startPoint.x + endPoint.x) / 2;
                 PointF p3 = new PointF();
                 PointF p4 = new PointF();
-                p3.y = startp.y;
+                p3.y = startPoint.y;
                 p3.x = wt;
-                p4.y = endp.y;
+                p4.y = endPoint.y;
                 p4.x = wt;
                 if (j == 0) {
-                    mPath.moveTo(startp.x, startp.y);
-                    fillPath.moveTo(startp.x, startp.y);
+                    mPath.moveTo(startPoint.x, startPoint.y);
+                    fillPath.moveTo(startPoint.x, startPoint.y);
                 }
 
-                mPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endp.x, endp.y);
-                fillPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endp.x, endp.y);
+                mPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endPoint.x, endPoint.y);
+                fillPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endPoint.x, endPoint.y);
             } else {
-                mPath.lineTo(startp.x, realDrawHeight + brokenLineMarginTop);
-                fillPath.lineTo(startp.x, realDrawHeight + brokenLineMarginTop);
+                mPath.lineTo(startPoint.x, realDrawHeight + brokenLineMarginTop);
+                fillPath.lineTo(startPoint.x, realDrawHeight + brokenLineMarginTop);
                 fillPath.lineTo(brokenLineMarginLeft, realDrawHeight + brokenLineMarginTop);
                 fillPath.lineTo(brokenLineMarginLeft, buysPoint[0].y);
             }
@@ -489,28 +475,27 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         Path fillPath = new Path();
 
         for (int j = 0; j < sellsPoint.length; j++) {
-            PointF startp = sellsPoint[j];
-            PointF endp;
+            PointF startPoint = sellsPoint[j];
+            PointF endPoint;
             if (j != sellsPoint.length - 1) {
-                endp = sellsPoint[j + 1];
-                float wt = (startp.x + endp.x) / 2;
+                endPoint = sellsPoint[j + 1];
+                float wt = (startPoint.x + endPoint.x) / 2;
                 PointF p3 = new PointF();
                 PointF p4 = new PointF();
-                p3.y = startp.y;
+                p3.y = startPoint.y;
                 p3.x = wt;
-                p4.y = endp.y;
+                p4.y = endPoint.y;
                 p4.x = wt;
                 if (j == 0) {
-                    path.moveTo(startp.x, startp.y);
-
-                    fillPath.moveTo(startp.x, startp.y);
+                    path.moveTo(startPoint.x, startPoint.y);
+                    fillPath.moveTo(startPoint.x, startPoint.y);
                 }
 
-                path.cubicTo(p3.x, p3.y, p4.x, p4.y, endp.x, endp.y);
-                fillPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endp.x, endp.y);
+                path.cubicTo(p3.x, p3.y, p4.x, p4.y, endPoint.x, endPoint.y);
+                fillPath.cubicTo(p3.x, p3.y, p4.x, p4.y, endPoint.x, endPoint.y);
             } else {
-                path.lineTo(brokenLineMarginLeft + realDrawWidth, startp.y);
-                fillPath.lineTo(brokenLineMarginLeft + realDrawWidth, startp.y);
+                path.lineTo(brokenLineMarginLeft + realDrawWidth, startPoint.y);
+                fillPath.lineTo(brokenLineMarginLeft + realDrawWidth, startPoint.y);
                 fillPath.lineTo(brokenLineMarginLeft + realDrawWidth, realDrawHeight + brokenLineMarginTop);
                 fillPath.lineTo(sellsPoint[0].x, brokenLineMarginTop + realDrawHeight);
             }
@@ -523,22 +508,22 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 绘制边框坐标
      */
-    private void DrawBorderLineAndText(Canvas canvas) {
+    private void drawBorderText(Canvas canvas) {
 
         //纵向的坐标
-        float averageHeight = realDrawHeight / numberLine;
+        float averageHeight = realDrawHeight / lineCount;
         textPaint.setTextAlign(TextPaint.Align.RIGHT);
         textPaint.setColor(axisTextColor);
-        for (int i = 0; i < numberLine; i++) {
+        for (int i = 0; i < lineCount; i++) {
             float nowadayHeight = averageHeight * i;
-            double v = averageYValue * (numberLine - i) + minYValue;
+            double v = averageYValue * (lineCount - i) + minYValue;
             canvas.drawText(verticalCoordinatePlace(v) + "", getWidth() - verticaLabelMarginRight, nowadayHeight + brokenLineMarginTop, textPaint);
         }
         //横向的坐标
         float averageWidth = realDrawWidth / (horinzontalNumberLine - 1);
         textPaint.setTextAlign(TextPaint.Align.LEFT);
         for (int i = 0; i < horinzontalNumberLine; i++) {
-            float nowadayWidth = averageWidth * i;
+            float tempWidth = averageWidth * i;
             float v = (float) (averageXValue * i + minXValue);
             String text = valueFormatter.format(v);
             Rect bounds = new Rect();
@@ -547,18 +532,15 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             float y = brokenLineMarginTop + realDrawHeight + bounds.height() + horizontalLabelMarginTop;
 
             if (i == 0) {
-                canvas.drawText(text + "", brokenLineMarginLeft + nowadayWidth, y, textPaint);
+                canvas.drawText(text + "", brokenLineMarginLeft + tempWidth, y, textPaint);
             } else if (i == horinzontalNumberLine - 1) {
-                canvas.drawText(text + "", brokenLineMarginLeft + nowadayWidth - bounds.width(), y, textPaint);
+                canvas.drawText(text + "", brokenLineMarginLeft + tempWidth - bounds.width(), y, textPaint);
             } else {
-                canvas.drawText(text + "", brokenLineMarginLeft + nowadayWidth - bounds.width() / 2, y, textPaint);
+                canvas.drawText(text + "", brokenLineMarginLeft + tempWidth - (bounds.width() >> 1), y, textPaint);
             }
         }
     }
 
-    /**
-     *
-     */
     private String verticalCoordinatePlace(double f) {
         return NumberTools.formatAmount(valueFormatter.format((float) f));
     }
@@ -570,7 +552,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     public PointF[] getPoints(List<MarketDepthPercentItem> values, double height, double width, double left, double top) {
         int size = values.size();
         PointF[] points = new PointF[size];
-        double maxY = averageYValue * numberLine;
+        double maxY = averageYValue * lineCount;
         for (int i = 0; i < size; i++) {
             double valueY = values.get(i).getAmount() - minYValue;
             //计算每点高度所以对应的值
@@ -594,11 +576,11 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 设置边框左上右下边距
      */
-    public void seMargins(float l, float t, float r, float b) {
-        brokenLineMarginLeft = Dputil.Dp2Px(context, l);
-        brokenLineMarginTop = Dputil.Dp2Px(context, t);
-        brokenLinerMarginRight = Dputil.Dp2Px(context, r);
-        brokenLineMarginBottom = Dputil.Dp2Px(context, b);
+    public void seMargins(float left, float top, float right, float bottom) {
+        brokenLineMarginLeft = left;
+        brokenLineMarginTop = top;
+        brokenLinerMarginRight = right;
+        brokenLineMarginBottom = bottom;
     }
 
     public int getViewWidth() {
@@ -654,24 +636,10 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     }
 
     /**
-     * 图表显示最大值
-     */
-    public void setMaxYVlaue(float maxYVlaue) {
-        this.maxYVlaue = maxYVlaue;
-    }
-
-    /**
-     * 图表显示最小值
-     */
-    public void setMinYValue(float minYValue) {
-        this.minYValue = minYValue;
-    }
-
-    /**
      * 图表横线数量
      */
-    public void setNumberLine(int numberLine) {
-        this.numberLine = numberLine;
+    public void setLineCount(int lineCount) {
+        this.lineCount = lineCount;
     }
 
     /**
@@ -728,39 +696,6 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      */
     public void setBrokenLineWidth(float brokenLineWidth) {
         this.brokenLineWidth = Dputil.Dp2Px(context, brokenLineWidth);
-    }
-
-    /**
-     * 获取框线画笔
-     */
-    public Paint getBorderLinePaint() {
-        return borderLinePaint;
-    }
-
-    /**
-     * 获取边框文本画笔
-     */
-    public Paint getTextPaint() {
-        return textPaint;
-    }
-
-    /**
-     * 获取折线画笔
-     */
-    public Paint getBrokenLinePaint() {
-        return brokenLineBuyPaint;
-    }
-
-    /**
-     * 获取边框横线画笔
-     */
-    public Paint getHorizontalLinePaint() {
-        return horizontalLinePaint;
-    }
-
-
-    public void setSymbol(String symbol) {
-        String mSymbol = symbol;
     }
 
 

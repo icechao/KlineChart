@@ -16,7 +16,6 @@ public class MarketDepthPercentItem {
 
     private double amount;
 
-    private String symbol;
 
     public double getPrice() {
         return price;
@@ -34,11 +33,4 @@ public class MarketDepthPercentItem {
         this.amount = amount;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
 }

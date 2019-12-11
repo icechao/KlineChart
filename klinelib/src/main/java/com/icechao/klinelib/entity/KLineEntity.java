@@ -11,7 +11,7 @@ package com.icechao.klinelib.entity;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public abstract class KLineEntity implements IKLine {
+public abstract class KLineEntity implements ICandle, IMACD, IKDJ, IRSI, IVolume, IWR {
 
 
     /**
