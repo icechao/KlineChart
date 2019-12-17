@@ -547,7 +547,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
 
     /**
-     * 根据值计算在该值的 x，y坐标
+     * 计算在该值的 xy
      */
     public PointF[] getPoints(List<MarketDepthPercentItem> values, double height, double width, double left, double top) {
         int size = values.size();
