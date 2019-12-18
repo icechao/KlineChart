@@ -26,7 +26,6 @@ import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
-import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KLineChartView;
 
@@ -39,7 +38,7 @@ import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private KLineChartAdapter<DataTest.Data> adapter;
+    private KLineChartAdapter<KChartBean> adapter;
 
     private KLineChartView chartView;
 
@@ -56,9 +55,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private View klineOperater;
     //    private ReqBean klineReq;
     private DepthFullView depthFullView;
-//    private List<KChartBean> all;
+    //    private List<KChartBean> all;
     private RadioGroup radioGroup;
     private Vibrator vibrator;
+    private List<KChartBean> all;
 
 
     @Override
@@ -213,11 +213,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //使用子线程延迟,防止页面还没有执行SizeChange方法就已经set数据
                 //设置数据 adapter会自动切回子线程,所有可以在子线程中操作
                 SystemClock.sleep(1000);
-//                all = DataRequest.getALL(MainActivity.this);
+                all = DataRequest.getALL(MainActivity.this);
                 //两种设置数据的方式
-                //adapter.resetData(all.subList(0, 380), true);
-                List<DataTest.Data> data = new DataTest().getData();
-                adapter.resetData(data);
+                adapter.resetData(all.subList(0, 380), true);
+//                List<KLineEntity> data = new DataTest().getData();
+//                adapter.resetData(all);
                 chartView.hideLoading();
 //                changeLast();
             }
@@ -227,37 +227,37 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     /**
      * 模拟增量数据
      */
-//    private void changeLast() {
-//        handler.postDelayed(() -> {
-//            int i = random.nextInt() * 1123 % 400;
-////            KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
-//            KChartBean kLineEntity = (KChartBean) adapter.getDatas().get(adapter.getCount() - 1);
-//            KChartBean kLineEntity1 = new KChartBean();
-//            kLineEntity1.setDate(kLineEntity.date);
-//            kLineEntity1.setHigh(kLineEntity.getHigh() + 10f);
-//            kLineEntity1.setClose(kLineEntity.getHigh() + 5f);
-//            kLineEntity1.setOpen(kLineEntity.getOpen());
-//            kLineEntity1.setLow(kLineEntity.getLow());
-//            kLineEntity1.setVolume(kLineEntity.getVolume());
-//            textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
-//            float v = kLineEntity1.getClose() - kLineEntity1.getOpen();
-//            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.getOpen()));
-//            textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.getClose()));
-//            textViewHighPriceText.setText(kLineEntity1.getHigh() + "");
-//            textViewLowPriceText.setText(kLineEntity1.getLow() + "");
-//            textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
-//            if (i++ % 3 == 0) {
-////                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
-//                adapter.addLast(kLineEntity1);
-//            } else {
-////                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
-//                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
-//            }
-//            changeLast();
-//            LogUtil.e(kLineEntity1.toString());
-//
-//        }, 2000);
-//    }
+    private void changeLast() {
+        handler.postDelayed(() -> {
+            int i = random.nextInt() * 1123 % 400;
+//            KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
+            KChartBean kLineEntity = (KChartBean) adapter.getDatas().get(adapter.getCount() - 1);
+            KChartBean kLineEntity1 = new KChartBean();
+            kLineEntity1.setDate(kLineEntity.date);
+            kLineEntity1.setHigh(kLineEntity.getHigh() + 10f);
+            kLineEntity1.setClose(kLineEntity.getHigh() + 5f);
+            kLineEntity1.setOpen(kLineEntity.getOpen());
+            kLineEntity1.setLow(kLineEntity.getLow());
+            kLineEntity1.setVolume(kLineEntity.getVolume());
+            textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
+            float v = kLineEntity1.getClose() - kLineEntity1.getOpen();
+            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.getOpen()));
+            textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.getClose()));
+            textViewHighPriceText.setText(kLineEntity1.getHigh() + "");
+            textViewLowPriceText.setText(kLineEntity1.getLow() + "");
+            textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
+            if (i++ % 3 == 0) {
+//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
+                adapter.addLast(kLineEntity1);
+            } else {
+//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
+                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
+            }
+            changeLast();
+            LogUtil.e(kLineEntity1.toString());
+
+        }, 2000);
+    }
 
 
     @Override
