@@ -462,7 +462,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         for (int i = 0; i < loop; i++) {
             item = new MarketDepthPercentItem();
-            item.setSymbol(symbol);
+//            item.setSymbol(symbol);
             item.setPrice(priceAndAmount.get(i).get(0));
             double totalAmount = totalList.get(i);
             item.setAmount(totalAmount);
