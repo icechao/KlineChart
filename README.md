@@ -85,7 +85,7 @@
              //app:...
              />
              
-4. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局</b>
+4. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局 Use the Scrollview in klinelib to solve the sliding conflict, or refer to solve the sliding layout</b>
              
 
 
