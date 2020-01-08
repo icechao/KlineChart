@@ -160,20 +160,26 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void scrollBy(int x, int y) {
-        scrollTo(scrollX - Math.round(x / scaleX), 0);
+        if (isScrollEnable()) {
+            scrollTo(scrollX - Math.round(x / scaleX), 0);
+        } else {
+            overScroller.forceFinished(true);
+        }
+
     }
 
     @Override
     public void scrollTo(int x, int y) {
-        if (!isScrollEnable()) {
+        if (isScrollEnable()) {
+            int oldX = scrollX;
+            scrollX = x;
+            if (scrollX != oldX) {
+                onScrollChanged(scrollX, 0, oldX, 0);
+            }
+        } else {
             overScroller.forceFinished(true);
-            return;
         }
-        int oldX = scrollX;
-        scrollX = x;
-        if (scrollX != oldX) {
-            onScrollChanged(scrollX, 0, oldX, 0);
-        }
+
     }
 
     @Override

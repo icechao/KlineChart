@@ -447,7 +447,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             tempTranslation = canvasTranslateX;
             isAnimationLast = false;
             overScroller.forceFinished(true);
-            setScrollEnable(false);
             setScaleEnable(false);
         }
     };
@@ -460,7 +459,6 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      */
     protected Runnable action = () -> {
         isAnimationLast = true;
-        setScrollEnable(true);
         setScaleEnable(true);
     };
 
