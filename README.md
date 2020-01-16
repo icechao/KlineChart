@@ -93,7 +93,7 @@
         
       | Attribute name | Value type | Attribute implication | Default value | 
       | ------ | ------ | ------ | ------ |  
-      | betterXLabel  | boolean | 两边X轴坐标向内缩进 | true,可能会引起X轴label重叠可设置为false |
+      | betterXLabel  | boolean | 左右两边时间label完整展示 | true  X轴label可能重叠,false截断展示 |
       | betterSelectedXLabel  | boolean | 选中X坐标在屏幕边缘时向内缩进 |  |
       | marketInfosLabel  | resource | 行情文字(字符串数组) | 行情文字 默认中文 |
       | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
@@ -316,7 +316,7 @@
             Status.ChildStatus.RSI  : rsi
             Status.ChildStatus.WR   : wr
 
-  ### 设置是适应X左右边轴坐标的位置 Setting is the position that suits the coordinates of the left and right axes of X.
+  ### 设置是否适应X左右边轴坐标的位置 Set whether to adapt to the position of left and right axis coordinates of X
 
         kLineChartView.setBetterX(boolean betterX);
             参数
