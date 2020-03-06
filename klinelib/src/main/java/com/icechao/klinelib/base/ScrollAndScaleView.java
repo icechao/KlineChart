@@ -154,8 +154,8 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
             } else {
                 overScroller.forceFinished(true);
             }
+            invalidate();
         }
-        invalidate();
     }
 
     @Override

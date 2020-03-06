@@ -1181,6 +1181,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 canvas.drawText(maxVol, tempYLabelX -
                         textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
 
+                break;
 
             case MAIN_ONLY:
                 if (0 == gridRowCountNoChild) {
