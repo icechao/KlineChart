@@ -436,7 +436,7 @@
         
          kLineChartView.setMacdStrokeModel(Status.HollowModel model);
             参数
-            NONE_STROKE     :   增长的值实心
+            NONE_STROKE     :   所有的值实心
             All_STROKE      :   所有的值空心
             INCREASE_STROKE :   增长的值空心
             DECREASE_STROKE :   下跌的值空心
@@ -444,7 +444,7 @@
           
          kLineChartView.setCandleSolid(Status.HollowModel model);
             参数
-            NONE_STROKE     :   增长的值实心
+            NONE_STROKE     :   所有的值实心
             All_STROKE      :   所有的值空心
             INCREASE_STROKE :   增长的值空心
             DECREASE_STROKE :   下跌的值空心      
