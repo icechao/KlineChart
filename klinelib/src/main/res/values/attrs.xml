@@ -81,7 +81,7 @@
         <attr name="candleRightPadding" format="dimension" />
         <attr name="candleWidth" format="dimension" />
         <attr name="candleLineWidth" format="dimension" />
-        <attr name="candleSolid" format="boolean" />
+        <attr name="candleSolid" format="integer" />
         <!--grid line-->
         <attr name="gridLineWidth" format="dimension" />
         <attr name="gridLineColor" format="color" />

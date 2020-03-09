@@ -478,13 +478,24 @@ public class MainDraw extends BaseDraw {
         this.marketInfoText = marketInfoText;
     }
 
-    public void setStroke(boolean isStroke) {
-        if (isStroke) {
-            upPaint.setStyle(Paint.Style.STROKE);
-            downPaint.setStyle(Paint.Style.STROKE);
-        } else {
-            upPaint.setStyle(Paint.Style.FILL);
-            downPaint.setStyle(Paint.Style.FILL);
+    public void setStroke(Status.HollowModel isStroke) {
+        switch (isStroke) {
+            case INCREASE_STROKE:
+                upPaint.setStyle(Paint.Style.STROKE);
+                downPaint.setStyle(Paint.Style.FILL);
+                break;
+            case DECREASE_STROKE:
+                upPaint.setStyle(Paint.Style.FILL);
+                downPaint.setStyle(Paint.Style.STROKE);
+                break;
+            case ALL_STROKE:
+                upPaint.setStyle(Paint.Style.STROKE);
+                downPaint.setStyle(Paint.Style.STROKE);
+                break;
+            case NONE_STROKE:
+                upPaint.setStyle(Paint.Style.FILL);
+                downPaint.setStyle(Paint.Style.FILL);
+                break;
         }
     }
 

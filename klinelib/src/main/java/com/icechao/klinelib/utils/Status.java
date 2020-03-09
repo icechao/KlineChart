@@ -105,17 +105,31 @@ public class Status {
         }
     }
 
-    public enum MacdStrokeModel {
-        NONE_STROKE(0),
-        All_STROKE(1),
-        INCREASE_STROKE(2),
-        DECREASE_STROKE(3);
+    public enum HollowModel {
+        NONE_STROKE(0),//全实心
+        ALL_STROKE(1), //全空心
+        INCREASE_STROKE(2),//涨空心
+        DECREASE_STROKE(3);//跌实心
+
         private int model;
 
-        MacdStrokeModel(int model) {
+        HollowModel(int model) {
             this.model = model;
         }
 
+        public static HollowModel getStrokeModel(int integer) {
+            switch (integer) {
+                default:
+                case 0:
+                    return NONE_STROKE;
+                case 1:
+                    return ALL_STROKE;
+                case 2:
+                    return INCREASE_STROKE;
+                case 3:
+                    return DECREASE_STROKE;
+            }
+        }
     }
 
     public enum MaxMinCalcModel {
@@ -126,5 +140,7 @@ public class Status {
         CALC_CLOSE_WITH_LAST,//计算显示的线和最新线的close值
     }
 }
+
+
 
 

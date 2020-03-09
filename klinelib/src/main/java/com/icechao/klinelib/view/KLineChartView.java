@@ -210,7 +210,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setVolMa1Color(array.getColor(R.styleable.KLineChartView_volMa1Color, getColor(R.color.color_F6DC93)));
                 setVolMa2Color(array.getColor(R.styleable.KLineChartView_volMa2Color, getColor(R.color.color_61D1C0)));
 
-                setCandleSolid(array.getBoolean(R.styleable.KLineChartView_candleSolid, false));
+                setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KLineChartView_candleSolid, 1)));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -599,8 +599,8 @@ public class KLineChartView extends BaseKLineChartView {
      *
      * @return {@link KLineChartView}
      */
-    public KLineChartView setCandleSolid(boolean candleSolid) {
-        mainDraw.setStroke(candleSolid);
+    public KLineChartView setCandleSolid(Status.HollowModel candleStrokeModel) {
+        mainDraw.setStroke(candleStrokeModel);
         return this;
     }
 
@@ -651,10 +651,10 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置macd 线空心模式
      *
-     * @param model {@link Status.MacdStrokeModel}
+     * @param model {@link Status.HollowModel}
      * @return {@link KLineChartView}
      */
-    public KLineChartView setMacdStrokeModel(Status.MacdStrokeModel model) {
+    public KLineChartView setMacdStrokeModel(Status.HollowModel model) {
         macdDraw.setStrokeModel(model);
         return this;
     }

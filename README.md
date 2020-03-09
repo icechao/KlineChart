@@ -434,13 +434,21 @@
             
   ### macd空心设置 Setting of MACD hollow histogram
         
-         kLineChartView.setMacdStrokeModel(Status.MacdStrokeModel model);
+         kLineChartView.setMacdStrokeModel(Status.HollowModel model);
             参数
             NONE_STROKE     :   增长的值实心
             All_STROKE      :   所有的值空心
             INCREASE_STROKE :   增长的值空心
             DECREASE_STROKE :   下跌的值空心
-            
+  ### K线空心设置 Setting of Kline hollow histogram
+          
+         kLineChartView.setCandleSolid(Status.HollowModel model);
+            参数
+            NONE_STROKE     :   增长的值实心
+            All_STROKE      :   所有的值空心
+            INCREASE_STROKE :   增长的值空心
+            DECREASE_STROKE :   下跌的值空心      
+                  
   ### macd空心时线宽设置 Line width of MACD hollow histogram
         
          kLineChartView.setMacdStrockWidth(int lineWidth);

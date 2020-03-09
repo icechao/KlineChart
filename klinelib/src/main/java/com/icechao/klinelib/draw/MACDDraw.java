@@ -40,7 +40,7 @@ public class MACDDraw extends BaseDraw {
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String macdIndexLabel, difIndexLabel, deaIndexLabel;
-    private Status.MacdStrokeModel macdStrokeModel = Status.MacdStrokeModel.NONE_STROKE;
+    private Status.HollowModel macdStrokeModel = Status.HollowModel.NONE_STROKE;
 
     public MACDDraw(Context context) {
         indexInterval = Constants.getCount();
@@ -60,7 +60,7 @@ public class MACDDraw extends BaseDraw {
             case NONE_STROKE:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                 break;
-            case All_STROKE:
+            case ALL_STROKE:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redStrokePaint, greenStrokePaint);
                 break;
             case INCREASE_STROKE:
@@ -205,7 +205,7 @@ public class MACDDraw extends BaseDraw {
         greenStrokePaint.setStrokeWidth(width);
     }
 
-    public void setStrokeModel(Status.MacdStrokeModel model) {
+    public void setStrokeModel(Status.HollowModel model) {
         this.macdStrokeModel = model;
 
     }
