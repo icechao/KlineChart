@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
-                .setCandleSolid(false)
+                .setCandleSolid(Status.HollowModel.ALL_STROKE)
                 .setOnSelectedChangedListener(new BaseKLineChartView.OnSelectedChangedListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
