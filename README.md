@@ -35,7 +35,7 @@
             
             工程的build.gradle中
 
-                        implementation 'com.icechao.klinelib:klinelib:1.1.3'
+                        implementation 'com.icechao.klinelib:klinelib:1.1.4'
 
             
 2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
@@ -521,6 +521,6 @@
               MaxMinCalcModel.CALC_NORMAL_WITH_SHOW :   计算显示的线全部值 
               MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
             
-  ### 指标线各种指标支持修改查看Constants类
-          成员方法修改后重置数据,会根据新指标计算          
+  ### 指标线所有指标可配置 具体配置方法查看Constants类
+          修改后重置数据,会根据新指标计算          
  
