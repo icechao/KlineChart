@@ -201,7 +201,7 @@ public class KLineChartView extends BaseKLineChartView {
                 //rsi
                 setRSI1Color(array.getColor(R.styleable.KLineChartView_rsi1Color, getColor(R.color.color_F6DC93)));
                 setRSI2Color(array.getColor(R.styleable.KLineChartView_rsi2Color, getColor(R.color.color_61D1C0)));
-//                setRSI3Color(array.getColor(R.styleable.KLineChartView_rsi2ColorColor, getColor(R.color.color_CB92FE)));
+                setRSI3Color(array.getColor(R.styleable.KLineChartView_ris3Color, getColor(R.color.color_CB92FE)));
                 //main
                 setMa1Color(array.getColor(R.styleable.KLineChartView_ma1Color, getColor(R.color.color_F6DC93)));
                 setMa2Color(array.getColor(R.styleable.KLineChartView_ma2Color, getColor(R.color.color_61D1C0)));

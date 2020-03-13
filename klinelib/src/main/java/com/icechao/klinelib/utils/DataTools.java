@@ -33,8 +33,13 @@ public class DataTools {
                 Constants.getKdjK(),
                 Constants.getWr1(), 0, 0);
 
-        calcRsi(points, dataList, Constants.getRsi1());
-
+        calcRsi(points, dataList, Constants.getRsi1(), 1);
+        if (-1 != Constants.getRsi2()) {
+            calcRsi(points, dataList, Constants.getRsi2(), 2);
+        }
+        if (-1 != Constants.getRsi3()) {
+            calcRsi(points, dataList, Constants.getRsi3(), 3);
+        }
         return points;
     }
 
@@ -244,20 +249,32 @@ public class DataTools {
 //　　        B=14个数字中负数之和乘以(—1)
 //　　        RSI(14)=A÷(A＋B)×100
 
-            points[indexInterval * i + Constants.INDEX_RSI_1] = point.getRsiOne();
+//            points[indexInterval * i + Constants.INDEX_RSI_1] = point.getRsiOne();
         }
         return points;
     }
 
     public void calcRsi(float[] points, List<? extends KLineEntity> klineInfos,
-                        int n) {
+                        int n, int index) {
         if (klineInfos.size() > n) {
-            double firstValue = klineInfos.get(n - 1).getRsiOne();
+            double firstValue;
+            switch (index) {
+                default:
+                case 1:
+                    firstValue = klineInfos.get(n - 1).getRsiOne();
+                    break;
+                case 2:
+                    firstValue = klineInfos.get(n - 1).getRsiTwo();
+                    break;
+                case 3:
+                    firstValue = klineInfos.get(n - 1).getRsiThree();
+                    break;
+            }
             if (firstValue != 0 && firstValue != Float.MIN_VALUE) {
-                calcRsiChange(points, klineInfos, n, findStart(klineInfos),
-                        klineInfos.size());
+                calcRsiChange(points, klineInfos, n, findStart(klineInfos, index),
+                        klineInfos.size(), index);
             } else {
-                calcRsiChange(points, klineInfos, n, 0, klineInfos.size());
+                calcRsiChange(points, klineInfos, n, 0, klineInfos.size(), index);
             }
         }
 
@@ -265,7 +282,7 @@ public class DataTools {
 
 
     private void calcRsiChange(float[] points, List<? extends KLineEntity> klineInfos,
-                               int n, int start, int end) {
+                               int n, int start, int end, int index) {
         double upPriceRma = 0;
         double downPriceRma = 0;
 
@@ -295,8 +312,20 @@ public class DataTools {
                 downPriceRma = (downPrice + (n - 1) * downPriceRma) / n;
                 rsi = calcRsi(upPriceRma, downPriceRma);
             }
-            klineInfos.get(i).setrOne((float) rsi);
-            points[Constants.getCount() * i + Constants.INDEX_RSI_1] = (float) rsi;
+            switch (index) {
+                case 1:
+                    klineInfos.get(i).setrOne((float) rsi);
+                    points[Constants.getCount() * i + Constants.INDEX_RSI_1] = (float) rsi;
+                    break;
+                case 2:
+                    klineInfos.get(i).setrTwo((float) rsi);
+                    points[Constants.getCount() * i + Constants.INDEX_RSI_2] = (float) rsi;
+                    break;
+                case 3:
+                    klineInfos.get(i).setrThree((float) rsi);
+                    points[Constants.getCount() * i + Constants.INDEX_RSI_3] = (float) rsi;
+                    break;
+            }
         }
     }
 
@@ -311,12 +340,28 @@ public class DataTools {
 
     }
 
-    private int findStart(List<? extends KLineEntity> klineInfos) {
+    private int findStart(List<? extends KLineEntity> klineInfos, int index) {
         for (int i = klineInfos.size() - 1; i > 0; i--) {
             //double  float 互转有精度问题无法精确判断,使用-1000判断 Rsi没有这个值
-            if (klineInfos.get(i).getRsiOne() < -1000) {
-                return i + 1;
+            switch (index) {
+                default:
+                case 1:
+                    if (klineInfos.get(i).getRsiOne() < -1000) {
+                        return i + 1;
+                    }
+                    break;
+                case 2:
+                    if (klineInfos.get(i).getRsiTwo() < -1000) {
+                        return i + 1;
+                    }
+                    break;
+                case 3:
+                    if (klineInfos.get(i).getRsiThree() < -1000) {
+                        return i + 1;
+                    }
+                    break;
             }
+
         }
         return 0;
     }

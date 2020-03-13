@@ -41,9 +41,19 @@ public class Constants {
 
     public static String RSI_TOP_TEXT_TAMPLATE = "RSI(%s)  ";
     public static int RSI_1 = 14;
+    public static int RSI_2 = 14;
+    public static int RSI_3 = 14;
 
-    public static void setRsi(int r) {
+    public static void setRsi1(int r) {
         RSI_1 = r;
+    }
+
+    public static void setRsi2(int r) {
+        RSI_2 = r;
+    }
+
+    public static void setRsi3(int r) {
+        RSI_3 = r;
     }
 
     public static String WR_TOP_TEXT_TEMPLATE = "WR(%s):";
@@ -152,6 +162,14 @@ public class Constants {
 
     public static int getRsi1() {
         return RSI_1;
+    }
+
+    public static int getRsi2() {
+        return RSI_2;
+    }
+
+    public static int getRsi3() {
+        return RSI_3;
     }
 
     public static Object getKdjD() {

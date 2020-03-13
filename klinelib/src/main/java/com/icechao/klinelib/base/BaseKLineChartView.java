@@ -1524,8 +1524,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             case CALC_CLOSE_WITH_LAST:
                 mainMaxValue = getLastPrice();
                 mainMinValue = getLastPrice();
-                mainHighMaxValue = getLastPrice();
-                mainLowMinValue = getLastPrice();
+                mainHighMaxValue = Float.MIN_VALUE;
+                mainLowMinValue = Float.MAX_VALUE;
                 break;
             case CALC_CLOSE_WITH_SHOW:
             case CALC_NORMAL_WITH_SHOW:
