@@ -271,7 +271,7 @@ public class DataTools {
                     break;
             }
             if (firstValue != 0 && firstValue != Float.MIN_VALUE) {
-                calcRsiChange(points, klineInfos, n, findStart(klineInfos, index),
+                calcRsiChange(points, klineInfos, n, findStart(klineInfos,index),
                         klineInfos.size(), index);
             } else {
                 calcRsiChange(points, klineInfos, n, 0, klineInfos.size(), index);

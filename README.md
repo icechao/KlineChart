@@ -521,5 +521,6 @@
               MaxMinCalcModel.CALC_NORMAL_WITH_SHOW :   计算显示的线全部值 
               MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
             
-            
+  ### 指标线各种指标支持修改查看Constants类
+          成员方法修改后重置数据,会根据新指标计算          
  

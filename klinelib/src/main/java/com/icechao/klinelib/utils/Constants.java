@@ -41,8 +41,10 @@ public class Constants {
 
     public static String RSI_TOP_TEXT_TAMPLATE = "RSI(%s)  ";
     public static int RSI_1 = 14;
-    public static int RSI_2 = 14;
-    public static int RSI_3 = 14;
+    //为-1不显示
+    public static int RSI_2 = -1;
+    //为-1不显示
+    public static int RSI_3 = -1;
 
     public static void setRsi1(int r) {
         RSI_1 = r;
