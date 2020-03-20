@@ -193,25 +193,25 @@
       | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
 
               
-4. <b>初始化k线</b>
+4. <b>初始化k线  Initialize K-line</b>
   
-            //设置数据适配器
+            //设置数据适配器  Set up data adapter
             chartView.setAdapter(adapter)
-                    //设置开场动画
+                    //显示加载动画  Show load animation
                     .setAnimLoadData(false)
-                    //添加日期格式化,可动态修改
+                    //日期格式器  Date formatter
                     .setDateTimeFormatter(new DateFormatter())
-                    //网格列
+                    //网格列  Grid column
                     .setGridColumns(5)
-                    //网格行
+                    //网格行 Grid row
                     .setGridRows(5)
                     //logo
                     .setLogoBigmap(bitmap)
-                    //logo透明度
+                    //logo透明度  Logo transparency
                     .setLogoAlpha(100)
-                    //左滑超出宽度
+                    //Slide left K line inside indent width
                     .setOverScrollRange(getWindowManager().getDefaultDisplay().getWidth() / 5)
-                    //滑动边界监听(可能重复调用)
+                    //滑动边界监听  Sliding boundary monitoring
                     .setSlidListener(new SlidListener() {
                         @Override
                         public void onSlidLeft() {
@@ -223,63 +223,63 @@
                             LogUtil.e("onSlidRight");
                         }
                     })
-                    //Y值精度格式化(可重复设置)
+                    //Y值精度格式化   Y value precision format
                     .setValueFormatter(new ValueFormatter() {
                         @Override
                         public String format(float value) {
                             return String.format("%.03f", value);
                         }
                     })
-                    //成交量格式化
+                    //成交量格式化 Volume format
                     .setVolFormatter(new ValueFormatter() {
                         @Override
                         public String format(float value) {
                             return String.format("%.03f", value);
                         }
                     })
-                    //设置loadingView
+                    //设置loadingView   set loading view
                     .setLoadingView(textView)
-                    //显示loading
+                    //显示loading  show loading view
                     .showLoading();
 
          
-5. <b>使用KLineChartAdapter设置数据</b>
+5. <b>使用KLineChartAdapter设置数据  Using klinechartadapter to set up data</b>
   
-            如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取
+            如果没有将数据适配器保存可以通过ChartView的getAdapter方法获取  If the data adapter is not saved, it can be obtained through the getadapter method of chartview
             chartView.getAdapter()
 
-            填充或重新填充数据,bool表示是否重置展示位
+            填充或重新填充数据,bool表示是否重置展示位   Fill or repopulate the data. Bool indicates whether to reset the display bit
             resetData(List<KlineEntry>,boolean);
 
-            尾部追加数据 
+            尾部追加数据  Append data at the end
             addLast(KlineEntry);
 
-            修改某个数据 
+            修改某个数据   Modify a data
             changeItem(KlineEntry);
 
-            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法
+            如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法   If you need to append more than one data, you can inherit the klinechartadapter custom method reference addlast method
+            添加完数据后需要手动隐藏loading   After adding data, you need to hide loading manually
             
-            添加完数据后需要手动隐藏loading
             chartView.hideLoading();
     
-6. <b>(可选)解决滑动冲突</b>
+6. <b>(可选)解决滑动冲突  (optional) resolve sliding conflict</b>
   
-            滑动布局使用 com.icechao.klinelib.view.ScrollView
+            滑动布局 com.icechao.klinelib.view.ScrollView
     
 
-## 更多API查看[KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
+## 更多API查看  More API [KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
 
 ## 部分API  ________  kLineChartView为KLineChartView对象
 
 
-  ### 自定义数据计算方法
+  ### 自定义数据计算方法  Custom data calculation method
        
        klineChartView.getAdapter.setDataTools(DataTools tools)
             
-            不实现此方法会使用默认的计算方法
+            不实现此方法会使用默认的计算方法  Do not implement this method will use the default calculation method
 
      
-  ### Loadding展示
+  ### Loadding展示  show loading view
 
        kLineChartView.justShowLoading() ;
        
@@ -521,6 +521,6 @@
               MaxMinCalcModel.CALC_NORMAL_WITH_SHOW :   计算显示的线全部值 
               MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
             
-  ### 指标线所有指标可配置 具体配置方法查看Constants类
+  ### 指标线所有指标可配置 具体配置方法查看Constants类  All indicators of the indicator line can be configured. See the Constants class for the specific configuration method
           修改后重置数据,会根据新指标计算          
  
