@@ -174,9 +174,9 @@
       | kColor  | color | k线的颜色 | |
       | dColor  | color | d线的颜色 | |
       | jColor  | color | j线的颜色 | |
-      | rsi1Color  | color | 第1根rsi线的颜色 | |
-      | rsi2Color  | color |第2根rsi线的颜色 | 暂无 |
-      | ris3Color  | color | 第3根rsi线的颜色 | 暂无 |
+      | rsi1Color  | color | 第1根rsi线的颜色 | 与ma线一致 |
+      | rsi2Color  | color | 第2根rsi线的颜色 | 与ma线一致 |
+      | ris3Color  | color | 第3根rsi线的颜色 | 与ma线一致 |
       | upColor  | color | up线颜色 | |
       | mbColor  | color | mb线颜色 | |
       | dnColor  | color | dn线颜色 | |
