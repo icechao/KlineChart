@@ -13,7 +13,7 @@
 
 1. 添加依赖  Add dependency
             
-            项目的build.gradle中
+            项目的build.gradle中  In the project's build.gradle
 
                         buildscript {
 
@@ -33,7 +33,7 @@
                         }
             
             
-            工程的build.gradle中
+            工程的build.gradle中  In the mudule's build.gradle
 
                         implementation 'com.icechao.klinelib:klinelib:1.1.4'
 
@@ -41,32 +41,32 @@
 2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
   
             public class KChartBean extends KLineEntity {
-            //必须复写此方法返回毫秒值
+            //必须覆写此方法返回毫秒值 Override this method to return the time in milliseconds
             @Override
             public Long getDate() {
               return date;
             }
-            //必须复写此方法返回开盘价
+            //必须覆写此方法返回开盘价 Override this method to return the opening price
             @Override
             public float getOpenPrice() {
               return open;
             }
-            //必须复写此方法返回最高价
+            //必须覆写此方法返回最高价  Override this method to return the maximum price
             @Override
             public float getHighPrice() {
               return high;
             }
-            //必须复写此方法返回最高价
+            //必须覆写此方法返回最低价  Override this method to return the lowest price
             @Override
             public float getLowPrice() {
               return low;
             }
-            //必须复写此方法返回收盘价
+            //必须覆写此方法返回收盘价  Override this method to return the closing price
             @Override
             public float getClosePrice() {
               return close;
             }
-            //必须复写此方法返回成交量
+            //必须覆写此方法返回成交量  Override this method to return volume
             @Override
             public float getVolume() {
               return volume;
