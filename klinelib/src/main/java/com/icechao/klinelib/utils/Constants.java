@@ -83,6 +83,8 @@ public class Constants {
         K_VOL_MA_NUMBER_2 = ma2;
     }
 
+    public static int EMA_NUMBER = 12;
+
 
     private static int i = 0;
     public static final int INDEX_DATE = i;
@@ -112,6 +114,7 @@ public class Constants {
     public static final int INDEX_WR_1 = ++i;
     public static final int INDEX_WR_2 = ++i;
     public static final int INDEX_WR_3 = ++i;
+//    public static final int EMA_INDEX = ++i;
 
 
     public static int getCount() {
@@ -174,11 +177,15 @@ public class Constants {
         return RSI_3;
     }
 
-    public static Object getKdjD() {
+    public static int getKdjD() {
         return KDJ_D;
     }
 
-    public static Object getKdjJ() {
+    public static int getKdjJ() {
         return KDJ_J;
+    }
+
+    public static int getEma() {
+        return EMA_NUMBER;
     }
 }

@@ -31,7 +31,8 @@ public class DataTools {
                 Constants.getMacdS(), Constants.getMacdL(), Constants.getMacdM(),
                 Constants.getVolMa1(), Constants.getVolMa2(),
                 Constants.getKdjK(),
-                Constants.getWr1(), 0, 0);
+                Constants.getWr1(), 0, 0,
+                Constants.getEma());
 
         calcRsi(points, dataList, Constants.getRsi1(), 1);
         if (-1 != Constants.getRsi2()) {
@@ -69,7 +70,8 @@ public class DataTools {
                       int s, int l, int m,
                       double maOne, double maTwo,
                       int kdjDay,
-                      int wr1, int wr2, int wr3) {
+                      int wr1, int wr2, int wr3,
+                      int ema) {
         double maSum1 = 0;
         double maSum2 = 0;
         double maSum3 = 0;
@@ -140,6 +142,10 @@ public class DataTools {
 
 
             //macd
+
+//            if (i > 0) {
+//                points[indexInterval * i + Constants.EMA_INDEX] = calculateEma(dataList, ema, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX]);
+//            }
             if (s > 0 && l > 0 && m > 0) {
                 if (size >= m + l - 2) {
                     if (i < l - 1) {
@@ -271,7 +277,7 @@ public class DataTools {
                     break;
             }
             if (firstValue != 0 && firstValue != Float.MIN_VALUE) {
-                calcRsiChange(points, klineInfos, n, findStart(klineInfos,index),
+                calcRsiChange(points, klineInfos, n, findStart(klineInfos, index),
                         klineInfos.size(), index);
             } else {
                 calcRsiChange(points, klineInfos, n, 0, klineInfos.size(), index);
@@ -389,14 +395,15 @@ public class DataTools {
                 maxRsi = Math.max(maxRsi, dataList.get(index).getHighPrice());
                 minRsi = Math.min(minRsi, dataList.get(index).getLowPrice());
             }
-            float rsv;
-            try {
-                rsv = 100f * (closePrice - minRsi) / (maxRsi - minRsi);
-            } catch (Exception e) {
+            float rsv = 100f * (closePrice - minRsi) / (maxRsi - minRsi);
+            if (Float.isNaN(rsv) || Float.isInfinite(rsv)) {
                 rsv = 0f;
             }
             KLineEntity kLineEntity = dataList.get(i - 1);
             float k1 = kLineEntity.getK();
+            if (Float.isNaN(k1)) {
+                k1 = 50;
+            }
             k = 2f / 3f * (k1 == Float.MIN_VALUE ? 50 : k1) + 1f / 3f * rsv;
             float d1 = kLineEntity.getD();
             d = 2f / 3f * (d1 == Float.MIN_VALUE ? 50 : d1) + 1f / 3f * k;
