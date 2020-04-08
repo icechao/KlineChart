@@ -70,14 +70,14 @@ public class RSIDraw extends BaseDraw {
             canvas.drawText(text + " ", x, y, rsi1Paint);
             x += rsi1Paint.measureText(text);
         }
-        if (Float.MIN_VALUE != values[Constants.INDEX_RSI_2]) {
+        if (Constants.RSI_2 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_2]) {
             canvas.drawText(legendText2, x, y, rsi2Paint);
             x += rsi2Paint.measureText(legendText2);
             String text = getValueFormatter().format(values[Constants.INDEX_RSI_2]);
             canvas.drawText(text + " ", x, y, rsi2Paint);
             x += rsi2Paint.measureText(text);
         }
-        if (Float.MIN_VALUE != values[Constants.INDEX_RSI_3]) {
+        if (Constants.RSI_3 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_3]) {
             canvas.drawText(legendText3, x, y, rsi3Paint);
             x += rsi3Paint.measureText(legendText3);
             String text = getValueFormatter().format(values[Constants.INDEX_RSI_3]);
