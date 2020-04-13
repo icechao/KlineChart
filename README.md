@@ -118,7 +118,8 @@
       | priceLineWidth  | dimension | 价格线宽 | 1dp |
       | priceLineColor  | color | 价格线颜色 | |
       | priceLineRightColor  | color | 价格线右侧虚线时颜色 | |
-      | priceLineRightTextColor  | color | 价格线右侧虚线价格文字颜色 | |
+      | priceLineRightLabelTextColor  | color | 价格线右侧虚线价格文字颜色 | |
+      | priceLineRightLabelBackGroundColor  | color | 价格线右侧Label背景 | |
       | priceLineBackgroundColor  | color | 价格线横框背景色 | #CFD3A9 |
       | priceLineBoxMarginRight  | dimension | 价格框右边距 | 120 |
       | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |

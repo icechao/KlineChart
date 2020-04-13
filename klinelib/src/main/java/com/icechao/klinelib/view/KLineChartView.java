@@ -31,8 +31,6 @@ import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
 
-import javax.crypto.interfaces.PBEKey;
-
 /*************************************************************************
  * Description   :
  *
@@ -121,8 +119,8 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceLineWidth(array.getDimension(R.styleable.KLineChartView_priceLineWidth, Dputil.Dp2Px(context, 1)));
                 setPriceLineColor(array.getColor(R.styleable.KLineChartView_priceLineColor, getResources().getColor(R.color.color_6D87A8)));
                 setPriceLineRightColor(array.getColor(R.styleable.KLineChartView_priceLineRightColor, getResources().getColor(R.color.color_4B85D6)));
-                setPriceLineRightTextColor(array.getColor(R.styleable.KLineChartView_priceLineRightTextColor, getResources().getColor(R.color.color_4B85D6)));
-                setPriceBoxColor(array.getColor(R.styleable.KLineChartView_priceLineBoxColor, getContext().getResources().getColor(R.color.color_131F30)));
+                setPriceLineRightLabelTextColor(array.getColor(R.styleable.KLineChartView_priceLineRightLabelTextColor, getResources().getColor(R.color.color_4B85D6)));
+                setPriceLineRightLabelBackGroundColor(array.getColor(R.styleable.KLineChartView_priceLineRightLabelBackGroundColor, getContext().getResources().getColor(R.color.color_131F30)));
                 setPriceLineBoxBgColor(array.getColor(R.styleable.KLineChartView_priceLineBackgroundColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
                 setPricelineBoxBorderColor(array.getColor(R.styleable.KLineChartView_priceLineBoxBorderColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
                 setPricelineBoxBorderWidth(array.getDimension(R.styleable.KLineChartView_priceLineBoxBorderWidth, 1));
@@ -210,7 +208,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setVolMa1Color(array.getColor(R.styleable.KLineChartView_volMa1Color, getColor(R.color.color_F6DC93)));
                 setVolMa2Color(array.getColor(R.styleable.KLineChartView_volMa2Color, getColor(R.color.color_61D1C0)));
 
-                setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KLineChartView_candleSolid, 1)));
+                setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KLineChartView_candleSolid, 0)));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1067,13 +1065,25 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 价格线右侧框背景
+     * 使用setPriceLineRightLabelBackGroundColor
      *
-     * @param backgroundFillPaint backgroundFillPaint
+     * @param priceRightBoxBackGroundColor backgroundFillPaint
      * @return {@link KLineChartView}
      */
-    public KLineChartView setPriceBoxColor(int backgroundFillPaint) {
-        this.rightPriceBoxPaint.setColor(backgroundFillPaint);
+    @Deprecated
+    public KLineChartView setPriceBoxColor(int priceRightBoxBackGroundColor) {
+        this.rightPriceBoxPaint.setColor(priceRightBoxBackGroundColor);
+        return this;
+    }
+
+    /**
+     * 价格线右侧框背景
+     *
+     * @param priceLIneRightLabelBackGroundColor backgroundFillPaint
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setPriceLineRightLabelBackGroundColor(int priceLIneRightLabelBackGroundColor) {
+        this.rightPriceBoxPaint.setColor(priceLIneRightLabelBackGroundColor);
         return this;
     }
 
@@ -1090,12 +1100,24 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
+     * 使用 setPriceLineRightLabelTextColor
+     *
+     * @param color price line right color
+     * @return {@link KLineChartView}
+     */
+    @Deprecated
+    public KLineChartView setPriceLineRightTextColor(int color) {
+        priceLineRightTextPaint.setColor(color);
+        return this;
+    }
+
+    /**
      * 价格线右侧价格文字的颜色
      *
      * @param color price line right color
      * @return {@link KLineChartView}
      */
-    public KLineChartView setPriceLineRightTextColor(int color) {
+    public KLineChartView setPriceLineRightLabelTextColor(int color) {
         priceLineRightTextPaint.setColor(color);
         return this;
     }
@@ -1163,7 +1185,9 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setPriceLineWidth(float lineWidth) {
         priceLinePaint.setStrokeWidth(lineWidth);
+        priceLineRightPaint.setStrokeWidth(lineWidth);
         priceLinePaint.setStyle(Paint.Style.STROKE);
+        priceLineRightPaint.setStyle(Paint.Style.STROKE);
         return this;
     }
 

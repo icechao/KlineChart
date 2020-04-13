@@ -13,8 +13,8 @@
         <attr name="priceLineColor" format="color" />
         <attr name="priceLineBackgroundColor" format="color" />
         <attr name="priceLineRightColor" format="color" />
-        <attr name="priceLineRightTextColor" format="color" />
-        <attr name="priceLineBoxColor" format="color" />
+        <attr name="priceLineRightLabelTextColor" format="color" />
+        <attr name="priceLineRightLabelBackGroundColor" format="color" />
         <attr name="priceLineBoxBorderColor" format="color" />
         <attr name="priceLineBoxBorderWidth" format="dimension" />
 
