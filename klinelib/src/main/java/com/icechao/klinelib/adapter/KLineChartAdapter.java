@@ -1,7 +1,6 @@
 package com.icechao.klinelib.adapter;
 
-import com.icechao.klinelib.base.BaseKLineChartAdapter;
-import com.icechao.klinelib.entity.KLineEntity;
+import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.utils.DataTools;
 
 import java.util.ArrayList;

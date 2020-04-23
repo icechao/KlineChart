@@ -1,22 +1,19 @@
-package com.icechao.klinelib.formatter;
+package com.icechao.klinelib.model;
 
 
-import java.util.Locale;
+import android.view.View;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ValueFormatter.java
+ * @FileName     : PriceItemClickListener.java
  * @Author       : chao
- * @Date         : 2019/4/8
+ * @Date         : 2019/4/10
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
+public interface PriceItemClickListener {
 
-public class ValueFormatter implements IValueFormatter {
-    @Override
-    public String format(float value) {
-        return String.format(Locale.CHINA, "%.2f", value);
-    }
+    void onClick(MarketTradeItem item, View view);
 }

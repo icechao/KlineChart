@@ -1,6 +1,5 @@
 package com.icechao.klinelib.formatter;
 
-import com.icechao.klinelib.base.IDateTimeFormatter;
 import com.icechao.klinelib.utils.DateUtil;
 
 import java.util.Date;

@@ -1,22 +1,26 @@
-package com.icechao.klinelib.formatter;
+package com.icechao.klinelib.model;
 
-
-import java.util.Locale;
+import java.io.Serializable;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ValueFormatter.java
+ * @FileName     : IWR.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
+public interface IWR extends Serializable {
 
-public class ValueFormatter implements IValueFormatter {
-    @Override
-    public String format(float value) {
-        return String.format(Locale.CHINA, "%.2f", value);
-    }
+    /**
+     * %R值
+     */
+    Float getWrOne();
+
+    Float getWrTwo();
+
+    Float getWrThree();
+
 }

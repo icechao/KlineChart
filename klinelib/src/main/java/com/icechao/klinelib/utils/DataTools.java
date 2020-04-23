@@ -3,7 +3,7 @@
 package com.icechao.klinelib.utils;
 
 
-import com.icechao.klinelib.entity.KLineEntity;
+import com.icechao.klinelib.model.KLineEntity;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class DataTools {
                 Constants.getVolMa1(), Constants.getVolMa2(),
                 Constants.getKdjK(),
                 Constants.getWr1(), 0, 0,
-                Constants.getEma());
+                Constants.getEma1(), Constants.getEma2(), Constants.getEma3());
 
         calcRsi(points, dataList, Constants.getRsi1(), 1);
         if (-1 != Constants.getRsi2()) {
@@ -71,7 +71,7 @@ public class DataTools {
                       double maOne, double maTwo,
                       int kdjDay,
                       int wr1, int wr2, int wr3,
-                      int ema) {
+                      int ema1, int ema2, int ema3) {
         double maSum1 = 0;
         double maSum2 = 0;
         double maSum3 = 0;
@@ -141,11 +141,6 @@ public class DataTools {
             points[indexInterval * i + Constants.INDEX_MA_3] = point.getMaThree();
 
 
-            //macd
-
-//            if (i > 0) {
-//                points[indexInterval * i + Constants.EMA_INDEX] = calculateEma(dataList, ema, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX]);
-//            }
             if (s > 0 && l > 0 && m > 0) {
                 if (size >= m + l - 2) {
                     if (i < l - 1) {
@@ -188,6 +183,24 @@ public class DataTools {
             points[indexInterval * i + Constants.INDEX_MACD_DIF] = point.getDif();
             points[indexInterval * i + Constants.INDEX_MACD_MACD] = point.getMacd();
             points[indexInterval * i + Constants.INDEX_MACD_DEA] = point.getDea();
+
+            if (ema1 > 0 && i >= ema1 - 1) {
+                points[indexInterval * i + Constants.EMA_INDEX_1] = calculateEma(dataList, ema1, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX_1]);
+                LogUtil.e(" points[indexInterval * i + Constants.EMA_INDEX_1]  = " + points[indexInterval * i + Constants.EMA_INDEX_1]);
+
+            } else {
+                points[indexInterval * i + Constants.EMA_INDEX_1] = 0;
+            }
+            if (ema2 > 0 && i >= ema2 - 1) {
+                points[indexInterval * i + Constants.EMA_INDEX_2] = calculateEma(dataList, ema2, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX_2]);
+            } else {
+                points[indexInterval * i + Constants.EMA_INDEX_2] = 0;
+            }
+            if (ema3 > 0 && i >= ema3 - 1) {
+                points[indexInterval * i + Constants.EMA_INDEX_3] = calculateEma(dataList, ema3, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX_3]);
+            } else {
+                points[indexInterval * i + Constants.EMA_INDEX_3] = 0;
+            }
 
 
             //boll计算

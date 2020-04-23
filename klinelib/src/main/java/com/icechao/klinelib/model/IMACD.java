@@ -1,22 +1,34 @@
-package com.icechao.klinelib.formatter;
+package com.icechao.klinelib.model;
 
-
-import java.util.Locale;
+import java.io.Serializable;
 
 /*************************************************************************
  * Description   :
  *
  * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : ValueFormatter.java
+ * @FileName     : IMACD.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
 
-public class ValueFormatter implements IValueFormatter {
-    @Override
-    public String format(float value) {
-        return String.format(Locale.CHINA, "%.2f", value);
-    }
+public interface IMACD extends Serializable {
+
+
+    /**
+     * DEA值
+     */
+    float getDea();
+
+    /**
+     * DIF值
+     */
+    float getDif();
+
+    /**
+     * MACD值
+     */
+    float getMacd();
+
 }

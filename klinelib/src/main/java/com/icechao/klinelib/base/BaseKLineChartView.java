@@ -19,19 +19,21 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
 import com.icechao.klinelib.adapter.KLineChartAdapter;
-import com.icechao.klinelib.draw.MainDraw;
-import com.icechao.klinelib.draw.VolumeDraw;
 import com.icechao.klinelib.formatter.DateFormatter;
+import com.icechao.klinelib.formatter.IDateTimeFormatter;
+import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.render.MainRender;
+import com.icechao.klinelib.render.VolumeRender;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /*************************************************************************
  * Description   : 绘制分类,BaseKLineChartView只绘制所有视图通用的图形 其他区域的绘制分别由对应的绘制类完成
@@ -281,17 +283,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 主视视图
      */
-    protected MainDraw mainDraw;
+    protected MainRender mainRender;
 
     /**
      * 交易量视图
      */
-    protected VolumeDraw volDraw;
+    protected VolumeRender volumeRender;
 
     /**
-     * 所有子视图
+     * 子视图
      */
-    protected IChartDraw indexDraw;
+    protected BaseRender indexRender;
 
     /**
      * 当前K线的最新价
@@ -475,8 +477,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 animInvalidate();
             });
             float[] tempData = Arrays.copyOfRange(points, tempIndex, points.length);
-            mainDraw.startAnim(BaseKLineChartView.this, tempData);
-            volDraw.startAnim(BaseKLineChartView.this, tempData);
+            mainRender.startAnim(BaseKLineChartView.this, tempData);
+            volumeRender.startAnim(BaseKLineChartView.this, tempData);
         }
     }
 
@@ -489,7 +491,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 指标视图
      */
-    protected List<IChartDraw> indexDraws = new ArrayList<>();
+    protected Map<String, BaseRender> indexRenders = new HashMap<>();
 
     /**
      * Y轴上值的格式化
@@ -823,16 +825,15 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     protected void setItemsCount(int itemCount) {
 
         this.itemsCount = itemCount;
-        mainDraw.setItemCount(itemsCount);
-        mainDraw.resetValues();
-        volDraw.setItemCount(itemsCount);
-        volDraw.resetValues();
-        int size = indexDraws.size();
-        for (int i = 0; i < size; i++) {
-            IChartDraw iChartDraw = indexDraws.get(i);
-            iChartDraw.setItemCount(0);
-            iChartDraw.resetValues();
+        mainRender.setItemCount(itemsCount);
+        mainRender.resetValues();
+        volumeRender.setItemCount(itemsCount);
+        volumeRender.resetValues();
+        if (null != indexRender) {
+            indexRender.setItemCount(itemCount);
+            indexRender.resetValues();
         }
+//        resetValues();
         invalidate();
     }
 
@@ -940,19 +941,19 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
             switch (chartShowStatue) {
                 case MAIN_VOL_INDEX:
-                    indexDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    indexRender.render(canvas, lastX, curX, this, i, values);
                 case MAIN_VOL:
-                    volDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    volumeRender.render(canvas, lastX, curX, this, i, values);
                 case MAIN_ONLY:
-                    mainDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    mainRender.render(canvas, lastX, curX, this, i, values);
                     break;
                 case MAIN_INDEX:
-                    indexDraw.drawTranslated(canvas, lastX, curX, this, i, values);
-                    mainDraw.drawTranslated(canvas, lastX, curX, this, i, values);
+                    indexRender.render(canvas, lastX, curX, this, i, values);
+                    mainRender.render(canvas, lastX, curX, this, i, values);
                     break;
             }
         }
-        mainDraw.drawMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
+        mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
         drawYLabels(canvas);
         if (getShowSelected()) {
             drawSelected(canvas, getX(selectedIndex));
@@ -1016,10 +1017,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             } else if (null != volRect && selectedY < volRect.top) {
                 return;
             } else if (null != volRect && selectedY < volRect.bottom) {
-                text = NumberTools.formatAmount(volDraw.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
-            } else if (null != indexDraw && selectedY < indexRect.bottom) {
+                text = NumberTools.formatAmount(volumeRender.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
+            } else if (null != indexRender && selectedY < indexRect.bottom) {
                 text = getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
-            } else if (null != indexDraw && selectedY < indexRect.top) {
+            } else if (null != indexRender && selectedY < indexRect.top) {
                 return;
             } else {
                 return;
@@ -1144,7 +1145,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
                 }
 
-                maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
+                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().
                         format(volMaxValue));
                 canvas.drawText(maxVol, tempYLabelX -
                         textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
@@ -1152,7 +1153,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
                 //子图Y轴label
 
-                childLable = indexDraw.getValueFormatter().format(indexMaxValue);
+                childLable = indexRender.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLable, tempYLabelX -
                         textPaint.measureText(childLable), volRect.bottom + baseLine, textPaint);
 
@@ -1176,7 +1177,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
                 }
 
-                maxVol = NumberTools.formatAmount(volDraw.getValueFormatter().
+                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().
                         format(volMaxValue));
                 canvas.drawText(maxVol, tempYLabelX -
                         textPaint.measureText(maxVol), mainRect.bottom + baseLine, textPaint);
@@ -1215,12 +1216,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempYLabelX - textPaint.measureText(text), v - mainYMoveUpInterval, textPaint);
                 }
-                childLable = indexDraw.getValueFormatter().format(indexMaxValue);
+                childLable = indexRender.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLable, tempYLabelX -
                         textPaint.measureText(childLable), indexRect.top - childViewPaddingTop + baseLine, textPaint);
                 break;
         }
-        drawPriceLine(canvas, tempRight);
+        drawPriceLine(canvas, tempRight - yLabelMarginRight);
     }
 
     private void drawPriceLine(Canvas canvas, float tempRight) {
@@ -1346,15 +1347,15 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             float x = getPaddingLeft();
             switch (chartShowStatue) {
                 case MAIN_INDEX:
-                    mainDraw.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
-                    indexDraw.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                    mainRender.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    indexRender.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
                     break;
                 case MAIN_VOL_INDEX:
-                    indexDraw.drawText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
+                    indexRender.drawText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
                 case MAIN_VOL:
-                    volDraw.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                    volumeRender.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
                 case MAIN_ONLY:
-                    mainDraw.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    mainRender.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
                     break;
             }
         }
@@ -1607,13 +1608,13 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 case MAIN_VOL_INDEX:
                 case MAIN_VOL:
                     float volume = points[tempIndex + Constants.INDEX_VOL];
-                    volMaxValue = volDraw.getMaxValue(
+                    volMaxValue = volumeRender.getMaxValue(
                             volMaxValue,
                             points[tempIndex + Constants.INDEX_VOL],
                             points[tempIndex + Constants.INDEX_VOL_MA_1],
                             points[tempIndex + Constants.INDEX_VOL_MA_2]);
                     if (screenRightIndex != itemsCount - 1) {
-                        volMinValue = volDraw.getMinValue(volMinValue,
+                        volMinValue = volumeRender.getMinValue(volMinValue,
                                 points[tempIndex + Constants.INDEX_VOL],
                                 points[tempIndex + Constants.INDEX_VOL_MA_1],
                                 points[tempIndex + Constants.INDEX_VOL_MA_2]);
@@ -1625,8 +1626,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                         break;
                     }
                 case MAIN_INDEX:
-                    indexMaxValue = Math.max(indexMaxValue, indexDraw.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
-                    mChildMinValue = Math.min(mChildMinValue, indexDraw.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    indexMaxValue = Math.max(indexMaxValue, indexRender.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    mChildMinValue = Math.min(mChildMinValue, indexRender.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
                     break;
 
             }
@@ -1674,12 +1675,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     private void calcMainMinValue(int tempIndex) {
         mainMinValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
-                mainDraw.getMinValue((float) mainMinValue,
+                mainRender.getMinValue((float) mainMinValue,
                         points[tempIndex + Constants.INDEX_LOW],
                         points[tempIndex + Constants.INDEX_MA_1],
                         points[tempIndex + Constants.INDEX_MA_2],
                         points[tempIndex + Constants.INDEX_MA_3]) :
-                mainDraw.getMinValue((float) mainMinValue,
+                mainRender.getMinValue((float) mainMinValue,
                         points[tempIndex + Constants.INDEX_LOW],
                         points[tempIndex + Constants.INDEX_BOLL_DN],
                         points[tempIndex + Constants.INDEX_BOLL_UP],
@@ -1688,12 +1689,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
 
     private void calcMainMaxValue(int tempIndex) {
         mainMaxValue = (status == Status.MainStatus.MA || status == Status.MainStatus.NONE) ?
-                mainDraw.getMaxValue((float) mainMaxValue,
+                mainRender.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_MA_1],
                         points[tempIndex + Constants.INDEX_MA_2],
                         points[tempIndex + Constants.INDEX_MA_3]) :
-                mainDraw.getMaxValue((float) mainMaxValue,
+                mainRender.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_BOLL_DN],
                         points[tempIndex + Constants.INDEX_BOLL_UP],
@@ -1818,8 +1819,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      *
      * @param childDraw IChartDraw
      */
-    public void addIndexDraw(IChartDraw childDraw) {
-        indexDraws.add(childDraw);
+    public void addIndexDraw(String tag, BaseRender childDraw) {
+        indexRenders.put(tag, childDraw);
     }
 
     /**

@@ -18,18 +18,21 @@ import android.widget.ProgressBar;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKLineChartView;
-import com.icechao.klinelib.base.IChartDraw;
-import com.icechao.klinelib.base.IDateTimeFormatter;
-import com.icechao.klinelib.base.IValueFormatter;
-import com.icechao.klinelib.draw.KDJDraw;
-import com.icechao.klinelib.draw.MACDDraw;
-import com.icechao.klinelib.draw.MainDraw;
-import com.icechao.klinelib.draw.RSIDraw;
-import com.icechao.klinelib.draw.VolumeDraw;
-import com.icechao.klinelib.draw.WRDraw;
+import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.formatter.IDateTimeFormatter;
+import com.icechao.klinelib.formatter.IValueFormatter;
+import com.icechao.klinelib.render.EmaRender;
+import com.icechao.klinelib.render.KDJRender;
+import com.icechao.klinelib.render.MACDRender;
+import com.icechao.klinelib.render.MainRender;
+import com.icechao.klinelib.render.RSIRender;
+import com.icechao.klinelib.render.VolumeRender;
+import com.icechao.klinelib.render.WRRender;
 import com.icechao.klinelib.utils.Dputil;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
+
+import java.util.Set;
 
 /*************************************************************************
  * Description   :
@@ -44,12 +47,6 @@ import com.icechao.klinelib.utils.Status;
 public class KLineChartView extends BaseKLineChartView {
 
     private View progressBar;
-
-    private MACDDraw macdDraw;
-    private RSIDraw rsiDraw;
-    private KDJDraw kdjDraw;
-    private WRDraw wrDraw;
-
 
     public KLineChartView(Context context) {
         this(context, null);
@@ -67,18 +64,13 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     private void initView(Context context) {
-
-        mainDraw = new MainDraw(context);
-        macdDraw = new MACDDraw(context);
-        volDraw = new VolumeDraw(context);
-        wrDraw = new WRDraw(context);
-        kdjDraw = new KDJDraw(context);
-        rsiDraw = new RSIDraw(context);
-        addIndexDraw(macdDraw);
-        addIndexDraw(kdjDraw);
-        addIndexDraw(rsiDraw);
-        addIndexDraw(wrDraw);
-
+        mainRender = new MainRender(context);
+        volumeRender = new VolumeRender(context);
+        addIndexDraw(Status.IndexStatus.MACD.getStatu(), new MACDRender(context));
+        addIndexDraw(Status.IndexStatus.KDJ.getStatu(), new KDJRender(context));
+        addIndexDraw(Status.IndexStatus.RSI.getStatu(), new RSIRender(context));
+        addIndexDraw(Status.IndexStatus.WR.getStatu(), new WRRender(context));
+        addIndexDraw(Status.IndexStatus.EMA.getStatu(), new EmaRender(context));
     }
 
     private void initAttrs(AttributeSet attrs, Context context) {
@@ -225,7 +217,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setLimitTextColor(int color) {
-        mainDraw.setLimitTextColor(color);
+        mainRender.setLimitTextColor(color);
         return this;
     }
 
@@ -236,7 +228,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setLimitTextSize(float dimension) {
-        mainDraw.setLimitTextSize(dimension);
+        mainRender.setLimitTextSize(dimension);
         return this;
     }
 
@@ -314,7 +306,38 @@ public class KLineChartView extends BaseKLineChartView {
      * @param deColor 下降颜色
      */
     public KLineChartView setMacdChartColor(int inColor, int deColor) {
-        macdDraw.setMacdChartColor(inColor, deColor);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setMacdChartColor(inColor, deColor);
+        }
+        return this;
+    }
+
+    /**
+     * 设置macd 线空心模式
+     *
+     * @param model {@link Status.HollowModel}
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setMacdStrokeModel(Status.HollowModel model) {
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setStrokeModel(model);
+        }
+        return this;
+    }
+
+    /**
+     * macd空心时线宽
+     *
+     * @param lineWidth 线宽 defaut 0.8dp
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setMacdStrockWidth(float lineWidth) {
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setMacdStrokeWidth(lineWidth);
+        }
         return this;
     }
 
@@ -408,7 +431,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setDIFColor(int color) {
-        macdDraw.setDIFColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setDIFColor(color);
+        }
         return this;
     }
 
@@ -418,7 +444,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setDEAColor(int color) {
-        macdDraw.setDEAColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setDEAColor(color);
+        }
         return this;
     }
 
@@ -428,7 +457,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMACDColor(int color) {
-        macdDraw.setMACDColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setMACDColor(color);
+        }
         return this;
     }
 
@@ -439,7 +471,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMACDWidth(float MACDWidth) {
-        macdDraw.setMACDWidth(MACDWidth);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.MACD.getStatu());
+        if (baseRender instanceof MACDRender) {
+            ((MACDRender) baseRender).setMACDWidth(MACDWidth);
+        }
         return this;
     }
 
@@ -449,7 +484,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setKColor(int color) {
-        kdjDraw.setKColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.KDJ.getStatu());
+        if (baseRender instanceof KDJRender) {
+            ((KDJRender) baseRender).setKColor(color);
+        }
         return this;
     }
 
@@ -459,7 +497,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setDColor(int color) {
-        kdjDraw.setDColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.KDJ.getStatu());
+        if (baseRender instanceof KDJRender) {
+            ((KDJRender) baseRender).setDColor(color);
+        }
         return this;
     }
 
@@ -469,7 +510,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setJColor(int color) {
-        kdjDraw.setJColor(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.KDJ.getStatu());
+        if (baseRender instanceof KDJRender) {
+            ((KDJRender) baseRender).setJColor(color);
+        }
         return this;
     }
 
@@ -479,7 +523,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setR1Color(int color) {
-        wrDraw.setR1Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.WR.getStatu());
+        if (baseRender instanceof WRRender) {
+            ((WRRender) baseRender).setR1Color(color);
+        }
         return this;
     }
 
@@ -489,7 +536,10 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setR2Color(int color) {
-        wrDraw.setR2Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.WR.getStatu());
+        if (baseRender instanceof WRRender) {
+            ((WRRender) baseRender).setR2Color(color);
+        }
         return this;
     }
 
@@ -499,18 +549,21 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setR3Color(int color) {
-        wrDraw.setR3Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.WR.getStatu());
+        if (baseRender instanceof WRRender) {
+            ((WRRender) baseRender).setR3Color(color);
+        }
         return this;
     }
 
 
     public KLineChartView setVolMa1Color(int color) {
-        volDraw.setMaOneColor(color);
+        volumeRender.setMaOneColor(color);
         return this;
     }
 
     public KLineChartView setVolMa2Color(int color) {
-        volDraw.setMaTwoColor(color);
+        volumeRender.setMaTwoColor(color);
         return this;
     }
 
@@ -521,7 +574,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMa1Color(int color) {
-        mainDraw.setMaOneColor(color);
+        mainRender.setMaOneColor(color);
         return this;
     }
 
@@ -532,7 +585,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMa2Color(int color) {
-        mainDraw.setMaTwoColor(color);
+        mainRender.setMaTwoColor(color);
         return this;
     }
 
@@ -543,7 +596,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMa3Color(int color) {
-        mainDraw.setMaThreeColor(color);
+        mainRender.setMaThreeColor(color);
         return this;
     }
 
@@ -554,7 +607,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setSelectorTextSize(float textSize) {
-        mainDraw.setSelectorTextSize(textSize);
+        mainRender.setSelectorTextSize(textSize);
         return this;
     }
 
@@ -565,7 +618,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setSelectorBackgroundColor(int color) {
-        mainDraw.setSelectorBackgroundColor(color);
+        mainRender.setSelectorBackgroundColor(color);
         return this;
     }
 
@@ -576,8 +629,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setCandleWidth(float candleWidth) {
-        mainDraw.setCandleWidth(candleWidth);
-        volDraw.setBarWidth(candleWidth);
+        mainRender.setCandleWidth(candleWidth);
+        volumeRender.setBarWidth(candleWidth);
         return this;
     }
 
@@ -588,7 +641,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setCandleLineWidth(float candleLineWidth) {
-        mainDraw.setCandleLineWidth(candleLineWidth);
+        mainRender.setCandleLineWidth(candleLineWidth);
         return this;
     }
 
@@ -598,7 +651,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setCandleSolid(Status.HollowModel candleStrokeModel) {
-        mainDraw.setStroke(candleStrokeModel);
+        mainRender.setStroke(candleStrokeModel);
         return this;
     }
 
@@ -615,17 +668,26 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     public KLineChartView setRSI1Color(int color) {
-        rsiDraw.setRSI1Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.RSI.getStatu());
+        if (baseRender instanceof RSIRender) {
+            ((RSIRender) baseRender).setRSI1Color(color);
+        }
         return this;
     }
 
     public KLineChartView setRSI2Color(int color) {
-        rsiDraw.setRSI2Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.RSI.getStatu());
+        if (baseRender instanceof RSIRender) {
+            ((RSIRender) baseRender).setRSI2Color(color);
+        }
         return this;
     }
 
     public KLineChartView setRSI3Color(int color) {
-        rsiDraw.setRSI3Color(color);
+        BaseRender baseRender = indexRenders.get(Status.IndexStatus.RSI.getStatu());
+        if (baseRender instanceof RSIRender) {
+            ((RSIRender) baseRender).setRSI3Color(color);
+        }
         return this;
     }
 
@@ -637,36 +699,21 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setLineWidth(float lineWidth) {
-        mainDraw.setLineWidth(lineWidth);
-        rsiDraw.setLineWidth(lineWidth);
-        macdDraw.setLineWidth(lineWidth);
-        kdjDraw.setLineWidth(lineWidth);
-        wrDraw.setLineWidth(lineWidth);
-        volDraw.setLineWidth(lineWidth);
+        mainRender.setLineWidth(lineWidth);
+        volumeRender.setLineWidth(lineWidth);
+        if (null != indexRenders && indexRenders.size() > 0) {
+            Set<String> strings = indexRenders.keySet();
+            for (String string : strings) {
+                BaseRender baseRender = indexRenders.get(string);
+                if (null != baseRender) {
+                    baseRender.setLineWidth(lineWidth);
+                }
+            }
+        }
+
         return this;
     }
 
-    /**
-     * 设置macd 线空心模式
-     *
-     * @param model {@link Status.HollowModel}
-     * @return {@link KLineChartView}
-     */
-    public KLineChartView setMacdStrokeModel(Status.HollowModel model) {
-        macdDraw.setStrokeModel(model);
-        return this;
-    }
-
-    /**
-     * macd空心时线宽
-     *
-     * @param lineWidth 线宽 defaut 0.8dp
-     * @return {@link KLineChartView}
-     */
-    public KLineChartView setMacdStrockWidth(float lineWidth) {
-        macdDraw.setMacdStrokeWidth(lineWidth);
-        return this;
-    }
 
     @Override
     public void onSelectedChange(MotionEvent e) {
@@ -732,9 +779,15 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
-        mainDraw.setValueFormatter(valueFormatter);
-        for (int i = 0; i < indexDraws.size(); i++) {
-            indexDraws.get(i).setValueFormatter(valueFormatter);
+        mainRender.setValueFormatter(valueFormatter);
+        if (null != indexRenders && indexRenders.size() > 0) {
+            Set<String> strings = indexRenders.keySet();
+            for (String string : strings) {
+                BaseRender baseRender = indexRenders.get(string);
+                if (null != baseRender) {
+                    baseRender.setValueFormatter(valueFormatter);
+                }
+            }
         }
         return this;
     }
@@ -867,7 +920,7 @@ public class KLineChartView extends BaseKLineChartView {
                         "涨跌幅    " +
                         "成交量  的翻译!");
             }
-            mainDraw.setMarketInfoText(marketInfoText);
+            mainRender.setMarketInfoText(marketInfoText);
 
         }
         return this;
@@ -958,8 +1011,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setIncreaseColor(int color) {
-        mainDraw.setIncreaseColor(color);
-        volDraw.setIncreaseColor(color);
+        mainRender.setIncreaseColor(color);
+        volumeRender.setIncreaseColor(color);
         return this;
     }
 
@@ -970,8 +1023,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setDecreaseColor(int color) {
-        mainDraw.setDecreaseColor(color);
-        volDraw.setDecreaseColor(color);
+        mainRender.setDecreaseColor(color);
+        volumeRender.setDecreaseColor(color);
         return this;
     }
 
@@ -982,7 +1035,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setTimeLineColor(int color) {
-        mainDraw.setMinuteLineColor(color);
+        mainRender.setMinuteLineColor(color);
         return this;
     }
 
@@ -1016,7 +1069,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setMainLengendMarginTop(float mainLengendMarginTop) {
-        mainDraw.setMainLegendMarginTop(mainLengendMarginTop);
+        mainRender.setMainLegendMarginTop(mainLengendMarginTop);
         return this;
     }
 
@@ -1027,7 +1080,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     private KLineChartView setVolLengendMarginTop(float volLengendMarginTop) {
-        volDraw.setVolLengendMarginTop(volLengendMarginTop);
+        volumeRender.setVolLengendMarginTop(volLengendMarginTop);
         return this;
     }
 
@@ -1038,7 +1091,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setVolLengendColor(int color) {
-        volDraw.setVolLengendColor(color);
+        volumeRender.setVolLengendColor(color);
         return this;
     }
 
@@ -1203,16 +1256,22 @@ public class KLineChartView extends BaseKLineChartView {
         textHeight = fm.descent - fm.ascent;
         textDecent = fm.descent;
         baseLine = (textHeight - fm.bottom - fm.top) / 2;
-
         priceLineRightPaint.setTextSize(textSize);
         priceLineRightTextPaint.setTextSize(textSize);
 
-        mainDraw.setTextSize(textSize);
-        rsiDraw.setTextSize(textSize);
-        macdDraw.setTextSize(textSize);
-        kdjDraw.setTextSize(textSize);
-        wrDraw.setTextSize(textSize);
-        volDraw.setTextSize(textSize);
+        mainRender.setTextSize(textSize);
+        volumeRender.setTextSize(textSize);
+
+        if (null != indexRenders && indexRenders.size() > 0) {
+            Set<String> strings = indexRenders.keySet();
+            for (String string : strings) {
+                BaseRender baseRender = indexRenders.get(string);
+                if (null != baseRender) {
+                    baseRender.setTextSize(textSize);
+                }
+            }
+        }
+
         return this;
     }
 
@@ -1367,7 +1426,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setSelectedInfoBoxColors(int textColor, int borderColor, int backgroundColor) {
-        mainDraw.setSelectorTextColor(textColor, borderColor, backgroundColor);
+        mainRender.setSelectorTextColor(textColor, borderColor, backgroundColor);
         return this;
     }
 
@@ -1436,7 +1495,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setVolFormatter(IValueFormatter valueFormatter) {
-        volDraw.setValueFormatter(valueFormatter);
+        volumeRender.setValueFormatter(valueFormatter);
         return this;
     }
 
@@ -1484,19 +1543,19 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setIndexDraw(Status.IndexStatus position) {
-        if (indexDrawPosition.getStatu() == position.getStatu()) {
-            return null;
+        if (indexDrawPosition.getStatu().equals(position.getStatu())) {
+            return this;
         }
 
         if (position == Status.IndexStatus.NONE) {
-            indexDraw = null;
+            indexRender = null;
             if (chartShowStatue == Status.ChildStatus.MAIN_INDEX) {
                 chartShowStatue = Status.ChildStatus.MAIN_ONLY;
             } else if (chartShowStatue == Status.ChildStatus.MAIN_VOL_INDEX) {
                 chartShowStatue = Status.ChildStatus.MAIN_VOL;
             }
         } else {
-            indexDraw = indexDraws.get(position.getStatu());
+            indexRender = this.indexRenders.get(position.getStatu());
             if (chartShowStatue == Status.ChildStatus.MAIN_ONLY) {
                 chartShowStatue = Status.ChildStatus.MAIN_INDEX;
             } else if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {
@@ -1721,7 +1780,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setSelectInfoBoxMargin(float margin) {
-        mainDraw.setSelectInfoBoxMargin(margin);
+        mainRender.setSelectInfoBoxMargin(margin);
         return this;
     }
 
@@ -1732,7 +1791,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setSelectorInfoBoxPadding(float padding) {
-        mainDraw.setSelectorInfoBoxPadding(padding);
+        mainRender.setSelectorInfoBoxPadding(padding);
         return this;
     }
 
@@ -1796,7 +1855,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @return {@link KLineChartView}
      */
     public KLineChartView setVolLineChartColor(int color) {
-        volDraw.setLineChartColor(color);
+        volumeRender.setLineChartColor(color);
         return this;
     }
 
@@ -1831,8 +1890,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param <T> 泛型控制
      * @return {@link KLineChartView}
      */
-    public <T extends MainDraw> KLineChartView resetMainDraw(T t) {
-        this.mainDraw = t;
+    public <T extends MainRender> KLineChartView resetMainDraw(T t) {
+        this.mainRender = t;
         return this;
     }
 
@@ -1844,8 +1903,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param <T> 泛型控制
      * @return {@link KLineChartView}
      */
-    public <T extends VolumeDraw> KLineChartView resetVoDraw(T t) {
-        this.volDraw = t;
+    public <T extends VolumeRender> KLineChartView resetVoDraw(T t) {
+        this.volumeRender = t;
         return this;
     }
 
@@ -1889,8 +1948,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param <T> 泛型控制
      * @return {@link KLineChartView}
      */
-    public <T extends IChartDraw> KLineChartView resetIndexDraw(Status.IndexStatus status, T t) {
-        indexDraws.set(status.getStatu(), t);
+    public <T extends BaseRender> KLineChartView resetIndexDraw(Status.IndexStatus status, T t) {
+        this.indexRenders.put(status.getStatu(), t);
         return this;
     }
 

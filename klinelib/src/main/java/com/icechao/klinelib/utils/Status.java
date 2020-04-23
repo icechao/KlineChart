@@ -50,14 +50,14 @@ public class Status {
     }
 
     public enum IndexStatus {
-        NONE(-1), MACD(0), KDJ(1), RSI(2), WR(3);
-        private int statu;
+        NONE("none"), MACD("macd"), KDJ("kdj"), RSI("rsi"), WR("wr"), EMA("ema");
+        private String statu;
 
-        IndexStatus(int statu) {
+        IndexStatus(String statu) {
             this.statu = statu;
         }
 
-        public int getStatu() {
+        public String getStatu() {
             return statu;
         }
 

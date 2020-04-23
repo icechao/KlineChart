@@ -13,8 +13,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import com.icechao.klinelib.draw.DepthDraw;
-import com.icechao.klinelib.draw.DepthLabelDraw;
+
+import com.icechao.klinelib.adapter.BaseDepthAdapter;
+import com.icechao.klinelib.render.DepthRender;
+import com.icechao.klinelib.render.DepthLabelRender;
 import com.icechao.klinelib.utils.Constants;
 
 
@@ -53,8 +55,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
 
     protected int height;
     protected int width;
-    private DepthDraw depthDraw;
-    private DepthLabelDraw labelDraw;
+    private DepthRender depthRender;
+    private DepthLabelRender labelDraw;
     private DataSetObserver observer;
     private float selectedPointX;
 
@@ -84,8 +86,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     private void initView(Context context) {
 
         setOnTouchListener(this);
-        labelDraw = new DepthLabelDraw(5, 5);
-        depthDraw = new DepthDraw();
+        labelDraw = new DepthLabelRender(5, 5);
+        depthRender = new DepthRender();
 
         paint.setTextSize(legentTextSize);
         paint.setStyle(Paint.Style.FILL);
@@ -110,8 +112,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
         width = getMeasuredWidth();
         labelDraw.setHeight(height);
         labelDraw.setWidth(width);
-        depthDraw.setWidth(width);
-        depthDraw.setHeight(height);
+        depthRender.setWidth(width);
+        depthRender.setHeight(height);
 
     }
 
@@ -131,12 +133,12 @@ public class BaseDepthView extends View implements View.OnTouchListener {
             labelDraw.drawLabels(canvas,
                     dataAdapter.getMaxIndex(), dataAdapter.getMaxValue(),
                     dataAdapter.getMinIndex(), dataAdapter.getMinValue());
-            depthDraw.drawDepth(canvas, tempLeftDatas, tempRightDatas,
+            depthRender.drawDepth(canvas, tempLeftDatas, tempRightDatas,
                     dataAdapter.getMaxValue(), dataAdapter.getMinValue(),
                     dataAdapter.getMaxIndex(), dataAdapter.getMinIndex());
             //选中
             if (isSelected) {
-                labelDraw.drawSelectedLables(canvas, depthDraw.drawSelected(canvas, selectedPointX, tempLeftDatas, tempRightDatas, dataAdapter.getMinValue()));
+                labelDraw.drawSelectedLables(canvas, depthRender.drawSelected(canvas, selectedPointX, tempLeftDatas, tempRightDatas, dataAdapter.getMinValue()));
             }
 
         }
@@ -197,7 +199,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
         paint.setColor(rightColor);
         canvas.drawRect(new RectF(rightLegentLeft, legentTop, rightLegentRight, legentBottom), paint);
 
-        depthDraw.setTopPadding(40);
+        depthRender.setTopPadding(40);
         labelDraw.setTopPading(40);
     }
 
@@ -355,7 +357,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param leftColor color
      */
     public void setLeftColor(int leftColor) {
-        depthDraw.setLeftColor(leftColor);
+        depthRender.setLeftColor(leftColor);
         this.leftColor = leftColor;
     }
 
@@ -365,7 +367,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param leftAreaColor Color
      */
     public void setLeftAreaColor(int leftAreaColor) {
-        depthDraw.setLeftAreaColor(leftAreaColor);
+        depthRender.setLeftAreaColor(leftAreaColor);
 
     }
 
@@ -375,7 +377,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param rightColor Color
      */
     public void setRightColor(int rightColor) {
-        depthDraw.setRightColor(rightColor);
+        depthRender.setRightColor(rightColor);
         this.rightColor = rightColor;
 
     }
@@ -386,7 +388,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param rightAreaColor Color
      */
     public void setRightAreaColor(int rightAreaColor) {
-        depthDraw.setRightAreaColor(rightAreaColor);
+        depthRender.setRightAreaColor(rightAreaColor);
     }
 
 
@@ -396,7 +398,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param selectedPointRadius 半径
      */
     public void setSelectedPointRadius(float selectedPointRadius) {
-        depthDraw.setSelectedPointRadius(selectedPointRadius);
+        depthRender.setSelectedPointRadius(selectedPointRadius);
     }
 
     /**
@@ -405,7 +407,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param selectedCircleRadius 半径
      */
     public void setSelectedCircleRadius(float selectedCircleRadius) {
-        depthDraw.setSelectedCircleRadius(selectedCircleRadius);
+        depthRender.setSelectedCircleRadius(selectedCircleRadius);
     }
 
     /**
@@ -414,7 +416,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param selectedCricleRadiusWidth 线宽
      */
     public void setSelectedCricleRadiusWidth(float selectedCricleRadiusWidth) {
-        depthDraw.setSelectedCricleRadiusWidth(selectedCricleRadiusWidth);
+        depthRender.setSelectedCricleRadiusWidth(selectedCricleRadiusWidth);
     }
 
     /**
@@ -423,7 +425,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      * @param depthLineWidth 线宽
      */
     public void setDepthLineWidth(float depthLineWidth) {
-        depthDraw.setDepthLineWidth(depthLineWidth);
+        depthRender.setDepthLineWidth(depthLineWidth);
     }
 
 
@@ -518,7 +520,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
 
     public void setLabelHeight(float labelHeight) {
         labelDraw.setLabelHeight(labelHeight);
-        depthDraw.setBottomPadding(labelHeight);
+        depthRender.setBottomPadding(labelHeight);
         labelDraw.setLabelHeight(labelHeight);
     }
 

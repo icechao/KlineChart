@@ -1,7 +1,7 @@
 package com.icechao.klinelib.utils;
 
 import android.support.v7.util.DiffUtil;
-import com.icechao.klinelib.entity.IDepth;
+import com.icechao.klinelib.model.IDepth;
 
 import java.util.List;
 
