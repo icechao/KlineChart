@@ -336,6 +336,8 @@ public class MainRender extends BaseRender {
     public void setCandleLineWidth(float candleLineWidth) {
         downLinePaint.setStrokeWidth(candleLineWidth);
         upLinePaint.setStrokeWidth(candleLineWidth);
+        downPaint.setStrokeWidth(candleLineWidth);
+        upPaint.setStrokeWidth(candleLineWidth);
     }
 
     /**
