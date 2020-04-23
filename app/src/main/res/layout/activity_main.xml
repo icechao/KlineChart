@@ -212,7 +212,6 @@
                         android:gravity="center"
                         android:text="1小时"
                         android:textColor="@color/color_6D87A8"
-
                         android:textSize="12sp"
                         android:visibility="gone" />
 
@@ -224,7 +223,6 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="4小时"
-
                         android:textColor="@color/color_6D87A8"
                         android:textSize="12sp"
                         android:visibility="gone" />
@@ -237,7 +235,6 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="1天"
-
                         android:textColor="@color/color_6D87A8"
                         android:textSize="12sp"
                         android:visibility="gone" />
@@ -282,13 +279,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="580dp"
                         android:background="@color/color_081734"
-                        app:backgroundFillBottomColor="@android:color/holo_red_dark"
-                        app:backgroundFillTopLolor="@android:color/holo_green_dark"
                         app:backgroundAlpha="25"
-                        app:selectInfoBoxBackgroundColor="#00ffff"
-                        app:selectInfoBoxBorderColor="#ff0000"
-                        app:selectInfoBoxTextColor="#ff00ff"
-                        />
+                        app:backgroundFillBottomColor="#081734"
+                        app:backgroundFillTopLolor="#112855"
+                        app:selectCrossBigColor="#99ffffff"
+                        app:selectCrossPointColor="#ffffff"
+                        app:selectCrossPointRadius="2dp"
+                        app:priceLineBoxBorderColor="#4B6C91"
+                        app:selectInfoBoxBackgroundColor="#325B88"
+                        app:selectInfoBoxBorderColor="#4E81EA"
+                        app:selectInfoBoxTextColor="#0B188C" />
 
                 <include
                         android:id="@+id/kline_operater"

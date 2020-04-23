@@ -35,7 +35,7 @@
             
             工程的build.gradle中  In the mudule's build.gradle
 
-                        implementation 'com.icechao.klinelib:klinelib:1.1.5'
+                        implementation 'com.icechao.klinelib:klinelib:1.1.7'
 
             
 2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
@@ -156,7 +156,7 @@
       | selectCrossBigColor  | color | 选中十字线相交点圆颜色| |
       | selectCrossPointColor  | color | 选中十字线相交点圆颜色 | |
       | selectShowCrossPoint  | color | 是否显示选中十字线相交点圆 | |
-      | selectCrossPointRadiu  | color | 选中十字线相交点小圆半径 | |
+      | selectCrossPointRadius  | color | 选中十字线相交点小圆半径 | |
       | selectPriceBoxBackgroundColor  | color | 选中价格框背景色 | |
       | selectPriceBoxHorizentalPadding  | dimension | 选中价格框的横向padding,三角形的高为横+纵padding | 4dp |
       | selectPriceBox_verticalPadding  | dimension | 选中价格框的纵向向padding,三角形的高为横+纵padding | 2dp |

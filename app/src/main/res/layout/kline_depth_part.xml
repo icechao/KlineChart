@@ -6,7 +6,7 @@
               android:orientation="vertical">
 
 
-    <com.icechao.klinelib.base.DepthChartView
+    <com.icechao.klinelib.view.DepthChartView
             android:id="@+id/depth_view"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>

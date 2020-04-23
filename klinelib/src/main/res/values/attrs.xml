@@ -24,7 +24,7 @@
         <attr name="selectXLineColor" format="color" />
         <attr name="selectYLineColor" format="color" />
         <attr name="selectCrossBigColor" format="color" />
-        <attr name="selectCrossPointRadiu" format="dimension" />
+        <attr name="selectCrossPointRadius" format="dimension" />
         <attr name="selectCrossPointColor" format="color" />
         <attr name="selectShowCrossPoint" format="boolean" />
         <attr name="selectYColor" format="color" />

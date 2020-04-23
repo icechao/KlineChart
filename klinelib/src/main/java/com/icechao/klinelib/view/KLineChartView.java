@@ -125,7 +125,7 @@ public class KLineChartView extends BaseKLineChartView {
                 //十字线
                 setSelectCrossBigColor(array.getColor(R.styleable.KLineChartView_selectCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
                 setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, Color.WHITE));
-                setSelectedPointRadius(array.getFloat(R.styleable.KLineChartView_selectCrossPointRadiu, 5));
+                setSelectedPointRadius(array.getDimension(R.styleable.KLineChartView_selectCrossPointRadius, 2));
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KLineChartView_selectShowCrossPoint, true));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KLineChartView_selectXLineWidth, getDimension(R.dimen.chart_line_width)));
                 setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBoderWidth, 2));

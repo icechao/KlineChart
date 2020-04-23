@@ -1,7 +1,7 @@
 package com.icechao.demo;
 
 import com.google.gson.annotations.SerializedName;
-import com.icechao.klinelib.entity.KLineEntity;
+import com.icechao.klinelib.model.KLineEntity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

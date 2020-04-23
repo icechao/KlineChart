@@ -1,10 +1,10 @@
 package com.icechao.demo;
 
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.icechao.klinelib.entity.KLineEntity;
-import com.icechao.klinelib.utils.DataTools;
+import com.icechao.klinelib.model.KLineEntity;
 
 import java.io.InputStream;
 import java.util.ArrayList;

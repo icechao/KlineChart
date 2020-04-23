@@ -7,10 +7,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.DepthRecycleViewAdapter;
-import com.icechao.klinelib.base.DepthChartView;
-import com.icechao.klinelib.entity.MarketDepthPercentItem;
+import com.icechao.klinelib.model.MarketDepthPercentItem;
+import com.icechao.klinelib.view.DepthChartView;
 
 import java.util.List;
 
