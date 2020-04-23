@@ -283,8 +283,6 @@
                         app:backgroundFillBottomColor="#081734"
                         app:backgroundFillTopLolor="#112855"
                         app:selectCrossBigColor="#99ffffff"
-                        app:selectCrossPointColor="#ffffff"
-                        app:selectCrossPointRadius="2dp"
                         app:priceLineBoxBorderColor="#4B6C91"
                         app:selectInfoBoxBackgroundColor="#325B88"
                         app:selectInfoBoxBorderColor="#4E81EA"
