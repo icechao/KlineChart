@@ -38,7 +38,7 @@
                         implementation 'com.icechao.klinelib:klinelib:1.1.7'
 
             
-2. <b>继承KlineEntry复写对应方法返回 高 开 低 收 量 时间 Inherit the corresponding method of klineentry replication to return the time, high ,opening and low, receipt</b>
+2. <b>继承KlineEntry定义自己的K线的数据Bean,复写抽象方法返回 :高 开 低 收 量 时间 The order information inherits the data bean of klineentry to define its own K-line, and the replication abstract method returns: high opening and low receipt time</b>
   
             public class KChartBean extends KLineEntity {
             //必须覆写此方法返回毫秒值 Override this method to return the time in milliseconds
@@ -85,7 +85,11 @@
              //app:...
              />
              
-4. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局 Use the Scrollview in klinelib to solve the sliding conflict, or refer to solve the sliding layout</b>
+4. <b>使用自己定义的数据Bean为K线绑定数据  Bind data for K-line with self-defined data bean</b>
+  
+            kLineChartView.getAdapter().resetData(List<KChartBean>)
+             
+5. <b>使用KlineLib中的ScrollView已解决滑动冲突,也可参考解决滑动布局 Use the Scrollview in klinelib to solve the sliding conflict, or refer to solve the sliding layout</b>
              
 
 
