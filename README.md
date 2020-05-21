@@ -393,7 +393,7 @@
             slidListener : SlidListener对象 监听滑动到最左和最右
             
 
-  ### K线左滑的超出范围 K-Line Left Slip Out of Range
+  ### K线左滑 右侧超出范围 Left sliding right side of K-line is out of range
         
          kLineChartView.setOverScrollRange(float overScrollRange);
             参数
