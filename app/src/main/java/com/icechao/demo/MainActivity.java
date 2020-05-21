@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
-                .setOverScrollRange(0)
+                .setOverScrollRange(getWindow().getWindowManager().getDefaultDisplay().getWidth() / 5)
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
@@ -219,7 +219,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //adapter.resetData(all.subList(0, 380), true);
                 adapter.resetData(all.subList(0, 100));
                 chartView.hideLoading();
-                changeLast();
+//                changeLast();
             }
         }.start();
     }

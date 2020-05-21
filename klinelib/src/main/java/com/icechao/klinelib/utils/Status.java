@@ -139,6 +139,11 @@ public class Status {
         CALC_NORMAL_WITH_LAST,//计算显示的线和最新线的全部值
         CALC_CLOSE_WITH_LAST,//计算显示的线和最新线的close值
     }
+
+    public enum YLabelModel {
+        LABEL_WITH_GRID,
+        LABEL_NONE_GRID
+    }
 }
 
 

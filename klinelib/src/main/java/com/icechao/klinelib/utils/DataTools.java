@@ -186,8 +186,6 @@ public class DataTools {
 
             if (ema1 > 0 && i >= ema1 - 1) {
                 points[indexInterval * i + Constants.EMA_INDEX_1] = calculateEma(dataList, ema1, i, points[indexInterval * (i - 1) + Constants.EMA_INDEX_1]);
-                LogUtil.e(" points[indexInterval * i + Constants.EMA_INDEX_1]  = " + points[indexInterval * i + Constants.EMA_INDEX_1]);
-
             } else {
                 points[indexInterval * i + Constants.EMA_INDEX_1] = 0;
             }

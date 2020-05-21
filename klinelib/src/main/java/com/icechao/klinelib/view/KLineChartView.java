@@ -1482,8 +1482,8 @@ public class KLineChartView extends BaseKLineChartView {
         if (gridColumns < 1) {
             gridColumns = 1;
         }
-        if (0 != width) {
-            columnSpace = width / gridColumns;
+        if (0 != chartWidth) {
+            columnSpace = chartWidth / gridColumns;
         }
         this.gridColumns = gridColumns;
         return this;

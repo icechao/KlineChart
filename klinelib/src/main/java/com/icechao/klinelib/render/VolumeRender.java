@@ -92,8 +92,8 @@ public class VolumeRender extends BaseRender {
         } else {
             top = view.getVolY(vol);
         }
-        if (0 != vol && top > bottom - 1) {
-            top = bottom - 1;
+        if (0 != vol && top > bottom - 2) {
+            top = bottom - 2;
         }
         if ((null == view.getVolChartStatus() && view.getKlineStatus().showLine()) || view.getVolChartStatus() == Status.VolChartStatus.LINE_CHART) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);

@@ -2,6 +2,8 @@ package com.icechao.klinelib.utils;
 
 import android.util.Log;
 
+import com.icechao.klinelib.BuildConfig;
+
 
 /*************************************************************************
  * Description   :
@@ -17,7 +19,9 @@ public class LogUtil {
     private final static String TAG = "CHAO=>";
 
     public static void e(Object o) {
-        Log.e(TAG, String.valueOf(o));
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, String.valueOf(o));
+        }
     }
 
 }

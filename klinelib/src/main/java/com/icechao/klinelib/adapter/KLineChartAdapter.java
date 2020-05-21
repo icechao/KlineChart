@@ -2,6 +2,7 @@ package com.icechao.klinelib.adapter;
 
 import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.utils.DataTools;
+import com.icechao.klinelib.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
