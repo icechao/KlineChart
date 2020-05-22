@@ -31,7 +31,7 @@ public class MainRender extends BaseRender {
     private int itemCount;
     private String[] strings = new String[8];
     private IValueFormatter valueFormatter = new ValueFormatter();
-    private float candleWidth, margin, padding, mainLengendMarginTop,
+    private float candleWidth, margin, padding, mainLegendMarginTop,
             maOne, maTwo, maThree, bollUp, bollMb, bollDn;
     private final int indexInterval;
     private String indexMa1, indexMa2, indexMa3, indexBoll, indexUb, indexLb;
@@ -90,14 +90,14 @@ public class MainRender extends BaseRender {
         if (view.getKlineStatus().showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
-                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX, view.getLastPrice());
-                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, view.getLastPrice());
+                view.renderMainLine(canvas, linePaint, lastX, lastClosePrice, curX, view.getLastPrice());
+                view.renderLineFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, view.getLastPrice());
 
             } else if (position != 0) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
                 float closePrice = values[Constants.INDEX_CLOSE + indexInterval];
-                view.drawMainLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
-                view.drawFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, closePrice);
+                view.renderMainLine(canvas, linePaint, lastX, lastClosePrice, curX, closePrice);
+                view.renderLineFill(canvas, lineAreaPaint, lastX, lastClosePrice, curX, closePrice);
             }
 
         } else {
@@ -155,9 +155,9 @@ public class MainRender extends BaseRender {
     private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float start, float animEnd, Paint paint, float end) {
         if (Float.MIN_VALUE != start) {
             if (itemCount - 1 == position && 0 != animEnd && view.isAnimationLast()) {
-                view.drawMainLine(canvas, paint, lastX, start, curX, animEnd);
+                view.renderMainLine(canvas, paint, lastX, start, curX, animEnd);
             } else {
-                view.drawMainLine(canvas, paint, lastX, start, curX, end);
+                view.renderMainLine(canvas, paint, lastX, start, curX, end);
             }
         }
     }
@@ -168,7 +168,7 @@ public class MainRender extends BaseRender {
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
 
         //修改头文字显示在顶部
-        y = maTextHeight + mainLengendMarginTop;
+        y = maTextHeight + mainLegendMarginTop;
         if (!view.getKlineStatus().showLine()) {
             Status.MainStatus status = view.getStatus();
             if (status == Status.MainStatus.MA) {
@@ -290,10 +290,10 @@ public class MainRender extends BaseRender {
         width += padding * 2;
 
         float x = view.getX(index) + view.getTranslateX();
-        if (x > view.getViewWidth() / 2) {
+        if (x > view.getChartWidth() / 2) {
             left = margin;
         } else {
-            left = view.getViewWidth() - width - margin;
+            left = view.getChartWidth() - width - margin;
         }
 
         float right = left + width;
@@ -596,7 +596,7 @@ public class MainRender extends BaseRender {
      * @param mainLegendMarginTop top
      */
     public void setMainLegendMarginTop(float mainLegendMarginTop) {
-        this.mainLengendMarginTop = mainLegendMarginTop;
+        this.mainLegendMarginTop = mainLegendMarginTop;
     }
 
     public void setSelectInfoBoxMargin(float margin) {

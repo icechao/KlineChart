@@ -35,7 +35,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -81,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         findViewById(R.id.text_view_rsi).setOnClickListener(this);
         findViewById(R.id.text_view_wr).setOnClickListener(this);
         findViewById(R.id.text_view_show_hide_vol).setOnClickListener(this);
+        findViewById(R.id.text_view_change_label_state).setOnClickListener(this);
 
 
         findViewById(R.id.text_view_one_minute).setOnClickListener(this);
@@ -111,6 +111,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
     }
 
+
+    /**
+     * K线属性设置
+     */
     private void initKline() {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 3;
@@ -131,6 +135,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
+                .setLabelSpace(130)
                 .setLogoBigmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
@@ -147,41 +152,32 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
                     }
                 })
+                .setPriceLineLabelMarginRight(200)
+                .setYLabelBackgroundColor(Color.DKGRAY, true)
                 .setSelectorInfoBoxPadding(40)
-//                .setChartPaddingTop(0)
                 .showLoading()
                 .setBetterX(true)
                 //set slid listener
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
-                        if (!load) {
-                            chartView.postDelayed(() -> {
-                                chartView.showLoading();
-                                LogUtil.e("onSlidLeft");
-                                List<KChartBean> kChartBeans = all.subList(0, 300);
-                                kChartBeans.addAll(adapter.getDatas());
-                                adapter.resetData(kChartBeans, true);
-                                chartView.hideLoading();
-                                load = true;
-                            }, 2000);
-                        }
+                        LogUtil.e("onSlidLeft");
                     }
+
 
                     @Override
                     public void onSlidRight() {
                         LogUtil.e("onSlidRight");
-
                     }
                 })
-                //set Y label formater
+                //set value  formater
                 .setValueFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
                         return String.format(Locale.CHINA, "%.03f", value);
                     }
                 })
-                //set vol y label formater
+                //set vol value  formater
                 .setVolFormatter(new ValueFormatter() {
                     @Override
                     public String format(float value) {
@@ -203,60 +199,26 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
     }
 
-    private boolean load;
-
-    Random random = new Random();
 
     private void initData() {
+        //开启线程模拟获取数据
+        //设置数据 adapter会自动切回子线程,所有可以在子线程中操作
         new Thread() {
             @Override
             public void run() {
-                //使用子线程延迟,防止页面还没有执行SizeChange方法就已经set数据
-                //设置数据 adapter会自动切回子线程,所有可以在子线程中操作
                 SystemClock.sleep(1000);
-                all = DataRequest.getALL(MainActivity.this);
-                //两种设置数据的方式
-                //adapter.resetData(all.subList(0, 380), true);
-                adapter.resetData(all.subList(0, 100));
+                //1.定义类 KChartBean 继承KLineEntity
+                //2.从数据源获取 KChartBean 数据集合
+                List<KChartBean> kChartBeans = all = new DataTest().getData(MainActivity.this);
+                //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
+                adapter.resetData(kChartBeans, true);
+                //adapter.addLast();  尾部追加数据
+                //adapter.changeItem(position,data);  更新数据
+                //4.隐藏K线loading
                 chartView.hideLoading();
-//                changeLast();
+
             }
         }.start();
-    }
-
-    /**
-     * 模拟增量数据
-     */
-    private void changeLast() {
-        handler.postDelayed(() -> {
-            int i = random.nextInt() * 1123 % 400;
-//            KChartBean kLineEntity = all.get(Math.abs(new Random().nextInt()) % 100);
-            KChartBean kLineEntity = (KChartBean) adapter.getDatas().get(adapter.getCount() - 1);
-            KChartBean kLineEntity1 = new KChartBean();
-            kLineEntity1.setDate(kLineEntity.date);
-            kLineEntity1.setHigh(kLineEntity.getHigh() + 10f);
-            kLineEntity1.setClose(kLineEntity.getHigh() + 5f);
-            kLineEntity1.setOpen(kLineEntity.getOpen());
-            kLineEntity1.setLow(kLineEntity.getLow());
-            kLineEntity1.setVolume(kLineEntity.getVolume());
-            textViewPriceText.setText(kLineEntity1.getClosePrice() + "");
-            float v = kLineEntity1.getClose() - kLineEntity1.getOpen();
-            textViewRiseAndFallText.setText(String.format("%.2f", v * 100 / kLineEntity1.getOpen()));
-            textViewCny.setText(String.format("%.2f", 6.5 * kLineEntity1.getClose()));
-            textViewHighPriceText.setText(kLineEntity1.getHigh() + "");
-            textViewLowPriceText.setText(kLineEntity1.getLow() + "");
-            textViewVolumeSumText.setText(kLineEntity1.getVolume() + "");
-            if (i++ % 3 == 0) {
-//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getClosePrice());
-                adapter.addLast(kLineEntity1);
-            } else {
-//                kLineEntity1.setOpen(adapter.getItem(adapter.getCount() - 1).getOpenPrice());
-                adapter.changeItem(adapter.getCount() - 1, kLineEntity1);
-            }
-            changeLast();
-            LogUtil.e(kLineEntity1.toString());
-
-        }, 2000);
     }
 
 
@@ -331,6 +293,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 chartView.setKlineState(Status.KlineStatus.K_LINE);
                 adapter.resetData(all);
                 break;
+            case R.id.text_view_change_label_state:
+                if (i % 2 == 0) {
+                    chartView.setYLabelState(Status.YLabelModel.LABEL_NONE_GRID);
+                } else {
+                    chartView.setYLabelState(Status.YLabelModel.LABEL_WITH_GRID);
+                }
+                i++;
+                break;
 
         }
         radioGroup.clearCheck();
@@ -396,8 +366,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 attachedOperater.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);
                 break;
+
         }
     }
+
+    int i;
 
 
     //-----------------------------------------------------------------------------------------//

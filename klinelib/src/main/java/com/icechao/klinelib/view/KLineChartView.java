@@ -83,7 +83,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setLimitTextSize(array.getDimension(R.styleable.KLineChartView_limitTextSize, getDimension(R.dimen.chart_text_size)));
                 setLimitTextColor(array.getColor(R.styleable.KLineChartView_limitTextColor, getColor(R.color.color_6D87A8)));
                 //全局
-                setMarketInfoText((String[]) array.getTextArray(R.styleable.KLineChartView_marketInfosLabel));
+                setMarketInfoText((String[]) array.getTextArray(R.styleable.KLineChartView_marketInfoLabel));
                 setBetterX(array.getBoolean(R.styleable.KLineChartView_betterXLabel, true));
                 setBetterSelectedX(array.getBoolean(R.styleable.KLineChartView_betterSelectedXLabel, true));
                 setyLabelMarginRight(array.getDimension(R.styleable.KLineChartView_yLabelMarginRight, 10));
@@ -101,9 +101,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setGridRows(array.getInteger(R.styleable.KLineChartView_gridLineRows, 5));
                 setGridLineColor(array.getColor(R.styleable.KLineChartView_gridLineColor, getColor(R.color.color_223349)));
                 //图例
-                setVolLengendColor(array.getColor(R.styleable.KLineChartView_volLengendColor, getResources().getColor(R.color.color_6D87A8)));
-                setMainLengendMarginTop(array.getDimension(R.styleable.KLineChartView_mainLegendMarginTop, 10f));
-                setVolLengendMarginTop(array.getDimension(R.styleable.KLineChartView_volLengendMarginTop, 10f));
+                setVolLegendColor(array.getColor(R.styleable.KLineChartView_volLegendColor, getResources().getColor(R.color.color_6D87A8)));
+                setMainLegendMarginTop(array.getDimension(R.styleable.KLineChartView_mainLegendMarginTop, 10f));
+                setVolLegendMarginTop(array.getDimension(R.styleable.KLineChartView_volLegendMarginTop, 10f));
                 //成交量
                 setVolLineChartColor(array.getColor(R.styleable.KLineChartView_volLineChartColor, getResources().getColor(R.color.color_4B85D6)));
 
@@ -116,20 +116,22 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceLineBoxBgColor(array.getColor(R.styleable.KLineChartView_priceLineBackgroundColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
                 setPricelineBoxBorderColor(array.getColor(R.styleable.KLineChartView_priceLineBoxBorderColor, getContext().getResources().getColor(R.color.color_CFD3E9)));
                 setPricelineBoxBorderWidth(array.getDimension(R.styleable.KLineChartView_priceLineBoxBorderWidth, 1));
-                setPriceLineBoxMarginRight(array.getDimension(R.styleable.KLineChartView_priceLineBoxMarginRight, 120));
+                setPriceLineLabelMarginRight(array.getDimension(R.styleable.KLineChartView_priceLineBoxMarginRight, 120));
                 setPriceLineBoxePadding(array.getDimension(R.styleable.KLineChartView_priceLineBoxPadding, 20));
                 setPriceLineShapeWidth(array.getDimension(R.styleable.KLineChartView_priceLineBoxShapeWidth, 10));
                 setPriceLineShapeHeight(array.getDimension(R.styleable.KLineChartView_priceLineBoxShapeHeight, 20));
                 setPriceLineBoxHeight(array.getDimension(R.styleable.KLineChartView_priceLineBoxHeight, 40));
                 setPriceBoxShapeTextMargin(array.getDimension(R.styleable.KLineChartView_priceLineBoxShapeTextMargin, 10));
+                setPriceLineDotSolidWidth(array.getDimension(R.styleable.KLineChartView_priceLineDotSolidWidth, 8f));
+                setPriceLineDotStrokeWidth(array.getDimension(R.styleable.KLineChartView_priceLineDotStrokeWidth, 4f));
                 //十字线
                 setSelectCrossBigColor(array.getColor(R.styleable.KLineChartView_selectCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
                 setSelectedPointColor(array.getColor(R.styleable.KLineChartView_selectCrossPointColor, Color.WHITE));
                 setSelectedPointRadius(array.getDimension(R.styleable.KLineChartView_selectCrossPointRadius, 2));
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KLineChartView_selectShowCrossPoint, true));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KLineChartView_selectXLineWidth, getDimension(R.dimen.chart_line_width)));
-                setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBoderWidth, 2));
-                setSelectedLabelBorderColor(array.getColor(R.styleable.KLineChartView_selectLabelBoderColor, Color.WHITE));
+                setSelectedLabelBorderWidth(array.getDimension(R.styleable.KLineChartView_selectLabelBorderWidth, 2));
+                setSelectedLabelBorderColor(array.getColor(R.styleable.KLineChartView_selectLabelBorderColor, Color.WHITE));
                 setSelectedYLineWidth(array.getDimension(R.styleable.KLineChartView_selectYLineWidth, getDimension(R.dimen.chart_point_width)));
                 setSelectedXLineColor(array.getColor(R.styleable.KLineChartView_selectXLineColor, getResources().getColor(R.color.color_CFD3E9)));
                 setSelectedYLineColor(array.getColor(R.styleable.KLineChartView_selectYLineColor, getResources().getColor(R.color.color_1ACFD3E9)));
@@ -137,9 +139,9 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectedPriceBoxBackgroundColor(array.getColor(R.styleable.KLineChartView_selectPriceBoxBackgroundColor, getColor(R.color.color_081724)));
                 setSelectorBackgroundColor(array.getColor(R.styleable.KLineChartView_selectInfoBoxBackgroundColor, getColor(R.color.color_EA111725)));
                 setSelectorTextSize(array.getDimension(R.styleable.KLineChartView_selectTextSize, getDimension(R.dimen.chart_selector_text_size)));
-                setSelectedPriceBoxHorizentalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxHorizentalPadding, getDimension(R.dimen.price_box_horizental)));
-                setDateBoxlHorizentalPadding(array.getDimension(R.styleable.KLineChartView_dateLabelVerticalPadding, getDimension(R.dimen.price_box_horizental)));
-                setDateBoxVerticalPadding(array.getDimension(R.styleable.KLineChartView_dateLabelHorizentalPadding, getDimension(R.dimen.price_box_vertical)));
+                setSelectedPriceBoxHorizentalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxHorizontalPadding, getDimension(R.dimen.price_box_horizental)));
+                setDateBoxlHorizontalPadding(array.getDimension(R.styleable.KLineChartView_dateLabelHorizontalPadding, getDimension(R.dimen.price_box_horizental)));
+                setDateBoxVerticalPadding(array.getDimension(R.styleable.KLineChartView_dateLabelVerticalPadding, getDimension(R.dimen.price_box_vertical)));
                 setSelectedPriceboxVerticalPadding(array.getDimension(R.styleable.KLineChartView_selectPriceBoxVerticalPadding, getDimension(R.dimen.price_box_vertical)));
                 setSelectInfoBoxMargin(array.getDimension(R.styleable.KLineChartView_selectInfoBoxMargin, getDimension(R.dimen.price_box_horizental)));
                 setSelectedInfoBoxColors(
@@ -150,26 +152,24 @@ public class KLineChartView extends BaseKLineChartView {
                 setSelectorInfoBoxPadding(array.getDimension(R.styleable.KLineChartView_selectInfoBoxPadding, getDimension(R.dimen.price_box_horizental)));
 
                 //K线
-                setIncreaseColor(array.getColor(R.styleable.KLineChartView_increaseColor, getResources().getColor(R.color.color_03C087)));
-                setDecreaseColor(array.getColor(R.styleable.KLineChartView_decreaseColor, getResources().getColor(R.color.color_FF605A)));
+                setIncreaseColor(array.getColor(R.styleable.KLineChartView_increaseColor, Color.GREEN));
+                setDecreaseColor(array.getColor(R.styleable.KLineChartView_decreaseColor, Color.RED));
                 setChartItemWidth(array.getDimension(R.styleable.KLineChartView_itemWidth, getDimension(R.dimen.chart_point_width)));
                 setCandleWidth(array.getDimension(R.styleable.KLineChartView_candleWidth, getDimension(R.dimen.chart_candle_width)));
                 setCandleLineWidth(array.getDimension(R.styleable.KLineChartView_candleLineWidth, getDimension(R.dimen.chart_candle_line_width)));
-                setKlineRightPadding(array.getDimension(R.styleable.KLineChartView_candleRightPadding, 0));
 
                 //背景添加渐变色
-                setBgColor(array.getColor(R.styleable.KLineChartView_backgroundColor, getResources().getColor(R.color.color_1C1E27)));
-                setBackGroundFillTopColor(array.getColor(R.styleable.KLineChartView_backgroundFillTopLolor, getResources().getColor(R.color.color_1C1E27)));
-                setBackGroundFillBottomColor(array.getColor(R.styleable.KLineChartView_backgroundFillBottomColor, getResources().getColor(R.color.color_4B85D6)));
-                setBackGroundAlpha(array.getInt(R.styleable.KLineChartView_backgroundAlpha, 18));
-                setDotRightPriceBoxAhpha(array.getInt(R.styleable.KLineChartView_dotRightPriceBoxBackGroundAlpha, 150));
+                setBackGroundFillTopColor(array.getColor(R.styleable.KLineChartView_backgroundFillTopColor, Color.TRANSPARENT));
+                setBackGroundFillBottomColor(array.getColor(R.styleable.KLineChartView_backgroundFillBottomColor, Color.TRANSPARENT));
+                setBackGroundAlpha(array.getInt(R.styleable.KLineChartView_backgroundFillAlpha, 0));
+                setPriceLabelRightBackgroundAlpha(array.getInt(R.styleable.KLineChartView_priceLineRightLabelBackGroundAlpha, 255));
 
                 // time line
                 setTimeLineColor(array.getColor(R.styleable.KLineChartView_timeLineColor, getResources().getColor(R.color.color_4B85D6)));
                 setTimeLineFillTopColor(array.getColor(R.styleable.KLineChartView_timeLineFillTopColor, getResources().getColor(R.color.color_404B85D6)));
                 setTimeLineFillBottomColor(array.getColor(R.styleable.KLineChartView_timeLineFillBottomColor, getResources().getColor(R.color.color_004B85D6)));
                 setTimeLineEndColor(array.getColor(R.styleable.KLineChartView_timeLineEndPointColor, Color.WHITE));
-                setTimeLineEndRadiu(array.getDimension(R.styleable.KLineChartView_timeLineEndRadiu, Dputil.Dp2Px(context, 4)));
+                setTimeLineEndRadius(array.getDimension(R.styleable.KLineChartView_timeLineEndRadius, Dputil.Dp2Px(context, 4)));
                 setTimeLineEndMultiply(array.getFloat(R.styleable.KLineChartView_timeLineEndMultiply, 3f));
 
 
@@ -199,6 +199,7 @@ public class KLineChartView extends BaseKLineChartView {
 
                 setVolMa1Color(array.getColor(R.styleable.KLineChartView_volMa1Color, getColor(R.color.color_F6DC93)));
                 setVolMa2Color(array.getColor(R.styleable.KLineChartView_volMa2Color, getColor(R.color.color_61D1C0)));
+
 
                 setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KLineChartView_candleSolid, 0)));
 
@@ -273,6 +274,29 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setSelectedLabelBorderColor(int color) {
         selectorFramePaint.setColor(color);
+        return this;
+    }
+
+    /**
+     * 价格线虚线实心宽度
+     *
+     * @param width width
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setPriceLineDotSolidWidth(float width) {
+        priceDotLineItemWidth = width;
+        return this;
+    }
+
+
+    /**
+     * 价格线虚线间隙
+     *
+     * @param width width
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setPriceLineDotStrokeWidth(float width) {
+        priceDotLineItemSpace = width;
         return this;
     }
 
@@ -772,7 +796,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
     /**
-     * 设置ValueFormatter,Y轴价格的格式化器
+     * 设置主视图Formatter,Y轴价格的格式化器
      *
      * @param valueFormatter value格式化器
      * @return {@link KLineChartView}
@@ -780,6 +804,16 @@ public class KLineChartView extends BaseKLineChartView {
     public KLineChartView setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
         mainRender.setValueFormatter(valueFormatter);
+        return this;
+    }
+
+    /**
+     * 设置子视图ValueFormatter,Y轴价格的格式化器
+     *
+     * @param valueFormatter value格式化器
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setIndexValueFormatter(IValueFormatter valueFormatter) {
         if (null != indexRenders && indexRenders.size() > 0) {
             Set<String> strings = indexRenders.keySet();
             for (String string : strings) {
@@ -791,6 +825,7 @@ public class KLineChartView extends BaseKLineChartView {
         }
         return this;
     }
+
 
     /**
      * 获取DatetimeFormatter
@@ -845,7 +880,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param priceBoxMarginRight priceLIneBoxMarginRight
      * @return {@link KLineChartView}
      */
-    public KLineChartView setPriceLineBoxMarginRight(float priceBoxMarginRight) {
+    public KLineChartView setPriceLineLabelMarginRight(float priceBoxMarginRight) {
         this.priceLineBoxMarginRight = priceBoxMarginRight;
         return this;
     }
@@ -1065,22 +1100,22 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置主实图指定文字距离视图上边缘的距离,
      *
-     * @param mainLengendMarginTop Lengend margin top , default 0
+     * @param mainLegendMarginTop Legend margin top , default 0
      * @return {@link KLineChartView}
      */
-    public KLineChartView setMainLengendMarginTop(float mainLengendMarginTop) {
-        mainRender.setMainLegendMarginTop(mainLengendMarginTop);
+    public KLineChartView setMainLegendMarginTop(float mainLegendMarginTop) {
+        mainRender.setMainLegendMarginTop(mainLegendMarginTop);
         return this;
     }
 
     /**
      * 交易量图例上边距
      *
-     * @param volLengendMarginTop margin default 0
+     * @param volLegendMarginTop margin default 0
      * @return {@link KLineChartView}
      */
-    private KLineChartView setVolLengendMarginTop(float volLengendMarginTop) {
-        volumeRender.setVolLengendMarginTop(volLengendMarginTop);
+    private KLineChartView setVolLegendMarginTop(float volLegendMarginTop) {
+        volumeRender.setVolLegendMarginTop(volLegendMarginTop);
         return this;
     }
 
@@ -1090,8 +1125,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param color color
      * @return {@link KLineChartView}
      */
-    public KLineChartView setVolLengendColor(int color) {
-        volumeRender.setVolLengendColor(color);
+    public KLineChartView setVolLegendColor(int color) {
+        volumeRender.setVolLegendColor(color);
         return this;
     }
 
@@ -1132,7 +1167,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 价格线右侧框背景
      *
-     * @param priceLIneRightLabelBackGroundColor backgroundFillPaint
+     * @param priceLIneRightLabelBackGroundColor PriceLineRightLabelBackGroundColor
      * @return {@link KLineChartView}
      */
     public KLineChartView setPriceLineRightLabelBackGroundColor(int priceLIneRightLabelBackGroundColor) {
@@ -1214,8 +1249,8 @@ public class KLineChartView extends BaseKLineChartView {
      * @param width pop width
      * @return {@link KLineChartView}
      */
-    public KLineChartView setTimeLineEndRadiu(float width) {
-        this.lineEndRadiu = width;
+    public KLineChartView setTimeLineEndRadius(float width) {
+        this.lineEndRadius = width;
         return this;
     }
 
@@ -1280,18 +1315,6 @@ public class KLineChartView extends BaseKLineChartView {
         return this;
     }
 
-
-    /**
-     * 设置背景颜色
-     *
-     * @param color {@link Color}
-     * @return {@link KLineChartView}
-     */
-    public KLineChartView setBgColor(int color) {
-        this.backgroundPaint.setColor(color);
-        backGroundColor = color;
-        return this;
-    }
 
     /**
      * 设置选中point 值显示背景
@@ -1432,32 +1455,6 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * 获取图的宽度
-     *
-     * @return 宽度
-     */
-    public float getViewWidth() {
-        return super.getViewWidth();
-    }
-
-
-    /**
-     * 获取上方padding
-     */
-    public float getChartPaddingTop() {
-        return super.getChartPaddingTop();
-    }
-
-    /**
-     * 获取子试图上方padding
-     */
-    @SuppressWarnings("unused")
-    public float getChildPadding() {
-        return childViewPaddingTop;
-    }
-
-
-    /**
      * 设置表格行数
      *
      * @return {@link KLineChartView}
@@ -1482,8 +1479,8 @@ public class KLineChartView extends BaseKLineChartView {
         if (gridColumns < 1) {
             gridColumns = 1;
         }
-        if (0 != chartWidth) {
-            columnSpace = chartWidth / gridColumns;
+        if (0 != viewWidth) {
+            columnSpace = viewWidth / gridColumns;
         }
         this.gridColumns = gridColumns;
         return this;
@@ -1703,6 +1700,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param alpha default 18
      * @return {@link KLineChartView}
      */
+    @Deprecated
     public KLineChartView setBackGroundAlpha(int alpha) {
         backgroundPaint.setAlpha(alpha);
         return this;
@@ -1720,24 +1718,7 @@ public class KLineChartView extends BaseKLineChartView {
     }
 
 
-    /**
-     * set KlineChartView right Padding,Kline will show in this point left
-     *
-     * @param klineRightPadding default 0
-     * @return {@link KLineChartView}
-     */
-    public KLineChartView setKlineRightPadding(float klineRightPadding) {
-        this.klinePaddingRight = klineRightPadding;
-        return this;
-    }
-
-    /**
-     * dot line  right price box background alpha
-     *
-     * @param alpha default 150
-     * @return {@link KLineChartView}
-     */
-    public KLineChartView setDotRightPriceBoxAhpha(int alpha) {
+    public KLineChartView setPriceLabelRightBackgroundAlpha(int alpha) {
         rightPriceBoxPaint.setAlpha(alpha);
         return this;
     }
@@ -1861,7 +1842,7 @@ public class KLineChartView extends BaseKLineChartView {
 
 
     /**
-     * set vol View chart line/or bar
+     * set vol View chart line/bar
      *
      * @param volChartStatus defaul time line show line chart , K line show barChart
      * @return {@link KLineChartView}
@@ -1925,7 +1906,7 @@ public class KLineChartView extends BaseKLineChartView {
      * @param padding float
      * @return {@link KLineChartView}
      */
-    public KLineChartView setDateBoxlHorizentalPadding(float padding) {
+    public KLineChartView setDateBoxlHorizontalPadding(float padding) {
         dateBoxlHorizentalPadding = padding;
         return this;
     }
@@ -1938,6 +1919,48 @@ public class KLineChartView extends BaseKLineChartView {
      */
     public KLineChartView setMaxMinCalcModel(Status.MaxMinCalcModel model) {
         this.calcModel = model;
+        return this;
+    }
+
+    /**
+     * Y轴显示模式
+     *
+     * @param model {@link Status.YLabelModel}
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setYLabelState(Status.YLabelModel model) {
+        this.yLabelModel = model;
+        initRect();
+        return this;
+    }
+
+    /**
+     * Y轴显示宽度
+     *
+     * @param width
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setLabelSpace(float width) {
+        labelSpace = width;
+        return this;
+    }
+
+    /**
+     * 设计最大最小值的计算模式
+     *
+     * @param color           -1清空
+     * @param heightSameChart true与图表同高 false 与控件同高
+     * @return {@link KLineChartView}
+     */
+    public KLineChartView setYLabelBackgroundColor(int color, boolean heightSameChart) {
+        if (-1 != color) {
+            this.yLabelBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            this.yLabelBackgroundPaint.setColor(color);
+            this.yLabelBackgroundPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            this.yLabelBackgroundHeightSameChart = heightSameChart;
+        } else {
+            this.yLabelBackgroundPaint = null;
+        }
         return this;
     }
 
@@ -1958,5 +1981,6 @@ public class KLineChartView extends BaseKLineChartView {
         logoBitmap = null;
         super.onDetachedFromWindow();
     }
+
 
 }

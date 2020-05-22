@@ -105,10 +105,9 @@
       | dateLabelVerticalPadding  | dimension | X轴label纵向pading | 10 |
       | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
       | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
-      | paddingTop  | dimension | 主视图Lengend上边距 | 30,第一个网格的位置 |
+      | paddingTop  | dimension | 主视图上内边距 | 30,第一个网格的位置 |
       | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
       | chartLogo  | resource | 主视图logo | |
-      | candleRightPadding  | dimension | 主视图与右侧内边距 | |
       | increaseColor  | color | 涨颜色| |
       | decreaseColor  | color | 跌颜色| |
       | chartTextSize  | dimension | 通用文字大小| |
@@ -193,9 +192,9 @@
       | ma3Color  | color | 第3根ma线的颜色 | |
       | volMa1Color  | color | 第1根量ma线的颜色 | |
       | volMa2Color  | color | 第2根量ma线的颜色 | |
-      | volLengendColor   | color| 成交量图例颜色 | |
+      | volLegendColor   | color| 成交量图例颜色 | |
       | volLineChartColor  | color | 成交量显示线状图时的颜色 | #4B85D6 |
-      | volLengendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
+      | volLegendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
 
               
 4. <b>初始化k线  Initialize K-line</b>

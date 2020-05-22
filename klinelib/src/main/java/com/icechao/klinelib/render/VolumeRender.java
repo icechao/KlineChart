@@ -32,7 +32,7 @@ public class VolumeRender extends BaseRender {
     private Paint maOnePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint maTwoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint volLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float volWidth, lineVolWidth, volLengendMarginTop, endMaOne, endMaTwo;
+    private float volWidth, lineVolWidth, volLegendMarginTop, endMaOne, endMaTwo;
     private IValueFormatter valueFormatter = new ValueFormatter();
     private int itemsCount;
     private final int indexInterval;
@@ -76,9 +76,9 @@ public class VolumeRender extends BaseRender {
     private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float lastMa, float endMa5, Paint ma5Paint, float currentMa) {
         if (Float.MIN_VALUE != lastMa) {
             if (position == itemsCount - 1 && 0 != endMa5 && view.isAnimationLast()) {
-                view.drawVolLine(canvas, ma5Paint, lastX, lastMa, curX, endMa5);
+                view.renderVolLine(canvas, ma5Paint, lastX, lastMa, curX, endMa5);
             } else {
-                view.drawVolLine(canvas, ma5Paint, lastX, lastMa, curX, currentMa);
+                view.renderVolLine(canvas, ma5Paint, lastX, lastMa, curX, currentMa);
             }
         }
     }
@@ -108,7 +108,7 @@ public class VolumeRender extends BaseRender {
     @Override
     public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
         String text;
-        volLengendMarginTop += volLengendMarginTop;
+        volLegendMarginTop += volLegendMarginTop;
         if (position == itemsCount - 1 && view.isAnimationLast()) {
             text = volIndex + NumberTools.formatAmount(getValueFormatter().format(view.getLastVol())) + "  ";
         } else {
@@ -173,7 +173,7 @@ public class VolumeRender extends BaseRender {
      *
      * @param color
      */
-    public void setVolLengendColor(int color) {
+    public void setVolLegendColor(int color) {
         this.volLeftPaint.setColor(color);
     }
 
@@ -221,8 +221,8 @@ public class VolumeRender extends BaseRender {
         linePaint.setColor(color);
     }
 
-    public void setVolLengendMarginTop(float volLengendMarginTop) {
-        this.volLengendMarginTop = volLengendMarginTop;
+    public void setVolLegendMarginTop(float volLegendMarginTop) {
+        this.volLegendMarginTop = volLegendMarginTop;
     }
 
     public void setIncreaseColor(int color) {

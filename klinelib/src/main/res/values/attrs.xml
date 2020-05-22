@@ -17,6 +17,9 @@
         <attr name="priceLineRightLabelBackGroundColor" format="color" />
         <attr name="priceLineBoxBorderColor" format="color" />
         <attr name="priceLineBoxBorderWidth" format="dimension" />
+        <attr name="priceLineRightLabelBackGroundAlpha" format="integer" />
+        <attr name="priceLineDotSolidWidth" format="dimension" />
+        <attr name="priceLineDotStrokeWidth" format="dimension" />
 
         <!--cross line -->
         <attr name="selectXLineWidth" format="dimension" />
@@ -31,41 +34,39 @@
         <attr name="selectLineColor" format="color" />
         <attr name="selectPriceBoxBackgroundColor" format="color" />
         <attr name="selectTextSize" format="dimension" />
-        <attr name="selectPriceBoxHorizentalPadding" format="dimension" />
+        <attr name="selectPriceBoxHorizontalPadding" format="dimension" />
         <attr name="selectPriceBoxVerticalPadding" format="dimension" />
         <attr name="selectInfoBoxPadding" format="dimension" />
         <attr name="selectInfoBoxMargin" format="dimension" />
         <attr name="selectInfoBoxTextColor" format="color" />
         <attr name="selectInfoBoxBorderColor" format="color" />
         <attr name="selectInfoBoxBackgroundColor" format="color" />
-        <attr name="selectLabelBoderWidth" format="dimension" />
-        <attr name="selectLabelBoderColor" format="color" />
+        <attr name="selectLabelBorderWidth" format="dimension" />
+        <attr name="selectLabelBorderColor" format="color" />
 
         <!-- background -->
         <attr name="yLabelMarginRight" format="dimension" />
-        <attr name="backgroundFillTopLolor" format="color" />
+        <attr name="backgroundFillTopColor" format="color" />
         <attr name="backgroundFillBottomColor" format="color" />
-        <attr name="backgroundAlpha" format="integer" />
-        <attr name="dotRightPriceBoxBackGroundAlpha" format="integer" />
+        <attr name="backgroundFillAlpha" format="integer" />
 
         <!--time line-->
         <attr name="timeLineColor" format="color" />
         <attr name="timeLineFillTopColor" format="color" />
         <attr name="timeLineFillBottomColor" format="color" />
         <attr name="timeLineEndPointColor" format="color" />
-        <attr name="timeLineEndRadiu" format="integer" />
+        <attr name="timeLineEndRadius" format="integer" />
         <attr name="timeLineEndMultiply" format="float" />
 
         <!--公共的-->
 
         <attr name="dateLabelVerticalPadding" format="dimension" />
-        <attr name="dateLabelHorizentalPadding" format="dimension" />
-        <attr name="marketInfosLabel" format="reference" />
+        <attr name="dateLabelHorizontalPadding" format="dimension" />
+        <attr name="marketInfoLabel" format="reference" />
         <attr name="mainLegendMarginTop" format="dimension" />
         <attr name="increaseColor" format="color" />
         <attr name="betterXLabel" format="boolean" />
         <attr name="betterSelectedXLabel" format="boolean" />
-        <attr name="backgroundColor" format="color" />
         <attr name="decreaseColor" format="color" />
         <attr name="chartTextSize" format="dimension" />
         <attr name="paddingTop" format="dimension" />
@@ -78,7 +79,6 @@
         <attr name="limitTextColor" format="color" />
         <attr name="limitTextSize" format="dimension" />
         <!--k线-->
-        <attr name="candleRightPadding" format="dimension" />
         <attr name="candleWidth" format="dimension" />
         <attr name="candleLineWidth" format="dimension" />
         <attr name="candleSolid" format="integer" />
@@ -121,8 +121,8 @@
         <attr name="volMa1Color" format="color" />
         <attr name="volMa2Color" format="color" />
         <!-- vol -->
-        <attr name="volLengendColor" format="color" />
+        <attr name="volLegendColor" format="color" />
         <attr name="volLineChartColor" format="color" />
-        <attr name="volLengendMarginTop" format="dimension" />
+        <attr name="volLegendMarginTop" format="dimension" />
     </declare-styleable>
 </resources>

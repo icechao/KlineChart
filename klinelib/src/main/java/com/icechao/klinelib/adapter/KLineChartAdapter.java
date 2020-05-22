@@ -2,7 +2,6 @@ package com.icechao.klinelib.adapter;
 
 import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.utils.DataTools;
-import com.icechao.klinelib.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,13 +78,13 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
      */
     public void resetData(List<T> data, boolean resetShowPosition) {
         notifyDataWillChanged();
-        datas = data;
-        if (null != data && data.size() > 0) {
-            this.dataCount = datas.size();
+        datas.clear();
+        datas.addAll(data);
+        this.dataCount = datas.size();
+        if (dataCount > 0) {
             points = dataTools.calculate(datas);
         } else {
             points = new float[]{};
-            this.dataCount = 0;
         }
         this.resetShowPosition = resetShowPosition;
         notifyDataSetChanged();

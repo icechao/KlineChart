@@ -45,17 +45,17 @@ public class RSIRender extends BaseRender {
     @Override
     public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
         if (Constants.RSI_1 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_1] && position != 0) {
-            view.drawChildLine(canvas, rsi1Paint, lastX,
+            view.renderChildLine(canvas, rsi1Paint, lastX,
                     values[Constants.INDEX_RSI_1],
                     curX, values[Constants.INDEX_RSI_1 + indexInterval]);
         }
         if (Constants.RSI_2 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_2] && position != 0) {
-            view.drawChildLine(canvas, rsi2Paint, lastX,
+            view.renderChildLine(canvas, rsi2Paint, lastX,
                     values[Constants.INDEX_RSI_2],
                     curX, values[Constants.INDEX_RSI_2 + indexInterval]);
         }
         if (Constants.RSI_3 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_3] && position != 0) {
-            view.drawChildLine(canvas, rsi3Paint, lastX,
+            view.renderChildLine(canvas, rsi3Paint, lastX,
                     values[Constants.INDEX_RSI_3],
                     curX, values[Constants.INDEX_RSI_3 + indexInterval]);
         }

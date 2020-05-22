@@ -85,10 +85,10 @@ public class MACDRender extends BaseRender {
             return;
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_MACD_DEA]) {
-            view.drawChildLine(canvas, deaPaint, lastX, values[Constants.INDEX_MACD_DEA], curX, values[Constants.INDEX_MACD_DEA + indexInterval]);
+            view.renderChildLine(canvas, deaPaint, lastX, values[Constants.INDEX_MACD_DEA], curX, values[Constants.INDEX_MACD_DEA + indexInterval]);
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_MACD_DIF]) {
-            view.drawChildLine(canvas, difPaint, lastX, values[Constants.INDEX_MACD_DIF], curX, values[Constants.INDEX_MACD_DIF + indexInterval]);
+            view.renderChildLine(canvas, difPaint, lastX, values[Constants.INDEX_MACD_DIF], curX, values[Constants.INDEX_MACD_DIF + indexInterval]);
         }
     }
 

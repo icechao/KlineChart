@@ -45,17 +45,17 @@ public class EmaRender extends BaseRender {
     @Override
     public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
         if (Constants.K_EMA_NUMBER_1 > 0 && Float.MIN_VALUE != values[Constants.EMA_INDEX_1] && position != 0) {
-            view.drawChildLine(canvas, rsi1Paint, lastX,
+            view.renderChildLine(canvas, rsi1Paint, lastX,
                     values[Constants.EMA_INDEX_1],
                     curX, values[Constants.EMA_INDEX_1 + indexInterval]);
         }
         if (Constants.K_EMA_NUMBER_2 > 0 && Float.MIN_VALUE != values[Constants.EMA_INDEX_2] && position != 0) {
-            view.drawChildLine(canvas, rsi2Paint, lastX,
+            view.renderChildLine(canvas, rsi2Paint, lastX,
                     values[Constants.EMA_INDEX_2],
                     curX, values[Constants.EMA_INDEX_2 + indexInterval]);
         }
         if (Constants.K_EMA_NUMBER_3 > 0 && Float.MIN_VALUE != values[Constants.EMA_INDEX_3] && position != 0) {
-            view.drawChildLine(canvas, rsi3Paint, lastX,
+            view.renderChildLine(canvas, rsi3Paint, lastX,
                     values[Constants.EMA_INDEX_3],
                     curX, values[Constants.EMA_INDEX_3 + indexInterval]);
         }

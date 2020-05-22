@@ -39,7 +39,7 @@ public class WRRender extends BaseRender {
     @Override
     public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
-            view.drawChildLine(canvas, r1Paint, lastX,
+            view.renderChildLine(canvas, r1Paint, lastX,
                     values[Constants.INDEX_WR_1],
                     curX,
                     values[Constants.INDEX_WR_1 + indexInterval]);

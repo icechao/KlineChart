@@ -12,6 +12,10 @@ package com.icechao.klinelib.utils;
  *************************************************************************/
 public class Status {
 
+    public enum PriceLineLabelState{
+        PRICE_LINE_WITH_LABEL,PRICE_LINE_RIGHT_LABEL;
+    }
+
     public enum MainStatus {
         MA, BOLL, NONE
     }

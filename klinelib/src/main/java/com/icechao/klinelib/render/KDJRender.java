@@ -39,17 +39,17 @@ public class KDJRender extends BaseRender {
             return;
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_KDJ_K]) {
-            view.drawChildLine(canvas, mKPaint, lastX,
+            view.renderChildLine(canvas, mKPaint, lastX,
                     values[Constants.INDEX_KDJ_K], curX,
                     values[Constants.INDEX_KDJ_K + indexInterval]);
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_KDJ_D]) {
-            view.drawChildLine(canvas, mDPaint, lastX,
+            view.renderChildLine(canvas, mDPaint, lastX,
                     values[Constants.INDEX_KDJ_D], curX,
                     values[Constants.INDEX_KDJ_D + indexInterval]);
         }
         if (Float.MIN_VALUE != values[Constants.INDEX_KDJ_J]) {
-            view.drawChildLine(canvas, mJPaint, lastX,
+            view.renderChildLine(canvas, mJPaint, lastX,
                     values[Constants.INDEX_KDJ_J], curX,
                     values[Constants.INDEX_KDJ_J + indexInterval]);
         }
