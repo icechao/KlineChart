@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setGridColumns(5)
                 .setGridRows(5)
                 .setLabelSpace(130)
-                .setLogoBigmap(logoBitmap)
+                .setLogoBitmap(logoBitmap)
                 .setLogoAlpha(100)
                 //set right can over range
                 .setOverScrollRange(getWindow().getWindowManager().getDefaultDisplay().getWidth() / 5)
@@ -152,9 +152,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
                     }
                 })
-                .setPriceLineLabelMarginRight(200)
+                .setPriceLabelInLineMarginRight(200)
                 .setYLabelBackgroundColor(Color.DKGRAY, true)
-                .setSelectorInfoBoxPadding(40)
+                .setSelectInfoBoxPadding(40)
                 .showLoading()
                 .setBetterX(true)
                 //set slid listener

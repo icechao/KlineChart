@@ -252,7 +252,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 价格框高度
      */
-    protected float priceLineBoxHeight = 40;
+    protected float priceLabelInLineBoxHeight = 40;
+
+    /**
+     * 价格框圆角半径
+     */
+    protected float priceLabelInLineBoxRadius = 20;
 
     /**
      * 价格框内边距
@@ -609,11 +614,11 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 选中价格框横向padding
      */
-    protected float selectedPriceBoxHorizentalPadding;
+    protected float selectedPriceBoxHorizontalPadding;
     /**
      * 选中日期框横向padding
      */
-    protected float dateBoxlHorizentalPadding;
+    protected float selectedDateBoxHorizontalPadding;
 
     /**
      * 选中日期框纵向padding
@@ -984,23 +989,23 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         //向下多移动出一个像素(如果有必要可以设置多移动网络线宽度)
         y = chartPaddingTop + displayHeight + 1;
         float temp = textWidth / 2;
-        right = x + temp + dateBoxlHorizentalPadding;
-        left = x - temp - dateBoxlHorizentalPadding;
+        right = x + temp + selectedDateBoxHorizontalPadding;
+        left = x - temp - selectedDateBoxHorizontalPadding;
         float screenRightX = xToTranslateX(renderWidth);
         if (betterSelectedX) {
             if (right > screenRightX) {
                 right = screenRightX;
-                left = right - dateBoxlHorizentalPadding * 2 - textWidth;
+                left = right - selectedDateBoxHorizontalPadding * 2 - textWidth;
             } else if (left < xToTranslateX(0)) {
                 left = xToTranslateX(0);
-                right = left + dateBoxlHorizentalPadding * 2 + textWidth;
+                right = left + selectedDateBoxHorizontalPadding * 2 + textWidth;
             }
         }
 
         bottom = y + textHeight + dateBoxVerticalPadding * 2;
         canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
-        canvas.drawText(date, left + selectedPriceBoxHorizentalPadding, y + baseLine + dateBoxVerticalPadding, textPaint);
+        canvas.drawText(date, left + selectedPriceBoxHorizontalPadding, y + baseLine + dateBoxVerticalPadding, textPaint);
         //十字线Y值判断
         //十字线横线
         if (crossTouchModel.getStateValue()) {
@@ -1033,33 +1038,33 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         // 选中状态下的Y值
         textWidth = textPaint.measureText(text);
         temp = textHeight / 2 + selectedPriceBoxVerticalPadding;
-        float tempX = textWidth + 2 * selectedPriceBoxHorizentalPadding;
+        float tempX = textWidth + 2 * selectedPriceBoxHorizontalPadding;
         float boxTop = y - temp;
         float boxBottom = y + temp;
         if (yLabelModel == Status.YLabelModel.LABEL_NONE_GRID || getX(selectedIndex - screenLeftIndex) > renderWidth / 2) {
-            x = -canvasTranslateX + viewWidth - textWidth - 1 - 2 * selectedPriceBoxHorizentalPadding - selectedPriceBoxVerticalPadding;
+            x = -canvasTranslateX + viewWidth - textWidth - 1 - 2 * selectedPriceBoxHorizontalPadding - selectedPriceBoxVerticalPadding;
             path = new Path();
             path.moveTo(x, y);
-            path.lineTo(x + selectedPriceBoxHorizentalPadding + selectedPriceBoxVerticalPadding, boxBottom);
+            path.lineTo(x + selectedPriceBoxHorizontalPadding + selectedPriceBoxVerticalPadding, boxBottom);
             path.lineTo(-canvasTranslateX + viewWidth - 2, boxBottom);
             path.lineTo(-canvasTranslateX + viewWidth - 2, boxTop);
-            path.lineTo(x + selectedPriceBoxHorizentalPadding + selectedPriceBoxVerticalPadding, boxTop);
+            path.lineTo(x + selectedPriceBoxHorizontalPadding + selectedPriceBoxVerticalPadding, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
             canvas.drawPath(path, selectedXLinePaint);
-            canvas.drawText(text, x + selectedPriceBoxVerticalPadding + selectedPriceBoxHorizentalPadding, boxTop + selectedPriceBoxVerticalPadding + baseLine, textPaint);
+            canvas.drawText(text, x + selectedPriceBoxVerticalPadding + selectedPriceBoxHorizontalPadding, boxTop + selectedPriceBoxVerticalPadding + baseLine, textPaint);
         } else {
             x = -canvasTranslateX;
             path = new Path();
             path.moveTo(x, boxTop);
             path.lineTo(x, boxBottom);
             path.lineTo(tempX + x, boxBottom);
-            path.lineTo(tempX + x + selectedPriceBoxHorizentalPadding + selectedPriceBoxVerticalPadding, y);
+            path.lineTo(tempX + x + selectedPriceBoxHorizontalPadding + selectedPriceBoxVerticalPadding, y);
             path.lineTo(tempX + x, boxTop);
             path.close();
             canvas.drawPath(path, selectedPriceBoxBackgroundPaint);
             canvas.drawPath(path, selectedXLinePaint);
-            canvas.drawText(text, x + selectedPriceBoxHorizentalPadding, boxTop + selectedPriceBoxVerticalPadding + baseLine, textPaint);
+            canvas.drawText(text, x + selectedPriceBoxHorizontalPadding, boxTop + selectedPriceBoxVerticalPadding + baseLine, textPaint);
         }
     }
 
@@ -1228,9 +1233,14 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             if (yLabelModel == YLabelModel.LABEL_WITH_GRID) {
                 renderDotLine(canvas, 0, tempRight - priceLineMarginPriceLabel, y, priceLinePaint);
                 float boxRight = tempRight - priceLineBoxMarginRight;
+                float halfPriceBoxHeight = priceLabelInLineBoxHeight / 2;
+
                 renderPriceLabelInPriceLine(canvas,
-                        boxRight - textWidth - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin
+                        boxRight - textWidth - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin,
+                        y - halfPriceBoxHeight
                         , boxRight,
+                        y + halfPriceBoxHeight,
+                        priceLabelInLineBoxRadius,
                         y,
                         priceText);
             } else {
@@ -1253,6 +1263,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         }
     }
 
+    private float priceLabelInLineLeft, priceLabelInLineRight, priceLabelInLineTop, priceLabelInLineBottom;
+
     /**
      * 价格线上的价格label
      *
@@ -1260,12 +1272,9 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param y         y
      * @param priceText priceText
      */
-    private void renderPriceLabelInPriceLine(Canvas canvas, float boxLeft, float boxRight, float y, String priceText) {
-        float halfPriceBoxHeight = priceLineBoxHeight / 2;
-        float boxTop = y - halfPriceBoxHeight;
-        float boxBottom = y + halfPriceBoxHeight;
-        canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), halfPriceBoxHeight, halfPriceBoxHeight, priceLineBoxBgPaint);
-        canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), halfPriceBoxHeight, halfPriceBoxHeight, priceLineBoxPaint);
+    private void renderPriceLabelInPriceLine(Canvas canvas, float boxLeft, float boxTop, float boxBottom, float boxRight, float rectRadius, float y, String priceText) {
+        canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxBgPaint);
+        canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxPaint);
         float temp = priceShapeHeight / 2;
         float shapeLeft = boxRight - priceShapeWidth - priceLineBoxPadidng;
         //价格线三角形
@@ -1879,7 +1888,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
     /**
      * 是否显示选中
      */
-    public boolean forceHideMarket() {
+    public boolean hideMarketInfo() {
         return hideMarketInfo;
     }
 
@@ -2022,4 +2031,12 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             return viewWidth;
         }
     }
+
+
+    @Override
+    protected void onDetachedFromWindow() {
+        logoBitmap = null;
+        super.onDetachedFromWindow();
+    }
+
 }

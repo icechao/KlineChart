@@ -2,38 +2,38 @@
 <resources>
     <declare-styleable name="KLineChartView">
 
-
-        <attr name="priceLineBoxMarginRight" format="dimension" />
-        <attr name="priceLineBoxShapeWidth" format="dimension" />
-        <attr name="priceLineBoxShapeHeight" format="dimension" />
-        <attr name="priceLineBoxHeight" format="dimension" />
-        <attr name="priceLineBoxPadding" format="dimension" />
-        <attr name="priceLineBoxShapeTextMargin" format="dimension" />
         <attr name="priceLineWidth" format="dimension" />
         <attr name="priceLineColor" format="color" />
-        <attr name="priceLineBackgroundColor" format="color" />
-        <attr name="priceLineRightColor" format="color" />
-        <attr name="priceLineRightLabelTextColor" format="color" />
-        <attr name="priceLineRightLabelBackGroundColor" format="color" />
-        <attr name="priceLineBoxBorderColor" format="color" />
-        <attr name="priceLineBoxBorderWidth" format="dimension" />
+        <attr name="priceLabelInLineBoxMarginRight" format="dimension" />
+        <attr name="priceLabelInLineShapeWidth" format="dimension" />
+        <attr name="priceLabelInLineShapeHeight" format="dimension" />
+        <attr name="priceLabelInLineBoxHeight" format="dimension" />
+        <attr name="priceLabelInLineBoxPadding" format="dimension" />
+        <attr name="priceLabelInLineBoxShapeTextMargin" format="dimension" />
+        <attr name="priceLabelInLineBoxBackgroundColor" format="color" />
+        <attr name="priceLabelRightBackgroundColor" format="color" />
+        <attr name="priceLabelInLineBoxBorderColor" format="color" />
+        <attr name="priceLabelInLineBoxBorderWidth" format="dimension" />
+        <attr name="priceLabelInLineBoxRadius" format="dimension" />
         <attr name="priceLineRightLabelBackGroundAlpha" format="integer" />
+        <attr name="priceLineRightColor" format="color" />
+        <attr name="priceLabelRightTextColor" format="color" />
         <attr name="priceLineDotSolidWidth" format="dimension" />
         <attr name="priceLineDotStrokeWidth" format="dimension" />
 
         <!--cross line -->
-        <attr name="selectXLineWidth" format="dimension" />
-        <attr name="selectYLineWidth" format="dimension" />
-        <attr name="selectXLineColor" format="color" />
-        <attr name="selectYLineColor" format="color" />
-        <attr name="selectCrossBigColor" format="color" />
-        <attr name="selectCrossPointRadius" format="dimension" />
-        <attr name="selectCrossPointColor" format="color" />
-        <attr name="selectShowCrossPoint" format="boolean" />
-        <attr name="selectYColor" format="color" />
-        <attr name="selectLineColor" format="color" />
-        <attr name="selectPriceBoxBackgroundColor" format="color" />
-        <attr name="selectTextSize" format="dimension" />
+        <attr name="selectedXLineWidth" format="dimension" />
+        <attr name="selectedYLineWidth" format="dimension" />
+        <attr name="selectedXLineColor" format="color" />
+        <attr name="selectedYLineColor" format="color" />
+        <attr name="selectedCrossBigColor" format="color" />
+        <attr name="selectedCrossPointRadius" format="dimension" />
+        <attr name="selectedCrossPointColor" format="color" />
+        <attr name="selectedShowCrossPoint" format="boolean" />
+        <attr name="selectedYColor" format="color" />
+        <attr name="selectedLineColor" format="color" />
+        <attr name="selectedPriceBoxBackgroundColor" format="color" />
+        <attr name="selectedInfoTextSize" format="dimension" />
         <attr name="selectPriceBoxHorizontalPadding" format="dimension" />
         <attr name="selectPriceBoxVerticalPadding" format="dimension" />
         <attr name="selectInfoBoxPadding" format="dimension" />
@@ -43,7 +43,7 @@
         <attr name="selectInfoBoxBackgroundColor" format="color" />
         <attr name="selectLabelBorderWidth" format="dimension" />
         <attr name="selectLabelBorderColor" format="color" />
-
+        <attr name="selectedInfoLabel" format="reference" />
         <!-- background -->
         <attr name="yLabelMarginRight" format="dimension" />
         <attr name="backgroundFillTopColor" format="color" />
@@ -60,9 +60,9 @@
 
         <!--公共的-->
 
-        <attr name="dateLabelVerticalPadding" format="dimension" />
-        <attr name="dateLabelHorizontalPadding" format="dimension" />
-        <attr name="marketInfoLabel" format="reference" />
+        <attr name="selectedDateBoxVerticalPadding" format="dimension" />
+        <attr name="selectedDateBoxHorizontalPadding" format="dimension" />
+
         <attr name="mainLegendMarginTop" format="dimension" />
         <attr name="increaseColor" format="color" />
         <attr name="betterXLabel" format="boolean" />

@@ -200,7 +200,7 @@ public class MainRender extends BaseRender {
                 }
             }
         }
-        if (view.getShowSelected() && !view.forceHideMarket()) {
+        if (view.getShowSelected() && !view.hideMarketInfo()) {
             drawSelector(view, canvas, values);
         }
     }
@@ -371,12 +371,12 @@ public class MainRender extends BaseRender {
      * 设置选择器弹出框相关颜色 selected popupwindow text color
      *
      * @param textColor       文字
-     * @param boderColor      边框
+     * @param borderColor      边框
      * @param backgroundColor 背景
      */
-    public void setSelectorTextColor(int textColor, int boderColor, int backgroundColor) {
+    public void setSelectorTextColor(int textColor, int borderColor, int backgroundColor) {
         selectorTextPaint.setColor(textColor);
-        selectorBorderPaint.setColor(boderColor);
+        selectorBorderPaint.setColor(borderColor);
         selectorBackgroundPaint.setColor(backgroundColor);
     }
 
