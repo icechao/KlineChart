@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     }
                 })
                 .setPriceLabelInLineMarginRight(200)
-                .setYLabelBackgroundColor(Color.DKGRAY, true)
+//                .setYLabelBackgroundColor(Color.DKGRAY, true)
                 .setSelectInfoBoxPadding(40)
                 .showLoading()
                 .setBetterX(true)

@@ -1688,8 +1688,8 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 }
 
             case MAIN_INDEX:
-                indexMaxValue += Math.abs(indexMaxValue * 0.03f);
-                mChildMinValue -= Math.abs(mChildMinValue * 0.03f);
+                indexMaxValue += Math.abs(indexMaxValue * 0.05f);
+                mChildMinValue -= Math.abs(mChildMinValue * 0.05f);
                 if (indexMaxValue == 0) {
                     indexMaxValue = 1f;
                 }
