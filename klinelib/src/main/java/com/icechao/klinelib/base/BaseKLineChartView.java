@@ -880,7 +880,7 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @return location y
      */
     public float getChildY(float value) {
-        return chartPaddingTop + indexRect.top + ((indexMaxValue - value) * indexScaleY);
+        return indexRect.top + ((indexMaxValue - value) * indexScaleY);
     }
 
 

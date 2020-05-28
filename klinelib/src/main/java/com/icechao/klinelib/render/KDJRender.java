@@ -84,7 +84,6 @@ public class KDJRender extends BaseRender {
     @Override
     public float getMinValue(float... values) {
         return Math.min(values[Constants.INDEX_KDJ_K], Math.min(values[Constants.INDEX_KDJ_D], values[Constants.INDEX_KDJ_J]));
-
     }
 
     @Override
