@@ -26,6 +26,7 @@ import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.render.MainRender;
 import com.icechao.klinelib.render.VolumeRender;
 import com.icechao.klinelib.utils.Constants;
+import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
@@ -1035,14 +1036,21 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
             canvas.drawCircle(x, y, chartItemWidth, selectedbigCrossPaint);
             canvas.drawCircle(x, y, selectedPointRadius, selectedCrossPaint);
         }
-        // 选中状态下的Y值
-        textWidth = textPaint.measureText(text);
+        switch (yLabelModel) {
+            case LABEL_NONE_GRID:
+                textWidth = labelSpace;
+                x = -canvasTranslateX + viewWidth - textWidth;
+                break;
+            case LABEL_WITH_GRID:
+                textWidth = textPaint.measureText(text);
+                x = -canvasTranslateX + viewWidth - textWidth - 1 - 2 * selectedPriceBoxHorizontalPadding - selectedPriceBoxVerticalPadding;
+                break;
+        }
         temp = textHeight / 2 + selectedPriceBoxVerticalPadding;
         float tempX = textWidth + 2 * selectedPriceBoxHorizontalPadding;
         float boxTop = y - temp;
         float boxBottom = y + temp;
         if (yLabelModel == Status.YLabelModel.LABEL_NONE_GRID || getX(selectedIndex - screenLeftIndex) > renderWidth / 2) {
-            x = -canvasTranslateX + viewWidth - textWidth - 1 - 2 * selectedPriceBoxHorizontalPadding - selectedPriceBoxVerticalPadding;
             path = new Path();
             path.moveTo(x, y);
             path.lineTo(x + selectedPriceBoxHorizontalPadding + selectedPriceBoxVerticalPadding, boxBottom);
@@ -1272,7 +1280,10 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
      * @param y         y
      * @param priceText priceText
      */
-    private void renderPriceLabelInPriceLine(Canvas canvas, float boxLeft, float boxTop, float boxBottom, float boxRight, float rectRadius, float y, String priceText) {
+    private void renderPriceLabelInPriceLine(Canvas canvas, float boxLeft, float boxTop, float boxRight, float boxBottom, float rectRadius, float y, String priceText) {
+
+        LogUtil.e("left : " + boxLeft + "     top" + boxTop + "   box");
+
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxBgPaint);
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxPaint);
         float temp = priceShapeHeight / 2;
