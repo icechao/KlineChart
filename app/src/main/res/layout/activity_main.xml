@@ -297,8 +297,8 @@
                         android:layout_height="580dp"
                         app:backgroundFillBottomColor="#081734"
                         app:backgroundFillTopColor="#112855"
-                        app:priceLineBoxBorderColor="#4B6C91"
-                        app:selectCrossBigColor="#99ffffff"
+                        app:priceLabelInLineBoxBorderColor="#4B6C91"
+                        app:selectedCrossBigColor="#99ffffff"
                         app:selectInfoBoxBackgroundColor="#325B88"
                         app:selectInfoBoxBorderColor="#4E81EA"
                         app:selectInfoBoxTextColor="#0B188C" />

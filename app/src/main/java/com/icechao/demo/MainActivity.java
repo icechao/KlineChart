@@ -43,12 +43,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private KLineChartView chartView;
 
     private Handler handler = new Handler();
-    private TextView textViewPriceText;
-    private TextView textViewRiseAndFallText;
-    private TextView textViewCny;
-    private TextView textViewHighPriceText;
-    private TextView textViewLowPriceText;
-    private TextView textViewVolumeSumText;
     private View attachedOperater;
     private View masterOperater;
     private View moreIndex;
@@ -93,12 +87,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         findViewById(R.id.text_view_hide_master).setOnClickListener(this);
 
 
-        textViewPriceText = findViewById(R.id.text_view_price_text);
-        textViewRiseAndFallText = findViewById(R.id.text_view_rise_and_fall_text);
-        textViewCny = findViewById(R.id.text_view_cny);
-        textViewHighPriceText = findViewById(R.id.high_price_text);
-        textViewLowPriceText = findViewById(R.id.low_price_text);
-        textViewVolumeSumText = findViewById(R.id.volume_sum_text);
 
         radioGroup = findViewById(R.id.radio_group_defalt_index);
         radioGroup.setOnCheckedChangeListener(this);
