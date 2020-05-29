@@ -10,6 +10,7 @@
         <attr name="priceLabelInLineBoxHeight" format="dimension" />
         <attr name="priceLabelInLineBoxPadding" format="dimension" />
         <attr name="priceLabelInLineBoxShapeTextMargin" format="dimension" />
+        <attr name="priceLabelInLineClickable" format="boolean" />
         <attr name="priceLabelInLineBoxBackgroundColor" format="color" />
         <attr name="priceLabelRightBackgroundColor" format="color" />
         <attr name="priceLabelInLineBoxBorderColor" format="color" />

@@ -122,6 +122,7 @@ public class KLineChartView extends BaseKLineChartView {
                 setPriceLabelInLineShapeWidth(array.getDimension(R.styleable.KLineChartView_priceLabelInLineShapeWidth, 10));
                 setPriceLabelInLineShapeHeight(array.getDimension(R.styleable.KLineChartView_priceLabelInLineShapeHeight, 20));
                 setPriceLabelInLineShapeTextMargin(array.getDimension(R.styleable.KLineChartView_priceLabelInLineBoxShapeTextMargin, 10));
+                setPriceLabelInLineClickable(array.getBoolean(R.styleable.KLineChartView_priceLabelInLineClickable, false));
                 setPriceLineDotSolidWidth(array.getDimension(R.styleable.KLineChartView_priceLineDotSolidWidth, 8f));
                 setPriceLineDotStrokeWidth(array.getDimension(R.styleable.KLineChartView_priceLineDotStrokeWidth, 4f));
                 //十字线
@@ -1638,6 +1639,7 @@ public class KLineChartView extends BaseKLineChartView {
     /**
      * 设置加载数据动画时间
      *
+     * @param duration 动画执行时长
      * @return {@link KLineChartView}
      */
     @SuppressWarnings("unused")
@@ -1645,6 +1647,18 @@ public class KLineChartView extends BaseKLineChartView {
         if (null != showAnim) {
             showAnim.setDuration(duration);
         }
+        return this;
+    }
+
+    /**
+     * 设置价格线label可点击,
+     *
+     * @param clickable true可点击,点击重置k线显示
+     * @return {@link KLineChartView}
+     */
+    @SuppressWarnings("unused")
+    public KLineChartView setPriceLabelInLineClickable(boolean clickable) {
+        this.priceLabelInLineClickable = clickable;
         return this;
     }
 

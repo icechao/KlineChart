@@ -260,7 +260,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         return true;
     }
 
-
     /**
      * 是否在触摸中
      *

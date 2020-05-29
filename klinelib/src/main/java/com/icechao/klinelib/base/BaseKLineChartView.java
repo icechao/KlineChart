@@ -1237,25 +1237,59 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
                 canvas.drawCircle(klineRight, y, lineEndRadius, lineEndFillPointPaint);
             }
             renderRightPriceLabel(canvas, y, priceText, textWidth, textLeft);
+            showPriceLabelInLine = false;
         } else {
             if (yLabelModel == YLabelModel.LABEL_WITH_GRID) {
                 renderDotLine(canvas, 0, tempRight - priceLineMarginPriceLabel, y, priceLinePaint);
-                float boxRight = tempRight - priceLineBoxMarginRight;
                 float halfPriceBoxHeight = priceLabelInLineBoxHeight / 2;
-
+                priceLabelInLineBoxRight = tempRight - priceLineBoxMarginRight;
+                priceLabelInLineBoxLeft = priceLabelInLineBoxRight - textWidth - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin;
+                priceLabelInLineBoxTop = y - halfPriceBoxHeight;
+                priceLabelInLineBoxBottom = y + halfPriceBoxHeight;
                 renderPriceLabelInPriceLine(canvas,
-                        boxRight - textWidth - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin,
-                        y - halfPriceBoxHeight
-                        , boxRight,
-                        y + halfPriceBoxHeight,
+                        priceLabelInLineBoxLeft,
+                        priceLabelInLineBoxTop,
+                        priceLabelInLineBoxRight,
+                        priceLabelInLineBoxBottom,
                         priceLabelInLineBoxRadius,
                         y,
                         priceText);
+                showPriceLabelInLine = true;
             } else {
                 renderDotLine(canvas, 0, tempRight - labelSpace, y, priceLinePaint);
                 renderRightPriceLabel(canvas, y, priceText, textWidth, textLeft);
+                showPriceLabelInLine = false;
             }
         }
+    }
+
+
+    protected boolean showPriceLabelInLine;
+    protected boolean priceLabelInLineClickable;
+    protected float priceLabelInLineBoxRight, priceLabelInLineBoxLeft, priceLabelInLineBoxTop, priceLabelInLineBoxBottom;
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        if (priceLabelInLineClickable && showPriceLabelInLine) {
+            float x = xToTranslateX(e.getX());
+            float y = e.getY();
+            if (priceLabelInLineBoxTop < y && priceLabelInLineBoxBottom > y && priceLabelInLineBoxLeft < x && priceLabelInLineBoxRight > x) {
+                ValueAnimator valueAnimator = ValueAnimator.ofFloat(getTranslateX(), getMinTranslate());
+                valueAnimator.setDuration(300).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        changeTranslated((Float) animation.getAnimatedValue());
+                        animInvalidate();
+                    }
+                });
+                valueAnimator.setRepeatCount(0);
+                valueAnimator.start();
+                selectedIndex = -1;
+                return true;
+            }
+        }
+        return super.onSingleTapUp(e);
+
     }
 
     /**
