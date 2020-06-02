@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.R;
-import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -86,7 +86,7 @@ public class MainRender extends BaseRender {
 
 
     @Override
-    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
+    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values) {
         if (view.getKlineStatus().showLine()) {
             if (position == itemCount - 1) {
                 float lastClosePrice = values[Constants.INDEX_CLOSE];
@@ -152,7 +152,7 @@ public class MainRender extends BaseRender {
         }
     }
 
-    private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float start, float animEnd, Paint paint, float end) {
+    private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKChartView view, int position, float start, float animEnd, Paint paint, float end) {
         if (Float.MIN_VALUE != start) {
             if (itemCount - 1 == position && 0 != animEnd && view.isAnimationLast()) {
                 view.renderMainLine(canvas, paint, lastX, start, curX, animEnd);
@@ -165,7 +165,7 @@ public class MainRender extends BaseRender {
 
     @Override
     @SuppressWarnings("all")
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
 
         //修改头文字显示在顶部
         y = maTextHeight + mainLegendMarginTop;
@@ -226,7 +226,7 @@ public class MainRender extends BaseRender {
      * @param open   开盘价
      * @param close  收盘价
      */
-    private void drawCandle(BaseKLineChartView view, Canvas canvas, float x, float high, float low, float open, float close, int position) {
+    private void drawCandle(BaseKChartView view, Canvas canvas, float x, float high, float low, float open, float close, int position) {
         high = view.getMainY(high);
         low = view.getMainY(low);
         open = view.getMainY(open);
@@ -265,7 +265,7 @@ public class MainRender extends BaseRender {
      * @param values
      */
     @SuppressLint("DefaultLocale")
-    protected void drawSelector(BaseKLineChartView view, Canvas canvas, float[] values) {
+    protected void drawSelector(BaseKChartView view, Canvas canvas, float[] values) {
 
         int index = view.getSelectedIndex();
 
@@ -434,7 +434,7 @@ public class MainRender extends BaseRender {
 
 
     @Override
-    public void startAnim(BaseKLineChartView view, float[] values) {
+    public void startAnim(BaseKChartView view, float[] values) {
 
         switch (view.getStatus()) {
             case MA:
@@ -513,7 +513,7 @@ public class MainRender extends BaseRender {
         downLinePaint.setColor(color);
     }
 
-    public void renderMaxMinValue(Canvas canvas, BaseKLineChartView view,
+    public void renderMaxMinValue(Canvas canvas, BaseKChartView view,
                                   float maxX, float mainHighMaxValue,
                                   float minX, float mainLowMinValue) {
         if (!view.getKlineStatus().showLine()) {

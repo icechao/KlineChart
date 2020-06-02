@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
-import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -43,7 +43,7 @@ public class EmaRender extends BaseRender {
 
 
     @Override
-    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
+    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values) {
         if (Constants.K_EMA_NUMBER_1 > 0 && Float.MIN_VALUE != values[Constants.EMA_INDEX_1] && position != 0) {
             view.renderChildLine(canvas, rsi1Paint, lastX,
                     values[Constants.EMA_INDEX_1],
@@ -62,7 +62,7 @@ public class EmaRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
         if (Constants.K_EMA_NUMBER_1 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_1]) {
             canvas.drawText(legendText1, x, y, rsi1Paint);
             x += rsi1Paint.measureText(legendText1);
@@ -105,7 +105,7 @@ public class EmaRender extends BaseRender {
     }
 
     @Override
-    public void startAnim(BaseKLineChartView view, float... values) {
+    public void startAnim(BaseKChartView view, float... values) {
 
     }
 

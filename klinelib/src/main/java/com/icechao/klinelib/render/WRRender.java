@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import com.icechao.klinelib.base.BaseRender;
-import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
@@ -37,7 +37,7 @@ public class WRRender extends BaseRender {
 
 
     @Override
-    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
+    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values) {
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
             view.renderChildLine(canvas, r1Paint, lastX,
                     values[Constants.INDEX_WR_1],
@@ -47,11 +47,11 @@ public class WRRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float... values) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float... values) {
 //        IWR point = (IWR) view.getItem(position);
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
-            canvas.drawText(legendText, x, y, view.getTextPaint());
-            x += view.getTextPaint().measureText(legendText);
+            canvas.drawText(legendText, x, y, view.getCommonTextPaint());
+            x += view.getCommonTextPaint().measureText(legendText);
             String temp = getValueFormatter().format(values[Constants.INDEX_WR_1]) + " ";
             canvas.drawText(temp, x, y, r1Paint);
         }
@@ -74,7 +74,7 @@ public class WRRender extends BaseRender {
     }
 
     @Override
-    public void startAnim(BaseKLineChartView view, float... values) {
+    public void startAnim(BaseKChartView view, float... values) {
 
     }
 

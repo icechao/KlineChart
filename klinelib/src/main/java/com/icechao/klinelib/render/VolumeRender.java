@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.R;
-import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
@@ -48,7 +48,7 @@ public class VolumeRender extends BaseRender {
 
 
     @Override
-    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values) {
+    public void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values) {
         if (position == 0) {
             drawHistogram(canvas, curX,
                     values[Constants.INDEX_VOL],
@@ -73,7 +73,7 @@ public class VolumeRender extends BaseRender {
 
     }
 
-    private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position, float lastMa, float endMa5, Paint ma5Paint, float currentMa) {
+    private void drawLine(float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKChartView view, int position, float lastMa, float endMa5, Paint ma5Paint, float currentMa) {
         if (Float.MIN_VALUE != lastMa) {
             if (position == itemsCount - 1 && 0 != endMa5 && view.isAnimationLast()) {
                 view.renderVolLine(canvas, ma5Paint, lastX, lastMa, curX, endMa5);
@@ -83,7 +83,7 @@ public class VolumeRender extends BaseRender {
         }
     }
 
-    private void drawHistogram(Canvas canvas, float curX, float vol, float open, float close, BaseKLineChartView view, int position) {
+    private void drawHistogram(Canvas canvas, float curX, float vol, float open, float close, BaseKChartView view, int position) {
 
         float top, r = volWidth / 2 * view.getScaleX();
         int bottom = view.getVolRectBottom();
@@ -106,7 +106,7 @@ public class VolumeRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values) {
+    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
         String text;
         volLegendMarginTop += volLegendMarginTop;
         if (position == itemsCount - 1 && view.isAnimationLast()) {
@@ -115,7 +115,7 @@ public class VolumeRender extends BaseRender {
             text = volIndex + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
         }
         canvas.drawText(text, x, y, volLeftPaint);
-        x += view.getTextPaint().measureText(text);
+        x += view.getCommonTextPaint().measureText(text);
 
         if (position == itemsCount - 1 && view.isAnimationLast() && 0 != endMaOne) {
             text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(endMaOne)) + "  ";
@@ -149,7 +149,7 @@ public class VolumeRender extends BaseRender {
     }
 
     @Override
-    public void startAnim(BaseKLineChartView view, float... values) {
+    public void startAnim(BaseKChartView view, float... values) {
         if (0 == endMaOne) {
             endMaOne = values[Constants.INDEX_VOL_MA_1];
             endMaTwo = values[Constants.INDEX_VOL_MA_2];

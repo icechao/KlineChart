@@ -291,7 +291,7 @@
                     android:layout_height="wrap_content">
 
 
-                <com.icechao.klinelib.view.KLineChartView
+                <com.icechao.klinelib.view.KChartView
                         android:id="@+id/kLineChartView"
                         android:layout_width="match_parent"
                         android:layout_height="580dp"

@@ -19,9 +19,9 @@ import java.util.Arrays;
  *************************************************************************/
 public abstract class BaseRender {
 
-    public abstract void render(Canvas canvas, float lastX, float curX, @NonNull BaseKLineChartView view, int position, float... values);
+    public abstract void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values);
 
-    public abstract void drawText(@NonNull Canvas canvas, @NonNull BaseKLineChartView view, float x, float y, int position, float[] values);
+    public abstract void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values);
 
     public float getMaxValue(float... values) {
         if (values.length == 0) {
@@ -50,12 +50,12 @@ public abstract class BaseRender {
         return 0;
     }
 
-    public void renderMaxMinValue(Canvas canvas, BaseKLineChartView view,
+    public void renderMaxMinValue(Canvas canvas, BaseKChartView view,
                                   float maxX, float mainHighMaxValue,
                                   float minX, float mainLowMinValue) {
     }
 
-    public abstract void startAnim(BaseKLineChartView view, float... values);
+    public abstract void startAnim(BaseKChartView view, float... values);
 
     public abstract IValueFormatter getValueFormatter();
 

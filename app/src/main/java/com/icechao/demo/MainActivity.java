@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
-import com.icechao.klinelib.base.BaseKLineChartView;
+import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
@@ -28,7 +28,7 @@ import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.SlidListener;
 import com.icechao.klinelib.utils.Status;
-import com.icechao.klinelib.view.KLineChartView;
+import com.icechao.klinelib.view.KChartView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
     private KLineChartAdapter adapter;
 
-    private KLineChartView chartView;
+    private KChartView chartView;
 
     private Handler handler = new Handler();
     private View attachedOperater;
@@ -123,6 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
+                .setPriceLabelInLineClickable(true)
                 .setLabelSpace(130)
                 .setLogoBitmap(logoBitmap)
                 .setLogoAlpha(100)
@@ -132,10 +133,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLoadingView(loadingView)
                 //full or stroke
                 .setCandleSolid(Status.HollowModel.ALL_STROKE)
-                .setOnSelectedChangedListener(new BaseKLineChartView.OnSelectedChangedListener() {
+                .setOnSelectedChangedListener(new BaseKChartView.OnSelectedChangedListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
-                    public void onSelectedChanged(BaseKLineChartView view, int index, float... values) {
+                    public void onSelectedChanged(BaseKChartView view, int index, float... values) {
                         vibrator.vibrate(VibrationEffect.createOneShot(10, 100));
 
                     }

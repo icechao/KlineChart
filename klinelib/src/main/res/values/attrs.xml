@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="KLineChartView">
+    <declare-styleable name="KChartView">
 
         <attr name="priceLineWidth" format="dimension" />
         <attr name="priceLineColor" format="color" />
@@ -46,7 +46,7 @@
         <attr name="selectLabelBorderColor" format="color" />
         <attr name="selectedInfoLabel" format="reference" />
         <!-- background -->
-        <attr name="yLabelMarginRight" format="dimension" />
+        <attr name="yLabelMarginBorder" format="dimension" />
         <attr name="backgroundFillTopColor" format="color" />
         <attr name="backgroundFillBottomColor" format="color" />
         <attr name="backgroundFillAlpha" format="integer" />
@@ -67,13 +67,16 @@
         <attr name="mainLegendMarginTop" format="dimension" />
         <attr name="increaseColor" format="color" />
         <attr name="betterXLabel" format="boolean" />
+        <attr name="labelTextSize" format="dimension" />
+        <attr name="labelTextColor" format="color" />
+        <attr name="yLabelAlign" format="boolean" />
         <attr name="betterSelectedXLabel" format="boolean" />
         <attr name="decreaseColor" format="color" />
-        <attr name="chartTextSize" format="dimension" />
+        <attr name="commonTextSize" format="dimension" />
         <attr name="paddingTop" format="dimension" />
         <attr name="paddingBottom" format="dimension" />
         <attr name="childPaddingTop" format="dimension" />
-        <attr name="textColor" format="color" />
+        <attr name="commonTextColor" format="color" />
         <attr name="lineWidth" format="dimension" />
         <attr name="itemWidth" format="dimension" />
         <attr name="chartLogo" format="reference" />
