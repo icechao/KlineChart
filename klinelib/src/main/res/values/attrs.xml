@@ -21,6 +21,8 @@
         <attr name="priceLabelRightTextColor" format="color" />
         <attr name="priceLineDotSolidWidth" format="dimension" />
         <attr name="priceLineDotStrokeWidth" format="dimension" />
+        <attr name="priceLabelInLineTextSize" format="dimension" />
+        <attr name="priceLabelInLineTextColor" format="color" />
 
         <!--cross line -->
         <attr name="selectedXLineWidth" format="dimension" />
@@ -43,6 +45,8 @@
         <attr name="selectedInfoBoxBackgroundColor" format="color" />
         <attr name="selectedLabelBorderWidth" format="dimension" />
         <attr name="selectedLabelBorderColor" format="color" />
+        <attr name="selectedLabelTextColor" format="color" />
+        <attr name="selectedLabelTextSize" format="dimension" />
         <attr name="selectedInfoLabel" format="reference" />
         <!-- background -->
         <attr name="closeFollowTouch" format="boolean" />

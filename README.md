@@ -97,6 +97,10 @@
         
       | Attribute name | Value type | Attribute implication | Default value |
       | ------ | ------ | ------ | ------ |  
+      | priceLabelInLineTextColor | color|  设置价格线上的文字颜色 |   |
+      | priceLabelInLineTextSize | color|  设置选中X坐标文字大小 |   |
+      | selectedLabelTextColor | color|  设置选中X坐标文字颜色 |   |
+      | selectedLabelTextSize | dimension |  设置选中X坐标文字大小 |   |
       | priceLabelInLineBoxMarginRight | dimension |  设置价格线上价格框离右距离 |   |
       | priceLabelInLineShapeWidth | dimension | 价格线上价格图形宽  |   |
       | priceLabelInLineShapeHeight | dimension | 价格线上价格图形高  |   |
@@ -137,7 +141,7 @@
       | selectedLabelBorderWidth | dimension |  选中时X坐标边框线宽|   |
       | selectedLabelBorderColor | color | 选中时X坐标边框线颜色  |   |
       | selectedInfoLabel | reference | 设置选中框的文本  |   |
-      | closeFollowTouch | boolean | 设置十字线跟随手势移动/十字线显示收盘价  |   |
+      | closeFollowTouch | boolean | 设置十字线跟随手势移动/显示收盘价  |   |
       | yLabelMarginBorder | dimension | 设置y轴上Label与视图右边距  |   |
       | backgroundFillTopColor | color |  设置背景色顶部颜色  |   |
       | backgroundFillBottomColor | color |  设置背景色底部颜色  |   |
@@ -172,7 +176,7 @@
       | candleSolid | integer | 蜡烛是否空心  |   |
       | gridLineWidth | dimension |  设置背景网格线宽 |   |
       | gridLineColor | color |  设置背景网格线颜色 |   |
-      | gridLineRows | integer |   |  设置背景网格行数  |
+      | gridLineRows | integer | 设置背景网格行数  |    |
       | gridLineColumns | integer | 设置背景网格列数  |   |
       | macdStrokeWidth | color | macd空心时线宽  |   |
       | macdIncreaseColor | color | 设置macd 上涨颜色|   |

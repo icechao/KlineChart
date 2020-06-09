@@ -203,6 +203,14 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 文字画笔
      */
     protected Paint commonTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    /**
+     * 在价格线上的Label 画笔
+     */
+    protected Paint labelInPriceLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    /**
+     * 选中时X坐标画笔
+     */
+    protected Paint selectedXLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 文字画笔
@@ -1013,7 +1021,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         bottom = y + textHeight + dateBoxVerticalPadding * 2;
         canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
         canvas.drawRect(left, y, right, bottom, selectorFramePaint);
-        canvas.drawText(date, left + selectedPriceBoxHorizontalPadding, y + baseLine + dateBoxVerticalPadding, commonTextPaint);
+        canvas.drawText(date, left + selectedPriceBoxHorizontalPadding, y + baseLine + dateBoxVerticalPadding, selectedXLabelPaint);
         //十字线Y值判断
         //十字线横线
         if (crossTouchModel.getStateValue()) {
@@ -1326,7 +1334,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         shape.lineTo(shapeLeft + priceShapeWidth, y);
         shape.close();
         canvas.drawPath(shape, commonTextPaint);
-        canvas.drawText(priceText, boxLeft + priceLineBoxPadidng, (y + (textHeight / 2 - textDecent)), commonTextPaint);
+        canvas.drawText(priceText, boxLeft + priceLineBoxPadidng, (y + (textHeight / 2 - textDecent)), labelInPriceLinePaint);
     }
 
 

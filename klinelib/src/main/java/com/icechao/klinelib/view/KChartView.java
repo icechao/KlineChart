@@ -131,6 +131,8 @@ public class KChartView extends BaseKChartView {
                 setPriceLineDotSolidWidth(array.getDimension(R.styleable.KChartView_priceLineDotSolidWidth, 8f));
                 setPriceLineDotStrokeWidth(array.getDimension(R.styleable.KChartView_priceLineDotStrokeWidth, 4f));
                 setPriceLabelRightBackgroundAlpha(array.getInt(R.styleable.KChartView_priceLineRightLabelBackGroundAlpha, 255));
+                setPriceLabelInLineTextColor(array.getInt(R.styleable.KChartView_priceLabelInLineTextColor, getColor(R.color.color_6D87A8)));
+                setPriceLabelInLineTextSize(array.getInt(R.styleable.KChartView_priceLabelInLineTextSize, DpUtil.Dp2Px(context, 15)));
 
                 //十字线
                 setSelectedCrossBigColor(array.getColor(R.styleable.KChartView_selectedCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
@@ -157,6 +159,9 @@ public class KChartView extends BaseKChartView {
                 );
                 setSelectedInfoTextSize(array.getDimension(R.styleable.KChartView_selectedInfoTextSize, DpUtil.Dp2Px(context, 15)));
                 setSelectInfoBoxPadding(array.getDimension(R.styleable.KChartView_selectedInfoBoxPadding, 4));
+                setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
+                setSelectedLabelTextColor(array.getColor(R.styleable.KChartView_selectedLabelTextColor, getColor(R.color.color_6D87A8)));
+                setSelectedLabelTextSize(array.getDimension(R.styleable.KChartView_selectedLabelTextSize, DpUtil.Dp2Px(context, 15)));
                 setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
                 //K线
                 setIncreaseColor(array.getColor(R.styleable.KChartView_increaseColor, Color.GREEN));
@@ -216,9 +221,53 @@ public class KChartView extends BaseKChartView {
     }
 
     /**
+     * 设置选中X坐标文字颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KChartView}
+     */
+    private KChartView setSelectedLabelTextColor(int color) {
+        selectedXLabelPaint.setColor(color);
+        return this;
+    }
+
+    /**
+     * 设置价格线上的文字大小
+     *
+     * @param size size
+     * @return {@link KChartView}
+     */
+    private KChartView setPriceLabelInLineTextSize(float size) {
+        labelInPriceLinePaint.setTextSize(size);
+        return this;
+    }
+
+    /**
+     * 设置价格线上的文字颜色
+     *
+     * @param color {@link Color}
+     * @return {@link KChartView}
+     */
+    private KChartView setPriceLabelInLineTextColor(int color) {
+        labelInPriceLinePaint.setColor(color);
+        return this;
+    }
+
+    /**
+     * 设置选中X坐标文字大小
+     *
+     * @param size size
+     * @return {@link KChartView}
+     */
+    private KChartView setSelectedLabelTextSize(float size) {
+        selectedXLabelPaint.setTextSize(size);
+        return this;
+    }
+
+    /**
      * 设置主视图最大/最小值文字颜色
      *
-     * @param color color
+     * @param color {@link Color}
      * @return {@link KChartView}
      */
     public KChartView setLimitTextColor(int color) {
@@ -999,7 +1048,7 @@ public class KChartView extends BaseKChartView {
     }
 
     /**
-     *  设置十字线相交小圆半径
+     * 设置十字线相交小圆半径
      *
      * @param radius selected circle radius
      * @return {@link KChartView}
@@ -1812,7 +1861,7 @@ public class KChartView extends BaseKChartView {
     }
 
     /**
-     *  选中时价格label的纵向padding
+     * 选中时价格label的纵向padding
      *
      * @param padding padding 带角的3角形的高为 横+纵padding
      * @return {@link KChartView}
