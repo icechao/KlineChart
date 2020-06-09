@@ -116,8 +116,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         chartView.setAdapter(adapter)
                 //loading anim
-                .setChartItemWidth(50)
-                .setCandleWidth(30)
+//                .setChartItemWidth(50)
+//                .setCandleWidth(30)
                 .setSelectedPointRadius(20)
                 .setSelectedPointColor(Color.RED)
                 .setAnimLoadData(false)

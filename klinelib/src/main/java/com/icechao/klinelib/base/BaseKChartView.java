@@ -616,7 +616,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 是否十字线跟随手指移动(Y轴)
      */
-    protected Status.CrossTouchModel crossTouchModel = Status.CrossTouchModel.FOLLOW_FINGERS;
+    protected Status.CrossTouchModel crossTouchModel;
 
     /**
      * 选中价格框横向padding

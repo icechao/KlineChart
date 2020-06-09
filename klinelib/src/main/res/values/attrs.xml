@@ -32,24 +32,23 @@
         <attr name="selectedCrossPointColor" format="color" />
         <attr name="selectedShowCrossPoint" format="boolean" />
         <attr name="selectedYColor" format="color" />
-        <attr name="selectedLineColor" format="color" />
         <attr name="selectedPriceBoxBackgroundColor" format="color" />
         <attr name="selectedInfoTextSize" format="dimension" />
-        <attr name="selectPriceBoxHorizontalPadding" format="dimension" />
-        <attr name="selectPriceBoxVerticalPadding" format="dimension" />
-        <attr name="selectInfoBoxPadding" format="dimension" />
-        <attr name="selectInfoBoxMargin" format="dimension" />
-        <attr name="selectInfoBoxTextColor" format="color" />
-        <attr name="selectInfoBoxBorderColor" format="color" />
-        <attr name="selectInfoBoxBackgroundColor" format="color" />
-        <attr name="selectLabelBorderWidth" format="dimension" />
-        <attr name="selectLabelBorderColor" format="color" />
+        <attr name="selectedPriceBoxHorizontalPadding" format="dimension" />
+        <attr name="selectedPriceBoxVerticalPadding" format="dimension" />
+        <attr name="selectedInfoBoxPadding" format="dimension" />
+        <attr name="selectedInfoBoxMargin" format="dimension" />
+        <attr name="selectedInfoBoxTextColor" format="color" />
+        <attr name="selectedInfoBoxBorderColor" format="color" />
+        <attr name="selectedInfoBoxBackgroundColor" format="color" />
+        <attr name="selectedLabelBorderWidth" format="dimension" />
+        <attr name="selectedLabelBorderColor" format="color" />
         <attr name="selectedInfoLabel" format="reference" />
         <!-- background -->
+        <attr name="closeFollowTouch" format="boolean" />
         <attr name="yLabelMarginBorder" format="dimension" />
         <attr name="backgroundFillTopColor" format="color" />
         <attr name="backgroundFillBottomColor" format="color" />
-        <attr name="backgroundFillAlpha" format="integer" />
 
         <!--time line-->
         <attr name="timeLineColor" format="color" />

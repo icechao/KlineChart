@@ -374,7 +374,7 @@ public class MainRender extends BaseRender {
      * @param borderColor      边框
      * @param backgroundColor 背景
      */
-    public void setSelectorTextColor(int textColor, int borderColor, int backgroundColor) {
+    public void setSelectorColors(int textColor, int borderColor, int backgroundColor) {
         selectorTextPaint.setColor(textColor);
         selectorBorderPaint.setColor(borderColor);
         selectorBackgroundPaint.setColor(backgroundColor);
@@ -396,15 +396,6 @@ public class MainRender extends BaseRender {
         selectedTextHeight = metrics.descent - metrics.ascent;
         selectedTextBaseLine = (selectedTextHeight - metrics.bottom - metrics.top) / 2;
 
-    }
-
-    /**
-     * 设置选择器背景 selected popupwindow  background color
-     *
-     * @param color color
-     */
-    public void setSelectorBackgroundColor(int color) {
-        selectorBackgroundPaint.setColor(color);
     }
 
     /**

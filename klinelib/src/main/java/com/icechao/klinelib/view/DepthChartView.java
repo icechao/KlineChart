@@ -31,7 +31,7 @@ import com.icechao.klinelib.R;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.utils.Dputil;
+import com.icechao.klinelib.utils.DpUtil;
 import com.icechao.klinelib.utils.NumberTools;
 
 import java.util.ArrayList;
@@ -292,7 +292,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         lineCount = 5;
         horinzontalNumberLine = 3;
         borderWidth = 2;
-        borderTextSize = Dputil.Dp2Px(context, 10);
+        borderTextSize = DpUtil.Dp2Px(context, 10);
         borderLineTextSize = 2;
         borderTransverseLineColor = Color.GRAY;
         borderTransverseLineWidth = 2;
@@ -300,13 +300,13 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         brokenLineFillWidth = 2;
         borderLineColor = Color.BLACK;
 
-        brokenLineMarginLeft = Dputil.Dp2Px(context, 0);
-        brokenLineMarginTop = Dputil.Dp2Px(context, 20);
-        brokenLineMarginBottom = Dputil.Dp2Px(context, 20);
-        brokenLinerMarginRight = Dputil.Dp2Px(context, 0);
-        horizontalLabelMarginTop = Dputil.Dp2Px(context, 5);
-        horizontalLabelMarginBottom = Dputil.Dp2Px(context, 5);
-        verticaLabelMarginRight = Dputil.Dp2Px(context, 5);
+        brokenLineMarginLeft = DpUtil.Dp2Px(context, 0);
+        brokenLineMarginTop = DpUtil.Dp2Px(context, 20);
+        brokenLineMarginBottom = DpUtil.Dp2Px(context, 20);
+        brokenLinerMarginRight = DpUtil.Dp2Px(context, 0);
+        horizontalLabelMarginTop = DpUtil.Dp2Px(context, 5);
+        horizontalLabelMarginBottom = DpUtil.Dp2Px(context, 5);
+        verticaLabelMarginRight = DpUtil.Dp2Px(context, 5);
 
         initPaint();
 
@@ -351,7 +351,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
                     sellsPoint != null && (showIndex < sellsPoint.length && showIndex > 0);
             if (!safePoint) return;
             RectF center = new RectF(0, 0, 8, 8);
-            RectF ring = new RectF(0, 0, Dputil.Dp2Px(context, 15), Dputil.Dp2Px(context, 15));
+            RectF ring = new RectF(0, 0, DpUtil.Dp2Px(context, 15), DpUtil.Dp2Px(context, 15));
             center.offset(-center.width() / 2, -center.height() / 2);
             ring.offset(-ring.width() / 2, -ring.height() / 2);
             PointF touchPoint = showBuy ? buysPoint[showIndex] : sellsPoint[showIndex];
@@ -368,7 +368,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             Rect rect = new Rect();
             RectF rect2 = new RectF();
             textPaint.getTextBounds(touchVol, 0, touchVol.length(), rect);
-            rect2.set(0, touchPoint.y, rect.width() + 2 * Dputil.Dp2Px(context, 5), touchPoint.y + h);
+            rect2.set(0, touchPoint.y, rect.width() + 2 * DpUtil.Dp2Px(context, 5), touchPoint.y + h);
             rect2.offset(getWidth() - rect2.width(), -rect2.height() / 2);
             if (rect2.bottom > y) {
                 rect2.offset(0, y - rect2.bottom);
@@ -382,7 +382,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
             textPaint.getTextBounds(touchValue, 0, touchValue.length(), rect);
             float baseLine = y + h / 2 - rect.exactCenterY();
 
-            rect2.set(0, y, rect.width() + 2 * Dputil.Dp2Px(context, 5), y + h);
+            rect2.set(0, y, rect.width() + 2 * DpUtil.Dp2Px(context, 5), y + h);
             float offsetX = Math.min(Math.max(0, touchPoint.x - rect2.width() / 2), getWidth() - rect2.width());
             rect2.offset(offsetX, 0);
 
@@ -661,7 +661,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 边框文本大小
      */
     public void setBorderTextSize(float borderTextSize) {
-        this.borderTextSize = Dputil.Dp2Px(context, borderTextSize);
+        this.borderTextSize = DpUtil.Dp2Px(context, borderTextSize);
     }
 
     /**
@@ -682,21 +682,21 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 边框线宽度
      */
     public void setBorderWidth(float borderWidth) {
-        this.borderWidth = Dputil.Dp2Px(context, borderWidth);
+        this.borderWidth = DpUtil.Dp2Px(context, borderWidth);
     }
 
     /**
      * 边框横线宽度
      */
     public void setBorderTransverseLineWidth(float borderTransverseLineWidth) {
-        this.borderTransverseLineWidth = Dputil.Dp2Px(context, borderTransverseLineWidth);
+        this.borderTransverseLineWidth = DpUtil.Dp2Px(context, borderTransverseLineWidth);
     }
 
     /**
      * 折线宽度
      */
     public void setBrokenLineWidth(float brokenLineWidth) {
-        this.brokenLineWidth = Dputil.Dp2Px(context, brokenLineWidth);
+        this.brokenLineWidth = DpUtil.Dp2Px(context, brokenLineWidth);
     }
 
 

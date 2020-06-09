@@ -95,106 +95,112 @@
 
       使用属性配置   属性  
         
-      | Attribute name | Value type | Attribute implication | Default value | 
+      | Attribute name | Value type | Attribute implication | Default value |
       | ------ | ------ | ------ | ------ |  
-      | betterXLabel  | boolean | 左右两边时间label完整展示 | true  X轴label可能重叠,false截断展示 |
-      | betterSelectedXLabel  | boolean | 选中X坐标在屏幕边缘时向内缩进 |  |
-      | marketInfosLabel  | resource | 行情文字(字符串数组) | 行情文字 默认中文 |
-      | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
-      | dateLabelHorizentalPadding  | dimension | X轴label横向pading,影响选中时 | 10 |
-      | dateLabelVerticalPadding  | dimension | X轴label纵向pading | 10 |
-      | maiLegendMarginTop  | dimension | 主视图Legend上边距 | 10 |
-      | paddingBottom  | dimension | chart上部内容边距 | 15,底部显示X轴label空间 |
-      | paddingTop  | dimension | 主视图上内边距 | 30,第一个网格的位置 |
-      | childPaddingTop  | dimension | 所有子视图上边距 | 15 |
-      | chartLogo  | resource | 主视图logo | |
-      | increaseColor  | color | 涨颜色| |
-      | decreaseColor  | color | 跌颜色| |
-      | chartTextSize  | dimension | 通用文字大小| |
-      | textColor  | color | 文字颜色| |
-      | limitTextColor  | color | 最大最小值文字颜色| |
-      | limitTextSize  | dimension | 最大最小值文字大小| |
-      | lineWidth  | dimension | 指标线线宽 | |
-      | klineItemWidth  | dimension | 蜡烛图加外围空隙宽| |
-      | candleWidth  | dimension | 蜡烛图柱宽 | |
-      | candleLineWidth  | dimension | K线空心时宽度 | |
-      | priceLineWidth  | dimension | 价格线宽 | 1dp |
-      | priceLineColor  | color | 价格线颜色 | |
-      | priceLineRightColor  | color | 价格线右侧虚线时颜色 | |
-      | priceLineRightLabelTextColor  | color | 价格线右侧虚线价格文字颜色 | |
-      | priceLineRightLabelBackGroundColor  | color | 价格线右侧Label背景 | |
-      | priceLineBackgroundColor  | color | 价格线横框背景色 | #CFD3A9 |
-      | priceLineBoxMarginRight  | dimension | 价格框右边距 | 120 |
-      | priceLineBoxShapeWidth  | dimension | 价格线框内三角形占宽| 10 |
-      | priceLineBoxShapeHeight  | dimension | 价格线框内三角形占高| 20 |
-      | priceLineBoxHeight  | dimension | 价格线上的框高度| 40 |
-      | priceLineBoxPadding  | dimension | 价格线上的框的内边距| 20 |
-      | priceLineBoxShapeTextMargin  | dimension | 价格框文字与图形距离| 10 |
-      | priceLineBoxBorderWidth  | dimension | 价格线框边框宽度| 1 |
-      | priceLineBoxBorderColor  | color | 价格线框边框颜色| #CFD3A9 |
-      | backgroundFillTopColor  | color |背景渐变上部颜色 | #1C1E27 |
-      | backgroundFillBottomColor  | color |背景渐变下部颜色 | 控制背景色 |
-      | backgroundAlpha  | integer | 背景色透明度| 控制背景色 default 18 |
-      | backgroundColor   | color | 背景色  | 控制背景色 |
-      | dotRightPriceBoxBackGroundAlpha  | integer | 虚线右侧最新价格填充透明度 default 150 | |
-      | yLabelMarginRight  | dimension | y轴上label与右侧边距 |10 |
-      | timeLineColor   | color| 分时线颜色| |
-      | timeLineFillTopColor  | color | 分时线填充渐变上部颜色 | |
-      | timeLineFillBottomColor  | color |背景色渐变下部颜色 | |
-      | timeLine_endPointColor  | color | 分时线尾颜色 | |
-      | timeLine_endMultiply  | int | 分时线尾圆变化最大倍数 | |
-      | timeLine_endRadiu  | dimension | 分时线尾圆半径 | |
-      | candleSolid  | boolean | K线是否空心| false |
-      | gridLineWidth  | dimension | 网格线宽| |
-      | gridLineColor  | color | 网格颜色 | |
-      | gridLineColumns  | integer | 网格列数 | |
-      | gridLineRows  | integer | 网格行数 | |
-      | selectXLineWidth  | dimension | 选中十字线X轴线宽| |
-      | selectLabelBoderWidth  | dimension | 选中十字线label边框线宽| 2 |
-      | selectLabelBoderColor  | color | 选中坐标边框颜色| |
-      | selectYLineWidth  | dimension | 十字线Y轴线宽| |
-      | selectXLineColor  | color |选中十字线X线颜色 | |
-      | selectYLineColor  | color |  选中十字线Y线画笔颜色| |
-      | selectYColor  | color | 选中十字线Y轴渐变色,-1时不绘制渐变| |
-      | selectCrossBigColor  | color | 选中十字线相交点圆颜色| |
-      | selectCrossPointColor  | color | 选中十字线相交点圆颜色 | |
-      | selectShowCrossPoint  | color | 是否显示选中十字线相交点圆 | |
-      | selectCrossPointRadius  | color | 选中十字线相交点小圆半径 | |
-      | selectPriceBoxBackgroundColor  | color | 选中价格框背景色 | |
-      | selectPriceBoxHorizentalPadding  | dimension | 选中价格框的横向padding,三角形的高为横+纵padding | 4dp |
-      | selectPriceBox_verticalPadding  | dimension | 选中价格框的纵向向padding,三角形的高为横+纵padding | 2dp |
-      | selectInfoBoxMargin  | dimension | 选中行弹出框的margin | |
-      | selectInfoBoxPadding  | dimension | 选中行弹出框行间距,上下为此值*2 | |
-      | selectInfoBoxTextColor  | dimension | 选中行弹出框文字颜色 | Color.WHITE |
-      | selectInfoBoxBorderColor  | dimension | 选中行弹出框边框颜色 | Color.WHITE |
-      | selectInfoBoxBackgroundColor  | dimension | 选中行弹出框背景颜色 | Color.DKGRAY |
-      | selectTextSize  | dimension | 选择框文字大小 | |
-      | macdIncreaseColor  | color | macd标准线上柱颜色| |
-      | macdDecreaseColor  | color | macd标准线下柱颜色 | |
-      | macdWidth  | dimension | macd柱状图宽度 | |
-      | difColor  | color | dif线颜色 | |
-      | deaColor  | color | dea线颜色 | |
-      | macdColor  | color | macd线颜色 | |
-      | kColor  | color | k线的颜色 | |
-      | dColor  | color | d线的颜色 | |
-      | jColor  | color | j线的颜色 | |
-      | rsi1Color  | color | 第1根rsi线的颜色 | 与ma线一致 |
-      | rsi2Color  | color | 第2根rsi线的颜色 | 与ma线一致 |
-      | ris3Color  | color | 第3根rsi线的颜色 | 与ma线一致 |
-      | upColor  | color | up线颜色 | |
-      | mbColor  | color | mb线颜色 | |
-      | dnColor  | color | dn线颜色 | |
-      | wr1Color  | color | 第1根wr线的颜色| |
-      | wr2Color  | color | 第2根wr线的颜色| 暂无 |
-      | wr3Color  | color | 第3根wr线的颜色| 暂无 |
-      | ma1Color  | color | 第1根ma线的颜色 | |
-      | ma2Color  | color | 第2根ma线的颜色 | |
-      | ma3Color  | color | 第3根ma线的颜色 | |
-      | volMa1Color  | color | 第1根量ma线的颜色 | |
-      | volMa2Color  | color | 第2根量ma线的颜色 | |
-      | volLegendColor   | color| 成交量图例颜色 | |
-      | volLineChartColor  | color | 成交量显示线状图时的颜色 | #4B85D6 |
-      | volLegendMarginTop  | dimension | 成交量图例距离成交量顶部距离 | 10 |
+      | priceLabelInLineBoxMarginRight | dimension |  设置价格线上价格框离右距离 |   |
+      | priceLabelInLineShapeWidth | dimension | 价格线上价格图形宽  |   |
+      | priceLabelInLineShapeHeight | dimension | 价格线上价格图形高  |   |
+      | priceLabelInLineBoxHeight | dimension | 设置价格线上价格框高度  |   |
+      | priceLabelInLineBoxPadding | dimension | 设置价格线上价格框内边距  |   |
+      | priceLabelInLineBoxShapeTextMargin | dimension | 价格线上价格文字与图形的间隔  |   |
+      | priceLabelInLineClickable | boolean |  设置价格线价格框可点击 |   |
+      | priceLabelInLineBoxBackgroundColor | color |  设置右侧价格框背景色 |   |
+      | priceLabelRightBackgroundColor | color |  设置价格线右侧框背景 |   |
+      | priceLabelInLineBoxBorderColor | color |  设置价格线右侧框边框颜色 |   |
+      | priceLabelInLineBoxBorderWidth | dimension |  设置价格线框边框宽度 |   |
+      | priceLabelInLineBoxRadius | dimension |  设置价格线上价格框圆角半径 |   |
+      | priceLineRightLabelBackGroundAlpha | integer | 设置价格线右侧标签的背景透明度  |   |
+      | priceLabelRightTextColor | color | 设置价格线右侧价格文字的颜色  |   |
+      | priceLineRightColor | color |  设置价格线右侧的颜色 |   |
+      | ppriceLineWidth | color |  设置价格线的宽度  |   |
+      | priceLineColor | color |  设置价格线颜色 |   |
+      | priceLineDotSolidWidth | dimension |  价格线虚线实心宽度 |   |
+      | priceLineDotStrokeWidth | dimension | 价格线实心间隔  |   |
+      | selectedXLineWidth | dimension |  设置选择器横线宽 |   |
+      | selectedYLineWidth | dimension | 设置十字线竖线宽度  |   |
+      | selectedXLineColor | color |  设置十字线横线颜色  |   |
+      | selectedYLineColor | color |  设置十字线竖线画笔颜色  |  无效 |
+      | selectedYColor | color | 选中的线的Y轴颜色  |   |
+      | selectedCrossBigColor | color | 设置都十字线选中点外圆颜色|   |
+      | selectedCrossPointRadius | dimension |  设置十字线相交小圆半径 |   |
+      | selectedCrossPointColor | color |  设置十字线交点小圆颜色 |   |
+      | selectedShowCrossPoint | boolean | 设置选中时是否显示十字线的交点圆  |   |
+      | selectedPriceBoxBackgroundColor | color | 设置选中Y值背景色  |   |
+      | selectedInfoTextSize | dimension |  设置选择器文字大小 |   |
+      | selectedPriceBoxHorizontalPadding | dimension | 选中时价格label的横向padding  |   |
+      | selectedPriceBoxVerticalPadding | dimension | 选中时价格label的纵向padding  |   |
+      | selectedInfoBoxPadding | dimension |  选中信息框内边距,上下为此值*2 |   |
+      | selectedInfoBoxMargin | dimension | 选中行弹出框与边缘的距离  |   |
+      | selectedInfoBoxTextColor | color |  设置选择器弹出框文字颜色 |   |
+      | selectedInfoBoxBorderColor | color | 设置选择器弹出框边框颜色  |   |
+      | selectedInfoBoxBackgroundColor | color |设置选择器背景颜色  |   |
+      | selectedLabelBorderWidth | dimension |  选中时X坐标边框线宽|   |
+      | selectedLabelBorderColor | color | 选中时X坐标边框线颜色  |   |
+      | selectedInfoLabel | reference | 设置选中框的文本  |   |
+      | closeFollowTouch | boolean | 设置十字线跟随手势移动/十字线显示收盘价  |   |
+      | yLabelMarginBorder | dimension | 设置y轴上Label与视图右边距  |   |
+      | backgroundFillTopColor | color |  设置背景色顶部颜色  |   |
+      | backgroundFillBottomColor | color |  设置背景色底部颜色  |   |
+      | timeLineColor | color | 设置分时线颜色  |   |
+      | timeLineFillTopColor | color | 设置分时线填充渐变的顶部颜色  |   |
+      | timeLineFillBottomColor | color | 设置分时线填充渐变的底部颜色  |   |
+      | timeLineEndPointColor | color | 分时线呼吸灯的颜色  |   |
+      | timeLineEndRadius | integer | 分时线呼吸灯的颜色半径  |   |
+      | timeLineEndMultiply |float | timeLineEndMultiply  |   |
+      | selectedDateBoxVerticalPadding | dimension | 选中十字线X轴坐标连框纵向内边距  |   |
+      | selectedDateBoxHorizontalPadding | dimension | 选中十字线X轴坐标连框横向内边距  |   |
+      | mainLegendMarginTop | dimension | 设置主实图图例距离视图上边缘的距离  |   |
+      | increaseColor | color |  设置涨的颜色 |   |
+      | decreaseColor | color | 设置跌的颜色  |   |
+      | betterXLabel | boolean | 设置是否自适应X左右边轴坐标的位置,默认true |   |
+      | labelTextSize | dimension | 设置坐标文字大小 |   |
+      | labelTextColor | color | 设置坐标轴坐标文字颜色  |   |
+      | yLabelAlign | boolean |  设置Y轴显示在左侧/右侧 |   |
+      | betterSelectedXLabel | boolean | b设置是否自适应X左右边轴坐标的位置,默认true|   |
+      | commonTextSize | dimension | 统一设置设置文字大小  |   |
+      | paddingTop | dimension | 设置上方padding  |   |
+      | paddingBottom | dimension | 设置下方padding  |   |
+      | childPaddingTop | dimension | 子视图的顶部padding  |   |
+      | commonTextColor | color |  设置通用文字颜色 |   |
+      | lineWidth | dimension | 全局通用线宽  |   |
+      | itemWidth | dimension | 设置每根K线总宽度(包含外间隙)  |   |
+      | candleWidth | dimension | 设置每根蜡烛图宽度  |   |
+      | candleLineWidth | dimension |   设置蜡烛线画笔宽(空心时的线宽) |   |
+      | chartLogo | reference | 设置K线显示的logo |   |
+      | limitTextColor | color | 设置主视图最大/最小值文字颜色 |   |
+      | limitTextSize | dimension | 设置主图片最大/最小值文字大小 |   |
+      | candleSolid | integer | 蜡烛是否空心  |   |
+      | gridLineWidth | dimension |  设置背景网格线宽 |   |
+      | gridLineColor | color |  设置背景网格线颜色 |   |
+      | gridLineRows | integer |   |  设置背景网格行数  |
+      | gridLineColumns | integer | 设置背景网格列数  |   |
+      | macdStrokeWidth | color | macd空心时线宽  |   |
+      | macdIncreaseColor | color | 设置macd 上涨颜色|   |
+      | macdDecreaseColor | color | 设置macd 下跌颜色 |   |
+      | macdWidth | dimension |  macd柱状图宽 |   |
+      | difColor | color | 设置DIF颜色  |   |
+      | deaColor | color | 设置DEA颜色  |   |
+      | macdColor | color | 设置MACD颜色  |   |
+      | wr1Color | color | 设置WR1颜色  |   |
+      | wr2Color | color | 设置WR2颜色    |   |
+      | wr3Color | color | 设置WR3颜色    |   |
+      | kColor | color |  设置K颜色 |   |
+      | dColor | color |  设置D颜色 |   |
+      | jColor | color | 设置J颜色  |   |
+      | rsi1Color | color | 设置RSI1颜色  |   |
+      | rsi2Color | color | 设置RSI2颜色 |   |
+      | ris3Color | color | 设置RSI3颜色   |   |
+      | upColor | color | 设置UP颜色 |   |
+      | mbColor | color | 设置MB颜色 |   |
+      | dnColor | color | 设置DN颜色 |   |
+      | ma1Color | color | 设置MA1颜色 |   |
+      | ma2Color | color | 设置MA2颜色  |   |
+      | ma3Color | color | 设置MA3颜色  |   |
+      | volMa1Color | color | 设置交易量MA1颜色  |   |
+      | volMa2Color | color | 设置交易量MA2颜色  |   |
+      | volLegendColor | color |  交易量图例颜色 |   |
+      | volLineChartColor | color |  设置当成交量视图显示为线时的颜色 |   |
+      | volLegendMarginTop | dimension | 交易量图例距离量视图上边缘的距离  |   |
 
               
 4. <b>初始化k线  Initialize K-line</b>
