@@ -6,7 +6,7 @@
  ****************************************************
 ## 效果图
 
-<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="320" hegiht="500" align=center />
+<img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" align=center />
 
 
 ## 使用步骤: 
