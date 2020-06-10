@@ -106,7 +106,7 @@ public class VolumeRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
         String text;
         volLegendMarginTop += volLegendMarginTop;
         if (position == itemsCount - 1 && view.isAnimationLast()) {

@@ -47,7 +47,7 @@ public class WRRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float... values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float... values) {
 //        IWR point = (IWR) view.getItem(position);
         if (Float.MIN_VALUE != values[Constants.INDEX_WR_1]) {
             canvas.drawText(legendText, x, y, view.getCommonTextPaint());

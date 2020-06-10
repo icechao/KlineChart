@@ -56,7 +56,7 @@ public class KDJRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
 //        IKDJ point = (IKDJ) view.getItem(position);
         if (Float.MIN_VALUE != values[Constants.INDEX_KDJ_K]) {
             String text = String.format(Constants.KDJ_TOP_TEXT_TAMPLATE, Constants.getKdjK(), Constants.getKdjD(), Constants.getKdjJ());

@@ -80,7 +80,7 @@ public class KChartView extends BaseKChartView {
 
                 setLogoResouce(array.getResourceId(R.styleable.KChartView_chartLogo, 0));
                 //最大最小值
-                setLimitTextSize(array.getDimension(R.styleable.KChartView_limitTextSize, DpUtil.Dp2Px(context, 15)));
+                setLimitTextSize(array.getDimension(R.styleable.KChartView_limitTextSize, DpUtil.Dp2Px(context, 10)));
                 setLimitTextColor(array.getColor(R.styleable.KChartView_limitTextColor, getColor(R.color.color_6D87A8)));
                 //全局
                 setBetterX(array.getBoolean(R.styleable.KChartView_betterXLabel, true));
@@ -88,16 +88,16 @@ public class KChartView extends BaseKChartView {
                 setyLabelMarginBorder(array.getDimension(R.styleable.KChartView_yLabelMarginBorder, 10));
                 setCrossFollowTouch(array.getBoolean(R.styleable.KChartView_closeFollowTouch, false) ? Status.CrossTouchModel.FOLLOW_FINGERS : Status.CrossTouchModel.SHOW_CLOSE);
                 setLineWidth(array.getDimension(R.styleable.KChartView_lineWidth, DpUtil.Dp2Px(context, 0.8f)));
-                setCommonTextSize(array.getDimension(R.styleable.KChartView_commonTextSize, DpUtil.Dp2Px(context, 15)));
+                setCommonTextSize(array.getDimension(R.styleable.KChartView_commonTextSize, DpUtil.Dp2Px(context, 10)));
                 setMacdStrockWidth(array.getDimension(R.styleable.KChartView_macdStrokeWidth, DpUtil.Dp2Px(context, 0.8f)));
-                setXLabelTextSize(array.getDimension(R.styleable.KChartView_labelTextSize, DpUtil.Dp2Px(context, 15)));
-                setYLabelTextSize(array.getDimension(R.styleable.KChartView_labelTextSize, DpUtil.Dp2Px(context, 15)));
+                setXLabelTextSize(array.getDimension(R.styleable.KChartView_labelTextSize, DpUtil.Dp2Px(context, 10)));
+                setYLabelTextSize(array.getDimension(R.styleable.KChartView_labelTextSize, DpUtil.Dp2Px(context, 10)));
                 setCommonTextColor(array.getColor(R.styleable.KChartView_commonTextColor, getColor(R.color.color_6D87A8)));
                 setXlabelTextColor(array.getColor(R.styleable.KChartView_labelTextColor, getColor(R.color.color_6D87A8)));
                 setYLabelTextColor(array.getColor(R.styleable.KChartView_labelTextColor, getColor(R.color.color_6D87A8)));
                 setYlabelAlign(array.getBoolean(R.styleable.KChartView_yLabelAlign, false));
-                setChartPaddingTop(array.getDimension(R.styleable.KChartView_paddingTop, 30));
-                setChildPaddingTop(array.getDimension(R.styleable.KChartView_childPaddingTop, DpUtil.Dp2Px(context, 15)));
+                setChartPaddingTop(array.getDimension(R.styleable.KChartView_paddingTop, DpUtil.Dp2Px(context, 20)));
+                setChildPaddingTop(array.getDimension(R.styleable.KChartView_childPaddingTop, DpUtil.Dp2Px(context, 10)));
                 setChartPaddingBottom(array.getDimension(R.styleable.KChartView_paddingBottom, 0));
                 //网格
                 setGridLineWidth(array.getDimension(R.styleable.KChartView_gridLineWidth, DpUtil.Dp2Px(context, 0.8f)));
@@ -132,7 +132,7 @@ public class KChartView extends BaseKChartView {
                 setPriceLineDotStrokeWidth(array.getDimension(R.styleable.KChartView_priceLineDotStrokeWidth, 4f));
                 setPriceLabelRightBackgroundAlpha(array.getInt(R.styleable.KChartView_priceLineRightLabelBackGroundAlpha, 255));
                 setPriceLabelInLineTextColor(array.getInt(R.styleable.KChartView_priceLabelInLineTextColor, getColor(R.color.color_6D87A8)));
-                setPriceLabelInLineTextSize(array.getInt(R.styleable.KChartView_priceLabelInLineTextSize, DpUtil.Dp2Px(context, 15)));
+                setPriceLabelInLineTextSize(array.getInt(R.styleable.KChartView_priceLabelInLineTextSize, DpUtil.Dp2Px(context, 10)));
 
                 //十字线
                 setSelectedCrossBigColor(array.getColor(R.styleable.KChartView_selectedCrossBigColor, getResources().getColor(R.color.color_9ACFD3E9)));
@@ -157,11 +157,11 @@ public class KChartView extends BaseKChartView {
                         array.getColor(R.styleable.KChartView_selectedInfoBoxBorderColor, Color.WHITE),
                         array.getColor(R.styleable.KChartView_selectedInfoBoxBackgroundColor, Color.DKGRAY)
                 );
-                setSelectedInfoTextSize(array.getDimension(R.styleable.KChartView_selectedInfoTextSize, DpUtil.Dp2Px(context, 15)));
+                setSelectedInfoTextSize(array.getDimension(R.styleable.KChartView_selectedInfoTextSize, DpUtil.Dp2Px(context, 10)));
                 setSelectInfoBoxPadding(array.getDimension(R.styleable.KChartView_selectedInfoBoxPadding, 4));
                 setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
                 setSelectedLabelTextColor(array.getColor(R.styleable.KChartView_selectedLabelTextColor, getColor(R.color.color_6D87A8)));
-                setSelectedLabelTextSize(array.getDimension(R.styleable.KChartView_selectedLabelTextSize, DpUtil.Dp2Px(context, 15)));
+                setSelectedLabelTextSize(array.getDimension(R.styleable.KChartView_selectedLabelTextSize, DpUtil.Dp2Px(context, 10)));
                 setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
                 //K线
                 setIncreaseColor(array.getColor(R.styleable.KChartView_increaseColor, Color.GREEN));

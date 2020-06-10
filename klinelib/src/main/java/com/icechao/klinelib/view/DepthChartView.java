@@ -1,16 +1,5 @@
 package com.icechao.klinelib.view;
 
-/*************************************************************************
- * Description   :
- *
- * @PackageName  : com.icechao.klinelib.view
- * @FileName     : DepthChart.java
- * @Author       : chao
- * @Date         : 2019/4/23
- * @Email        : icechliu@gmail.com
- * @version      : V1
- *************************************************************************/
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -29,13 +18,24 @@ import android.view.View;
 
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.utils.DpUtil;
 import com.icechao.klinelib.utils.NumberTools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*************************************************************************
+ * Description   :
+ *
+ * @PackageName  : com.icechao.klinelib.view
+ * @FileName     : DepthChart.java
+ * @Author       : chao
+ * @Date         : 2019/4/23
+ * @Email        : icechliu@gmail.com
+ * @version      : V1
+ *************************************************************************/
 
 public class DepthChartView extends View implements GestureDetector.OnGestureListener {
 

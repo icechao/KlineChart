@@ -98,7 +98,7 @@
       | Attribute name | Value type | Attribute implication | Default value |
       | ------ | ------ | ------ | ------ |  
       | priceLabelInLineTextColor | color|  设置价格线上的文字颜色 |   |
-      | priceLabelInLineTextSize | color|  设置选中X坐标文字大小 |   |
+      | priceLabelInLineTextSize | color|  设置价格线上的文字大小 |   |
       | selectedLabelTextColor | color|  设置选中X坐标文字颜色 |   |
       | selectedLabelTextSize | dimension |  设置选中X坐标文字大小 |   |
       | priceLabelInLineBoxMarginRight | dimension |  设置价格线上价格框离右距离 |   |
@@ -123,7 +123,7 @@
       | selectedXLineWidth | dimension |  设置选择器横线宽 |   |
       | selectedYLineWidth | dimension | 设置十字线竖线宽度  |   |
       | selectedXLineColor | color |  设置十字线横线颜色  |   |
-      | selectedYLineColor | color |  设置十字线竖线画笔颜色  |  无效 |
+      | selectedYLineColor | color |  设置十字线竖线画笔颜色  |   |
       | selectedYColor | color | 选中的线的Y轴颜色  |   |
       | selectedCrossBigColor | color | 设置都十字线选中点外圆颜色|   |
       | selectedCrossPointRadius | dimension |  设置十字线相交小圆半径 |   |
@@ -162,7 +162,7 @@
       | yLabelAlign | boolean |  设置Y轴显示在左侧/右侧 |   |
       | betterSelectedXLabel | boolean | b设置是否自适应X左右边轴坐标的位置,默认true|   |
       | commonTextSize | dimension | 统一设置设置文字大小  |   |
-      | paddingTop | dimension | 设置上方padding  |   |
+      | mainMarginTop | dimension | 设置上方padding  |   |
       | paddingBottom | dimension | 设置下方padding  |   |
       | childPaddingTop | dimension | 子视图的顶部padding  |   |
       | commonTextColor | color |  设置通用文字颜色 |   |

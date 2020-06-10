@@ -93,7 +93,7 @@ public class MACDRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
         String text = String.format(Constants.MACD_TOP_TEXT_TAMPLATE, Constants.MACD_S, Constants.MACD_L, Constants.MACD_M);
         canvas.drawText(text, x, y, view.getCommonTextPaint());
         x += macdPaint.measureText(text);

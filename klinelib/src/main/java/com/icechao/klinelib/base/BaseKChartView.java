@@ -83,6 +83,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 整体上部的padding
      */
     protected int chartPaddingTop;
+
     /**
      * 最视图和子试图上方padding
      */
@@ -875,7 +876,13 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * @return location Y
      */
     public float getMainY(float value) {
-        return (float) (getChartPaddingTop() + ((mainMaxValue - value) * mainScaleY));
+        double v = mainRect.top + ((mainMaxValue - value) * mainScaleY);
+        if (v > mainRect.bottom) {
+            v = mainRect.bottom;
+        } else if (v < mainRect.top) {
+            v = mainRect.top;
+        }
+        return (float) v;
     }
 
     /**
@@ -928,7 +935,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         switch (yLabelModel) {
             case LABEL_NONE_GRID:
                 canvas.save();
-                canvas.clipRect(-canvasTranslateX + renderWidth, chartPaddingTop, -canvasTranslateX, getChartPaddingTop() + displayHeight);
+                canvas.clipRect(-canvasTranslateX, chartPaddingTop, -canvasTranslateX + renderWidth, getChartPaddingTop() + displayHeight);
                 renderKCandle(canvas);
                 mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
                 canvas.restore();
@@ -1425,15 +1432,15 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             float x = 0;
             switch (chartShowStatue) {
                 case MAIN_INDEX:
-                    mainRender.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
-                    indexRender.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                    mainRender.renderText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    indexRender.renderText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
                     break;
                 case MAIN_VOL_INDEX:
-                    indexRender.drawText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
+                    indexRender.renderText(canvas, this, x, volRect.bottom + baseLine, position, tempValues);
                 case MAIN_VOL:
-                    volumeRender.drawText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
+                    volumeRender.renderText(canvas, this, x, mainRect.bottom + baseLine, position, tempValues);
                 case MAIN_ONLY:
-                    mainRender.drawText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
+                    mainRender.renderText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
                     break;
             }
         }
@@ -1796,6 +1803,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     public void renderMainLine(Canvas canvas, Paint paint, float startX, float startValue, float stopX,
                                float stopValue) {
         canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(stopValue), paint);
+//        canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(stopValue), commonTextPaint);
+
     }
 
 

@@ -86,6 +86,8 @@
         <attr name="limitTextColor" format="color" />
         <attr name="limitTextSize" format="dimension" />
         <!--k线-->
+        <attr name="candlePaddingTop" format="dimension" />
+        <attr name="candlePaddingBottom" format="dimension" />
         <attr name="candleWidth" format="dimension" />
         <attr name="candleLineWidth" format="dimension" />
         <attr name="candleSolid" format="integer" />

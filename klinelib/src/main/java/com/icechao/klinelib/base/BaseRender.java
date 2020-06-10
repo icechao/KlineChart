@@ -21,7 +21,7 @@ public abstract class BaseRender {
 
     public abstract void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values);
 
-    public abstract void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values);
+    public abstract void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values);
 
     public float getMaxValue(float... values) {
         if (values.length == 0) {

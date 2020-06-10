@@ -165,7 +165,7 @@ public class MainRender extends BaseRender {
 
     @Override
     @SuppressWarnings("all")
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
 
         //修改头文字显示在顶部
         y = maTextHeight + mainLegendMarginTop;

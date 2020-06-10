@@ -62,7 +62,7 @@ public class EmaRender extends BaseRender {
     }
 
     @Override
-    public void drawText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+    public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
         if (Constants.K_EMA_NUMBER_1 != -1 && Float.MIN_VALUE != values[Constants.INDEX_RSI_1]) {
             canvas.drawText(legendText1, x, y, rsi1Paint);
             x += rsi1Paint.measureText(legendText1);

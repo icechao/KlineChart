@@ -299,9 +299,9 @@
                         app:backgroundFillTopColor="#112855"
                         app:priceLabelInLineBoxBorderColor="#4B6C91"
                         app:selectedCrossBigColor="#99ffffff"
-                        app:selectInfoBoxBackgroundColor="#325B88"
-                        app:selectInfoBoxBorderColor="#4E81EA"
-                        app:selectInfoBoxTextColor="#0B188C" />
+                        app:selectedInfoBoxBackgroundColor="#325B88"
+                        app:selectedInfoBoxBorderColor="#4E81EA"
+                        app:selectedInfoBoxTextColor="#0B188C" />
 
                 <include
                         android:id="@+id/kline_operater"
