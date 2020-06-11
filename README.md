@@ -9,7 +9,7 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="320" hegiht="480" align=center />
 
 
-## 使用步骤: 
+## 五步接入: 
 
 1. 添加依赖  Add dependency
             
