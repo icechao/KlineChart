@@ -1,6 +1,7 @@
 package com.icechao.klinelib.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -41,6 +42,12 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
 
     private IValueFormatter valueFormatter = new ValueFormatter();
+    private int axisTouchRectBgColor;
+    private int axisTouchRectBoundColor;
+    private int axisTextColor;
+    private int axisTouchTextColor;
+    private float ringRectWidth;
+    private int padding;
 
     public void setValueFormatter(IValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
@@ -55,30 +62,22 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      */
     private int viewHeight;
     /**
-     * 边框线画笔
-     */
-    private Paint borderLinePaint;
-    /**
      * 文本画笔
      */
-    private Paint textPaint;
+    private Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     /**
      * 要绘制的折线线画笔
      */
-    private Paint brokenLineBuyPaint;
+    private Paint brokenLineBuyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Paint brokenLineFillBuyPaint;
+    private Paint brokenLineFillBuyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Paint brokenLineSellPaint;
+    private Paint brokenLineSellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Paint brokenLineFillSellPaint;
+    private Paint brokenLineFillSellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Paint touchBgPaint;
+    private Paint touchBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    /**
-     * 横线画笔
-     */
-    private Paint horizontalLinePaint;
     /**
      * 边框的左边距
      */
@@ -145,11 +144,11 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 横线数量
      */
-    private int lineCount;
+    private int gridRows;
     /**
      * 竖线数量
      */
-    private int horinzontalNumberLine;
+    private int gridColumns;
     /**
      * 边框线颜色
      */
@@ -157,7 +156,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 边框线的宽度
      */
-    private int borderWidth;
+    private float borderWidth;
     /**
      * 边框文本颜色
      */
@@ -165,11 +164,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 边框文本大小
      */
-    private float borderTextSize;
-    /**
-     * 边框文本大小
-     */
-    private float borderLineTextSize;
+    private float commonTextSize;
     /**
      * 边框横线颜色
      */
@@ -199,30 +194,22 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
     public PointF[] sellsPoint;
 
-    private int horizontalLabelMarginTop;
-    private int verticaLabelMarginRight;
-    private int horizontalLabelMarginBottom;
+    private float horizontalLabelMarginTop;
+    private float verticalLabelMarginRight;
+    private float horizontalLabelMarginBottom;
+
+    private float ringPadding;
 
     private GestureDetector detector;
 
-
-    private int axisTextColor = Color.parseColor("#6D87A8");
-    private int axisTouchTextColor = Color.parseColor("#CFD3E9");
-    private int axisTouchRectBgColor = Color.parseColor("#E6081724");
-    private int axisTouchRectBoundColor = Color.parseColor("#6D87A8");
-    private int touchRingBgColor = Color.parseColor("#33081724");
-    private Context context;
-
     public DepthChartView(Context context) {
         super(context);
-        this.context = context;
-        init();
+        init(context, null);
     }
 
     public DepthChartView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
-        init();
+        init(context, attrs);
     }
 
     /**
@@ -230,84 +217,69 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      */
     private void initPaint() {
 
-        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextSize(borderTextSize);
+        textPaint.setTextSize(commonTextSize);
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_6D87A8));
-        borderLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-
-        borderLinePaint.setTextSize(borderLineTextSize);
-        borderLinePaint.setStrokeWidth(borderWidth);
-        borderLinePaint.setColor(borderLineColor);
 
         /**
          * 初始化折线画笔
          */
-
-        brokenLineBuyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         brokenLineBuyPaint.setStrokeWidth(brokenLineWidth);
         mBrokenLineBuyColor = ContextCompat.getColor(getContext(), R.color.color_03C087);
         brokenLineBuyPaint.setColor(mBrokenLineBuyColor);
 
 
-        brokenLineFillBuyPaint = new Paint();
-        brokenLineFillBuyPaint.setAntiAlias(true);
         brokenLineFillBuyPaint.setStyle(Paint.Style.FILL);
         brokenLineFillBuyPaint.setStrokeWidth(brokenLineFillWidth);
         /**
          * 折线颜色
          */
-        int mBrokenLineFillBuyColor = ContextCompat.getColor(getContext(), R.color.color_103E41);
+        int mBrokenLineFillBuyColor = Color.parseColor("#103E41");
         brokenLineFillBuyPaint.setColor(mBrokenLineFillBuyColor);
 
-
-        brokenLineSellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         brokenLineSellPaint.setStrokeWidth(brokenLineWidth);
-        int mBrokenLineSellColor = ContextCompat.getColor(getContext(), R.color.color_FF605A);
+        int mBrokenLineSellColor = Color.parseColor("#FF605A");
         brokenLineSellPaint.setColor(mBrokenLineSellColor);
 
-
-        brokenLineFillSellPaint = new Paint();
-        brokenLineFillSellPaint.setAntiAlias(true);
         brokenLineFillSellPaint.setStyle(Paint.Style.FILL);
         brokenLineFillSellPaint.setStrokeWidth(brokenLineFillWidth);
-        int mBrokenLineFillSellColor = ContextCompat.getColor(getContext(), R.color.color_3D2E33);
+        int mBrokenLineFillSellColor = Color.parseColor("#3D2E33");
         brokenLineFillSellPaint.setColor(mBrokenLineFillSellColor);
 
-
-        touchBgPaint = new Paint();
-        touchBgPaint.setAntiAlias(true);
         touchBgPaint.setStyle(Paint.Style.FILL);
-        touchBgPaint.setColor(touchRingBgColor);
-
-
-        horizontalLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        horizontalLinePaint.setStrokeWidth(borderTransverseLineWidth);
-        horizontalLinePaint.setColor(borderTransverseLineColor);
 
     }
 
-    private void init() {
-        lineCount = 5;
-        horinzontalNumberLine = 3;
-        borderWidth = 2;
-        borderTextSize = DpUtil.Dp2Px(context, 10);
-        borderLineTextSize = 2;
-        borderTransverseLineColor = Color.GRAY;
-        borderTransverseLineWidth = 2;
-        brokenLineWidth = 4;
-        brokenLineFillWidth = 2;
-        borderLineColor = Color.BLACK;
+    private void init(Context context, AttributeSet attributeSet) {
 
-        brokenLineMarginLeft = DpUtil.Dp2Px(context, 0);
-        brokenLineMarginTop = DpUtil.Dp2Px(context, 20);
-        brokenLineMarginBottom = DpUtil.Dp2Px(context, 20);
-        brokenLinerMarginRight = DpUtil.Dp2Px(context, 0);
-        horizontalLabelMarginTop = DpUtil.Dp2Px(context, 5);
-        horizontalLabelMarginBottom = DpUtil.Dp2Px(context, 5);
-        verticaLabelMarginRight = DpUtil.Dp2Px(context, 5);
+        TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.DepthChartView);
+        if (null != typedArray) {
+            gridRows = typedArray.getInt(R.styleable.DepthChartView_gridLineRows, 5);
+            gridColumns = typedArray.getInt(R.styleable.DepthChartView_gridLineColumns, 3);
+            borderWidth = typedArray.getDimension(R.styleable.DepthChartView_borderWidth, DpUtil.Dp2Px(context, 2));
+            commonTextSize = typedArray.getDimension(R.styleable.DepthChartView_commonTextSize, DpUtil.Dp2Px(context, 10));
+            borderTransverseLineColor = typedArray.getColor(R.styleable.DepthChartView_commonTextSize, Color.GRAY);
+            borderTransverseLineWidth = typedArray.getDimension(R.styleable.DepthChartView_borderTransverseLineWidth, DpUtil.Dp2Px(context, 2));
+            brokenLineWidth = typedArray.getDimension(R.styleable.DepthChartView_brokenLineWidth, DpUtil.Dp2Px(context, 2));
+            borderLineColor = typedArray.getColor(R.styleable.DepthChartView_brokenLineWidth, Color.BLACK);
+            brokenLineFillWidth = typedArray.getDimension(R.styleable.DepthChartView_brokenLineFillWidth, DpUtil.Dp2Px(context, 2));
+            brokenLineMarginLeft = typedArray.getDimension(R.styleable.DepthChartView_brokenLineMarginLeft, DpUtil.Dp2Px(context, 0));
+            brokenLineMarginTop = typedArray.getDimension(R.styleable.DepthChartView_brokenLineMarginTop, DpUtil.Dp2Px(context, 20));
+            brokenLineMarginBottom = typedArray.getDimension(R.styleable.DepthChartView_brokenLineMarginBottom, DpUtil.Dp2Px(context, 20));
+            brokenLinerMarginRight = typedArray.getDimension(R.styleable.DepthChartView_brokenLinerMarginRight, DpUtil.Dp2Px(context, 0));
+            horizontalLabelMarginTop = typedArray.getDimension(R.styleable.DepthChartView_horizontalLabelMarginTop, DpUtil.Dp2Px(context, 5));
+            horizontalLabelMarginBottom = typedArray.getDimension(R.styleable.DepthChartView_horizontalLabelMarginBottom, DpUtil.Dp2Px(context, 5));
+            verticalLabelMarginRight = typedArray.getDimension(R.styleable.DepthChartView_verticalLabelMarginRight, DpUtil.Dp2Px(context, 5));
 
+            touchBgPaint.setColor(typedArray.getColor(R.styleable.DepthChartView_brokenLineWidth, Color.parseColor("#33081724")));
+            axisTouchRectBgColor = typedArray.getColor(R.styleable.DepthChartView_axisTouchRectBgColor, Color.parseColor("#E6081724"));
+            axisTouchRectBoundColor = typedArray.getColor(R.styleable.DepthChartView_axisTouchRectBoundColor, Color.parseColor("#6D87A8"));
+            axisTextColor = typedArray.getColor(R.styleable.DepthChartView_axisTextColor, Color.parseColor("#6D87A8"));
+            axisTouchTextColor = typedArray.getColor(R.styleable.DepthChartView_axisTouchTextColor, Color.parseColor("#CFD3E9"));
+            ringRectWidth = typedArray.getDimension(R.styleable.DepthChartView_ringRectWidth, DpUtil.Dp2Px(context, 5));
+            typedArray.recycle();
+        }
+        ringPadding = DpUtil.Dp2Px(context, 5);
         initPaint();
 
         detector = new GestureDetector(getContext(), this);
@@ -315,19 +287,14 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        viewHeight = getMeasuredHeight();
-        viewWidth = getMeasuredWidth();
-
-
-        initNeedDrawWidthAndHeight();
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        viewHeight = w;
+        viewWidth = h;
+        calcWidthHeight();
     }
 
-    /**
-     * 初始化绘制折线图的宽高
-     */
-    private void initNeedDrawWidthAndHeight() {
+    private void calcWidthHeight() {
         realDrawWidth = viewWidth - brokenLineMarginLeft - brokenLinerMarginRight;
         realDrawHeight = viewHeight - brokenLineMarginTop - brokenLineMarginBottom;
     }
@@ -337,83 +304,85 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         super.onDraw(canvas);
         calculateMaxMin();
         calculateAverage();
-        buysPoint = getPoints(mBuyDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
-        sellsPoint = getPoints(mSellDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
+        buysPoint = calcValues(mBuyDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
+        sellsPoint = calcValues(mSellDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
 
-        drawBuyLine(canvas);
-        drawSellLine(canvas);
-
-        drawBorderText(canvas);
-
+        renderLeft(canvas);
+        renderRight(canvas);
+        renderLabel(canvas);
 
         if (touchMode) {
-            boolean safePoint = showBuy ? buysPoint != null && (showIndex < buysPoint.length && showIndex > 0) :
-                    sellsPoint != null && (showIndex < sellsPoint.length && showIndex > 0);
-            if (!safePoint) return;
-            RectF center = new RectF(0, 0, 8, 8);
-            RectF ring = new RectF(0, 0, DpUtil.Dp2Px(context, 15), DpUtil.Dp2Px(context, 15));
-            center.offset(-center.width() / 2, -center.height() / 2);
-            ring.offset(-ring.width() / 2, -ring.height() / 2);
-            PointF touchPoint = showBuy ? buysPoint[showIndex] : sellsPoint[showIndex];
-
-            MarketDepthPercentItem marketDepthPercentItem = showBuy ? mBuyDataList.get(showIndex) : mSellDataList.get(showIndex);
-
-
-            String touchVol = verticalCoordinatePlace(marketDepthPercentItem.getAmount());
-            String touchValue = valueFormatter.format((float) marketDepthPercentItem.getPrice());
-
-            float y = brokenLineMarginTop + realDrawHeight;
-            float h = getHeight() - y - horizontalLabelMarginBottom;
-
-            Rect rect = new Rect();
-            RectF rect2 = new RectF();
-            textPaint.getTextBounds(touchVol, 0, touchVol.length(), rect);
-            rect2.set(0, touchPoint.y, rect.width() + 2 * DpUtil.Dp2Px(context, 5), touchPoint.y + h);
-            rect2.offset(getWidth() - rect2.width(), -rect2.height() / 2);
-            if (rect2.bottom > y) {
-                rect2.offset(0, y - rect2.bottom);
-            } else if (rect2.top < brokenLineMarginTop) {
-                rect2.offset(0, brokenLineMarginTop - rect2.bottom);
-            }
-
-
-            rect = new Rect();
-            rect2 = new RectF();
-            textPaint.getTextBounds(touchValue, 0, touchValue.length(), rect);
-            float baseLine = y + h / 2 - rect.exactCenterY();
-
-            rect2.set(0, y, rect.width() + 2 * DpUtil.Dp2Px(context, 5), y + h);
-            float offsetX = Math.min(Math.max(0, touchPoint.x - rect2.width() / 2), getWidth() - rect2.width());
-            rect2.offset(offsetX, 0);
-
-            center.offset(touchPoint.x, touchPoint.y);
-            ring.offset(touchPoint.x, touchPoint.y);
-
-            canvas.drawArc(ring, 0, 360, true, touchBgPaint);
-            canvas.drawArc(ring, 0, 360, false, showBuy ? brokenLineBuyPaint : brokenLineSellPaint);
-            canvas.drawArc(center, 0, 360, true, showBuy ? brokenLineBuyPaint : brokenLineSellPaint);
-
-            textPaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.save();
-            canvas.clipRect(rect2);
-            canvas.drawColor(axisTouchRectBgColor);
-            canvas.restore();
-            textPaint.setColor(axisTouchRectBoundColor);
-            canvas.drawRect(rect2, textPaint);
-            textPaint.setColor(axisTouchTextColor);
-            canvas.drawText(touchVol, getWidth() - verticaLabelMarginRight, rect2.centerY() - rect.centerY(), textPaint);
-
-            textPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.save();
-            canvas.clipRect(rect2);
-            canvas.drawColor(axisTouchRectBgColor);
-            canvas.restore();
-            textPaint.setColor(axisTouchRectBoundColor);
-            canvas.drawRect(rect2, textPaint);
-            textPaint.setColor(axisTouchTextColor);
-            canvas.drawText(touchValue, rect2.centerX(), baseLine, textPaint);
-
+            renderTouch(canvas);
         }
+    }
+
+    private void renderTouch(Canvas canvas) {
+        boolean safePoint = showBuy ? buysPoint != null && (showIndex < buysPoint.length && showIndex > 0) :
+                sellsPoint != null && (showIndex < sellsPoint.length && showIndex > 0);
+        if (!safePoint) return;
+        RectF center = new RectF(0, 0, 8, 8);
+        RectF ring = new RectF(0, 0, ringRectWidth, ringRectWidth);
+        center.offset(-center.width() / 2, -center.height() / 2);
+        ring.offset(-ring.width() / 2, -ring.height() / 2);
+        PointF touchPoint = showBuy ? buysPoint[showIndex] : sellsPoint[showIndex];
+
+        MarketDepthPercentItem marketDepthPercentItem = showBuy ? mBuyDataList.get(showIndex) : mSellDataList.get(showIndex);
+
+
+        String touchVol = verticalCoordinatePlace(marketDepthPercentItem.getAmount());
+        String touchValue = valueFormatter.format((float) marketDepthPercentItem.getPrice());
+
+        float y = brokenLineMarginTop + realDrawHeight;
+        float h = getHeight() - y - horizontalLabelMarginBottom;
+
+        Rect rect = new Rect();
+        RectF rect2 = new RectF();
+        textPaint.getTextBounds(touchVol, 0, touchVol.length(), rect);
+        rect2.set(0, touchPoint.y, rect.width() + 2 * ringPadding, touchPoint.y + h);
+        rect2.offset(getWidth() - rect2.width(), -rect2.height() / 2);
+        if (rect2.bottom > y) {
+            rect2.offset(0, y - rect2.bottom);
+        } else if (rect2.top < brokenLineMarginTop) {
+            rect2.offset(0, brokenLineMarginTop - rect2.bottom);
+        }
+
+
+        rect = new Rect();
+        rect2 = new RectF();
+        textPaint.getTextBounds(touchValue, 0, touchValue.length(), rect);
+        float baseLine = y + h / 2 - rect.exactCenterY();
+
+
+        rect2.set(0, y, rect.width() + 2 * ringPadding, y + h);
+        float offsetX = Math.min(Math.max(0, touchPoint.x - rect2.width() / 2), getWidth() - rect2.width());
+        rect2.offset(offsetX, 0);
+
+        center.offset(touchPoint.x, touchPoint.y);
+        ring.offset(touchPoint.x, touchPoint.y);
+
+        canvas.drawArc(ring, 0, 360, true, touchBgPaint);
+        canvas.drawArc(ring, 0, 360, false, showBuy ? brokenLineBuyPaint : brokenLineSellPaint);
+        canvas.drawArc(center, 0, 360, true, showBuy ? brokenLineBuyPaint : brokenLineSellPaint);
+
+        textPaint.setTextAlign(Paint.Align.RIGHT);
+        canvas.save();
+        canvas.clipRect(rect2);
+        canvas.drawColor(axisTouchRectBgColor);
+        canvas.restore();
+        textPaint.setColor(axisTouchRectBoundColor);
+        canvas.drawRect(rect2, textPaint);
+        textPaint.setColor(axisTouchTextColor);
+        canvas.drawText(touchVol, getWidth() - verticalLabelMarginRight, rect2.centerY() - rect.centerY(), textPaint);
+
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        canvas.save();
+        canvas.clipRect(rect2);
+        canvas.drawColor(axisTouchRectBgColor);
+        canvas.restore();
+        textPaint.setColor(axisTouchRectBoundColor);
+        canvas.drawRect(rect2, textPaint);
+        textPaint.setColor(axisTouchTextColor);
+        canvas.drawText(touchValue, rect2.centerX(), baseLine, textPaint);
     }
 
     private void calculateMaxMin() {
@@ -431,12 +400,12 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
     private void calculateAverage() {
         calculateYValue = maxYVlaue - minYValue;
-        averageYValue = calculateYValue / (lineCount - 0.5);
+        averageYValue = calculateYValue / (gridRows - 0.5);
         calculateXValue = maxXVlaue - minXValue;
-        averageXValue = calculateXValue / (horinzontalNumberLine - 1);
+        averageXValue = calculateXValue / (gridColumns - 1);
     }
 
-    public void drawBuyLine(Canvas canvas) {
+    public void renderLeft(Canvas canvas) {
         Path mPath = new Path();
         Path fillPath = new Path();
 
@@ -471,7 +440,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
     }
 
-    public void drawSellLine(Canvas canvas) {
+    public void renderRight(Canvas canvas) {
         Path path = new Path();
         Path fillPath = new Path();
 
@@ -509,21 +478,21 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 绘制边框坐标
      */
-    private void drawBorderText(Canvas canvas) {
+    private void renderLabel(Canvas canvas) {
 
         //纵向的坐标
-        float averageHeight = realDrawHeight / lineCount;
+        float averageHeight = realDrawHeight / gridRows;
         textPaint.setTextAlign(TextPaint.Align.RIGHT);
         textPaint.setColor(axisTextColor);
-        for (int i = 0; i < lineCount; i++) {
+        for (int i = 0; i < gridRows; i++) {
             float nowadayHeight = averageHeight * i;
-            double v = averageYValue * (lineCount - i) + minYValue;
-            canvas.drawText(verticalCoordinatePlace(v) + "", getWidth() - verticaLabelMarginRight, nowadayHeight + brokenLineMarginTop, textPaint);
+            double v = averageYValue * (gridRows - i) + minYValue;
+            canvas.drawText(verticalCoordinatePlace(v) + "", getWidth() - verticalLabelMarginRight, nowadayHeight + brokenLineMarginTop, textPaint);
         }
         //横向的坐标
-        float averageWidth = realDrawWidth / (horinzontalNumberLine - 1);
+        float averageWidth = realDrawWidth / (gridColumns - 1);
         textPaint.setTextAlign(TextPaint.Align.LEFT);
-        for (int i = 0; i < horinzontalNumberLine; i++) {
+        for (int i = 0; i < gridColumns; i++) {
             float tempWidth = averageWidth * i;
             float v = (float) (averageXValue * i + minXValue);
             String text = valueFormatter.format(v);
@@ -534,7 +503,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
             if (i == 0) {
                 canvas.drawText(text + "", brokenLineMarginLeft + tempWidth, y, textPaint);
-            } else if (i == horinzontalNumberLine - 1) {
+            } else if (i == gridColumns - 1) {
                 canvas.drawText(text + "", brokenLineMarginLeft + tempWidth - bounds.width(), y, textPaint);
             } else {
                 canvas.drawText(text + "", brokenLineMarginLeft + tempWidth - (bounds.width() >> 1), y, textPaint);
@@ -550,10 +519,10 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 计算在该值的 xy
      */
-    public PointF[] getPoints(List<MarketDepthPercentItem> values, double height, double width, double left, double top) {
+    public PointF[] calcValues(List<MarketDepthPercentItem> values, double height, double width, double left, double top) {
         int size = values.size();
         PointF[] points = new PointF[size];
-        double maxY = averageYValue * lineCount;
+        double maxY = averageYValue * gridRows;
         for (int i = 0; i < size; i++) {
             double valueY = values.get(i).getAmount() - minYValue;
             //计算每点高度所以对应的值
@@ -616,7 +585,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         return realDrawHeight;
     }
 
-    public PointF[] getPoints() {
+    public PointF[] calcValues() {
         return buysPoint;
     }
 
@@ -639,8 +608,8 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 图表横线数量
      */
-    public void setLineCount(int lineCount) {
-        this.lineCount = lineCount;
+    public void setGridRows(int gridRows) {
+        this.gridRows = gridRows;
     }
 
     /**
@@ -660,8 +629,8 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 边框文本大小
      */
-    public void setBorderTextSize(float borderTextSize) {
-        this.borderTextSize = DpUtil.Dp2Px(context, borderTextSize);
+    public void setCommonTextSize(float commonTextSize) {
+        this.commonTextSize = commonTextSize;
     }
 
     /**
@@ -682,21 +651,21 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
      * 边框线宽度
      */
     public void setBorderWidth(float borderWidth) {
-        this.borderWidth = DpUtil.Dp2Px(context, borderWidth);
+        this.borderWidth = borderWidth;
     }
 
     /**
      * 边框横线宽度
      */
     public void setBorderTransverseLineWidth(float borderTransverseLineWidth) {
-        this.borderTransverseLineWidth = DpUtil.Dp2Px(context, borderTransverseLineWidth);
+        this.borderTransverseLineWidth = borderTransverseLineWidth;
     }
 
     /**
      * 折线宽度
      */
     public void setBrokenLineWidth(float brokenLineWidth) {
-        this.brokenLineWidth = DpUtil.Dp2Px(context, brokenLineWidth);
+        this.brokenLineWidth = brokenLineWidth;
     }
 
 

@@ -103,7 +103,7 @@ public class KChartView extends BaseKChartView {
                 setGridLineWidth(array.getDimension(R.styleable.KChartView_gridLineWidth, DpUtil.Dp2Px(context, 0.8f)));
                 setGridColumns(array.getInteger(R.styleable.KChartView_gridLineColumns, DpUtil.Dp2Px(context, 5)));
                 setGridRows(array.getInteger(R.styleable.KChartView_gridLineRows, DpUtil.Dp2Px(context, 5)));
-                setGridLineColor(array.getColor(R.styleable.KChartView_gridLineColor, getColor(R.color.color_223349)));
+                setGridLineColor(array.getColor(R.styleable.KChartView_gridLineColor, getColor(R.color.color_1ACFD3E9)));
                 //图例
                 setVolLegendColor(array.getColor(R.styleable.KChartView_volLegendColor, getResources().getColor(R.color.color_6D87A8)));
                 setMainLegendMarginTop(array.getDimension(R.styleable.KChartView_mainLegendMarginTop, 10f));

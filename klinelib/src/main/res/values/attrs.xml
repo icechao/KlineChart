@@ -134,4 +134,49 @@
         <attr name="volLineChartColor" format="color" />
         <attr name="volLegendMarginTop" format="dimension" />
     </declare-styleable>
+
+
+    <declare-styleable name="DepthChartView">
+        <attr name="gridLineRows" format="integer" />
+        <attr name="gridLineColumns" format="integer" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="commonTextSize" format="dimension" />
+        <attr name="borderTransverseLineColor" format="color" />
+        <attr name="borderTransverseLineWidth" format="dimension" />
+        <attr name="brokenLineWidth" format="dimension" />
+        <attr name="brokenLineFillWidth" format="dimension" />
+        <attr name="borderLineColor" format="color" />
+        <attr name="brokenLineMarginLeft" format="dimension" />
+        <attr name="brokenLineMarginTop" format="dimension" />
+        <attr name="brokenLineMarginBottom" format="dimension" />
+        <attr name="brokenLinerMarginRight" format="dimension" />
+        <attr name="horizontalLabelMarginTop" format="dimension" />
+        <attr name="horizontalLabelMarginBottom" format="dimension" />
+        <attr name="verticalLabelMarginRight" format="dimension" />
+        <attr name="axisTextColor" format="color" />
+        <attr name="axisTouchTextColor" format="color" />
+        <attr name="axisTouchRectBoundColor" format="color" />
+        <attr name="touchRingBgColor" format="dimension" />
+        <attr name="axisTouchRectBgColor" format="dimension" />
+        <attr name="ringRectWidth" format="dimension" />
+        <!--
+                borderTransverseLineColor = Color.GRAY;
+                borderTransverseLineWidth = 2;
+                brokenLineWidth = 4;
+                brokenLineFillWidth = 2;
+                borderLineColor = Color.BLACK;
+
+                brokenLineMarginLeft = DpUtil.Dp2Px(context, 0);
+                brokenLineMarginTop = DpUtil.Dp2Px(context, 20);
+                brokenLineMarginBottom = DpUtil.Dp2Px(context, 20);
+                brokenLinerMarginRight = DpUtil.Dp2Px(context, 0);
+                horizontalLabelMarginTop = DpUtil.Dp2Px(context, 5);
+                horizontalLabelMarginBottom = DpUtil.Dp2Px(context, 5);
+                verticaLabelMarginRight = DpUtil.Dp2Px(context, 5);
+                 private int axisTextColor = Color.parseColor("#6D87A8");
+            private int axisTouchTextColor = Color.parseColor("#CFD3E9");
+            private int axisTouchRectBgColor = Color.parseColor("#E6081724");
+            private int axisTouchRectBoundColor = Color.parseColor("#6D87A8");
+            private int touchRingBgColor = Color.parseColor("#33081724");-->
+    </declare-styleable>
 </resources>
