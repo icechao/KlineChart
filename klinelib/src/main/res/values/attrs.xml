@@ -75,7 +75,7 @@
         <attr name="yLabelAlign" format="boolean" />
         <attr name="betterSelectedXLabel" format="boolean" />
         <attr name="decreaseColor" format="color" />
-        <attr name="commonTextSize" format="dimension" />
+        <attr name="commonTextSize" />
         <attr name="paddingTop" format="dimension" />
         <attr name="paddingBottom" format="dimension" />
         <attr name="childPaddingTop" format="dimension" />
@@ -94,8 +94,8 @@
         <!--grid line-->
         <attr name="gridLineWidth" format="dimension" />
         <attr name="gridLineColor" format="color" />
-        <attr name="gridLineRows" format="integer" />
-        <attr name="gridLineColumns" format="integer" />
+        <attr name="gridLineRows" />
+        <attr name="gridLineColumns" />
         <!--macd-->
         <attr name="macdStrokeWidth" format="color" />
         <attr name="macdIncreaseColor" format="color" />
@@ -135,12 +135,16 @@
         <attr name="volLegendMarginTop" format="dimension" />
     </declare-styleable>
 
+    <attr name="gridLineRows" format="integer" />
+    <attr name="gridLineColumns" format="integer" />
+    <attr name="commonTextSize" />
+
 
     <declare-styleable name="DepthChartView">
-        <attr name="gridLineRows" format="integer" />
-        <attr name="gridLineColumns" format="integer" />
+        <attr name="gridLineRows" />
+        <attr name="gridLineColumns" />
         <attr name="borderWidth" format="dimension" />
-        <attr name="commonTextSize" format="dimension" />
+        <attr name="commonTextSize" />
         <attr name="borderTransverseLineColor" format="color" />
         <attr name="borderTransverseLineWidth" format="dimension" />
         <attr name="brokenLineWidth" format="dimension" />
@@ -159,24 +163,6 @@
         <attr name="touchRingBgColor" format="dimension" />
         <attr name="axisTouchRectBgColor" format="dimension" />
         <attr name="ringRectWidth" format="dimension" />
-        <!--
-                borderTransverseLineColor = Color.GRAY;
-                borderTransverseLineWidth = 2;
-                brokenLineWidth = 4;
-                brokenLineFillWidth = 2;
-                borderLineColor = Color.BLACK;
 
-                brokenLineMarginLeft = DpUtil.Dp2Px(context, 0);
-                brokenLineMarginTop = DpUtil.Dp2Px(context, 20);
-                brokenLineMarginBottom = DpUtil.Dp2Px(context, 20);
-                brokenLinerMarginRight = DpUtil.Dp2Px(context, 0);
-                horizontalLabelMarginTop = DpUtil.Dp2Px(context, 5);
-                horizontalLabelMarginBottom = DpUtil.Dp2Px(context, 5);
-                verticaLabelMarginRight = DpUtil.Dp2Px(context, 5);
-                 private int axisTextColor = Color.parseColor("#6D87A8");
-            private int axisTouchTextColor = Color.parseColor("#CFD3E9");
-            private int axisTouchRectBgColor = Color.parseColor("#E6081724");
-            private int axisTouchRectBoundColor = Color.parseColor("#6D87A8");
-            private int touchRingBgColor = Color.parseColor("#33081724");-->
     </declare-styleable>
 </resources>

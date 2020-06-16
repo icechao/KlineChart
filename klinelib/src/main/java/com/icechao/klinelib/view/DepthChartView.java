@@ -10,7 +10,6 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -219,21 +218,19 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
         textPaint.setTextSize(commonTextSize);
         textPaint.setTextAlign(Paint.Align.LEFT);
-        textPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_6D87A8));
+        textPaint.setColor(Color.parseColor("#6D87A8"));
 
         /**
          * 初始化折线画笔
          */
         brokenLineBuyPaint.setStrokeWidth(brokenLineWidth);
-        mBrokenLineBuyColor = ContextCompat.getColor(getContext(), R.color.color_03C087);
+        mBrokenLineBuyColor = Color.parseColor("#03C087");
         brokenLineBuyPaint.setColor(mBrokenLineBuyColor);
 
 
         brokenLineFillBuyPaint.setStyle(Paint.Style.FILL);
         brokenLineFillBuyPaint.setStrokeWidth(brokenLineFillWidth);
-        /**
-         * 折线颜色
-         */
+
         int mBrokenLineFillBuyColor = Color.parseColor("#103E41");
         brokenLineFillBuyPaint.setColor(mBrokenLineFillBuyColor);
 

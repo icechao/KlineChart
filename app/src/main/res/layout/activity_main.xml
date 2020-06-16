@@ -17,7 +17,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="14dp"
-                android:background="@color/color_6D87A8" />
+                android:background="#6D87A8" />
 
         <TextView
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="9dp"
                             android:includeFontPadding="false"
-                            android:textColor="@color/color_03C087"
+                            android:textColor="#03C087"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_toRightOf="@+id/text_view_cny"
                             android:includeFontPadding="false"
-                            android:textColor="@color/color_03C087"
+                            android:textColor="#03C087"
                             android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -108,7 +108,7 @@
                                 android:layout_height="wrap_content"
                                 android:includeFontPadding="false"
                                 android:text="高"
-                                android:textColor="@color/color_6D87A8"
+                                android:textColor="#6D87A8"
                                 android:textSize="12dp" />
 
 
@@ -130,7 +130,7 @@
                                 android:layout_height="match_parent"
                                 android:includeFontPadding="false"
                                 android:text="低"
-                                android:textColor="@color/color_6D87A8"
+                                android:textColor="#6D87A8"
                                 android:textSize="12dp" />
 
 
@@ -152,7 +152,7 @@
                                 android:layout_height="wrap_content"
                                 android:includeFontPadding="false"
                                 android:text="24量"
-                                android:textColor="@color/color_6D87A8"
+                                android:textColor="#6D87A8"
                                 android:textSize="12dp" />
 
                         <TextView
@@ -188,7 +188,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="分时"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp" />
 
                 <RadioButton
@@ -200,7 +200,7 @@
                         android:gravity="center"
 
                         android:text="15分钟"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp" />
 
                 <RadioButton
@@ -211,7 +211,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="1小时"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp"
                         android:visibility="gone" />
 
@@ -223,7 +223,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="4小时"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp"
                         android:visibility="gone" />
 
@@ -235,7 +235,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="1天"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp"
                         android:visibility="gone" />
 
@@ -247,7 +247,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="更多"
-                        android:textColor="@color/color_6D87A8"
+                        android:textColor="#6D87A8"
                         android:textSize="12sp" />
 
                 <RadioButton
@@ -259,7 +259,7 @@
                         android:gravity="center"
                         android:paddingRight="10dp"
                         android:text="指标"
-                        android:textColor="@color/color_4B85D6"
+                        android:textColor="#4B85D6"
                         android:textSize="12dp" />
 
                 <TextView
@@ -270,7 +270,7 @@
                         android:button="@null"
                         android:paddingRight="10dp"
                         android:text="显/隐 交易量"
-                        android:textColor="@color/color_4B85D6"
+                        android:textColor="#4B85D6"
                         android:textSize="12dp" />
 
                 <TextView
@@ -281,7 +281,7 @@
                         android:button="@null"
                         android:paddingRight="10dp"
                         android:text="Y轴显示模式"
-                        android:textColor="@color/color_4B85D6"
+                        android:textColor="#4B85D6"
                         android:textSize="12dp" />
 
             </RadioGroup>
@@ -317,7 +317,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@color/color_111725"
+                    android:background="#111725"
                     android:orientation="horizontal"
                     android:padding="5dp">
 
@@ -328,7 +328,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="深度"
-                        android:textColor="@color/color_6D87A8" />
+                        android:textColor="#6D87A8" />
 
                 <RadioButton
                         android:layout_width="0dp"
@@ -337,7 +337,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="成交"
-                        android:textColor="@color/color_6D87A8" />
+                        android:textColor="#6D87A8" />
 
                 <RadioButton
                         android:layout_width="0dp"
@@ -346,7 +346,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:text="简介"
-                        android:textColor="@color/color_6D87A8" />
+                        android:textColor="#6D87A8" />
             </RadioGroup>
 
             <com.icechao.demo.DepthFullView

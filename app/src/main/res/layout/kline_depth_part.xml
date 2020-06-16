@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/color_081734"
+              android:background="#081734"
               android:orientation="vertical">
 
 
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:text="买盘"
-                android:textColor="@color/color_6D87A8"
+                android:textColor="#6D87A8"
                 android:textSize="10sp"/>
 
         <TextView
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="数量"
-                android:textColor="@color/color_6D87A8"
+                android:textColor="#6D87A8"
 
                 android:textSize="10sp"/>
 
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:paddingRight="5dp"
                 android:text="价格(USDT)"
-                android:textColor="@color/color_6D87A8"
+                android:textColor="#6D87A8"
                 android:textSize="10sp"/>
 
         <TextView
@@ -58,7 +58,7 @@
                 android:paddingLeft="5dp"
                 android:text="数量"
 
-                android:textColor="@color/color_6D87A8"
+                android:textColor="#6D87A8"
                 android:textSize="10sp"/>
 
 
@@ -70,7 +70,7 @@
                 android:paddingRight="5dp"
 
                 android:text="卖盘"
-                android:textColor="@color/color_6D87A8"
+                android:textColor="#6D87A8"
                 android:textSize="10sp"/>
 
     </LinearLayout>
