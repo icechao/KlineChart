@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -107,6 +105,7 @@ public class KChartView extends BaseKChartView {
                 //图例
                 setVolLegendColor(array.getColor(R.styleable.KChartView_volLegendColor, Color.parseColor("#6D87A8")));
                 setMainLegendMarginTop(array.getDimension(R.styleable.KChartView_mainLegendMarginTop, 10f));
+                setLegendMarginLeft(array.getDimension(R.styleable.KChartView_legendMarginLeft, 0f));
                 setVolLegendMarginTop(array.getDimension(R.styleable.KChartView_volLegendMarginTop, 10f));
                 //成交量
                 setVolLineChartColor(array.getColor(R.styleable.KChartView_volLineChartColor, Color.parseColor("#4B85A6")));
@@ -1143,11 +1142,22 @@ public class KChartView extends BaseKChartView {
     /**
      * 设置主实图图例距离主视图上边缘的距离
      *
-     * @param mainLegendMarginTop Legend margin top , default 0
+     * @param mainLegendMarginTop Legend margin top , default 10
      * @return {@link KChartView}
      */
     public KChartView setMainLegendMarginTop(float mainLegendMarginTop) {
         mainRender.setMainLegendMarginTop(mainLegendMarginTop);
+        return this;
+    }
+
+    /**
+     * 设置主实图图例距离主视图上边缘的距离
+     *
+     * @param legendMarginLeft Legend margin left , default 0
+     * @return {@link KChartView}
+     */
+    public KChartView setLegendMarginLeft(float legendMarginLeft) {
+        this.legendMarginLeft = legendMarginLeft;
         return this;
     }
 

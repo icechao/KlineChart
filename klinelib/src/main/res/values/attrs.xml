@@ -68,6 +68,7 @@
         <attr name="selectedDateBoxHorizontalPadding" format="dimension" />
 
         <attr name="mainLegendMarginTop" format="dimension" />
+        <attr name="legendMarginLeft" format="dimension" />
         <attr name="increaseColor" format="color" />
         <attr name="betterXLabel" format="boolean" />
         <attr name="labelTextSize" format="dimension" />

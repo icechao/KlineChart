@@ -357,6 +357,10 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 统一文字基础线
      */
     protected float baseLine;
+    /**
+     * 统一文字基础线
+     */
+    protected float legendMarginLeft;
 
     /**
      * 统一文字Decent
@@ -1429,7 +1433,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         int temp = indexInterval * position;
         if (temp < points.length && position >= 0) {
             float[] tempValues = Arrays.copyOfRange(points, temp, temp + indexInterval);
-            float x = 0;
+            float x = legendMarginLeft;
             switch (chartShowStatue) {
                 case MAIN_INDEX:
                     mainRender.renderText(canvas, this, x, mainRect.top + baseLine - textHeight / 2, position, tempValues);
