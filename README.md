@@ -35,7 +35,7 @@
             
             工程的build.gradle中  In the mudule's build.gradle
 
-                        implementation 'com.icechao.klinelib:klinelib:1.1.7'
+                        implementation 'com.icechao.klinelib:klinelib:2.0.0'
 
             
 2. <b>继承KlineEntry定义自己的K线的数据Bean,复写抽象方法返回 :高 开 低 收 量 时间 The order information inherits the data bean of klineentry to define its own K-line, and the replication abstract method returns: high opening and low receipt time</b>
@@ -154,6 +154,7 @@
       | selectedDateBoxVerticalPadding | dimension | 选中十字线X轴坐标连框纵向内边距  |   |
       | selectedDateBoxHorizontalPadding | dimension | 选中十字线X轴坐标连框横向内边距  |   |
       | mainLegendMarginTop | dimension | 设置主实图图例距离视图上边缘的距离  |   |
+      | legendMarginLeft | dimension | 设置图例距离视图左边缘的距离  |   |
       | increaseColor | color |  设置涨的颜色 |   |
       | decreaseColor | color | 设置跌的颜色  |   |
       | betterXLabel | boolean | 设置是否自适应X左右边轴坐标的位置,默认true |   |
@@ -281,7 +282,13 @@
             滑动布局 com.icechao.klinelib.view.ScrollView
     
 
-## 更多API查看  More API [KLineChartView](https://github.com/icechao/KlineChart/blob/master/klinelib/src/main/java/com/icechao/klinelib/view/KLineChartView.java)或加QQ群咨询
+## 所有属性相关均有与之对应的Set方法
+    版本更新内容
+
+        1. 支持右侧坐标独立显示与内容不重叠
+        2. 支持坐标轴显示在左侧
+        3. 支持右侧独立坐标轴配置单独背景色
+        4. 统一属性值名称
 
 ## 部分API  ________  kLineChartView为KLineChartView对象
 
