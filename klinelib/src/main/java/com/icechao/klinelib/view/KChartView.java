@@ -140,7 +140,8 @@ public class KChartView extends BaseKChartView {
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KChartView_selectedShowCrossPoint, true));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KChartView_selectedXLineWidth, DpUtil.Dp2Px(context, 0.8f)));
                 setSelectedLabelBorderWidth(array.getDimension(R.styleable.KChartView_selectedLabelBorderWidth, DpUtil.Dp2Px(context, 0.8f)));
-                setSelectedLabelBorderColor(array.getColor(R.styleable.KChartView_selectedLabelBorderColor, Color.WHITE));
+                setSelectedXLabelBorderColor(array.getColor(R.styleable.KChartView_selectedXLabelBorderColor, Color.WHITE));
+                setSelectedXLabelBackgroundColor(array.getColor(R.styleable.KChartView_selectedXLabelBackgroundColor, Color.parseColor("#CFD3E9")));
                 setSelectedYLineWidth(array.getDimension(R.styleable.KChartView_selectedYLineWidth, 7));
                 setSelectedXLineColor(array.getColor(R.styleable.KChartView_selectedXLineColor, Color.parseColor("#CFD3E9")));
                 setSelectedYLineColor(array.getColor(R.styleable.KChartView_selectedYLineColor, Color.parseColor("#1ACFD3E9")));
@@ -303,9 +304,21 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectedLabelBorderWidth(float width) {
-        selectorFramePaint.setStrokeWidth(width);
+        selectorXFramePaint.setStrokeWidth(width);
         return this;
     }
+
+    /**
+     * 选中时X坐标背景颜色
+     *
+     * @param color width
+     * @return {@link KChartView}
+     */
+    public KChartView setSelectedXLabelBackgroundColor(int color) {
+        selectorXBackgroundPaint.setColor(color);
+        return this;
+    }
+
 
     /**
      * 子视图的顶部padding
@@ -324,8 +337,8 @@ public class KChartView extends BaseKChartView {
      * @param color color
      * @return {@link KChartView}
      */
-    public KChartView setSelectedLabelBorderColor(int color) {
-        selectorFramePaint.setColor(color);
+    public KChartView setSelectedXLabelBorderColor(int color) {
+        selectorXFramePaint.setColor(color);
         return this;
     }
 

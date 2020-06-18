@@ -97,6 +97,7 @@
         
       | Attribute name | Value type | Attribute implication | Default value |
       | ------ | ------ | ------ | ------ |  
+      | selectedXLabelBackgroundColor | color|  设置选中X轴坐标背景色 |   |
       | priceLabelInLineTextColor | color|  设置价格线上的文字颜色 |   |
       | priceLabelInLineTextSize | color|  设置价格线上的文字大小 |   |
       | selectedLabelTextColor | color|  设置选中X坐标文字颜色 |   |

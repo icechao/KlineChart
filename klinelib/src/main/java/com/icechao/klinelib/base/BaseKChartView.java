@@ -231,14 +231,19 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected Paint selectedYLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
-     * 十字线坐标显示背景相交点画笔
+     * 十字线Y坐标显示背景画笔
      */
     protected Paint selectedPriceBoxBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
+     * 十字线Y坐标显示背景画笔
+     */
+    protected Paint selectorXBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    /**
      * 十字线坐标显示边框画笔
      */
-    protected Paint selectorFramePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint selectorXFramePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 价格线画笔
@@ -675,7 +680,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         showAnim = ValueAnimator.ofFloat(0f, 1f);
         showAnim.setDuration(duration);
         showAnim.addUpdateListener(animation -> invalidate());
-        selectorFramePaint.setStyle(Paint.Style.STROKE);
+        selectorXFramePaint.setStyle(Paint.Style.STROKE);
         priceLinePaint.setAntiAlias(true);
         priceLineRightPaint.setStyle(Paint.Style.STROKE);
         rightPriceBoxPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -690,9 +695,9 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         super.onSizeChanged(w, h, oldw, oldh);
         //如果没设置chartPaddingBottom
         if (0 == chartPaddingBottom) {
-            chartPaddingBottom = (int) (dateBoxVerticalPadding * 2 + selectorFramePaint.getStrokeWidth() * 2 + textHeight);
+            chartPaddingBottom = (int) (dateBoxVerticalPadding * 2 + selectorXFramePaint.getStrokeWidth() * 2 + textHeight);
         }
-        displayHeight = h - chartPaddingTop - (dateBoxVerticalPadding * 2 + selectorFramePaint.getStrokeWidth() * 2 + textHeight);
+        displayHeight = h - chartPaddingTop - (dateBoxVerticalPadding * 2 + selectorXFramePaint.getStrokeWidth() * 2 + textHeight);
         rowSpace = displayHeight / gridRows;
         this.viewWidth = w;
         this.viewHeight = h;
@@ -1030,8 +1035,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         }
 
         bottom = y + textHeight + dateBoxVerticalPadding * 2;
-        canvas.drawRect(left, y, right, bottom, selectedPriceBoxBackgroundPaint);
-        canvas.drawRect(left, y, right, bottom, selectorFramePaint);
+        canvas.drawRect(left, y, right, bottom, selectorXBackgroundPaint);
+        canvas.drawRect(left, y, right, bottom, selectorXFramePaint);
         canvas.drawText(date, left + selectedPriceBoxHorizontalPadding, y + baseLine + dateBoxVerticalPadding, selectedXLabelPaint);
         //十字线Y值判断
         //十字线横线
