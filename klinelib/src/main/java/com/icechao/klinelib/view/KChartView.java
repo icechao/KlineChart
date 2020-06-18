@@ -139,7 +139,7 @@ public class KChartView extends BaseKChartView {
                 setSelectedPointRadius(array.getDimension(R.styleable.KChartView_selectedCrossPointRadius, DpUtil.Dp2Px(context, 0.8f)));
                 setSelectedShowCrossPoint(array.getBoolean(R.styleable.KChartView_selectedShowCrossPoint, true));
                 setSelectedXLineWidth(array.getDimension(R.styleable.KChartView_selectedXLineWidth, DpUtil.Dp2Px(context, 0.8f)));
-                setSelectedLabelBorderWidth(array.getDimension(R.styleable.KChartView_selectedLabelBorderWidth, DpUtil.Dp2Px(context, 0.8f)));
+                setSelectedXLabelBorderWidth(array.getDimension(R.styleable.KChartView_selectedXLabelBorderWidth, DpUtil.Dp2Px(context, 0.8f)));
                 setSelectedXLabelBorderColor(array.getColor(R.styleable.KChartView_selectedXLabelBorderColor, Color.WHITE));
                 setSelectedXLabelBackgroundColor(array.getColor(R.styleable.KChartView_selectedXLabelBackgroundColor, Color.parseColor("#CFD3E9")));
                 setSelectedYLineWidth(array.getDimension(R.styleable.KChartView_selectedYLineWidth, 7));
@@ -159,10 +159,9 @@ public class KChartView extends BaseKChartView {
                 );
                 setSelectedInfoTextSize(array.getDimension(R.styleable.KChartView_selectedInfoTextSize, DpUtil.Dp2Px(context, 10)));
                 setSelectInfoBoxPadding(array.getDimension(R.styleable.KChartView_selectedInfoBoxPadding, 4));
-                setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
-                setSelectedLabelTextColor(array.getColor(R.styleable.KChartView_selectedLabelTextColor, Color.parseColor("#6D87A8")));
-                setSelectedLabelTextSize(array.getDimension(R.styleable.KChartView_selectedLabelTextSize, DpUtil.Dp2Px(context, 10)));
-                setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabel));
+                setSelectedInfoLabels((String[]) array.getTextArray(R.styleable.KChartView_selectedInfoLabels));
+                setSelectedXLabelTextColor(array.getColor(R.styleable.KChartView_selectedXLabelTextColor, Color.parseColor("#6D87A8")));
+                setSelectedXLabelTextSize(array.getDimension(R.styleable.KChartView_selectedXLabelTextSize, DpUtil.Dp2Px(context, 10)));
                 //K线
                 setIncreaseColor(array.getColor(R.styleable.KChartView_increaseColor, Color.GREEN));
                 setDecreaseColor(array.getColor(R.styleable.KChartView_decreaseColor, Color.RED));
@@ -226,7 +225,7 @@ public class KChartView extends BaseKChartView {
      * @param color {@link Color}
      * @return {@link KChartView}
      */
-    public KChartView setSelectedLabelTextColor(int color) {
+    public KChartView setSelectedXLabelTextColor(int color) {
         selectedXLabelPaint.setColor(color);
         return this;
     }
@@ -259,7 +258,7 @@ public class KChartView extends BaseKChartView {
      * @param size size
      * @return {@link KChartView}
      */
-    public KChartView setSelectedLabelTextSize(float size) {
+    public KChartView setSelectedXLabelTextSize(float size) {
         selectedXLabelPaint.setTextSize(size);
         return this;
     }
@@ -303,7 +302,7 @@ public class KChartView extends BaseKChartView {
      * @param width width
      * @return {@link KChartView}
      */
-    public KChartView setSelectedLabelBorderWidth(float width) {
+    public KChartView setSelectedXLabelBorderWidth(float width) {
         selectorXFramePaint.setStrokeWidth(width);
         return this;
     }
