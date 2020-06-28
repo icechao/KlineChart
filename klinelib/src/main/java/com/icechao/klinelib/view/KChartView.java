@@ -73,9 +73,12 @@ public class KChartView extends BaseKChartView {
 
     private void initAttrs(AttributeSet attrs, Context context) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.KChartView);
+        parseAttrs(array, context);
+    }
+
+    public void parseAttrs(TypedArray array, Context context) {
         if (null != array) {
             try {
-
                 setLogoResouce(array.getResourceId(R.styleable.KChartView_chartLogo, 0));
                 //最大最小值
                 setLimitTextSize(array.getDimension(R.styleable.KChartView_limitTextSize, DpUtil.Dp2Px(context, 10)));
@@ -99,8 +102,8 @@ public class KChartView extends BaseKChartView {
                 setChartPaddingBottom(array.getDimension(R.styleable.KChartView_paddingBottom, 0));
                 //网格
                 setGridLineWidth(array.getDimension(R.styleable.KChartView_gridLineWidth, DpUtil.Dp2Px(context, 0.8f)));
-                setGridColumns(array.getInteger(R.styleable.KChartView_gridLineColumns, DpUtil.Dp2Px(context, 5)));
-                setGridRows(array.getInteger(R.styleable.KChartView_gridLineRows, DpUtil.Dp2Px(context, 5)));
+                setGridColumns(array.getInteger(R.styleable.KChartView_gridLineColumns, 5));
+                setGridRows(array.getInteger(R.styleable.KChartView_gridLineRows, 5));
                 setGridLineColor(array.getColor(R.styleable.KChartView_gridLineColor, Color.parseColor("#1ACFD3A9")));
                 //图例
                 setVolLegendColor(array.getColor(R.styleable.KChartView_volLegendColor, Color.parseColor("#6D87A8")));
@@ -217,6 +220,7 @@ public class KChartView extends BaseKChartView {
                 array.recycle();
             }
         }
+        animInvalidate();
     }
 
     /**

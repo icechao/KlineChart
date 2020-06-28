@@ -2,6 +2,7 @@ package com.icechao.demo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -75,6 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         findViewById(R.id.text_view_wr).setOnClickListener(this);
         findViewById(R.id.text_view_show_hide_vol).setOnClickListener(this);
         findViewById(R.id.text_view_change_label_state).setOnClickListener(this);
+        findViewById(R.id.text_view_change_theme).setOnClickListener(this);
 
 
         findViewById(R.id.text_view_one_minute).setOnClickListener(this);
@@ -85,7 +87,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         findViewById(R.id.text_view_hide_sub).setOnClickListener(this);
         findViewById(R.id.text_view_hide_master).setOnClickListener(this);
-
 
 
         radioGroup = findViewById(R.id.radio_group_defalt_index);
@@ -150,7 +151,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
-                        LogUtil.e("onSlidLeft");
+                        List<KChartBean> all = new DataTest().getData(MainActivity.this);
+                        //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
+                        all.addAll(adapter.getDatas());
+                        adapter.resetData(all, false);
                     }
 
 
@@ -183,7 +187,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 //        chartView.setSelectedInfoBoxColors(Color.RED,Color.BLUE,Color.YELLOW);
 //        chartView.setChartVolState(false);
 
-        chartView.setScaleXMax(1);
+        chartView.setScaleXMax(3);
         chartView.setScaleXMin(0.5f);
 
     }
@@ -198,7 +202,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 //1.定义类 KChartBean 继承KLineEntity
                 //2.从数据源获取 KChartBean 数据集合
-                List<KChartBean> kChartBeans = all = new DataTest().getData(MainActivity.this);
+                List<KChartBean> kChartBeans = new DataTest().getData(MainActivity.this);
                 //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
                 adapter.resetData(kChartBeans, true);
                 //adapter.addLast();  尾部追加数据
@@ -210,6 +214,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         }.start();
     }
 
+    private boolean changeTheme;
 
     @Override
     public void onClick(View v) {
@@ -220,6 +225,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         moreIndex.setVisibility(View.GONE);
 
         switch (v.getId()) {
+            case R.id.text_view_change_theme:
+                TypedArray typedArray = obtainStyledAttributes(changeTheme ? R.style.kline_style : R.style.kline, R.styleable.KChartView);
+                chartView.parseAttrs(typedArray, this);
+                changeTheme = !changeTheme;
+                break;
             case R.id.text_view_show_hide_vol:
                 chartView.setVolShowState(!chartView.getVolShowState());
                 break;

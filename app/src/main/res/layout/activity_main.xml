@@ -29,6 +29,12 @@
                 android:textColor="#CFD3E9"
                 android:textSize="18sp" />
 
+        <TextView
+                android:id="@+id/text_view_change_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="切换主题" />
+
     </LinearLayout>
 
     <com.icechao.klinelib.view.ScrollView
@@ -293,15 +299,9 @@
 
                 <com.icechao.klinelib.view.KChartView
                         android:id="@+id/kLineChartView"
+                        style="@style/kline"
                         android:layout_width="match_parent"
-                        android:layout_height="580dp"
-                        app:backgroundFillBottomColor="#081734"
-                        app:backgroundFillTopColor="#112855"
-                        app:priceLabelInLineBoxBorderColor="#4B6C91"
-                        app:selectedCrossBigColor="#99ffffff"
-                        app:selectedInfoBoxBackgroundColor="#325B88"
-                        app:selectedInfoBoxBorderColor="#4E81EA"
-                        app:selectedInfoBoxTextColor="#0B188C" />
+                        android:layout_height="580dp" />
 
                 <include
                         android:id="@+id/kline_operater"

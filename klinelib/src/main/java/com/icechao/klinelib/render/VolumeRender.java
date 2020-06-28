@@ -14,6 +14,8 @@ import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
+import java.util.Arrays;
+
 /*************************************************************************
  * Description   :
  *
@@ -231,5 +233,19 @@ public class VolumeRender extends BaseRender {
 
     public void setDecreaseColor(int color) {
         this.decreasePaint.setColor(color);
+    }
+
+    public float getMinValue(float... values) {
+        int length = values.length;
+        if (length == 0) {
+            return 0;
+        }
+        Arrays.sort(values);
+        for (int i = 0; i < length; i++) {
+            if (values[i] >= 0) {
+                return values[i];
+            }
+        }
+        return 0;
     }
 }

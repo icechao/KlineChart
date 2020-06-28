@@ -467,7 +467,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             isAnimationLast = false;
             overScroller.forceFinished(true);
             setScaleEnable(false);
-            resetValues();
+//            resetValues();
         }
     };
 
@@ -900,6 +900,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * @param value value
      * @return location y
      */
+    // TODO: 2020/7/8 所有交易量都为0时存在精度差
     public float getVolY(float value) {
         return volRect.top + ((volMaxValue - value) * volScaleY);
     }
@@ -1707,6 +1708,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     if (volume < volMinValue) {
                         volMinValue = volume;
                     }
+
                     if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {
                         break;
                     }
@@ -1734,8 +1736,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         switch (chartShowStatue) {
             case MAIN_VOL_INDEX:
             case MAIN_VOL:
-                if (volMaxValue < 0.001) {
-                    volMaxValue = 0.1f;
+                if (volMaxValue < 0.01f) {
+                    volMaxValue = 0.01f;
                 }
                 volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
                 if (chartShowStatue == Status.ChildStatus.MAIN_VOL) {

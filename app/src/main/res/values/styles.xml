@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="kline">
+        <item name="backgroundFillBottomColor">#081734</item>
+        <item name="backgroundFillTopColor">#112855</item>
+        <item name="priceLabelInLineBoxBorderColor">#4B6C91</item>
+        <item name="selectedCrossBigColor">#99ffffff</item>
+        <item name="selectedInfoBoxBackgroundColor">#325B88</item>
+        <item name="selectedInfoBoxBorderColor">#4E81EA</item>
+        <item name="selectedInfoBoxTextColor">#0B188C</item>
+    </style>
+
+
+    <style name="kline_style">
+        <item name="backgroundFillBottomColor">#00ff00</item>
+        <item name="backgroundFillTopColor">#ff00ff</item>
+        <item name="priceLabelInLineBoxBorderColor">#00ffff</item>
+        <item name="selectedCrossBigColor">#99ff00ff</item>
+        <item name="selectedInfoBoxBackgroundColor">#99ff00ff</item>
+        <item name="selectedInfoBoxBorderColor">#99ff00ff</item>
+        <item name="selectedInfoBoxTextColor">#99ff00ff</item>
+    </style>
 </resources>
