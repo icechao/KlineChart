@@ -467,7 +467,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             isAnimationLast = false;
             overScroller.forceFinished(true);
             setScaleEnable(false);
-            resetValues();
+//            resetValues();
         }
     };
 

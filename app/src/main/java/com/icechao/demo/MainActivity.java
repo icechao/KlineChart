@@ -87,7 +87,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         findViewById(R.id.text_view_hide_master).setOnClickListener(this);
 
 
-
         radioGroup = findViewById(R.id.radio_group_defalt_index);
         radioGroup.setOnCheckedChangeListener(this);
 
@@ -150,7 +149,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
-                        LogUtil.e("onSlidLeft");
+                        List<KChartBean> all = new DataTest().getData(MainActivity.this);
+                        //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
+                        all.addAll(adapter.getDatas());
+                        adapter.resetData(all, false);
                     }
 
 
@@ -198,7 +200,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 //1.定义类 KChartBean 继承KLineEntity
                 //2.从数据源获取 KChartBean 数据集合
-                List<KChartBean> kChartBeans = all = new DataTest().getData(MainActivity.this);
+                List<KChartBean> kChartBeans = new DataTest().getData(MainActivity.this);
                 //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
                 adapter.resetData(kChartBeans, true);
                 //adapter.addLast();  尾部追加数据

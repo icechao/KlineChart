@@ -92,7 +92,10 @@
         <attr name="candlePaddingBottom" format="dimension" />
         <attr name="candleWidth" format="dimension" />
         <attr name="candleLineWidth" format="dimension" />
-        <attr name="candleSolid" format="integer" />
+        <attr name="candleSolid">
+            <enum name="stroke" value="0" />
+            <enum name="solid" value="1" />
+        </attr>
         <!--grid line-->
         <attr name="gridLineWidth" format="dimension" />
         <attr name="gridLineColor" format="color" />
