@@ -371,7 +371,7 @@ public class MainRender extends BaseRender {
      * 设置选择器弹出框相关颜色 selected popupwindow text color
      *
      * @param textColor       文字
-     * @param borderColor      边框
+     * @param borderColor     边框
      * @param backgroundColor 背景
      */
     public void setSelectorColors(int textColor, int borderColor, int backgroundColor) {
@@ -473,19 +473,19 @@ public class MainRender extends BaseRender {
 
     public void setStroke(Status.HollowModel isStroke) {
         switch (isStroke) {
-            case INCREASE_STROKE:
-                upPaint.setStyle(Paint.Style.STROKE);
-                downPaint.setStyle(Paint.Style.FILL);
-                break;
-            case DECREASE_STROKE:
+            case DECREASE_HOLLOW:
                 upPaint.setStyle(Paint.Style.FILL);
                 downPaint.setStyle(Paint.Style.STROKE);
                 break;
-            case ALL_STROKE:
+            case INCREASE_HOLLOW:
+                upPaint.setStyle(Paint.Style.STROKE);
+                downPaint.setStyle(Paint.Style.FILL);
+                break;
+            case ALL_HOLLOW:
                 upPaint.setStyle(Paint.Style.STROKE);
                 downPaint.setStyle(Paint.Style.STROKE);
                 break;
-            case NONE_STROKE:
+            case NONE_HOLLOW:
                 upPaint.setStyle(Paint.Style.FILL);
                 downPaint.setStyle(Paint.Style.FILL);
                 break;

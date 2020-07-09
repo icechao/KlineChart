@@ -40,7 +40,7 @@ public class MACDRender extends BaseRender {
     private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String macdIndexLabel, difIndexLabel, deaIndexLabel;
-    private Status.HollowModel macdStrokeModel = Status.HollowModel.NONE_STROKE;
+    private Status.HollowModel macdStrokeModel = Status.HollowModel.NONE_HOLLOW;
 
     public MACDRender(Context context) {
         indexInterval = Constants.getCount();
@@ -57,13 +57,13 @@ public class MACDRender extends BaseRender {
 
         switch (macdStrokeModel) {
             default:
-            case NONE_STROKE:
+            case NONE_HOLLOW:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                 break;
-            case ALL_STROKE:
+            case ALL_HOLLOW:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redStrokePaint, greenStrokePaint);
                 break;
-            case INCREASE_STROKE:
+            case DECREASE_HOLLOW:
                 if (values.length <= Constants.getCount() || values[Constants.INDEX_MACD_MACD] < values[Constants.INDEX_MACD_MACD + indexInterval]) {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
@@ -71,7 +71,7 @@ public class MACDRender extends BaseRender {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redStrokePaint, greenStrokePaint);
                 }
                 break;
-            case DECREASE_STROKE:
+            case INCREASE_HOLLOW:
                 if (values.length <= Constants.getCount() || values[Constants.INDEX_MACD_MACD] > values[Constants.INDEX_MACD_MACD + indexInterval]) {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
