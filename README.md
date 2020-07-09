@@ -35,7 +35,7 @@
             
             工程的build.gradle中  In the mudule's build.gradle
 
-                        implementation 'com.icechao.klinelib:klinelib:2.0.1'
+                        implementation 'com.icechao.klinelib:klinelib:2.0.2'
 
             
 2. <b>继承KlineEntry定义自己的K线的数据Bean,复写抽象方法返回 :高 开 低 收 量 时间 The order information inherits the data bean of klineentry to define its own K-line, and the replication abstract method returns: high opening and low receipt time</b>
@@ -546,3 +546,11 @@
   ### 指标线所有指标可配置 具体配置方法查看Constants类  All indicators of the indicator line can be configured. See the Constants class for the specific configuration method
           修改后重置数据,会根据新指标计算          
  
+
+
+## 2.0.2更新
+
+    - 属性selecedLabel修改为selectedXlabel
+    - 修改HollowModel枚举内容名称
+    - 修复resetDate展示位重置问题
+    - 修复值为成交量为0时计算出现负数问题
