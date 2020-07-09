@@ -458,18 +458,19 @@
         
          kLineChartView.setMacdStrokeModel(Status.HollowModel model);
             参数
-            NONE_STROKE     :   所有的值实心
-            All_STROKE      :   所有的值空心
-            INCREASE_STROKE :   增长的值空心
-            DECREASE_STROKE :   下跌的值空心
+            NONE_HOLLOW     :   所有的值实心
+            All_HOLLOW      :   所有的值空心
+            INCREASE_HOLLOW :   上扬的值空心
+            DECREASE_HOLLOW :   下扬的值空心
+            
   ### K线空心设置 Setting of Kline hollow histogram
           
          kLineChartView.setCandleSolid(Status.HollowModel model);
             参数
-            NONE_STROKE     :   所有的值实心
-            All_STROKE      :   所有的值空心
-            INCREASE_STROKE :   增长的值空心
-            DECREASE_STROKE :   下跌的值空心      
+            NONE_HOLLOW     :   所有的值实心
+            All_HOLLOW      :   所有的值空心
+            INCREASE_HOLLOW :   增长的值空心
+            DECREASE_HOLLOW :   下跌的值空心      
                   
   ### macd空心时线宽设置 Line width of MACD hollow histogram
         
@@ -521,21 +522,26 @@
             Status.VolChartStatus.LINE_CHART : 线状图
             
   ### 强制隐藏信息框 Forced Hiding Information Box
+  
         kLineChartView.hideMarketInfoBox(boolean forceHide)  
         参数 
             true  : 隐藏
             false : 显示       
   
   ### 替换MainDraw,继承后自由实现功能 Replace MainDraw and implement functionality freely after inheritance
+  
           kLineChartView.resetMainDraw(T t)
            
   ### 替换volDraw,继承后自由实现功能 Replace volDraw and implement functions freely after inheritance
+  
           kLineChartView.resetVoDraw(T t)
                     
   ### 替换IndexDraw,继承后自由实现功能 Replace IndexDraw and implement functionality freely after inheritance
+  
           kLineChartView.resetIndexDraw(Status.IndexStatus status, T t) 
   
   ### 最大最小值计算模式,影响Y轴的最大最小值 Max min calculation mode, affecting the max min value of Y axis
+  
           kLineChartView.setMaxMinCalcModel(Status.MaxMinCalcModel model)
           参数 
               MaxMinCalcModel.CALC_NORMAL_WITH_LAST :   计算显示的线和最新线的全部值 默认值
@@ -544,6 +550,7 @@
               MaxMinCalcModel.CALC_CLOSE_WITH_SHOW  :   计算显示的线的close值
             
   ### 指标线所有指标可配置 具体配置方法查看Constants类  All indicators of the indicator line can be configured. See the Constants class for the specific configuration method
+  
           修改后重置数据,会根据新指标计算          
  
 
