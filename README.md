@@ -555,9 +555,15 @@
      - 支持右侧独立坐标轴配置单独背景色
      - 统一属性值名称
 
-## 2.0.2更新
+ ## 2.0.2更新
 
     - 属性selecedLabel修改为selectedXlabel
     - 修改HollowModel枚举内容名称
     - 修复resetDate展示位重置问题
     - 修复值为成交量为0时计算出现负数问题
+
+ ## 2.0.3更新
+
+        - 添加setAutoFixScrollEnable方法控制可滚动为手动控制还是自动控制
+        - 网格线宽重置位置
+        - 渲染控制resetData时不渲染直到数据设置完成
