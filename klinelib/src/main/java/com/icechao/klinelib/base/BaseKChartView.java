@@ -455,10 +455,9 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             } else if (!isAnimationLast) {
                 changeTranslated(getMinTranslate());
             }
-            gridRowCountWithChild = 0;
-            gridRowCountNoChild = 0;
             //再次开启动画
             action.run();
+            needRender = true;
         }
 
         @Override
@@ -466,10 +465,11 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             tempTranslation = canvasTranslateX;
             isAnimationLast = false;
             overScroller.forceFinished(true);
-            setScaleEnable(false);
-//            resetValues();
+            needRender = false;
         }
     };
+
+    private boolean needRender = true;
 
     private float tempTranslation;
 
@@ -479,7 +479,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     protected Runnable action = () -> {
         isAnimationLast = true;
-        setScaleEnable(true);
     };
 
 
@@ -769,17 +768,23 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
     @Override
     public void onDraw(Canvas canvas) {
-        renderBackground(canvas);
-        renderGrid(canvas);
-        renderLogo(canvas);
-        if (!isShowLoading && viewWidth != 0 && 0 != itemsCount && null != points && points.length != 0) {
-            try {
-                calcValues();
-                renderXLabels(canvas);
-                renderK(canvas);
-                renderValue(canvas, getShowSelected() ? selectedIndex : itemsCount - 1);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (needRender) {
+            renderBackground(canvas);
+            renderGrid(canvas);
+            renderLogo(canvas);
+            if (!isShowLoading &&
+                    0 != viewWidth &&
+                    0 != itemsCount &&
+                    null != points &&
+                    points.length != 0) {
+                try {
+                    calcValues();
+                    renderXLabels(canvas);
+                    renderK(canvas);
+                    renderValue(canvas, getShowSelected() ? selectedIndex : itemsCount - 1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -843,24 +848,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected boolean yLabelBackgroundHeightSameChart;
 
     /**
-     * 重置所有数据
-     * <p>
-     * 可能会出现没效果,动画执行过程中,值改变
-     */
-    protected void resetValues() {
-        lastVol = 0;
-        lastPrice = 0;
-        lastPrice = 0;
-        itemsCount = 0;
-        selectedIndex = -1;
-        screenLeftIndex = 0;
-        screenRightIndex = 0;
-        gridRowCountNoChild = 0;
-        gridRowCountWithChild = 0;
-    }
-
-
-    /**
      * 设置当前K线总数据个数
      *
      * @param itemCount items count
@@ -875,6 +862,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             indexRender.setItemCount(itemCount);
             indexRender.resetValues();
         }
+        fixScrollEnable(getDataLength());
         invalidate();
     }
 
@@ -1392,13 +1380,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * @return float
      */
     protected float getDataLength() {
-        float length = chartItemWidth * getScaleX() * (itemsCount - 1) + overScrollRange;
-        if (length <= renderWidth && isScrollEnable()) {
-            setScrollEnable(false);
-        } else if (!isScrollEnable() && length > renderWidth) {
-            setScrollEnable(true);
-        }
-        return length;
+        return chartItemWidth * getScaleX() * (itemsCount - 1) + overScrollRange;
     }
 
     /**
@@ -1532,8 +1514,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         } else {
             stopFreshPage();
         }
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
         animInvalidate();
     }
 
@@ -1547,19 +1527,31 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         float newCount = (renderWidth / tempWidth);
         float oldCount = (renderWidth / chartItemWidth / oldScale);
         float difCount = (newCount - oldCount) / 2;
+        float dataLength = getDataLength();
         if (screenLeftIndex > 0) {
             changeTranslated(canvasTranslateX / oldScale * scale + difCount * tempWidth);
         } else {
-            if (getDataLength() < renderWidth) {
-                changeTranslated(-(renderWidth - getDataLength()));
+            if (dataLength < renderWidth) {
+                changeTranslated(-(renderWidth - dataLength));
             } else {
                 changeTranslated(getMaxTranslate());
             }
         }
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
+        fixScrollEnable(dataLength);
         animInvalidate();
     }
+
+    private void fixScrollEnable(float dataLength) {
+        if (autoFixScrollEnable) {
+            if (dataLength <= renderWidth && isScrollEnable()) {
+                setScrollEnable(false);
+            } else if (!isScrollEnable() && dataLength > renderWidth) {
+                setScrollEnable(true);
+            }
+        }
+    }
+
+    protected boolean autoFixScrollEnable = true;
 
 
     /**
@@ -2007,7 +1999,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
          * @param index 选中点的索引
          */
         void onSelectedChanged(BaseKChartView view, int index, float... values);
-
     }
 
     /**
@@ -2102,11 +2093,9 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         }
     }
 
-
     @Override
     protected void onDetachedFromWindow() {
         logoBitmap = null;
         super.onDetachedFromWindow();
     }
-
 }

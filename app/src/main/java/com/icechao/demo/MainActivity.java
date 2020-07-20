@@ -60,6 +60,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTheme(R.style.AppTheme);
+
         chartView = findViewById(R.id.kLineChartView);
         depthFullView = findViewById(R.id.full_depth_view);
         attachedOperater = findViewById(R.id.linear_layout_attached_operater);
@@ -124,6 +126,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
+                .setMacdStrokeModel(Status.HollowModel.INCREASE_HOLLOW)
                 .setPriceLabelInLineClickable(true)
                 .setLabelSpace(130)
                 .setLogoBitmap(logoBitmap)
@@ -133,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
-                .setCandleSolid(Status.HollowModel.ALL_STROKE)
+                .setCandleSolid(Status.HollowModel.INCREASE_HOLLOW)
                 .setOnSelectedChangedListener(new BaseKChartView.OnSelectedChangedListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -184,6 +187,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         return DateUtil.yyyyMMddFormat.format(date);
                     }
                 });
+//        chartView.setAutoFixScrollEnable(false);
+//        chartView.setScrollEnable(false);
+//        chartView.setScaleEnable(false);
 //        chartView.setSelectedInfoBoxColors(Color.RED,Color.BLUE,Color.YELLOW);
 //        chartView.setChartVolState(false);
 
@@ -202,13 +208,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 SystemClock.sleep(1000);
                 //1.定义类 KChartBean 继承KLineEntity
                 //2.从数据源获取 KChartBean 数据集合
-                List<KChartBean> kChartBeans = new DataTest().getData(MainActivity.this);
+                all = new DataTest().getData(MainActivity.this);
                 //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
-                adapter.resetData(kChartBeans, true);
+                adapter.resetData(all, true);
                 //adapter.addLast();  尾部追加数据
                 //adapter.changeItem(position,data);  更新数据
                 //4.隐藏K线loading
                 chartView.hideLoading();
+
 
             }
         }.start();

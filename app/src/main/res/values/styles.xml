@@ -6,9 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="theme_text_color">#ff0000</item>
     </style>
 
+
     <style name="kline">
+        <item name="android:background"></item>
         <item name="backgroundFillBottomColor">#081734</item>
         <item name="backgroundFillTopColor">#112855</item>
         <item name="priceLabelInLineBoxBorderColor">#4B6C91</item>

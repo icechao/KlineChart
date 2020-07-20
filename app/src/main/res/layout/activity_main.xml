@@ -4,6 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#131F30"
+        android:theme="@style/AppTheme"
         android:orientation="vertical">
 
     <LinearLayout
@@ -26,7 +27,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:text="K线Demo"
-                android:textColor="#CFD3E9"
+                android:textColor="?theme_text_color"
                 android:textSize="18sp" />
 
         <TextView
@@ -70,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="9dp"
                             android:includeFontPadding="false"
-                            android:textColor="#03C087"
+                            android:textColor="?theme_text_color"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 

@@ -102,14 +102,14 @@ public class MainRender extends BaseRender {
 
         } else {
             if (position == 0) {
-                drawCandle(view, canvas, curX,
+                renderCandle(view, canvas, curX,
                         values[Constants.INDEX_HIGH],
                         values[Constants.INDEX_LOW],
                         values[Constants.INDEX_OPEN],
                         values[Constants.INDEX_CLOSE],
                         position);
             } else {
-                drawCandle(view, canvas, curX,
+                renderCandle(view, canvas, curX,
                         values[Constants.INDEX_HIGH + indexInterval],
                         values[Constants.INDEX_LOW + indexInterval],
                         values[Constants.INDEX_OPEN + indexInterval],
@@ -226,7 +226,7 @@ public class MainRender extends BaseRender {
      * @param open   开盘价
      * @param close  收盘价
      */
-    private void drawCandle(BaseKChartView view, Canvas canvas, float x, float high, float low, float open, float close, int position) {
+    private void renderCandle(BaseKChartView view, Canvas canvas, float x, float high, float low, float open, float close, int position) {
         high = view.getMainY(high);
         low = view.getMainY(low);
         open = view.getMainY(open);
@@ -239,15 +239,15 @@ public class MainRender extends BaseRender {
         float cancleLeft = x - r;
         float candleright = x + r;
         if (open < close) {//跌
-            drawCandle(canvas, x, high, low, open, close, cancleLeft, candleright, downPaint, downLinePaint);
+            renderCandle(canvas, x, high, low, open, close, cancleLeft, candleright, downPaint, downLinePaint);
         } else if (open > close) {//涨
-            drawCandle(canvas, x, high, low, close, open, cancleLeft, candleright, upPaint, upLinePaint);
+            renderCandle(canvas, x, high, low, close, open, cancleLeft, candleright, upPaint, upLinePaint);
         } else {
-            drawCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
+            renderCandle(canvas, x, high, low, close - 1, open, cancleLeft, candleright, upPaint, upLinePaint);
         }
     }
 
-    private void drawCandle(Canvas canvas, float x, float high, float low, float open, float close, float cancleLeft, float candleright, Paint paint, Paint linePaint) {
+    private void renderCandle(Canvas canvas, float x, float high, float low, float open, float close, float cancleLeft, float candleright, Paint paint, Paint linePaint) {
         canvas.drawRect(cancleLeft, close, candleright, open, paint);
         if (high < open) {
             canvas.drawLine(x, open, x, high, linePaint);

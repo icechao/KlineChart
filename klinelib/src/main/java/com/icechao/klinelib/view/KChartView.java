@@ -503,6 +503,11 @@ public class KChartView extends BaseKChartView {
     }
 
 
+    /**
+     * 设置是否可以 滑动
+     *
+     * @param scrollEnable
+     */
     public void setScrollEnable(boolean scrollEnable) {
         super.setScrollEnable(scrollEnable);
     }
@@ -2084,6 +2089,15 @@ public class KChartView extends BaseKChartView {
             this.yLabelBackgroundPaint = null;
         }
         return this;
+    }
+
+    /**
+     * 设置是否自动修复滑动
+     *
+     * @param autoFixScrollEnable
+     */
+    public void setAutoFixScrollEnable(boolean autoFixScrollEnable) {
+        this.autoFixScrollEnable = autoFixScrollEnable;
     }
 
     /**
