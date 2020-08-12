@@ -412,6 +412,11 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     protected boolean hideMarketInfo;
 
+    /**
+     *  最大最小值缩放系数
+     */
+    protected double maxMinCoefficient;
+
     protected Status.MaxMinCalcModel calcModel = Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST;
 
     /**
@@ -933,7 +938,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         switch (yLabelModel) {
             case LABEL_NONE_GRID:
                 canvas.save();
-                canvas.clipRect(-canvasTranslateX, chartPaddingTop, -canvasTranslateX + renderWidth, getChartPaddingTop() + displayHeight);
+                canvas.clipRect(-canvasTranslateX, chartPaddingTop - textHeight, -canvasTranslateX + renderWidth, chartPaddingTop + displayHeight  +textHeight);
                 renderKCandle(canvas);
                 mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
                 canvas.restore();
@@ -1514,6 +1519,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         } else {
             stopFreshPage();
         }
+        gridRowCountWithChild = 0;
+        gridRowCountNoChild = 0;
         animInvalidate();
     }
 
@@ -1538,6 +1545,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             }
         }
         fixScrollEnable(dataLength);
+        gridRowCountWithChild = 0;
+        gridRowCountNoChild = 0;
         animInvalidate();
     }
 
@@ -1717,10 +1726,10 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
         if (mainMaxValue == mainMinValue) {
             //当最大值和最小值都相等的时候 分别增大最大值和 减小最小值
-            mainMaxValue += Math.abs(mainMaxValue * 0.05f);
-            mainMinValue -= Math.abs(mainMinValue * 0.05f);
+            mainMaxValue += Math.abs(mainMaxValue * maxMinCoefficient);
+            mainMinValue -= Math.abs(mainMinValue * maxMinCoefficient);
         }
-        double padding = (mainMaxValue - mainMinValue) * 0.05f;
+        double padding = (mainMaxValue - mainMinValue) * maxMinCoefficient;
 
         mainMaxValue += padding;
         mainMinValue = padding < mainMinValue ? mainMinValue -= padding : 0;
@@ -1737,8 +1746,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 }
 
             case MAIN_INDEX:
-                indexMaxValue += Math.abs(indexMaxValue * 0.05f);
-                mChildMinValue -= Math.abs(mChildMinValue * 0.05f);
+                indexMaxValue += Math.abs(indexMaxValue * maxMinCoefficient);
+                mChildMinValue -= Math.abs(mChildMinValue * maxMinCoefficient);
                 if (indexMaxValue == 0) {
                     indexMaxValue = 1f;
                 }

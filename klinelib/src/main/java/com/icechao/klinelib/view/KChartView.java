@@ -211,6 +211,7 @@ public class KChartView extends BaseKChartView {
 
                 setVolMa1Color(array.getColor(R.styleable.KChartView_volMa1Color, Color.parseColor("#F6DC93")));
                 setVolMa2Color(array.getColor(R.styleable.KChartView_volMa2Color, Color.parseColor("#61D1C0")));
+                setMaxMinCoefficient(array.getDouble(R.styleable.KChartView_maxMinCoefficient,0.05));
 
                 setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KChartView_candleSolid, 0)));
 
@@ -2035,6 +2036,16 @@ public class KChartView extends BaseKChartView {
      */
     public KChartView setSelectedDateBoxHorizontalPadding(float padding) {
         selectedDateBoxHorizontalPadding = padding;
+        return this;
+    }
+    /**
+     * 设置最大值最小值的缩放系数
+     *
+     * @param coefficient double
+     * @return {@link KChartView}
+     */
+    public KChartView setMaxMinCoefficient(double coefficient) {
+        maxminCoefficient = coefficient;
         return this;
     }
 
