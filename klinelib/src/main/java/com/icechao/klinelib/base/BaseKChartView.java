@@ -413,7 +413,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected boolean hideMarketInfo;
 
     /**
-     *  最大最小值缩放系数
+     * 最大最小值缩放系数
      */
     protected double maxMinCoefficient;
 
@@ -766,8 +766,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         if (null != logoBitmap) {
             logoTop = mainRect.bottom - logoBitmap.getHeight() - logoPaddingBottom;
         }
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
         invalidate();
     }
 
@@ -859,6 +857,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     protected void setItemsCount(int itemCount) {
         this.itemsCount = itemCount;
+        dataLength = 0;
         mainRender.setItemCount(itemsCount);
         mainRender.resetValues();
         volumeRender.setItemCount(itemsCount);
@@ -938,7 +937,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         switch (yLabelModel) {
             case LABEL_NONE_GRID:
                 canvas.save();
-                canvas.clipRect(-canvasTranslateX, chartPaddingTop - textHeight, -canvasTranslateX + renderWidth, chartPaddingTop + displayHeight  +textHeight);
+                canvas.clipRect(-canvasTranslateX, chartPaddingTop - textHeight, -canvasTranslateX + renderWidth, chartPaddingTop + displayHeight + textHeight);
                 renderKCandle(canvas);
                 mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
                 canvas.restore();
@@ -1144,9 +1143,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         }
     }
 
-    private double rowValueNoChild, rowValueWithChild;
-    protected int gridRowCountNoChild;
-    protected int gridRowCountWithChild;
 
     protected Status.YLabelAlign yLabelAlign;
     protected float yLabelX;
@@ -1164,32 +1160,25 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         float tempLeft = -canvasTranslateX;
         switch (chartShowStatue) {
             case MAIN_VOL_INDEX:
-                if (0 == gridRowCountWithChild) {
-                    gridRowCountWithChild = gridRows - 2;
-                    rowValueWithChild = (mainMaxValue - mainMinValue) / gridRowCountWithChild;
-                }
-                gridRowCount = gridRowCountWithChild;
-                rowValue = rowValueWithChild;
+                gridRowCount = gridRows - 2;
+                rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
                     String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
-                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().
-                        format(volMaxValue));
+                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().format(volMaxValue));
                 canvas.drawText(maxVol, tempLeft + yLabelX, mainRect.bottom + baseLine, yLabelPaint);
                 //子图Y轴label
                 childLabel = indexRender.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLabel, tempLeft + yLabelX, volRect.bottom + baseLine, yLabelPaint);
                 break;
             case MAIN_VOL:
-                if (0 == gridRowCountNoChild) {
-                    gridRowCountNoChild = gridRows - 1;
-                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
-                }
-                gridRowCount = gridRowCountNoChild;
-                rowValue = rowValueNoChild;
+
+                gridRowCount = gridRows - 1;
+                rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
+
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
                     String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
@@ -1203,12 +1192,9 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 break;
 
             case MAIN_ONLY:
-                if (0 == gridRowCountNoChild) {
-                    gridRowCountNoChild = gridRows;
-                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
-                }
-                gridRowCount = gridRowCountNoChild;
-                rowValue = rowValueNoChild;
+
+                gridRowCount = gridRows;
+                rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网格的值
                 for (int i = 0; i <= gridRowCount; i++) {
                     String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
@@ -1217,12 +1203,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 }
                 break;
             case MAIN_INDEX:
-                if (0 == gridRowCountNoChild) {
-                    gridRowCountNoChild = gridRows - 1;
-                    rowValueNoChild = (mainMaxValue - mainMinValue) / gridRowCountNoChild;
-                }
-                gridRowCount = gridRowCountNoChild;
-                rowValue = rowValueNoChild;
+                gridRowCount = gridRows - 1;
+                rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
                     String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
@@ -1330,9 +1312,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * @param priceText priceText
      */
     private void renderPriceLabelInPriceLine(Canvas canvas, float boxLeft, float boxTop, float boxRight, float boxBottom, float rectRadius, float y, String priceText) {
-
-        LogUtil.e("left : " + boxLeft + "     top" + boxTop + "   box");
-
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxBgPaint);
         canvas.drawRoundRect(new RectF(boxLeft, boxTop, boxRight, boxBottom), rectRadius, rectRadius, priceLineBoxPaint);
         float temp = priceShapeHeight / 2;
@@ -1385,8 +1364,14 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * @return float
      */
     protected float getDataLength() {
-        return chartItemWidth * getScaleX() * (itemsCount - 1) + overScrollRange;
+        if(dataLength == 0){
+            return chartItemWidth * getScaleX() * (itemsCount - 1) + overScrollRange;
+        }else {
+            return dataLength;
+        }
     }
+
+    private float dataLength = 0;
 
     /**
      * 开启循环刷新绘制
@@ -1519,8 +1504,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         } else {
             stopFreshPage();
         }
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
         animInvalidate();
     }
 
@@ -1530,6 +1513,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         if (scale == oldScale) {
             return;
         }
+        dataLength = 0;
         float tempWidth = chartItemWidth * scale;
         float newCount = (renderWidth / tempWidth);
         float oldCount = (renderWidth / chartItemWidth / oldScale);
@@ -1545,8 +1529,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             }
         }
         fixScrollEnable(dataLength);
-        gridRowCountWithChild = 0;
-        gridRowCountNoChild = 0;
         animInvalidate();
     }
 

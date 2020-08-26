@@ -211,7 +211,7 @@ public class KChartView extends BaseKChartView {
 
                 setVolMa1Color(array.getColor(R.styleable.KChartView_volMa1Color, Color.parseColor("#F6DC93")));
                 setVolMa2Color(array.getColor(R.styleable.KChartView_volMa2Color, Color.parseColor("#61D1C0")));
-                setMaxMinCoefficient(array.getDouble(R.styleable.KChartView_maxMinCoefficient,0.05));
+                setMaxMinCoefficient(array.getFloat(R.styleable.KChartView_maxMinCoefficient,0.05f));
 
                 setCandleSolid(Status.HollowModel.getStrokeModel(array.getInteger(R.styleable.KChartView_candleSolid, 0)));
 
@@ -2045,7 +2045,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMaxMinCoefficient(double coefficient) {
-        maxminCoefficient = coefficient;
+        maxMinCoefficient = coefficient;
         return this;
     }
 

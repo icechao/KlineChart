@@ -115,7 +115,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         loadingView.setText("正在加载...");
         adapter = new KLineChartAdapter();
         chartView = findViewById(R.id.kLineChartView);
-
+        chartView.setTimeLineEndRadius(20);
 
         chartView.setAdapter(adapter)
                 //loading anim
