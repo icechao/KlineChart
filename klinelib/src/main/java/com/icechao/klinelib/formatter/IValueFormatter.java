@@ -17,5 +17,5 @@ public interface IValueFormatter {
      * @param value 传入的value值
      * @return 返回字符串
      */
-    String format(float value);
+    String format(double value);
 }

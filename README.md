@@ -175,7 +175,7 @@
       | chartLogo | reference | 设置K线显示的logo |   |
       | limitTextColor | color | 设置主视图最大/最小值文字颜色 |   |
       | limitTextSize | dimension | 设置主图片最大/最小值文字大小 |   |
-      | candleSolid | integer | 蜡烛是否空心  |   |
+      | candleHollow | integer | 蜡烛是否空心  |  `` 原属性为candleSolid `` |
       | gridLineWidth | dimension |  设置背景网格线宽 |   |
       | gridLineColor | color |  设置背景网格线颜色 |   |
       | gridLineRows | integer | 设置背景网格行数  |    |
@@ -183,6 +183,7 @@
       | macdStrokeWidth | color | macd空心时线宽  |   |
       | macdIncreaseColor | color | 设置macd 上涨颜色|   |
       | macdDecreaseColor | color | 设置macd 下跌颜色 |   |
+      | macdHolow| color | 设置macd 下跌颜色 |   |
       | macdWidth | dimension |  macd柱状图宽 |   |
       | difColor | color | 设置DIF颜色  |   |
       | deaColor | color | 设置DEA颜色  |   |
@@ -460,7 +461,7 @@
 
   ### K线空心设置 Setting of Kline hollow histogram
           
-         kLineChartView.setCandleSolid(Status.HollowModel model);
+         kLineChartView.setCandleHolow(Status.HollowModel model);
             参数
             NONE_HOLLOW     :   所有的值实心
             All_HOLLOW      :   所有的值空心

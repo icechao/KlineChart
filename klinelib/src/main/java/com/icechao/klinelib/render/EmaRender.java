@@ -7,8 +7,6 @@ import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 
 import java.util.Arrays;
@@ -31,7 +29,6 @@ public class EmaRender extends BaseRender {
     private Paint rsi1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint rsi2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint rsi3Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
 
     public EmaRender(Context context) {
@@ -109,16 +106,6 @@ public class EmaRender extends BaseRender {
 
     }
 
-    @Override
-    public IValueFormatter getValueFormatter() {
-
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
-    }
 
     @Override
     public void setItemCount(int mItemCount) {

@@ -126,7 +126,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setAnimLoadData(false)
                 .setGridColumns(5)
                 .setGridRows(5)
-                .setMacdStrokeModel(Status.HollowModel.INCREASE_HOLLOW)
+                .setMacdHollow(Status.INCREASE_HOLLOW)
                 .setPriceLabelInLineClickable(true)
                 .setLabelSpace(130)
                 .setLogoBitmap(logoBitmap)
@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //show loading View
                 .setLoadingView(loadingView)
                 //full or stroke
-                .setCandleSolid(Status.HollowModel.INCREASE_HOLLOW)
+                .setCandleHollow(Status.INCREASE_HOLLOW)
                 .setOnSelectedChangedListener(new BaseKChartView.OnSelectedChangedListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -169,14 +169,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 //set value  formater
                 .setValueFormatter(new ValueFormatter() {
                     @Override
-                    public String format(float value) {
+                    public String format(double value) {
                         return String.format(Locale.CHINA, "%.03f", value);
                     }
                 })
                 //set vol value  formater
                 .setVolFormatter(new ValueFormatter() {
                     @Override
-                    public String format(float value) {
+                    public String format(double value) {
                         return String.format(Locale.CHINA, "%.03f", value);
                     }
                 })
@@ -242,68 +242,68 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 break;
             case R.id.text_view_hide_master:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.MainStatus.NONE);
+                chartView.changeMainDrawType(Status.MAIN_NONE);
 
                 break;
             case R.id.text_view_hide_sub:
                 chartView.hideSelectData();
-                chartView.setIndexDraw(Status.IndexStatus.NONE);
+                chartView.setIndexDraw(Status.INDEX_NONE);
                 break;
             case R.id.text_view_ma:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.MainStatus.MA);
+                chartView.changeMainDrawType(Status.MAIN_MA);
                 break;
             case R.id.text_view_boll:
                 chartView.hideSelectData();
-                chartView.changeMainDrawType(Status.MainStatus.BOLL);
+                chartView.changeMainDrawType(Status.MAIN_BOLL);
                 break;
             case R.id.text_view_macd:
                 chartView.hideSelectData();
-                chartView.setIndexDraw(Status.IndexStatus.MACD);
+                chartView.setIndexDraw(Status.INDEX_MACD);
                 break;
             case R.id.text_view_kdj:
                 chartView.hideSelectData();
-                chartView.setIndexDraw(Status.IndexStatus.KDJ);
+                chartView.setIndexDraw(Status.INDEX_KDJ);
                 break;
             case R.id.text_view_rsi:
                 chartView.hideSelectData();
-                chartView.setIndexDraw(Status.IndexStatus.RSI);
+                chartView.setIndexDraw(Status.INDEX_RSI);
                 break;
             case R.id.text_view_wr:
                 chartView.hideSelectData();
-                chartView.setIndexDraw(Status.IndexStatus.WR);
+                chartView.setIndexDraw(Status.INDEX_WR);
                 break;
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_five_minute:
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all);
 
                 break;
             case R.id.text_view_half_hour:
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_one_week:
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_one_mounth:
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all);
                 break;
             case R.id.text_view_change_label_state:
                 if (i % 2 == 0) {
-                    chartView.setYLabelState(Status.YLabelModel.LABEL_NONE_GRID);
+                    chartView.setYLabelState(Status.LABEL_NONE_GRID);
                 } else {
-                    chartView.setYLabelState(Status.YLabelModel.LABEL_WITH_GRID);
+                    chartView.setYLabelState(Status.LABEL_WITH_GRID);
                 }
                 i++;
                 break;
@@ -324,50 +324,50 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         switch (checkedId) {
             case R.id.radio_button_time_line:
                 //计算最大最小值包含收盘价与最新收盘价
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_CLOSE_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_CLOSE_WITH_LAST);
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.TIME_LINE);
+                chartView.setKlineState(Status.KLINE_SHOW_TIME_LINE);
                 adapter.resetData(all.subList(10, 140));
                 break;
             case R.id.radio_button_fifteen:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all.subList(10, 20));
 
                 break;
             case R.id.radio_button_one_hour:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all.subList(110, 400));
                 break;
             case R.id.radio_button_four_hour:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all.subList(150, 450));
 
                 break;
             case R.id.radio_button_one_day:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
-                chartView.setKlineState(Status.KlineStatus.K_LINE);
+                chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
                 adapter.resetData(all.subList(10, 320));
                 break;
             case R.id.radio_button_more:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 moreIndex.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);
                 break;
             case R.id.radio_button_index_setting:
                 //计算最大最小值时包含指标值与最新数据
-                chartView.setMaxMinCalcModel(Status.MaxMinCalcModel.CALC_NORMAL_WITH_LAST);
+                chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 masterOperater.setVisibility(View.VISIBLE);
                 attachedOperater.setVisibility(View.VISIBLE);
                 klineOperater.setVisibility(View.VISIBLE);

@@ -31,7 +31,6 @@ public class RSIRender extends BaseRender {
     private Paint rsi1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint rsi2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint rsi3Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
 
     public RSIRender(Context context) {
@@ -107,17 +106,6 @@ public class RSIRender extends BaseRender {
     @Override
     public void startAnim(BaseKChartView view, float... values) {
 
-    }
-
-    @Override
-    public IValueFormatter getValueFormatter() {
-
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
     }
 
     @Override
