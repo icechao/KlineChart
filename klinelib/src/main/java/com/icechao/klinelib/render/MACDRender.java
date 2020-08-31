@@ -37,10 +37,9 @@ public class MACDRender extends BaseRender {
      * macd 中柱子的宽度
      */
     private float macdWidth = 0;
-    private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String macdIndexLabel, difIndexLabel, deaIndexLabel;
-    private Status.HollowModel macdStrokeModel = Status.HollowModel.NONE_HOLLOW;
+    private @Status.HollowModel int macdStrokeModel = Status.NONE_HOLLOW;
 
     public MACDRender(Context context) {
         indexInterval = Constants.getCount();
@@ -57,13 +56,13 @@ public class MACDRender extends BaseRender {
 
         switch (macdStrokeModel) {
             default:
-            case NONE_HOLLOW:
+            case Status.NONE_HOLLOW:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                 break;
-            case ALL_HOLLOW:
+            case Status.ALL_HOLLOW:
                 drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redStrokePaint, greenStrokePaint);
                 break;
-            case DECREASE_HOLLOW:
+            case Status.DECREASE_HOLLOW:
                 if (values.length <= Constants.getCount() || values[Constants.INDEX_MACD_MACD] < values[Constants.INDEX_MACD_MACD + indexInterval]) {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
@@ -71,7 +70,7 @@ public class MACDRender extends BaseRender {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redStrokePaint, greenStrokePaint);
                 }
                 break;
-            case INCREASE_HOLLOW:
+            case Status.INCREASE_HOLLOW:
                 if (values.length <= Constants.getCount() || values[Constants.INDEX_MACD_MACD] > values[Constants.INDEX_MACD_MACD + indexInterval]) {
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
                     drawMACD(canvas, view, curX, values[Constants.INDEX_MACD_MACD + (position == 0 ? 0 : indexInterval)], redPaint, greenPaint);
@@ -124,17 +123,6 @@ public class MACDRender extends BaseRender {
 
     }
 
-
-    @Override
-    public IValueFormatter getValueFormatter() {
-
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
-    }
 
     @Override
     public void setItemCount(int mItemCount) {
@@ -205,7 +193,7 @@ public class MACDRender extends BaseRender {
         greenStrokePaint.setStrokeWidth(width);
     }
 
-    public void setStrokeModel(Status.HollowModel model) {
+    public void setStrokeModel(@Status.HollowModel int model) {
         this.macdStrokeModel = model;
 
     }

@@ -25,7 +25,6 @@ public class WRRender extends BaseRender {
     private Paint r1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint r2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint r3Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private final String legendText;
 
@@ -55,17 +54,6 @@ public class WRRender extends BaseRender {
             String temp = getValueFormatter().format(values[Constants.INDEX_WR_1]) + " ";
             canvas.drawText(temp, x, y, r1Paint);
         }
-    }
-
-    @Override
-    public IValueFormatter getValueFormatter() {
-
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
     }
 
     @Override

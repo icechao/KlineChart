@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class ValueFormatter implements IValueFormatter {
     @Override
-    public String format(float value) {
+    public String format(double value) {
         return String.format(Locale.CHINA, "%.2f", value);
     }
 }

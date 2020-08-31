@@ -36,19 +36,19 @@ public class BaseDepthView extends View implements View.OnTouchListener {
 
     private float labelHeight = 40;
 
-    private boolean isShowLegent = true;
-    private float legentHeight = 10;
+    private boolean isShowLegend = true;
+    private float legendHeight = 10;
     private float defaultPadding = 8;
-    private float legentTextSize = 25;
+    private float legendTextSize = 25;
 
     private int leftColor = Color.GREEN;
     private int rightColor = Color.RED;
-    private int legentTextColor = Color.GRAY;
-    private boolean isColorSameAsLegent;
+    private int legendTextColor = Color.GRAY;
+    private boolean isColorSameAsLegend;
     private boolean isSelected;
 
-    private String leftLegentText;
-    private String rightLegentText;
+    private String leftLegendText;
+    private String rightLegendText;
 
     private int backGroundColor = Color.DKGRAY;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -89,7 +89,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
         labelDraw = new DepthLabelRender(5, 5);
         depthRender = new DepthRender();
 
-        paint.setTextSize(legentTextSize);
+        paint.setTextSize(legendTextSize);
         paint.setStyle(Paint.Style.FILL);
         observer = new DataSetObserver() {
             @Override
@@ -121,7 +121,7 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawBackground(canvas);
-        if (isShowLegent) {
+        if (isShowLegend) {
             drawLegent(canvas);
         }
 
@@ -153,51 +153,51 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      */
     private void drawLegent(Canvas canvas) {
         float halfWidth = width >> 1;
-        float legentTop;
-        float leftLegentLeft;
-        float leftLegentRight;
-        float legentBottom;
-        float rightLegentLeft = halfWidth + defaultPadding;
-        float rightLegentRight = halfWidth + defaultPadding + legentHeight;
-        if (TextUtils.isEmpty(rightLegentText) || TextUtils.isEmpty(leftLegentText)) {
-            legentTop = defaultPadding;
-            leftLegentLeft = halfWidth - legentHeight - defaultPadding;
-            leftLegentRight = halfWidth - defaultPadding;
-            legentBottom = legentHeight + defaultPadding;
+        float legendTop;
+        float leftLegendLeft;
+        float leftLegendRight;
+        float legendBottom;
+        float rightLegendLeft = halfWidth + defaultPadding;
+        float rightLegendRight = halfWidth + defaultPadding + legendHeight;
+        if (TextUtils.isEmpty(rightLegendText) || TextUtils.isEmpty(leftLegendText)) {
+            legendTop = defaultPadding;
+            leftLegendLeft = halfWidth - legendHeight - defaultPadding;
+            leftLegendRight = halfWidth - defaultPadding;
+            legendBottom = legendHeight + defaultPadding;
 
         } else {
 
 
-            float leftWidth = paint.measureText(leftLegentText);
+            float leftWidth = paint.measureText(leftLegendText);
 
-            leftLegentLeft = halfWidth - defaultPadding * 2 - leftWidth - legentHeight;
-            leftLegentRight = halfWidth - defaultPadding * 2 - leftWidth;
+            leftLegendLeft = halfWidth - defaultPadding * 2 - leftWidth - legendHeight;
+            leftLegendRight = halfWidth - defaultPadding * 2 - leftWidth;
 
-            legentTop = defaultPadding;
-            legentBottom = defaultPadding + legentHeight;
+            legendTop = defaultPadding;
+            legendBottom = defaultPadding + legendHeight;
             //绘制图例文字
 
-            float rightTextX = rightLegentRight + defaultPadding;
-            float leftTextX = leftLegentRight + defaultPadding;
-            float textY = fixTextY(defaultPadding + legentHeight / 2);
+            float rightTextX = rightLegendRight + defaultPadding;
+            float leftTextX = leftLegendRight + defaultPadding;
+            float textY = fixTextY(defaultPadding + legendHeight / 2);
 
 
-            if (isColorSameAsLegent) {
+            if (isColorSameAsLegend) {
                 paint.setColor(leftColor);
-                canvas.drawText(leftLegentText, leftTextX, textY, paint);
+                canvas.drawText(leftLegendText, leftTextX, textY, paint);
                 paint.setColor(rightColor);
-                canvas.drawText(rightLegentText, rightTextX, textY, paint);
+                canvas.drawText(rightLegendText, rightTextX, textY, paint);
             } else {
-                paint.setColor(legentTextColor);
-                canvas.drawText(leftLegentText, leftTextX, textY, paint);
-                canvas.drawText(rightLegentText, rightTextX, textY, paint);
+                paint.setColor(legendTextColor);
+                canvas.drawText(leftLegendText, leftTextX, textY, paint);
+                canvas.drawText(rightLegendText, rightTextX, textY, paint);
             }
 
         }
         paint.setColor(leftColor);
-        canvas.drawRect(new RectF(leftLegentLeft, legentTop, leftLegentRight, legentBottom), paint);
+        canvas.drawRect(new RectF(leftLegendLeft, legendTop, leftLegendRight, legendBottom), paint);
         paint.setColor(rightColor);
-        canvas.drawRect(new RectF(rightLegentLeft, legentTop, rightLegentRight, legentBottom), paint);
+        canvas.drawRect(new RectF(rightLegendLeft, legendTop, rightLegendRight, legendBottom), paint);
 
         depthRender.setTopPadding(40);
         labelDraw.setTopPading(40);
@@ -232,13 +232,13 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     }
 
     @SuppressWarnings("all")
-    public void setShowLegent(boolean showLegent) {
-        isShowLegent = showLegent;
+    public void setShowLegend(boolean showLegend) {
+        isShowLegend = showLegend;
     }
 
     @SuppressWarnings("all")
-    public void setLegentHeight(float legentHeight) {
-        this.legentHeight = legentHeight;
+    public void setLegendHeight(float legendHeight) {
+        this.legendHeight = legendHeight;
     }
 
     @SuppressWarnings("all")
@@ -247,18 +247,18 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     }
 
     @SuppressWarnings("all")
-    public void setLegentTextSize(float legentTextSize) {
-        this.legentTextSize = legentTextSize;
+    public void setLegendTextSize(float legendTextSize) {
+        this.legendTextSize = legendTextSize;
     }
 
     /**
      * 左侧图例文字颜色
      *
-     * @param legentTextColor
+     * @param legendTextColor
      */
     @SuppressWarnings("all")
-    public void setLegentTextColor(int legentTextColor) {
-        this.legentTextColor = legentTextColor;
+    public void setLegendTextColor(int legendTextColor) {
+        this.legendTextColor = legendTextColor;
     }
 
     /**
@@ -268,25 +268,25 @@ public class BaseDepthView extends View implements View.OnTouchListener {
      */
     @SuppressWarnings("all")
     public void setLegnetTextColorSameAsLegent(boolean colorSameAsLegent) {
-        isColorSameAsLegent = colorSameAsLegent;
+        isColorSameAsLegend = colorSameAsLegent;
     }
 
     /**
      * 左侧图例文本
      *
-     * @param leftLegentText text
+     * @param leftLegendText text
      */
-    public void setLeftLegentText(String leftLegentText) {
-        this.leftLegentText = leftLegentText;
+    public void setLeftLegendText(String leftLegendText) {
+        this.leftLegendText = leftLegendText;
     }
 
     /**
      * 右侧图例文本
      *
-     * @param rightLegentText text
+     * @param rightLegendText text
      */
-    public void setRightLegentText(String rightLegentText) {
-        this.rightLegentText = rightLegentText;
+    public void setRightLegendText(String rightLegendText) {
+        this.rightLegendText = rightLegendText;
     }
 
     /**
@@ -525,8 +525,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     }
 
     @SuppressWarnings("all")
-    public void setColorSameAsLegent(boolean colorSameAsLegent) {
-        isColorSameAsLegent = colorSameAsLegent;
+    public void setColorSameAsLegend(boolean colorSameAsLegend) {
+        isColorSameAsLegend = colorSameAsLegend;
     }
 
     public void setTextLabelTextSize(int size) {

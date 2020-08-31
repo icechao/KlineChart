@@ -21,7 +21,6 @@ public class KDJRender extends BaseRender {
     private Paint mKPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mDPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mJPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private ValueFormatter valueFormatter = new ValueFormatter();
     private final int indexInterval;
     private String kIndexLabel,dIndexLabel,jIndexLabel;
 
@@ -84,17 +83,6 @@ public class KDJRender extends BaseRender {
     @Override
     public float getMinValue(float... values) {
         return Math.min(values[Constants.INDEX_KDJ_K], Math.min(values[Constants.INDEX_KDJ_D], values[Constants.INDEX_KDJ_J]));
-    }
-
-    @Override
-    public IValueFormatter getValueFormatter() {
-
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = new ValueFormatter();
     }
 
     @Override

@@ -35,7 +35,6 @@ public class VolumeRender extends BaseRender {
     private Paint maTwoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint volLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float volWidth, lineVolWidth, volLegendMarginTop, endMaOne, endMaTwo;
-    private IValueFormatter valueFormatter = new ValueFormatter();
     private int itemsCount;
     private final int indexInterval;
     private String volMaIndex1, volMaIndex2, volIndex;
@@ -97,7 +96,7 @@ public class VolumeRender extends BaseRender {
         if (0 != vol && top > bottom - 2) {
             top = bottom - 2;
         }
-        if ((null == view.getVolChartStatus() && view.getKlineStatus().showLine()) || view.getVolChartStatus() == Status.VolChartStatus.LINE_CHART) {
+        if ((view.getKlineStatus() == Status.KLINE_SHOW_TIME_LINE) || view.getVolChartStatus() == Status.VOL_SHOW_VERTICAL_BAR) {
             canvas.drawRect(curX - lineVolWidth, top, curX + lineVolWidth, bottom, linePaint);
         } else if (close >= open) {//涨
             canvas.drawRect(curX - r, top, curX + r, bottom, increasePaint);
@@ -133,16 +132,6 @@ public class VolumeRender extends BaseRender {
             text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
         }
         canvas.drawText(text, x, y, maTwoPaint);
-    }
-
-    @Override
-    public IValueFormatter getValueFormatter() {
-        return valueFormatter;
-    }
-
-    @Override
-    public void setValueFormatter(IValueFormatter valueFormatter) {
-        this.valueFormatter = valueFormatter;
     }
 
     @Override
@@ -235,7 +224,7 @@ public class VolumeRender extends BaseRender {
         this.decreasePaint.setColor(color);
     }
 
-    public float getMinValue(float... values) {
+    public float getMinValue(double... values) {
         int length = values.length;
         if (length == 0) {
             return 0;
@@ -243,7 +232,7 @@ public class VolumeRender extends BaseRender {
         Arrays.sort(values);
         for (int i = 0; i < length; i++) {
             if (values[i] >= 0) {
-                return values[i];
+                return (float) values[i];
             }
         }
         return 0;

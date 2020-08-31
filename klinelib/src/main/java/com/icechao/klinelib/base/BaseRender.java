@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.formatter.IValueFormatter;
+import com.icechao.klinelib.formatter.ValueFormatter;
 
 import java.util.Arrays;
 
@@ -18,6 +19,8 @@ import java.util.Arrays;
  * @version      : V1
  *************************************************************************/
 public abstract class BaseRender {
+
+    protected IValueFormatter valueFormatter = new ValueFormatter();
 
     public abstract void render(Canvas canvas, float lastX, float curX, @NonNull BaseKChartView view, int position, float... values);
 
@@ -55,11 +58,18 @@ public abstract class BaseRender {
                                   float minX, float mainLowMinValue) {
     }
 
+    public  void setValueFormatter(IValueFormatter valueFormatter){
+        this.valueFormatter = valueFormatter;
+    }
+
+    public IValueFormatter getValueFormatter(){
+        return valueFormatter;
+    }
+
+
+
     public abstract void startAnim(BaseKChartView view, float... values);
 
-    public abstract IValueFormatter getValueFormatter();
-
-    public abstract void setValueFormatter(IValueFormatter valueFormatter);
 
     public abstract void setItemCount(int mItemCount);
 

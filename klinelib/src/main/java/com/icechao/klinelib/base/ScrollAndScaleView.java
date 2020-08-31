@@ -83,17 +83,17 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean isTapShow;
 
-    protected Status.ShowCrossModel modle = Status.ShowCrossModel.SELECT_BOTH;
+    protected @Status.ShowCrossModel int modle = Status.SELECT_BOTH;
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
         switch (modle) {
             default:
-            case SELECT_PRESS:
+            case Status.SELECT_PRESS:
                 showSelected = false;
                 return true;
-            case SELECT_BOTH:
+            case Status.SELECT_BOTH:
                 if (!isTapShow && showSelected) {
                     showSelected = false;
                     isTapShow = false;
@@ -103,7 +103,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
                     onSelectedChange(e);
                 }
                 return true;
-            case SELECT_TOUCHE:
+            case Status.SELECT_TOUCHE:
                 showSelected = true;
                 onSelectedChange(e);
                 return true;
@@ -125,7 +125,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (modle == Status.ShowCrossModel.SELECT_PRESS || modle == Status.ShowCrossModel.SELECT_BOTH) {
+        if (modle == Status.SELECT_PRESS || modle == Status.SELECT_BOTH) {
             showSelected = true;
             onSelectedChange(e);
         }
