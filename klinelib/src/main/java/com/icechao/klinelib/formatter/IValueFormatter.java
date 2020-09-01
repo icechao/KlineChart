@@ -3,7 +3,7 @@ package com.icechao.klinelib.formatter;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.formatter
  * @FileName     : IValueFormatter.java
  * @Author       : chao
  * @Date         : 2019/4/8

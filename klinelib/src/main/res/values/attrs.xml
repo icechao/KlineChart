@@ -3,6 +3,8 @@
     <declare-styleable name="KChartView">
 
         <attr name="maxMinCoefficient" format="float" />
+        <attr name="showPriceLine" format="boolean" />
+        <attr name="showPriceLabelInLine" format="boolean" />
         <attr name="priceLineWidth" format="dimension" />
         <attr name="priceLineColor" format="color" />
         <attr name="priceLabelInLineBoxMarginRight" format="dimension" />

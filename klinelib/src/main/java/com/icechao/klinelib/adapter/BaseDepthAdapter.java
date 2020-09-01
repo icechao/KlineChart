@@ -13,7 +13,7 @@ import java.util.List;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.base
+ * @PackageName  : com.icechao.klinelib.adapter
  * @FileName     : BaseDepthAdapter.java
  * @Author       : chao
  * @Date         : 2019/4/9

@@ -8,8 +8,8 @@ import android.graphics.Path;
 /*************************************************************************
  * Description   : 修改,不为index为基础绘制X,而是为X坐标为基础绘制
  *
- * @PackageName  : com.icechao.klinelib.draw
- * @FileName     : DepthDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : DepthRender.java
  * @Author       : chao
  * @Date         : 2019/4/9
  * @Email        : icechliu@gmail.com

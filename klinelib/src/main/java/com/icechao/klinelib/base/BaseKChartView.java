@@ -21,14 +21,14 @@ import android.view.ScaleGestureDetector;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.formatter.IYValueFormatter;
+import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
 import com.icechao.klinelib.render.MainRender;
 import com.icechao.klinelib.render.VolumeRender;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.IMaxMinDeal;
-import com.icechao.klinelib.utils.NumberTools;
-import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.callback.IMaxMinDeal;
+import com.icechao.klinelib.callback.SlidListener;
+import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.Status;
 
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 最大最小值处理工具类
      */
-   protected IMaxMinDeal maxMinDeal;
+    protected IMaxMinDeal maxMinDeal;
 
     /**
      * 是否正在显示loading
@@ -70,10 +70,15 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     protected long duration = 400;
 
+    public long getDuration() {
+        return duration;
+    }
+
     /**
      * 当前子视图的索引
      */
-    protected @Status.IndexStatus int indexDrawPosition = Status.INDEX_NONE;
+    protected @Status.IndexStatus
+    int indexDrawPosition = Status.INDEX_NONE;
 
     /**
      * 绘制K线时画板平移的距离
@@ -340,12 +345,14 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 量视图是否显示为线
      */
-    protected @Status.KlineStatus int klineStatus = Status.KLINE_SHOW_TIME_LINE;
+    protected @Status.KlineStatus
+    int klineStatus = Status.KLINE_SHOW_TIME_LINE;
 
     /**
      * 量视图是否显示为线
      */
-    protected @Status.VolChartStatus int volChartStatus;
+    protected @Status.VolChartStatus
+    int volChartStatus;
 
     /**
      * 数据
@@ -517,12 +524,18 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 指标视图
      */
-    protected Map< Integer, BaseRender> indexRenders = new HashMap<>();
+    protected Map<Integer, BaseRender> indexRenders = new HashMap<>();
+
 
     /**
-     * Y轴上值的格式化
+     * Y轴上值的格式化,默认使用主视图formartter
      */
-    protected IValueFormatter valueFormatter = new ValueFormatter();
+    protected IYValueFormatter valueFormatter = new IYValueFormatter() {
+        @Override
+        public String format(double max, double min, double value) {
+            return mainRender.getValueFormatter().format(value);
+        }
+    };
 
     /**
      * 日期格式化
@@ -716,9 +729,11 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
     protected float labelSpace = 0f;
 
-    protected @Status.YLabelShowModel int yLabelModel = Status.LABEL_NONE_GRID;
+    protected @Status.YLabelShowModel
+    int yLabelModel = Status.LABEL_NONE_GRID;
 
-    protected @Status.ChildStatus int chartShowStatue = Status.MAIN_VOL;
+    protected @Status.ChildStatus
+    int chartShowStatue = Status.MAIN_VOL;
 
     /**
      * 初始化视图区域
@@ -777,6 +792,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     @Override
     public void onDraw(Canvas canvas) {
         if (needRender) {
+            long l = System.currentTimeMillis();
             renderBackground(canvas);
             renderGrid(canvas);
             renderLogo(canvas);
@@ -789,11 +805,12 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     calcValues();
                     renderXLabels(canvas);
                     renderK(canvas);
-                    renderValue(canvas, getShowSelected() ? selectedIndex : itemsCount - 1);
+                    renderValue(canvas, getShowSelected() ? getSelectedIndex() : itemsCount - 1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            LogUtil.e("renderTime :  " + (System.currentTimeMillis() - l));
         }
     }
 
@@ -954,7 +971,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
         renderYLabels(canvas);
         if (getShowSelected()) {
-            renderSelected(canvas, getX(selectedIndex));
+            renderSelected(canvas, getX(getSelectedIndex()));
         }
         canvas.restore();
     }
@@ -1013,7 +1030,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         }
         canvas.drawPath(path, selectedYLinePaint);
         //画X值
-        String date = formatDateTime(dataAdapter.getDate(selectedIndex));
+        String date = formatDateTime(dataAdapter.getDate(getSelectedIndex()));
         textWidth = commonTextPaint.measureText(date);
         //向下多移动出一个像素(如果有必要可以设置多移动网络线宽度)
         y = chartPaddingTop + displayHeight + 1;
@@ -1042,21 +1059,21 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             if (selectedY < mainRect.top + chartPaddingTop) {
                 return;
             } else if (selectedY < mainRect.bottom) {
-                text = valueFormatter.format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - chartPaddingTop) * (mainRect.bottom - selectedY)));
+                text = mainRender.getValueFormatter().format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - chartPaddingTop) * (mainRect.bottom - selectedY)));
             } else if (null != volRect && selectedY < volRect.top) {
                 return;
             } else if (null != volRect && selectedY < volRect.bottom) {
-                text = NumberTools.formatAmount(volumeRender.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY))));
+                text = volumeRender.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY)));
             } else if (null != indexRender && selectedY < indexRect.bottom) {
-                text = getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
+                text = mainRender.getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
             } else if (null != indexRender && selectedY < indexRect.top) {
                 return;
             } else {
                 return;
             }
         } else {
-            text = valueFormatter.format(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
-            y = getMainY(points[selectedIndex * indexInterval + Constants.INDEX_CLOSE]);
+            text = mainRender.getValueFormatter().format(points[getSelectedIndex() * indexInterval + Constants.INDEX_CLOSE]);
+            y = getMainY(points[getSelectedIndex() * indexInterval + Constants.INDEX_CLOSE]);
         }
         canvas.drawLine(-canvasTranslateX, y, -canvasTranslateX + renderWidth, y, selectedXLinePaint);
         //十字线交点
@@ -1078,7 +1095,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         float tempX = textWidth + 2 * selectedPriceBoxHorizontalPadding;
         float boxTop = y - temp;
         float boxBottom = y + temp;
-        if (yLabelModel == Status.LABEL_NONE_GRID || getX(selectedIndex - screenLeftIndex) > renderWidth / 2) {
+        if (yLabelModel == Status.LABEL_NONE_GRID || getX(getSelectedIndex() - screenLeftIndex) > renderWidth / 2) {
             path = new Path();
             path.moveTo(x, y);
             path.lineTo(x + selectedPriceBoxHorizontalPadding + selectedPriceBoxVerticalPadding, boxBottom);
@@ -1147,8 +1164,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         }
     }
 
-
-    protected @Status.Align int yLabelAlign;
     protected float yLabelX;
 
     /**
@@ -1168,11 +1183,11 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
+                    String text = valueFormatter.format(mainMaxValue, mainMinValue, (float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
-                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().format(volMaxValue));
+                maxVol = volumeRender.getValueFormatter().format(volMaxValue);
                 canvas.drawText(maxVol, tempLeft + yLabelX, mainRect.bottom + baseLine, yLabelPaint);
                 //子图Y轴label
                 childLabel = indexRender.getValueFormatter().format(indexMaxValue);
@@ -1185,13 +1200,12 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
+                    String text = valueFormatter.format(mainMaxValue, mainMinValue, (float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
 
                 }
-                maxVol = NumberTools.formatAmount(volumeRender.getValueFormatter().
-                        format(volMaxValue));
+                maxVol = volumeRender.getValueFormatter().format(volMaxValue);
                 canvas.drawText(maxVol, tempLeft + yLabelX, mainRect.bottom + baseLine, yLabelPaint);
                 break;
 
@@ -1201,7 +1215,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网格的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
+                    String text = valueFormatter.format(mainMaxValue, mainMinValue, (float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
@@ -1211,7 +1225,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 rowValue = (mainMaxValue - mainMinValue) / gridRowCount;
                 //Y轴上网络的值
                 for (int i = 0; i <= gridRowCount; i++) {
-                    String text = valueFormatter.format((float) (mainMaxValue - i * rowValue));
+                    String text = valueFormatter.format(mainMaxValue, mainMinValue, (float) (mainMaxValue - i * rowValue));
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
@@ -1227,7 +1241,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
     private void renderPriceLine(Canvas canvas, float tempRight) {
         float y = getMainY(lastPrice);
-        String priceText = valueFormatter.format(lastPrice);
+        String priceText = getValueFormatter().format(mainMaxValue, mainMinValue, lastPrice);
         float textWidth = commonTextPaint.measureText(priceText);
         float textLeft = tempRight - textWidth - yLabelMarginBorder;
         float klineRight = getX(screenRightIndex);
@@ -1238,60 +1252,59 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 canvas.drawCircle(klineRight, y, lineEndRadius, lineEndFillPointPaint);
             }
             renderRightPriceLabel(canvas, y, priceText, textWidth, textLeft);
-            showPriceLabelInLine = false;
         } else {
-            if (yLabelModel == Status.LABEL_WITH_GRID) {
-                renderDotLine(canvas, 0, tempRight - priceLineMarginPriceLabel, y, priceLinePaint);
-                float halfPriceBoxHeight = priceLabelInLineBoxHeight / 2;
-                priceLabelInLineBoxRight = tempRight - priceLineBoxMarginRight;
-                priceLabelInLineBoxLeft = priceLabelInLineBoxRight - textWidth - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin;
-                priceLabelInLineBoxTop = y - halfPriceBoxHeight;
-                priceLabelInLineBoxBottom = y + halfPriceBoxHeight;
-                renderPriceLabelInPriceLine(canvas,
-                        priceLabelInLineBoxLeft,
-                        priceLabelInLineBoxTop,
-                        priceLabelInLineBoxRight,
-                        priceLabelInLineBoxBottom,
-                        priceLabelInLineBoxRadius,
-                        y,
-                        priceText);
-                showPriceLabelInLine = true;
-            } else {
-                renderDotLine(canvas, 0, tempRight - labelSpace, y, priceLinePaint);
-                renderRightPriceLabel(canvas, y, priceText, textWidth, textLeft);
-                showPriceLabelInLine = false;
+            if (showPriceLine) {
+                if (yLabelModel == Status.LABEL_WITH_GRID) {
+                    renderDotLine(canvas, 0, tempRight - priceLineMarginPriceLabel,
+                            y, priceLinePaint);
+                    if (showPriceLabelInLine) {
+                        float halfPriceBoxHeight = priceLabelInLineBoxHeight / 2;
+                        priceLabelInLineBoxRight = tempRight - priceLineBoxMarginRight;
+                        priceText = mainRender.getValueFormatter().format(lastPrice);
+                        textWidth = commonTextPaint.measureText(priceText);
+                        priceLabelInLineBoxLeft = priceLabelInLineBoxRight - textWidth
+                                - priceShapeWidth - priceLineBoxPadidng * 2 - priceBoxShapeTextMargin;
+                        priceLabelInLineBoxTop = y - halfPriceBoxHeight;
+                        priceLabelInLineBoxBottom = y + halfPriceBoxHeight;
+                        renderPriceLabelInPriceLine(canvas,
+                                priceLabelInLineBoxLeft,
+                                priceLabelInLineBoxTop,
+                                priceLabelInLineBoxRight,
+                                priceLabelInLineBoxBottom,
+                                priceLabelInLineBoxRadius,
+                                y,
+                                priceText);
+                    }
+                } else {
+                    textLeft = tempRight - textWidth - yLabelMarginBorder;
+                    renderDotLine(canvas, 0, tempRight - labelSpace, y, priceLinePaint);
+                    renderRightPriceLabel(canvas, y, priceText, textWidth, textLeft);
+                }
             }
         }
     }
 
-
     protected boolean showPriceLabelInLine;
+    protected boolean showPriceLine;
+    protected PriceLabelInLineClickListener labelInLineClickListener = new PriceLabelInLineClickListener();
     protected boolean priceLabelInLineClickable;
     protected float priceLabelInLineBoxRight, priceLabelInLineBoxLeft,
             priceLabelInLineBoxTop, priceLabelInLineBoxBottom;
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        if (priceLabelInLineClickable && showPriceLabelInLine) {
+        if (showPriceLine && priceLabelInLineClickable) {
             float x = xToTranslateX(e.getX());
             float y = e.getY();
             if (priceLabelInLineBoxTop < y && priceLabelInLineBoxBottom > y
                     && priceLabelInLineBoxLeft < x && priceLabelInLineBoxRight > x) {
-                ValueAnimator valueAnimator = ValueAnimator.ofFloat(getTranslateX(),
-                        getMinTranslate());
-                valueAnimator.setDuration(duration).addUpdateListener(animation -> {
-                    changeTranslated((Float) animation.getAnimatedValue());
-                    animInvalidate();
-                });
-                valueAnimator.setRepeatCount(0);
-                valueAnimator.start();
-                selectedIndex = -1;
-                return true;
+                return labelInLineClickListener.onPriceLabelClick(this);
             }
         }
         return super.onSingleTapUp(e);
 
     }
+
 
     /**
      * 横屏价格线
@@ -1447,7 +1460,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
 
 
     /**
-     * 当前主视图显示的指标     */
+     * 当前主视图显示的指标
+     */
     protected @Status.MainStatus
     int mainStatus = Status.MAIN_MA;
 
@@ -1455,31 +1469,33 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 计算当前选中item的X的坐标
      *
      * @param x index of selected item
+     * @return index
      */
-    protected void calculateSelectedX(float x) {
-        selectedIndex = indexOfTranslateX(xToTranslateX(x));
-        if (selectedIndex > screenRightIndex) {
-            selectedIndex = screenRightIndex;
+    protected int calculateSelectedX(float x) {
+        int tempIndex = indexOfTranslateX(xToTranslateX(x));
+        if (tempIndex > screenRightIndex) {
+            tempIndex = screenRightIndex;
+        } else if (tempIndex < screenLeftIndex) {
+            tempIndex = screenLeftIndex;
         }
-        if (selectedIndex < screenLeftIndex) {
-            selectedIndex = screenLeftIndex;
-        }
+        return tempIndex;
+
     }
 
     private float selectedY = 0;
 
     @Override
     public void onSelectedChange(MotionEvent e) {
-        int lastIndex = selectedIndex;
-        calculateSelectedX(e.getX());
-        selectedY = e.getY();
-        if (lastIndex != selectedIndex) {
-            int temp = selectedIndex * indexInterval;
-            if (null != this.selectedChangedListener) {
-                selectedChangedListener.onSelectedChanged(this, selectedIndex, Arrays.copyOfRange(points, temp, temp + indexInterval));
+        if (null != points && points.length > 0) {
+            int index = calculateSelectedX(e.getX());
+            setSelectedIndex(index);
+            selectedY = e.getY();
+            int temp = index * indexInterval;
+            if (null != selectedChangedListener) {
+                selectedChangedListener.onSelectedChanged(this, getSelectedIndex(), Arrays.copyOfRange(points, temp, temp + indexInterval));
             }
+            invalidate();
         }
-        invalidate();
     }
 
     /**
@@ -1487,8 +1503,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      *
      * @return translate value
      */
-    private float getMinTranslate() {
-
+    public float getMinTranslate() {
         float dataLength = getDataLength();
         if (dataLength > renderWidth) {
             float minValue = -(dataLength - renderWidth);
@@ -1504,7 +1519,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      *
      * @return 最大值
      */
-    private float getMaxTranslate() {
+    public float getMaxTranslate() {
         float dataLength = getDataLength();
         if (dataLength > renderWidth) {
             return klineStatus == Status.KLINE_SHOW_TIME_LINE ? 0 : chartItemWidth * getScaleX() / 2;
@@ -1517,7 +1532,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         changeTranslated(canvasTranslateX + (l - oldl));
-        if ( klineStatus == Status.KLINE_SHOW_TIME_LINE
+        if (klineStatus == Status.KLINE_SHOW_TIME_LINE
                 && getX(screenRightIndex) + canvasTranslateX <= renderWidth) {
             startFreshPage();
         } else {
@@ -1569,7 +1584,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      *
      * @param translateX canvasTranslateX
      */
-    protected void changeTranslated(float translateX) {
+    public void changeTranslated(float translateX) {
         if (translateX < getMinTranslate()) {
             translateX = getMinTranslate();
             if (null != slidListener && itemsCount > (renderWidth / chartItemWidth)) {
@@ -1719,9 +1734,11 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     mChildMinValue = Math.min(mChildMinValue, indexRender.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
                     break;
 
+                case Status.MAIN_ONLY:
+                    break;
             }
         }
-        if(null == maxMinDeal){
+        if (null == maxMinDeal) {
             if (mainMaxValue == mainMinValue) {
                 //当最大值和最小值都相等的时候 分别增大最大值和 减小最小值
                 mainMaxValue += Math.abs(mainMaxValue * maxMinCoefficient);
@@ -1731,7 +1748,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             mainMaxValue += padding;
             mainMinValue = padding < mainMinValue ? mainMinValue -= padding : 0;
 
-        }else {
+        } else {
             mainMaxValue = maxMinDeal.dealMainMax(mainMaxValue);
             mainMinValue = maxMinDeal.dealMainMin(mainMinValue);
         }
@@ -1742,9 +1759,9 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     volMaxValue = 0.01f;
                 }
 
-                if(null != maxMinDeal){
-                    volMaxValue  = maxMinDeal.dealVolMax(volMaxValue);
-                    volMinValue  = maxMinDeal.dealVolMin(volMinValue);
+                if (null != maxMinDeal) {
+                    volMaxValue = maxMinDeal.dealVolMax(volMaxValue);
+                    volMinValue = maxMinDeal.dealVolMin(volMinValue);
                 }
 
                 volScaleY = volRect.height() * 1f / (volMaxValue - volMinValue);
@@ -1822,7 +1839,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     public void renderMainLine(Canvas canvas, Paint paint, float startX, float startValue, float stopX,
                                float stopValue) {
         canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(stopValue), paint);
-//        canvas.drawLine(startX, getMainY(startValue), stopX, getMainY(stopValue), commonTextPaint);
 
     }
 
@@ -2069,7 +2085,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         return commonTextPaint;
     }
 
-    public IValueFormatter getValueFormatter() {
+    public IYValueFormatter getValueFormatter() {
         return valueFormatter;
     }
 
@@ -2085,11 +2101,13 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         return this.mainStatus;
     }
 
-    public @Status.KlineStatus int getKlineStatus() {
+    public @Status.KlineStatus
+    int getKlineStatus() {
         return klineStatus;
     }
 
-    public @Status.VolChartStatus int getVolChartStatus() {
+    public @Status.VolChartStatus
+    int getVolChartStatus() {
         return volChartStatus;
     }
 
@@ -2103,6 +2121,15 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         } else {
             return viewWidth;
         }
+    }
+
+    /**
+     * 获取交易量Render
+     *
+     * @return {@link VolumeRender}
+     */
+    public VolumeRender getVolumeRender() {
+        return volumeRender;
     }
 
     @Override

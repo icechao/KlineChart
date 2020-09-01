@@ -6,7 +6,7 @@ import java.text.ParseException;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : ICandle.java
  * @Author       : chao
  * @Date         : 2019/4/8

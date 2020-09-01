@@ -14,8 +14,8 @@ import java.util.Arrays;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : RSIDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : EmaRender.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com

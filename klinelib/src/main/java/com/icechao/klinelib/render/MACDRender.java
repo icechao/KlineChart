@@ -16,8 +16,8 @@ import com.icechao.klinelib.utils.Status;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : MACDDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : MACDRender.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com

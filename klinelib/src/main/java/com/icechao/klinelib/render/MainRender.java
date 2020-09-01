@@ -13,14 +13,13 @@ import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : MainDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : MainRender.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
@@ -259,14 +258,14 @@ public class MainRender extends BaseRender {
         int index = view.getSelectedIndex();
 
         strings[0] = view.getTime(index);
-        strings[1] = view.getValueFormatter().format(values[Constants.INDEX_OPEN]);
-        strings[2] = (view.getValueFormatter().format(values[Constants.INDEX_HIGH]));
-        strings[3] = (view.getValueFormatter().format(values[Constants.INDEX_LOW]));
-        strings[4] = (view.getValueFormatter().format(values[Constants.INDEX_CLOSE]));
+        strings[1] = getValueFormatter().format(values[Constants.INDEX_OPEN]);
+        strings[2] = getValueFormatter().format(values[Constants.INDEX_HIGH]);
+        strings[3] = getValueFormatter().format(values[Constants.INDEX_LOW]);
+        strings[4] = getValueFormatter().format(values[Constants.INDEX_CLOSE]);
         double tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
-        strings[5] = (view.getValueFormatter().format((float) tempDiffPrice));
-        strings[6] = NumberTools.roundDown((tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
-        strings[7] = NumberTools.formatAmount(valueFormatter.format(values[Constants.INDEX_VOL]));
+        strings[5] = getValueFormatter().format((float) tempDiffPrice);
+        strings[6] = String.format("%.2f",(tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
+        strings[7] = view.getVolumeRender().getValueFormatter().format(values[Constants.INDEX_VOL]);
 
         float width = 0, left, top = margin + view.getChartPaddingTop();
         //上下多加两个padding值的间隙

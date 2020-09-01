@@ -18,6 +18,8 @@ import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
 import com.icechao.klinelib.formatter.IValueFormatter;
+import com.icechao.klinelib.formatter.IYValueFormatter;
+import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
 import com.icechao.klinelib.render.EmaRender;
 import com.icechao.klinelib.render.KDJRender;
 import com.icechao.klinelib.render.MACDRender;
@@ -26,7 +28,7 @@ import com.icechao.klinelib.render.RSIRender;
 import com.icechao.klinelib.render.VolumeRender;
 import com.icechao.klinelib.render.WRRender;
 import com.icechao.klinelib.utils.DpUtil;
-import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.utils.Status;
 
 import java.util.Set;
@@ -114,6 +116,8 @@ public class KChartView extends BaseKChartView {
                 setVolLineChartColor(array.getColor(R.styleable.KChartView_volLineChartColor, Color.parseColor("#4B85A6")));
 
                 //价格线
+                setShowPriceLine(array.getBoolean(R.styleable.KChartView_showPriceLine, true));
+                setShowPriceLabelInLine(array.getBoolean(R.styleable.KChartView_showPriceLabelInLine, true));
                 setPriceLineWidth(array.getDimension(R.styleable.KChartView_priceLineWidth, DpUtil.Dp2Px(context, 0.8f)));
                 setPriceLineColor(array.getColor(R.styleable.KChartView_priceLineColor, Color.parseColor("#6D87A8")));
                 setPriceLineRightColor(array.getColor(R.styleable.KChartView_priceLineRightColor, Color.parseColor("#4B85A6")));
@@ -863,7 +867,7 @@ public class KChartView extends BaseKChartView {
      *
      * @return IValueFormatter
      */
-    public IValueFormatter getValueFormatter() {
+    public IYValueFormatter getValueFormatter() {
         return super.getValueFormatter();
     }
 
@@ -873,7 +877,7 @@ public class KChartView extends BaseKChartView {
      * @param valueFormatter value格式化器
      * @return {@link KChartView}
      */
-    public KChartView setYValueFormatter(IValueFormatter valueFormatter) {
+    public KChartView setYValueFormatter(IYValueFormatter valueFormatter) {
         this.valueFormatter = valueFormatter;
         return this;
     }
@@ -1810,6 +1814,45 @@ public class KChartView extends BaseKChartView {
         this.priceLabelInLineClickable = clickable;
         return this;
     }
+
+
+    /**
+     * 设置横屏线价格线显示
+     *
+     * @param showPriceLine true显示
+     * @return {@link KChartView}
+     */
+    @SuppressWarnings("unused")
+    public KChartView setShowPriceLine(boolean showPriceLine) {
+        this.showPriceLine = showPriceLine;
+        return this;
+    }
+   /**
+     * 设置横屏线价格线上label显示
+     *
+     * @param showPriceLabelInLine true显示
+     * @return {@link KChartView}
+     */
+    @SuppressWarnings("unused")
+    public KChartView setShowPriceLabelInLine(boolean showPriceLabelInLine) {
+        this.showPriceLabelInLine = showPriceLabelInLine;
+        return this;
+    }
+
+
+
+    /**
+     * 设置横屏线价格线上的Label点击事件
+     *
+     * @param labelInLineClickListener {@link PriceLabelInLineClickListener}
+     * @return {@link KChartView}
+     */
+    @SuppressWarnings("unused")
+    public KChartView setLabelInLineClickListener(PriceLabelInLineClickListener labelInLineClickListener) {
+        this.labelInLineClickListener = labelInLineClickListener;
+        return this;
+    }
+
 
 
     /**

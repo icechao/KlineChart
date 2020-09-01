@@ -8,10 +8,7 @@ import android.support.annotation.NonNull;
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
-import com.icechao.klinelib.utils.NumberTools;
 import com.icechao.klinelib.utils.Status;
 
 import java.util.Arrays;
@@ -19,8 +16,8 @@ import java.util.Arrays;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : VolumeDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : VolumeRender.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com
@@ -111,25 +108,25 @@ public class VolumeRender extends BaseRender {
         String text;
         volLegendMarginTop += volLegendMarginTop;
         if (position == itemsCount - 1 && view.isAnimationLast()) {
-            text = volIndex + NumberTools.formatAmount(getValueFormatter().format(view.getLastVol())) + "  ";
+            text = volIndex +getValueFormatter().format(view.getLastVol()) + "  ";
         } else {
-            text = volIndex + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL])) + "  ";
+            text = volIndex + getValueFormatter().format(values[Constants.INDEX_VOL]) + "  ";
         }
         canvas.drawText(text, x, y, volLeftPaint);
         x += view.getCommonTextPaint().measureText(text);
 
         if (position == itemsCount - 1 && view.isAnimationLast() && 0 != endMaOne) {
-            text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(endMaOne)) + "  ";
+            text = volMaIndex1 + getValueFormatter().format(endMaOne) + "  ";
         } else {
-            text = volMaIndex1 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_1])) + "  ";
+            text = volMaIndex1 + getValueFormatter().format(values[Constants.INDEX_VOL_MA_1]) + "  ";
         }
         canvas.drawText(text, x, y, maOnePaint);
         x += maOnePaint.measureText(text);
         if (position == itemsCount - 1 && view.isAnimationLast() && 0 != endMaOne) {
 
-            text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(endMaTwo)) + "  ";
+            text = volMaIndex2 + getValueFormatter().format(endMaTwo) + "  ";
         } else {
-            text = volMaIndex2 + NumberTools.formatAmount(getValueFormatter().format(values[Constants.INDEX_VOL_MA_2])) + "  ";
+            text = volMaIndex2 + getValueFormatter().format(values[Constants.INDEX_VOL_MA_2]) + "  ";
         }
         canvas.drawText(text, x, y, maTwoPaint);
     }
@@ -230,9 +227,9 @@ public class VolumeRender extends BaseRender {
             return 0;
         }
         Arrays.sort(values);
-        for (int i = 0; i < length; i++) {
-            if (values[i] >= 0) {
-                return (float) values[i];
+        for (double value : values) {
+            if (value >= 0) {
+                return (float) value;
             }
         }
         return 0;

@@ -11,11 +11,16 @@ import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 
-/**
- * KDJ实现类
- * Created by tifezh on 2016/6/19.
- */
-
+/*************************************************************************
+ * Description   :
+ *
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : KDJRender.java
+ * @Author       : chao
+ * @Date         : 2019/4/8
+ * @Email        : icechliu@gmail.com
+ * @version      : V1
+ *************************************************************************/
 public class KDJRender extends BaseRender {
 
     private Paint mKPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

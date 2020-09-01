@@ -3,7 +3,7 @@ package com.icechao.klinelib.model;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : MarketDepthPercentItem.java
  * @Author       : chao
  * @Date         : 2019/4/10

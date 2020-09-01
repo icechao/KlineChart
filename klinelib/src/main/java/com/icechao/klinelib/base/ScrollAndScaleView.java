@@ -14,7 +14,7 @@ import com.icechao.klinelib.utils.Status;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.base
  * @FileName     : ScrollAndScaleView.java
  * @Author       : chao
  * @Date         : 2019/4/8
@@ -222,7 +222,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
         if (event.getPointerCount() > 1) {
             showSelected = false;
-            selectedIndex = -1;
+            setSelectedIndex(-1);
         }
         if (null != eventLisenter) {
             eventLisenter.onEvent();
@@ -247,7 +247,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
                 break;
             case MotionEvent.ACTION_CANCEL:
                 showSelected = false;
-                selectedIndex = -1;
+                setSelectedIndex(-1);
                 touch = false;
                 invalidate();
                 break;
@@ -258,6 +258,10 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         this.gestureDetector.onTouchEvent(event);
         this.scaleDetector.onTouchEvent(event);
         return true;
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
     }
 
     /**

@@ -21,7 +21,6 @@ import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.utils.DpUtil;
-import com.icechao.klinelib.utils.NumberTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -509,7 +508,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     }
 
     private String verticalCoordinatePlace(double f) {
-        return NumberTools.formatAmount(valueFormatter.format((float) f));
+        return valueFormatter.format((float) f);
     }
 
 

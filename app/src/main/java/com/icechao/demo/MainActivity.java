@@ -27,7 +27,7 @@ import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.model.MarketTradeItem;
 import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
-import com.icechao.klinelib.utils.SlidListener;
+import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KChartView;
 
@@ -166,8 +166,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         LogUtil.e("onSlidRight");
                     }
                 })
-                //set value  formater
-                .setValueFormatter(new ValueFormatter() {
+                //set main  formater
+                .setMainValueFormatter(new ValueFormatter() {
                     @Override
                     public String format(double value) {
                         return String.format(Locale.CHINA, "%.03f", value);

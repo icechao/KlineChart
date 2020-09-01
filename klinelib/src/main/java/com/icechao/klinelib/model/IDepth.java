@@ -5,7 +5,7 @@ import java.io.Serializable;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.entity
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : IDepth.java
  * @Author       : chao
  * @Date         : 2019/4/8

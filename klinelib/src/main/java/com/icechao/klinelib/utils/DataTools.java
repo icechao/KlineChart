@@ -1,7 +1,4 @@
-
-
 package com.icechao.klinelib.utils;
-
 
 import com.icechao.klinelib.model.KLineEntity;
 

@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 数据适配器
- * Created by tifezh on 2016/6/18.
- */
+/*************************************************************************
+ * Description   :
+ *
+ * @PackageName  : com.icechao.klinelib.adapter
+ * @FileName     : KLineChartAdapter.java
+ * @Author       : chao
+ * @Date         : 2019/4/8
+ * @Email        : icechliu@gmail.com
+ * @version      : V1
+ *************************************************************************/
+
 public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdapter<T> {
 
     private int dataCount;

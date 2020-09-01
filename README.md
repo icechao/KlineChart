@@ -118,6 +118,8 @@
       | priceLabelRightTextColor | color | 设置价格线右侧价格文字的颜色  |   |
       | priceLineRightColor | color |  设置价格线右侧的颜色 |   |
       | ppriceLineWidth | color |  设置价格线的宽度  |   |
+      | showPriceLine| boolean|  设置显示价格线|   |
+      | showPriceLabelInLine| boolean |  设置显示价格线上的价格 |   |
       | priceLineColor | color |  设置价格线颜色 |   |
       | priceLineDotSolidWidth | dimension |  价格线虚线实心宽度 |   |
       | priceLineDotStrokeWidth | dimension | 价格线实心间隔  |   |

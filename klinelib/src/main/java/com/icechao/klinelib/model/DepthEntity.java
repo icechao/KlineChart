@@ -3,7 +3,7 @@ package com.icechao.klinelib.model;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.entity
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : DepthEntity.java
  * @Author       : chao
  * @Date         : 2019/4/9

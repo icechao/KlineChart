@@ -8,8 +8,8 @@ import android.graphics.RectF;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.draw
- * @FileName     : DepthLabelDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : DepthLabelRender.java
  * @Author       : chao
  * @Date         : 2019/4/9
  * @Email        : icechliu@gmail.com

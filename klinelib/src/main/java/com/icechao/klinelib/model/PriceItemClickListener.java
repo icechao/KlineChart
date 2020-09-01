@@ -6,7 +6,7 @@ import android.view.View;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : PriceItemClickListener.java
  * @Author       : chao
  * @Date         : 2019/4/10

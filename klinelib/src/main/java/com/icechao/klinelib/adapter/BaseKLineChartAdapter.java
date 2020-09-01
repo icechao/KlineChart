@@ -11,7 +11,7 @@ import com.icechao.klinelib.adapter.IAdapter;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.adapter
  * @FileName     : BaseKLineChartAdapter.java
  * @Author       : chao
  * @Date         : 2019/4/8

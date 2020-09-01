@@ -5,7 +5,7 @@ import java.io.Serializable;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : IVolume.java
  * @Author       : chao
  * @Date         : 2019/4/8

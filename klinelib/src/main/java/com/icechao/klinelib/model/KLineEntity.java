@@ -4,7 +4,7 @@ package com.icechao.klinelib.model;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : KLineEntity.java
  * @Author       : chao
  * @Date         : 2019/4/8

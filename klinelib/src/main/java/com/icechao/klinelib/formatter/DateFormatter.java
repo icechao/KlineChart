@@ -7,7 +7,7 @@ import java.util.Date;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.formatter
  * @FileName     : DateFormatter.java
  * @Author       : chao
  * @Date         : 2019/4/8

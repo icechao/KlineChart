@@ -13,8 +13,8 @@ import com.icechao.klinelib.utils.Constants;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
- * @FileName     : WRDraw.java
+ * @PackageName  : com.icechao.klinelib.render
+ * @FileName     : WRRender.java
  * @Author       : chao
  * @Date         : 2019/4/8
  * @Email        : icechliu@gmail.com

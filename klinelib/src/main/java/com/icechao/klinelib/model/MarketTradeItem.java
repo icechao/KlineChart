@@ -8,7 +8,7 @@ import java.io.Serializable;
 /*************************************************************************
  * Description   :
  *
- * @PackageName  : com.icechao.klinelib.utils
+ * @PackageName  : com.icechao.klinelib.model
  * @FileName     : MarketTradeItem.java
  * @Author       : chao
  * @Date         : 2019/4/10
