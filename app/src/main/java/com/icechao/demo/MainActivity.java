@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.model.MarketTradeItem;
+import com.icechao.klinelib.render.MainRender;
 import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.callback.SlidListener;
@@ -195,6 +197,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         chartView.setScaleXMax(3);
         chartView.setScaleXMin(0.5f);
+
+        chartView.resetMainRender(new MainRender(this){
+            @Override
+            public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
+
+            }
+        });
 
     }
 

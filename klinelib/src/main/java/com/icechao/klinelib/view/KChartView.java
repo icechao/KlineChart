@@ -2065,26 +2065,26 @@ public class KChartView extends BaseKChartView {
 
 
     /**
-     * 替换MainDraw  自定义MainDraw使用
+     * 替换MainRender  自定义MainRender
      *
-     * @param t   MainDraw子类对象
+     * @param t   MainRender子类对象
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends MainRender> KChartView resetMainDraw(T t) {
+    public <T extends MainRender> KChartView resetMainRender(T t) {
         this.mainRender = t;
         return this;
     }
 
 
     /**
-     * 替换volDraw  自定义volDraw使用
+     * 替换volRender  自定义volRender使用
      *
-     * @param t   VolumeDraw子类对象
+     * @param t   VolumeRender子类对象
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends VolumeRender> KChartView resetVoDraw(T t) {
+    public <T extends VolumeRender> KChartView resetVolRender(T t) {
         this.volumeRender = t;
         return this;
     }
@@ -2187,11 +2187,11 @@ public class KChartView extends BaseKChartView {
     /**
      * 替换指标图
      *
-     * @param t   IChartDraw子类对象
+     * @param t   IChartRender子类对象
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends BaseRender> KChartView resetIndexDraw(@Status.IndexStatus int status, T t) {
+    public <T extends BaseRender> KChartView resetIndexRender(@Status.IndexStatus int status, T t) {
         this.indexRenders.put(status, t);
         return this;
     }
