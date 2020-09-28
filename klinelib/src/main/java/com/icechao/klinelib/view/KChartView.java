@@ -126,7 +126,7 @@ public class KChartView extends BaseKChartView {
                 setPriceLabelInLineBoxBackgroundColor(array.getColor(R.styleable.KChartView_priceLabelInLineBoxBackgroundColor, Color.parseColor("#CFD3E9")));
                 setPriceLabelInLineBoxBorderColor(array.getColor(R.styleable.KChartView_priceLabelInLineBoxBorderColor, Color.parseColor("#CFD3E9")));
                 setPriceLabelInLineBoxBorderWidth(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxBorderWidth, 0.8f));
-                setPriceLabelInLineBoxePadding(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxPadding, 20));
+                setPriceLabelInLineBoxPadding(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxPadding, 20));
                 setPriceLabelInLineMarginRight(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxMarginRight, 120));
                 setPriceLabelInLineBoxHeight(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxHeight, 40));
                 setPriceLabelInLineBoxRadius(array.getDimension(R.styleable.KChartView_priceLabelInLineBoxRadius, 20));
@@ -976,7 +976,7 @@ public class KChartView extends BaseKChartView {
      *
      * @return {@link KChartView}
      */
-    public KChartView setPriceLabelInLineBoxePadding(float padding) {
+    public KChartView setPriceLabelInLineBoxPadding(float padding) {
         this.priceLineBoxPadidng = padding;
         return this;
     }
