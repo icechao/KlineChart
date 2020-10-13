@@ -139,6 +139,7 @@ public class KChartView extends BaseKChartView {
                 setPriceLabelInLineClickable(array.getBoolean(R.styleable.KChartView_priceLabelInLineClickable, false));
                 setPriceLineDotSolidWidth(array.getDimension(R.styleable.KChartView_priceLineDotSolidWidth, 8f));
                 setPriceLineDotStrokeWidth(array.getDimension(R.styleable.KChartView_priceLineDotStrokeWidth, 4f));
+                setShowRightDotPriceLine(array.getBoolean(R.styleable.KChartView_showRightDotPriceLine, true));
                 setPriceLabelRightBackgroundAlpha(array.getInt(R.styleable.KChartView_priceLineRightLabelBackGroundAlpha, 255));
                 setPriceLabelInLineTextColor(array.getInt(R.styleable.KChartView_priceLabelInLineTextColor, Color.parseColor("#6D87A8")));
                 setPriceLabelInLineTextSize(array.getDimension(R.styleable.KChartView_priceLabelInLineTextSize, DpUtil.Dp2Px(context, 10)));

@@ -19,6 +19,7 @@
         <attr name="priceLabelInLineBoxBorderColor" format="color" />
         <attr name="priceLabelInLineBoxBorderWidth" format="dimension" />
         <attr name="priceLabelInLineBoxRadius" format="dimension" />
+        <attr name="showRightDotPriceLine" format="boolean" />
         <attr name="priceLineRightLabelBackGroundAlpha" format="integer" />
         <attr name="priceLineRightColor" format="color" />
         <attr name="priceLabelRightTextColor" format="color" />

@@ -123,6 +123,7 @@
       | priceLineColor | color |  设置价格线颜色 |   |
       | priceLineDotSolidWidth | dimension |  价格线虚线实心宽度 |   |
       | priceLineDotStrokeWidth | dimension | 价格线实心间隔  |   |
+      | showRightDotPriceLine| boolean| 显示右侧虚线和价格  |   |
       | selectedXLineWidth | dimension |  设置选择器横线宽 |   |
       | selectedYLineWidth | dimension | 设置十字线竖线宽度  |   |
       | selectedXLineColor | color |  设置十字线横线颜色  |   |
