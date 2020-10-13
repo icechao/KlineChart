@@ -5,8 +5,6 @@ import android.database.DataSetObserver;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.icechao.klinelib.adapter.IAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +18,9 @@ import java.util.List;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public abstract class BaseDepthAdapter implements IAdapter {
+public abstract class BaseDepthAdapter extends BaseKLineChartAdapter {
 
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private final DataSetObservable mDataSetObservable = new DataSetObservable();
     protected float[] tempLeftDatas;
     protected float[] tempRightDatas;

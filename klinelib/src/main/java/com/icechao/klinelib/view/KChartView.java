@@ -13,13 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.icechao.klinelib.R;
+import com.icechao.klinelib.adapter.BaseKLineChartAdapter;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.callback.IMaxMinDeal;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.IYValueFormatter;
 import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
+import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.render.EmaRender;
 import com.icechao.klinelib.render.KDJRender;
 import com.icechao.klinelib.render.MACDRender;
@@ -861,16 +864,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
-    /**
-     * 获取ValueFormatter
-     *
-     * @return IValueFormatter
-     */
-    public IYValueFormatter getValueFormatter() {
-        return super.getValueFormatter();
-    }
-
     /**
      * 设置Y轴价格的格式化器
      *
@@ -1087,7 +1080,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectedCrossBigColor(int color) {
-        selectedbigCrossPaint.setColor(color);
+        selectedBigCrossPaint.setColor(color);
         return this;
     }
 
@@ -1753,15 +1746,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-    /**
-     * 获取当前主图显示状态
-     *
-     * @return {@link Status.MainStatus}
-     */
-    public int getStatus() {
-        return super.getStatus();
-    }
-
 
     /**
      * 设置k线加载中loading
@@ -1815,8 +1799,19 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
+    /**
+     * 设置K线右侧运虚线价格线
+     *
+     * @param showRightDotPriceLine true显示
+     * @return {@link KChartView}
+     */
+    public KChartView setShowRightDotPriceLine(boolean showRightDotPriceLine) {
+        this.showRightDotPriceLine = showRightDotPriceLine;
+        return this;
+    }
 
     /**
+     * /**
      * 设置横屏线价格线显示
      *
      * @param showPriceLine true显示
@@ -1827,7 +1822,8 @@ public class KChartView extends BaseKChartView {
         this.showPriceLine = showPriceLine;
         return this;
     }
-   /**
+
+    /**
      * 设置横屏线价格线上label显示
      *
      * @param showPriceLabelInLine true显示
@@ -1838,8 +1834,6 @@ public class KChartView extends BaseKChartView {
         this.showPriceLabelInLine = showPriceLabelInLine;
         return this;
     }
-
-
 
     /**
      * 设置横屏线价格线上的Label点击事件
@@ -1852,7 +1846,6 @@ public class KChartView extends BaseKChartView {
         this.labelInLineClickListener = labelInLineClickListener;
         return this;
     }
-
 
 
     /**
@@ -2195,4 +2188,47 @@ public class KChartView extends BaseKChartView {
         this.indexRenders.put(status, t);
         return this;
     }
+
+
+    /**
+     * 获取适配器
+     *
+     * @return {@link BaseKLineChartAdapter }
+     */
+    public BaseKLineChartAdapter<? extends KLineEntity> getAdapter() {
+        return dataAdapter;
+    }
+
+
+
+
+    /**
+     * 给子区域添加画图方法
+     *
+     * @param childDraw IChartDraw
+     */
+    public void addIndexDraw(@Status.IndexStatus int tag, BaseRender childDraw) {
+        indexRenders.put(tag, childDraw);
+    }
+
+
+    /**
+     * 获取ValueFormatter
+     *
+     * @return IValueFormatter
+     */
+    public IYValueFormatter getValueFormatter() {
+        return valueFormatter;
+    }
+
+
+    /**
+     * 设置特别的最大最小值处理方式
+     *
+     * @param maxMinDeal {@link IMaxMinDeal}
+     */
+    public void setMaxMinDeal(IMaxMinDeal maxMinDeal) {
+        this.maxMinDeal = maxMinDeal;
+    }
+
 }

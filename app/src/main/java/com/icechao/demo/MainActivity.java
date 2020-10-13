@@ -158,7 +158,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     public void onSlidLeft() {
                         List<KChartBean> all = new DataTest().getData(MainActivity.this);
                         //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
-                        all.addAll(adapter.getDatas());
+                        all.addAll(adapter.getDataSource());
                         adapter.resetData(all, false);
                     }
 

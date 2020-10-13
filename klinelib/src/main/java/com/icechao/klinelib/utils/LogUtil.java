@@ -23,5 +23,4 @@ public class LogUtil {
             Log.e(TAG, String.valueOf(o));
         }
     }
-
 }
