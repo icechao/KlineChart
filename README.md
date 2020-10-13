@@ -35,7 +35,7 @@
             
             工程的build.gradle中  In the mudule's build.gradle
 
-                        implementation 'com.icechao.klinelib:klinelib:2.0.4'
+                        implementation 'com.icechao.klinelib:klinelib:2.0.5'
 
             
 2. <b>继承KlineEntry定义自己的K线的数据Bean,复写抽象方法返回 :高 开 低 收 量 时间 The order information inherits the data bean of klineentry to define its own K-line, and the replication abstract method returns: high opening and low receipt time</b>
@@ -567,12 +567,17 @@
 
  ## 2.0.3更新
 
-        - 添加setAutoFixScrollEnable方法控制可滚动为手动控制还是自动控制
-        - 网格线宽重置位置
-        - 渲染控制resetData时不渲染直到数据设置完成
+    - 添加setAutoFixScrollEnable方法控制可滚动为手动控制还是自动控制
+    - 网格线宽重置位置
+    - 渲染控制resetData时不渲染直到数据设置完成
         
  ## 2.0.4更新
 
-        - 修复独立显示Y轴时最大最小值可能显示一半的问题
-        - 修复滑动时Y轴不变化问题
-        - 添加最大最小缩放系数,显示最大最小值通过系数设置
+    - 修复独立显示Y轴时最大最小值可能显示一半的问题
+    - 修复滑动时Y轴不变化问题
+    - 添加最大最小缩放系数,显示最大最小值通过系数设置   
+    
+ ## 2.0.5更新
+
+    - 修复bug
+    - 最大最小值绘制优化
