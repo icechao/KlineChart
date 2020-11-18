@@ -24,14 +24,14 @@ public abstract class BaseKLineChartAdapter<T> implements java.io.Serializable {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final DataSetObservable dataSetObservable = new DataSetObservable();
 
-    private final Runnable notifyDataChangeRunable = dataSetObservable::notifyChanged;
+    private final Runnable notifyDataChangeRunnable = dataSetObservable::notifyChanged;
     private final Runnable notifyDataWillChangeRunnable = dataSetObservable::notifyInvalidated;
 
     /**
      * 发生变化
      */
     public void notifyDataSetChanged() {
-        handler.post(notifyDataChangeRunable);
+        handler.post(notifyDataChangeRunnable);
     }
 
 

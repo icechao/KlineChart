@@ -780,7 +780,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     @Override
     public void onDraw(Canvas canvas) {
         if (needRender) {
-            long l = System.currentTimeMillis();
             renderBackground(canvas);
             renderGrid(canvas);
             renderLogo(canvas);
@@ -798,7 +797,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     e.printStackTrace();
                 }
             }
-            LogUtil.e("renderTime :  " + (System.currentTimeMillis() - l));
         }
     }
 
