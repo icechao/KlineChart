@@ -77,7 +77,7 @@
           
 3. <b>在布局中使用  Use in layout</b>
   
-            <com.icechao.klinelib.view.KLineChartView
+            <com.icechao.klinelib.view.KChartView
              android:id="@+id/kLineChartView"
              android:layout_width="matchParent"
              android:layout_height="580dp"
