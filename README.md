@@ -1,3 +1,4 @@
+#尽量使用maven,源码随时修改不稳定,需要源请Clone后回滚
 # kline(尽量避免改动源码,方便修复bug重新依赖)
  ****************************************************
  * 加群反馈,优化功能会同步到群                  
@@ -77,7 +78,7 @@
           
 3. <b>在布局中使用  Use in layout</b>
   
-            <com.icechao.klinelib.view.KLineChartView
+            <com.icechao.klinelib.view.KChartView
              android:id="@+id/kLineChartView"
              android:layout_width="matchParent"
              android:layout_height="580dp"
@@ -275,7 +276,7 @@
             addLast(KlineEntry);
 
             修改某个数据   Modify a data
-            changeItem(KlineEntry);
+            changeItem(int position, T data)
 
             如果有需要在前面追加多个数据可以继承KLineChartAdapter自定义方法参考addLast方法   If you need to append more than one data, you can inherit the klinechartadapter custom method reference addlast method
             添加完数据后需要手动隐藏loading   After adding data, you need to hide loading manually
