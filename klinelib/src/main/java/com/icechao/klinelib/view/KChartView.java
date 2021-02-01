@@ -185,7 +185,9 @@ public class KChartView extends BaseKChartView {
                 setBackGroundFillBottomColor(array.getColor(R.styleable.KChartView_backgroundFillBottomColor, Color.TRANSPARENT));
 
                 // time line
-                setTimeLineColor(array.getColor(R.styleable.KChartView_timeLineColor, Color.parseColor("#4B85D6")));
+                int defValue = Color.parseColor("#4B85D6");
+                int color = array.getColor(R.styleable.KChartView_timeLineColor, defValue);
+                setTimeLineColor(color);
                 setTimeLineFillTopColor(array.getColor(R.styleable.KChartView_timeLineFillTopColor, Color.parseColor("#404B85D6")));
                 setTimeLineFillBottomColor(array.getColor(R.styleable.KChartView_timeLineFillBottomColor, Color.parseColor("#004B85D6")));
                 setTimeLineEndColor(array.getColor(R.styleable.KChartView_timeLineEndPointColor, Color.WHITE));
@@ -453,7 +455,7 @@ public class KChartView extends BaseKChartView {
             if (progressBar.getVisibility() != View.VISIBLE) {
                 post(() -> {
                     progressBar.setVisibility(View.VISIBLE);
-                    isAnimationLast = false;
+//                    isAnimationLast = false;
                 });
             }
         } else {
@@ -1161,7 +1163,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setTimeLineColor(int color) {
-        mainRender.setMinuteLineColor(color);
+        mainRender.setTimeLineColor(color);
         return this;
     }
 
@@ -1912,7 +1914,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}l
      */
     public KChartView setSelectedTouchModel(@Status.ShowCrossModel int showCrossModel) {
-        this.modle = showCrossModel;
+        this.model = showCrossModel;
         return this;
     }
 

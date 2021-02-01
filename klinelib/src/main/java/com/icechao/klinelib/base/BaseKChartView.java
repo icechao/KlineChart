@@ -451,8 +451,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected boolean showRightDotPriceLine;
 
     protected void lastChange() {
+        int tempIndex = (itemsCount - 1) * indexInterval;
         if (isAnimationLast) {
-            int tempIndex = (itemsCount - 1) * indexInterval;
             generaterAnimator(lastVol, points[tempIndex + Constants.INDEX_VOL], animation -> lastVol = (Float) animation.getAnimatedValue());
             generaterAnimator(lastPrice, points[tempIndex + Constants.INDEX_CLOSE], animation -> {
                 lastPrice = (Float) animation.getAnimatedValue();
@@ -463,6 +463,17 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             float[] tempData = Arrays.copyOfRange(points, tempIndex, points.length);
             mainRender.startAnim(BaseKChartView.this, tempData);
             volumeRender.startAnim(BaseKChartView.this, tempData);
+            if (null != indexRender) {
+                indexRender.startAnim(BaseKChartView.this, tempData);
+            }
+        } else {
+            mainRender.resetValues();
+            volumeRender.resetValues();
+            if (null != indexRender) {
+                indexRender.resetValues();
+            }
+            lastVol = points[tempIndex + Constants.INDEX_VOL];
+            lastPrice = points[tempIndex + Constants.INDEX_CLOSE];
         }
     }
 
@@ -668,7 +679,6 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     private ValueAnimator valueAnimator;
 
-    private float tempTranslation;
     private float selectedY = 0;
     private float dataLength = 0;
 
@@ -1553,14 +1563,14 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     public void changeTranslated(float translateX) {
         if (translateX < getMinTranslate()) {
             translateX = getMinTranslate();
-            if (null != slidListener && itemsCount > (renderWidth / chartItemWidth)) {
-                overScroller.forceFinished(true);
+            if (!getForceStopSlid() && null != slidListener && itemsCount > (renderWidth / chartItemWidth)) {
+                setForceStopSlid(true);
                 slidListener.onSlidRight();
             }
         } else if (translateX > getMaxTranslate()) {
             translateX = getMaxTranslate();
-            if (null != slidListener && itemsCount > (renderWidth / chartItemWidth)) {
-                overScroller.forceFinished(true);
+            if (!getForceStopSlid() && null != slidListener && itemsCount > (renderWidth / chartItemWidth)) {
+                setForceStopSlid(true);
                 slidListener.onSlidLeft();
             }
         }
@@ -1887,7 +1897,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 开始动画
      */
     public void startAnimation() {
-        if (null != showAnim) {
+        if (loadDataWithAnim && null != showAnim) {
             showAnim.start();
         }
     }
@@ -2127,55 +2137,46 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected DataSetObserver dataSetObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
-            //从没数据变成有数据时,显示动画加载效果
+//          1 判断数据个数化,更新最后一个数据还是添加数据
             int currentCount = BaseKChartView.this.itemsCount;
-            if (loadDataWithAnim && currentCount == 0) {
-                startAnimation();
-            }
-            int dataCount = dataAdapter.getCount();
-            setItemsCount(dataCount);
-            if (dataCount == 0) {
-                return;
-            }
             points = dataAdapter.getPoints();
-            int temp = (dataAdapter.getCount() - 1) * indexInterval;
-            setItemsCount(dataCount);
-            if (dataCount > currentCount) {
+            //当前没数据默认加载数据
+            int tempDataCount = dataAdapter.getCount();
+
+            if (currentCount == 0) { //原没有数据
+                setItemsCount(tempDataCount);
+                int temp = (tempDataCount - 1) * indexInterval;
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
                 lastVol = points[temp + Constants.INDEX_VOL];
-                if (screenRightIndex >= currentCount - 2) {
-                    changeTranslated(canvasTranslateX - chartItemWidth * getScaleX());
-                }
-            } else if (currentCount == dataCount) {
+                changeTranslated(getMinTranslate());
+                startAnimation();
+            } else if (currentCount == tempDataCount) { //更新数据
                 lastChange();
-            } else {
-                lastPrice = points[temp + Constants.INDEX_CLOSE];
-                lastVol = points[temp + Constants.INDEX_VOL];
-                changeTranslated(getMinTranslate());
-            }
-            if (!dataAdapter.getResetShowPosition()) {
-                if (dataCount > currentCount) {
-                    changeTranslated(tempTranslation - (dataCount - currentCount) * chartItemWidth * getScaleX());
-                } else {
-                    changeTranslated(getMaxTranslate());
+                if (dataAdapter.getResetShowPosition()) {
+                    changeTranslated(getMinTranslate());
                 }
-            } else {
-                changeTranslated(getMinTranslate());
+            } else {  //添加数据
+                setItemsCount(tempDataCount);
+                lastChange();
+                if (dataAdapter.getResetShowPosition()) {
+                    changeTranslated(getMinTranslate());
+                } else if (getX(tempDataCount - 1) < xToTranslateX(renderWidth)) {
+                    changeTranslated(getTranslateX() - (tempDataCount - currentCount) * chartItemWidth * getScaleX());
+                }
             }
-            //再次开启动画
-            isAnimationLast = true;
             needRender = true;
+            invalidate();
         }
 
         @Override
         public void onInvalidated() {
-            tempTranslation = canvasTranslateX;
-            isAnimationLast = false;
             overScroller.forceFinished(true);
             needRender = false;
             //设置当前为0防止切换时出现莫名多一根柱子
-            lastVol = 0;
-            lastPrice = 0;
+            if (dataAdapter.getResetLastAnim()) {
+                lastVol = 0;
+                lastPrice = 0;
+            }
         }
     };
 }

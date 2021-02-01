@@ -42,7 +42,7 @@ import java.util.List;
 public class DataTest {
 
 
-    public List<KChartBean> getData(Context context) {
+    public String getData(Context context) {
         AssetManager assets = context.getResources().getAssets();
         InputStream in = null;
         try {
@@ -50,10 +50,8 @@ public class DataTest {
             int length = in.available();
             byte[] buffer = new byte[length];
             in.read(buffer);
-            String json = new String(buffer, 0, buffer.length, "UTF-8");
-            List<KChartBean> data = new Gson().fromJson(json, new TypeToken<List<KChartBean>>() {
-            }.getType());
-            return data;
+          return new String(buffer, 0, buffer.length, "UTF-8");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

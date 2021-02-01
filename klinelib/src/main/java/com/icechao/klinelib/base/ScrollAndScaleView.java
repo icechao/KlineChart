@@ -29,6 +29,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     protected ScaleGestureDetector scaleDetector;
 
     protected boolean showSelected = false;
+    protected boolean forceStopSlid = false;
 
     protected int selectedIndex = -1;
 
@@ -68,7 +69,6 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         gestureDetector = new GestureDetectorCompat(getContext(), this);
         scaleDetector = new ScaleGestureDetector(getContext(), this);
         overScroller = new OverScroller(getContext());
-
     }
 
     @Override
@@ -83,12 +83,12 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     private boolean isTapShow;
 
-    protected @Status.ShowCrossModel int modle = Status.SELECT_BOTH;
+    protected @Status.ShowCrossModel int model = Status.SELECT_BOTH;
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        switch (modle) {
+        switch (model) {
             default:
             case Status.SELECT_PRESS:
                 showSelected = false;
@@ -125,7 +125,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (modle == Status.SELECT_PRESS || modle == Status.SELECT_BOTH) {
+        if (model == Status.SELECT_PRESS || model == Status.SELECT_BOTH) {
             showSelected = true;
             onSelectedChange(e);
         }
@@ -219,16 +219,13 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         if (event.getPointerCount() > 1) {
             showSelected = false;
             setSelectedIndex(-1);
         }
-        if (null != eventLisenter) {
-            eventLisenter.onEvent();
-        }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                setForceStopSlid(false);
                 touch = true;
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -267,7 +264,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     /**
      * 是否在触摸中
      *
-     * @return
+     * @return bool正在点击
      */
     public boolean isTouch() {
         return touch;
@@ -337,15 +334,11 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         isScaleEnable = scaleEnable;
     }
 
-
-    public void setEventLisenter(EventLisenter lisenter) {
-        this.eventLisenter = lisenter;
+    public boolean getForceStopSlid() {
+        return forceStopSlid;
     }
 
-    public interface EventLisenter {
-        void onEvent();
+    public void setForceStopSlid(boolean forceStopSlid) {
+        this.forceStopSlid = forceStopSlid;
     }
-
-    private EventLisenter eventLisenter;
-
 }

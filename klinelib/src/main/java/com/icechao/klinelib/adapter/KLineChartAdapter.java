@@ -22,15 +22,7 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
 
     private int dataCount;
 
-    private boolean resetShowPosition;
-
-    public boolean getResetShowPosition() {
-        return resetShowPosition;
-    }
-
-    public void setResetShowPosition(boolean resetShowPosition) {
-        this.resetShowPosition = resetShowPosition;
-    }
+    private boolean resetShowPosition,resetLastAnim;
 
     public List<T> getDataSource() {
         return dataSource;
@@ -66,14 +58,24 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         return new Date(dataSource.get(position).getDate());
     }
 
-
     /**
      * 重置K线数据
      *
      * @param data              K线数据
      * @param resetShowPosition 重置K线显示位置default true,如不需重置K线传入false
      */
-    public void resetData(List<T> data, boolean resetShowPosition) {
+    public void resetData(List<T> data, boolean resetShowPosition){
+        resetData(data,resetShowPosition,false);
+    }
+
+    /**
+     * 重置K线数据
+     *
+     * @param data              K线数据
+     * @param resetShowPosition 重置K线显示位置default true,如不需重置K线传入false
+     * @param resetLastAnim     清楚最后一要柱子的动画,如果切换币需要使用方法传true
+     */
+    public void resetData(List<T> data, boolean resetShowPosition, boolean resetLastAnim) {
         notifyDataWillChanged();
         dataSource.clear();
         dataSource.addAll(data);
@@ -83,7 +85,8 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         } else {
             points = new float[]{};
         }
-        this.resetShowPosition = resetShowPosition;
+        setResetShowPosition(resetShowPosition);
+        setResetLastAnim(resetLastAnim);
         notifyDataSetChanged();
     }
 
@@ -107,12 +110,19 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     /**
      * 向尾部添加数据
      */
-    @Override
     public void addLast(T entity) {
+        addLast(entity, false);
+    }
+
+    /**
+     * 向尾部添加数据
+     */
+    public void addLast(T entity, boolean resetShowPosition) {
         if (null != entity) {
             dataSource.add(entity);
             this.dataCount++;
             points = dataTools.calculate(dataSource);
+            setResetShowPosition(resetShowPosition);
             notifyDataSetChanged();
         }
     }
@@ -126,5 +136,22 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         dataSource.set(position, data);
         points = dataTools.calculate(dataSource);
         notifyDataSetChanged();
+    }
+
+    public void setResetLastAnim(boolean resetLastAnim) {
+        this.resetLastAnim = resetLastAnim;
+    }
+
+    public boolean getResetShowPosition() {
+        return resetShowPosition;
+    }
+
+    public void setResetShowPosition(boolean resetShowPosition) {
+        this.resetShowPosition = resetShowPosition;
+    }
+
+    @Override
+    public boolean getResetLastAnim() {
+        return resetLastAnim;
     }
 }

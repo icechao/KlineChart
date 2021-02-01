@@ -77,11 +77,6 @@ public abstract class BaseKLineChartAdapter<T> implements java.io.Serializable {
     public abstract Date getDate(int position);
 
     /**
-     * 向尾部追加数据
-     */
-    public abstract void addLast(T entity);
-
-    /**
      * 获取处理的数据
      */
     public abstract float[] getPoints();
@@ -95,4 +90,17 @@ public abstract class BaseKLineChartAdapter<T> implements java.io.Serializable {
      * 设置重置显示位置
      */
     public abstract void setResetShowPosition(boolean resetShowPosition);
+
+
+    /**
+     * 设置重置显示位置
+     */
+    public abstract boolean getResetLastAnim();
+
+    /**
+     * 设置重置最后一根柱子动画
+     */
+    public abstract void setResetLastAnim(boolean resetLastAnim);
+
+
 }

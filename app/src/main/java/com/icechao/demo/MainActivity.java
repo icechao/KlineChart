@@ -19,11 +19,14 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
+import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.model.MarketTradeItem;
 import com.icechao.klinelib.render.MainRender;
@@ -38,10 +41,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private KLineChartAdapter adapter;
+    private KLineChartAdapter<KChartBean> adapter;
 
     private KChartView chartView;
 
@@ -91,6 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         findViewById(R.id.text_view_hide_sub).setOnClickListener(this);
         findViewById(R.id.text_view_hide_master).setOnClickListener(this);
+        findViewById(R.id.text_view_change_time_color).setOnClickListener(this);
 
 
         radioGroup = findViewById(R.id.radio_group_defalt_index);
@@ -126,8 +131,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setSelectedPointRadius(20)
                 .setSelectedPointColor(Color.RED)
                 .setAnimLoadData(false)
-                .setGridColumns(5)
-                .setGridRows(5)
+                .setGridColumns(0)
+                .setGridRows(0)
                 .setMacdHollow(Status.INCREASE_HOLLOW)
                 .setPriceLabelInLineClickable(true)
                 .setLabelSpace(130)
@@ -148,7 +153,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     }
                 })
                 .setPriceLabelInLineMarginRight(200)
-//                .setYLabelBackgroundColor(Color.DKGRAY, true)
+                .setYLabelBackgroundColor(Color.DKGRAY, true)
                 .setSelectInfoBoxPadding(40)
                 .showLoading()
                 .setBetterX(true)
@@ -156,12 +161,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setSlidListener(new SlidListener() {
                     @Override
                     public void onSlidLeft() {
-                        List<KChartBean> all = new DataTest().getData(MainActivity.this);
-                        //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
-                        all.addAll(adapter.getDataSource());
-                        adapter.resetData(all, false);
+                        LogUtil.e("onSlidLeft");
                     }
-
 
                     @Override
                     public void onSlidRight() {
@@ -197,14 +198,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
 
         chartView.setScaleXMax(3);
         chartView.setScaleXMin(0.5f);
-
-        chartView.resetMainRender(new MainRender(this){
-            @Override
-            public void renderText(@NonNull Canvas canvas, @NonNull BaseKChartView view, float x, float y, int position, float[] values) {
-
-            }
-        });
-
     }
 
 
@@ -214,18 +207,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         new Thread() {
             @Override
             public void run() {
-                SystemClock.sleep(1000);
-                //1.定义类 KChartBean 继承KLineEntity
-                //2.从数据源获取 KChartBean 数据集合
-                all = new DataTest().getData(MainActivity.this);
-                //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
-                adapter.resetData(all, true);
-                //adapter.addLast();  尾部追加数据
-                //adapter.changeItem(position,data);  更新数据
-                //4.隐藏K线loading
-                chartView.hideLoading();
-
-
+                while (true) {
+                    SystemClock.sleep(1000);
+                    //1.定义类 KChartBean 继承KLineEntity
+                    //2.使用自定义KChartBean 解析数据集合
+                    if (null == all) {
+                        all = new Gson().fromJson(new DataTest().getData(MainActivity.this),
+                                new TypeToken<List<KChartBean>>() {
+                                }.getType());
+                        //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
+                        adapter.resetData(all.subList(0, 100), false);
+                    } else {
+                       //4.绝大多数是通过最后一根线的时间判断是add还是update
+                        adapter.addLast(all.get(new Random().nextInt(all.size() - 1))); // 尾部追加数据
+                        //adapter.changeItem(position,data);  更新数据
+                    }
+                    chartView.hideLoading();
+                }
             }
         }.start();
     }
@@ -241,7 +239,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         moreIndex.setVisibility(View.GONE);
 
         switch (v.getId()) {
-            case R.id.text_view_change_theme:
+            case R.id.text_view_change_time_color:
+                chartView.setTimeLineColor(Color.BLUE);
+                break;
+                case R.id.text_view_change_theme:
                 TypedArray typedArray = obtainStyledAttributes(changeTheme ? R.style.kline_style : R.style.kline, R.styleable.KChartView);
                 chartView.parseAttrs(typedArray, this);
                 changeTheme = !changeTheme;

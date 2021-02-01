@@ -287,7 +287,18 @@
                         android:layout_weight="1"
                         android:button="@null"
                         android:paddingRight="10dp"
-                        android:text="Y轴显示模式"
+                        android:text=" Y 轴 "
+                        android:textColor="#4B85D6"
+                        android:textSize="12dp" />
+
+                <TextView
+                        android:id="@+id/text_view_change_time_color"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:paddingRight="10dp"
+                        android:text=" 分时线颜色 "
                         android:textColor="#4B85D6"
                         android:textSize="12dp" />
 

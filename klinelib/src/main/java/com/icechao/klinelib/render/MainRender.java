@@ -565,7 +565,7 @@ public class MainRender extends BaseRender {
      *
      * @param color
      */
-    public void setMinuteLineColor(int color) {
+    public void setTimeLineColor(int color) {
         linePaint.setColor(color);
     }
 
