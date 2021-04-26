@@ -101,7 +101,7 @@ public class KChartView extends BaseKChartView {
                 setCommonTextColor(array.getColor(R.styleable.KChartView_commonTextColor, Color.parseColor("#6D87A8")));
                 setXlabelTextColor(array.getColor(R.styleable.KChartView_labelTextColor, Color.parseColor("#6D87A8")));
                 setYLabelTextColor(array.getColor(R.styleable.KChartView_labelTextColor, Color.parseColor("#6D87A8")));
-                setYlabelAlign(array.getBoolean(R.styleable.KChartView_yLabelAlign, true));
+                setYlabelAlign(array.getBoolean(R.styleable.KChartView_yLabelAlign, false));
                 setChartPaddingTop(array.getDimension(R.styleable.KChartView_paddingTop, DpUtil.Dp2Px(context, 20)));
                 setChildPaddingTop(array.getDimension(R.styleable.KChartView_childPaddingTop, DpUtil.Dp2Px(context, 10)));
                 setChartPaddingBottom(array.getDimension(R.styleable.KChartView_paddingBottom, 0));
