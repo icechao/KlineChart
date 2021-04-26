@@ -1578,10 +1578,10 @@ public class KChartView extends BaseKChartView {
      */
     public KChartView setYlabelAlign(boolean alignLeft) {
         if (alignLeft) {
-            yLabelPaint.setTextAlign(Paint.Align.RIGHT);
+            yLabelPaint.setTextAlign(Paint.Align.LEFT);
             yLabelX = yLabelMarginBorder;
         } else {
-            yLabelPaint.setTextAlign(Paint.Align.LEFT);
+            yLabelPaint.setTextAlign(Paint.Align.RIGHT);
             post(() -> yLabelX = getViewWidth() - yLabelMarginBorder);
         }
         return this;
