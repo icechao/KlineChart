@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,12 +23,16 @@ import com.google.gson.reflect.TypeToken;
 import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
+import com.icechao.klinelib.callback.OnSelectedChangedListener;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
-import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.model.MarketTradeItem;
-import com.icechao.klinelib.render.MainRender;
+import com.icechao.klinelib.shape.LineSegmentShape;
+import com.icechao.klinelib.shape.ParallelLineShape;
+import com.icechao.klinelib.shape.RadialShape;
+import com.icechao.klinelib.shape.RectangleShape;
+import com.icechao.klinelib.shape.StraightLineShape;
 import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.callback.SlidListener;
@@ -41,7 +44,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -144,7 +146,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 .setLoadingView(loadingView)
                 //full or stroke
                 .setCandleHollow(Status.INCREASE_HOLLOW)
-                .setOnSelectedChangedListener(new BaseKChartView.OnSelectedChangedListener() {
+                .setOnSelectedChangedListener(new OnSelectedChangedListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSelectedChanged(BaseKChartView view, int index, float... values) {
@@ -217,9 +219,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                                 }.getType());
                         //3.设置K线数据  建议直接在子线程设置 KLineChartView 会在 绘制时自动回归主线程
                         adapter.resetData(all.subList(0, 100), false);
+//                        chartView.addDrawShape(new ParallelLineShape(chartView));
                     } else {
                        //4.绝大多数是通过最后一根线的时间判断是add还是update
-                        adapter.addLast(all.get(new Random().nextInt(all.size() - 1))); // 尾部追加数据
+//                        adapter.addLast(all.get(new Random().nextInt(all.size() - 1))); // 尾部追加数据
                         //adapter.changeItem(position,data);  更新数据
                     }
                     chartView.hideLoading();
@@ -337,14 +340,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                 chartView.setMaxMinCalcModel(Status.CALC_CLOSE_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.KLINE_SHOW_TIME_LINE);
-                adapter.resetData(all.subList(10, 140));
+                adapter.resetData(all.subList(0, 100), false);
                 break;
             case R.id.radio_button_fifteen:
                 //计算最大最小值时包含指标值与最新数据
                 chartView.setMaxMinCalcModel(Status.CALC_NORMAL_WITH_LAST);
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all.subList(10, 20));
+                adapter.resetData(all.subList(0, 100), false);
 
                 break;
             case R.id.radio_button_one_hour:

@@ -30,6 +30,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     protected boolean showSelected = false;
     protected boolean forceStopSlid = false;
+    protected boolean drawShapeEnable = false;
 
     protected int selectedIndex = -1;
 
@@ -81,53 +82,67 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     }
 
+    public abstract boolean changeDrawShape(MotionEvent e1, MotionEvent e, float distanceX, float distanceY);
+
+
     private boolean isTapShow;
 
     protected @Status.ShowCrossModel int model = Status.SELECT_BOTH;
-
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        switch (model) {
-            default:
-            case Status.SELECT_PRESS:
-                showSelected = false;
-                return true;
-            case Status.SELECT_BOTH:
-                if (!isTapShow && showSelected) {
+        if (drawShapeEnable) {
+            return changeDrawShape(e, e, 0, 0);
+        } else {
+            switch (model) {
+                default:
+                case Status.SELECT_NONE:
+                case Status.SELECT_PRESS:
                     showSelected = false;
-                    isTapShow = false;
-                } else {
-                    isTapShow = true;
+                    return true;
+                case Status.SELECT_BOTH:
+                    if (!isTapShow && showSelected) {
+                        showSelected = false;
+                        isTapShow = false;
+                    } else {
+                        isTapShow = true;
+                        showSelected = true;
+                        onSelectedChange(e);
+                    }
+                    return true;
+                case Status.SELECT_TOUCHE:
                     showSelected = true;
                     onSelectedChange(e);
-                }
-                return true;
-            case Status.SELECT_TOUCHE:
-                showSelected = true;
-                onSelectedChange(e);
-                return true;
+                    return true;
+            }
         }
     }
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (isTapShow) {
-            showSelected = false;
-            isTapShow = false;
+
+        if (drawShapeEnable) {
+            return changeDrawShape(e1, e2, distanceX, distanceY);
+        } else {
+            if (isTapShow) {
+                showSelected = false;
+                isTapShow = false;
+            }
+            if (!showSelected && !isMultipleTouch() && isScrollEnable()) {
+                scrollBy(Math.round(distanceX), 0);
+                return true;
+            }
+            return false;
         }
-        if (!showSelected && !isMultipleTouch() && isScrollEnable()) {
-            scrollBy(Math.round(distanceX), 0);
-            return true;
-        }
-        return false;
     }
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (model == Status.SELECT_PRESS || model == Status.SELECT_BOTH) {
-            showSelected = true;
-            onSelectedChange(e);
+        if (!drawShapeEnable) {
+            if (model == Status.SELECT_PRESS || model == Status.SELECT_BOTH) {
+                showSelected = true;
+                onSelectedChange(e);
+            }
         }
     }
 
@@ -225,6 +240,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                changeDrawShape(event, null, 0, 0);
                 setForceStopSlid(false);
                 touch = true;
                 break;
@@ -238,8 +254,8 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-
                 touch = false;
+                changeDrawShape(event, event, 0, 0);
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -283,7 +299,7 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
     /**
      * 是否是多指触控
      *
-     * @return
+     * @return isMultipleTouch
      */
     public boolean isMultipleTouch() {
         return isMultipleTouch;

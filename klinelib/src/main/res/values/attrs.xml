@@ -71,7 +71,11 @@
         <attr name="timeLineEndMultiply" format="float" />
 
         <!--公共的-->
-
+        <!-- background -->
+        <attr name="klineState" format="enum" >
+            <enum value="4102" name="timeLine"/>
+            <enum value="4103" name="kline"/>
+        </attr>
         <attr name="selectedDateBoxVerticalPadding" format="dimension" />
         <attr name="selectedDateBoxHorizontalPadding" format="dimension" />
 

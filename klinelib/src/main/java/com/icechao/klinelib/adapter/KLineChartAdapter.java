@@ -58,6 +58,11 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         return new Date(dataSource.get(position).getDate());
     }
 
+    @Override
+    public long getDateMillion(int position) {
+        return dataSource.get(position).getDate();
+    }
+
     /**
      * 重置K线数据
      *

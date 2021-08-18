@@ -77,6 +77,14 @@ public abstract class BaseKLineChartAdapter<T> implements java.io.Serializable {
     public abstract Date getDate(int position);
 
     /**
+     * 获取某个数据时间
+     *
+     * @param position int
+     * @return {@link Date}
+     */
+    public abstract long getDateMillion(int position);
+
+    /**
      * 获取处理的数据
      */
     public abstract float[] getPoints();

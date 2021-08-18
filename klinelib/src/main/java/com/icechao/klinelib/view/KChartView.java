@@ -18,10 +18,13 @@ import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.base.BaseRender;
 import com.icechao.klinelib.callback.IMaxMinDeal;
+import com.icechao.klinelib.callback.OnSelectedChangedListener;
+import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
+import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.IYValueFormatter;
-import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
+import com.icechao.klinelib.idraw.IDrawShape;
 import com.icechao.klinelib.model.KLineEntity;
 import com.icechao.klinelib.render.EmaRender;
 import com.icechao.klinelib.render.KDJRender;
@@ -31,7 +34,6 @@ import com.icechao.klinelib.render.RSIRender;
 import com.icechao.klinelib.render.VolumeRender;
 import com.icechao.klinelib.render.WRRender;
 import com.icechao.klinelib.utils.DpUtil;
-import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.utils.Status;
 
 import java.util.Set;
@@ -226,6 +228,8 @@ public class KChartView extends BaseKChartView {
                 setCandleHollow(array.getInteger(R.styleable.KChartView_candleHollow, Status.NONE_HOLLOW));
                 setMacdHollow(array.getInteger(R.styleable.KChartView_macdHollow, Status.NONE_HOLLOW));
 
+                setKlineState(array.getInt(R.styleable.KChartView_klineState, Status.KLINE_SHOW_TIME_LINE));
+
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -334,7 +338,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 子视图的顶部padding
      *
@@ -368,7 +371,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 价格线虚线间隙
      *
@@ -379,7 +381,6 @@ public class KChartView extends BaseKChartView {
         priceDotLineItemSpace = width;
         return this;
     }
-
 
     /**
      * 价格线框边框宽度
@@ -476,7 +477,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 切换时可能会引起动画效果
      * 延迟500换秒隐藏动画以免动画效果显示
@@ -502,7 +502,6 @@ public class KChartView extends BaseKChartView {
         showSelected = false;
         return this;
     }
-
 
     /**
      * 设置是否可以缩放
@@ -655,7 +654,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     public KChartView setVolMa1Color(int color) {
         volumeRender.setMaOneColor(color);
         return this;
@@ -743,7 +741,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 设置十字线跟随手势移动/十字线显示收盘价
      *
@@ -779,7 +776,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 全局通用线宽
      *
@@ -801,7 +797,6 @@ public class KChartView extends BaseKChartView {
 
         return this;
     }
-
 
     @Override
     public void onSelectedChange(MotionEvent e) {
@@ -832,7 +827,6 @@ public class KChartView extends BaseKChartView {
         this.yLabelMarginBorder = yLabelMarginRight;
         return this;
     }
-
 
     /**
      * 主是视图占比最大 0-10
@@ -1098,7 +1092,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 选中的线的Y轴颜色
      *
@@ -1188,7 +1181,6 @@ public class KChartView extends BaseKChartView {
         this.timeLineFillBottomColor = color;
         return this;
     }
-
 
     /**
      * 设置主实图图例距离主视图上边缘的距离
@@ -1691,7 +1683,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 设置当前显示子图
      *
@@ -1850,7 +1841,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 设置K线显示的logo
      *
@@ -1906,7 +1896,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 设置K线显示选中的点击模式
      *
@@ -1917,7 +1906,6 @@ public class KChartView extends BaseKChartView {
         this.model = showCrossModel;
         return this;
     }
-
 
     /**
      * 设置价格线右侧标签的背景透明度
@@ -2016,7 +2004,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 获取当前成交量视图晚是否显示
      *
@@ -2025,7 +2012,6 @@ public class KChartView extends BaseKChartView {
     public boolean getVolShowState() {
         return (chartShowStatue == Status.MAIN_VOL || chartShowStatue == Status.MAIN_VOL_INDEX);
     }
-
 
     /**
      * 设置当成交量视图显示为线时的颜色
@@ -2037,7 +2023,6 @@ public class KChartView extends BaseKChartView {
         volumeRender.setLineChartColor(color);
         return this;
     }
-
 
     /**
      * 设置成交量视图显示 柱/线
@@ -2059,7 +2044,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 替换MainRender  自定义MainRender
      *
@@ -2071,7 +2055,6 @@ public class KChartView extends BaseKChartView {
         this.mainRender = t;
         return this;
     }
-
 
     /**
      * 替换volRender  自定义volRender使用
@@ -2192,7 +2175,6 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
-
     /**
      * 获取适配器
      *
@@ -2201,9 +2183,6 @@ public class KChartView extends BaseKChartView {
     public BaseKLineChartAdapter<? extends KLineEntity> getAdapter() {
         return dataAdapter;
     }
-
-
-
 
     /**
      * 给子区域添加画图方法
@@ -2214,7 +2193,6 @@ public class KChartView extends BaseKChartView {
         indexRenders.put(tag, childDraw);
     }
 
-
     /**
      * 获取ValueFormatter
      *
@@ -2224,6 +2202,37 @@ public class KChartView extends BaseKChartView {
         return valueFormatter;
     }
 
+    /**
+     * 添加一个绘制图形
+     *
+     * @param drawShape {@link IMaxMinDeal}
+     */
+    public void addDrawShape(IDrawShape drawShape) {
+        drawShapeEnable = true;
+        this.drawShape = drawShape;
+        showSelected = false;
+        fixScrollEnable(getDataLength());
+    }
+
+    /**
+     * 移除正在绘制的图形
+     *
+     * @param drawShape {@link IMaxMinDeal}
+     */
+    public void removeDrawShape(IDrawShape drawShape) {
+        drawShapeEnable = false;
+        this.drawShape = drawShape;
+        fixScrollEnable(getDataLength());
+    }
+
+    /**
+     * 移除正在绘制的图形
+     */
+    public void removeAllDrawShapes() {
+        drawShapeEnable = false;
+        this.drawShape = null;
+        fixScrollEnable(getDataLength());
+    }
 
     /**
      * 设置特别的最大最小值处理方式

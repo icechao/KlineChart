@@ -84,7 +84,7 @@ public class Status {
     public static final int VOL_SHOW_BAR_CHART = 4100;
     public static final int VOL_SHOW_VERTICAL_BAR = 4101;
     public static final int KLINE_SHOW_TIME_LINE = 4102;
-    public static final int K_LINE_SHOW_CANDLE_LINE = 4104;
+    public static final int K_LINE_SHOW_CANDLE_LINE = 4103;
 
     /**
      * 成交里显示模式
@@ -183,6 +183,32 @@ public class Status {
     public @interface Align {
     }
 
+    public static final int STRAIGHT_LINE = 10001; //直线
+    public static final int LINE_SEGMENT = 10002; //线段
+    public static final int PARALLEL_LINE = 10003; //平等线
+    public static final int RECTANGLE = 10004; //矩形
+    public static final int DIAMOND = 10005; //菱形
+    public static final int BROKEN_LINE = 10006; //折线
+    public static final int RADIAL = 10007; //射线
+
+    @Documented
+    @IntDef({STRAIGHT_LINE, LINE_SEGMENT, PARALLEL_LINE, RECTANGLE, DIAMOND, BROKEN_LINE, RADIAL})
+    @Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD , ElementType.TYPE_USE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Shape {
+    }
+
+
+    public static final int DRAWING = 11001; //绘制中
+    public static final int DRAW_DONE = 11002; //绘制完成
+    public static final int DRAW_STOP = 11003; //绘制中断
+
+    @Documented
+    @IntDef({DRAWING, DRAW_DONE, DRAW_STOP})
+    @Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DrawShapeState {
+    }
 
 }
 
