@@ -1,4 +1,4 @@
-#尽量使用maven,源码随时修改不稳定,需要源请Clone后回滚
+# 尽量使用maven,源码随时修改不稳定,需要源码请Clone后回滚
 # kline(尽量避免改动源码,方便修复bug重新依赖)
  ****************************************************
  * 加群反馈,优化功能会同步到群                  
@@ -539,6 +539,13 @@
   ### 替换IndexDraw,继承后自由实现功能 Replace IndexDraw and implement functionality freely after inheritance
 
           kLineChartView.resetIndexDraw(Status.IndexStatus status, T t) 
+          
+  ### 设置Y轴显示模式独立显示/与网格同时显示 Set the y-axis display mode to display independently / simultaneously with the grid
+
+          kLineChartView.setYLabelState(Status.YLabelShowModel status) 
+          参数 
+              YLabelShowModel.LABEL_WITH_GRID :   Y轴显示在网格上
+              YLabelShowModel.LABEL_NONE_GRID :   Y轴独立显示与网格不重叠
   
   ### 最大最小值计算模式,影响Y轴的最大最小值 Max min calculation mode, affecting the max min value of Y axis
 
@@ -583,3 +590,9 @@
 
     - 修复bug
     - 最大最小值绘制优化
+    
+    
+## 更新预告 
+   - K线画线
+   - 性能优化
+   - 修复bug
