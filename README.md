@@ -5,10 +5,13 @@
  * QQ群: __163565953__     <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=578dc312547759f4a308318e159f92ab2354ca4bff7272cf197233e271f2e214"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="点击加群" title="点击加群"></a>                             
  * 点击Star 防止丢失                   
  ****************************************************
+
 ## 效果图
 
 <img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="320" hegiht="480" align=center />
 
+## 微信
+<img src="https://github.com/icechao/KlineChart/blob/master/wxGroup.png" width="320" hegiht="480" align=center />
 
 ## 五步接入: 
 
