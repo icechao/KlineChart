@@ -18,7 +18,7 @@ public interface IDrawShape {
 
     boolean touchMove(double x, double y, double distanceX, double distanceY);
 
-    boolean toucheUp(double x, double y);
+    boolean touchUp(double x, double y);
 
     void render(Canvas canvas, float chartLeft, float chartRight, int top, int bottom);
 
