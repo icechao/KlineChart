@@ -2141,7 +2141,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             if (e2 == null) {
                 drawShape.touchDown(xToTranslateX(e1.getX()), e1.getY());
             } else if (e1 == e2) { //点击事件
-                drawShape.toucheUp(xToTranslateX(e1.getX()), e1.getY());
+                drawShape.touchUp(xToTranslateX(e1.getX()), e1.getY());
             } else {
                 drawShape.touchMove(xToTranslateX(e2.getX()), e2.getY(), distanceX, distanceY);
             }
