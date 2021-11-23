@@ -11,7 +11,7 @@
 <img src="https://github.com/icechao/KlineChart/blob/master/1565013719576.gif" width="320" hegiht="480" align=center />
 
 ## 微信
-<img src="https://github.com/icechao/KlineChart/blob/master/wxGroup.png" width="320" hegiht="480" align=center />
+<img src="https://github.com/icechao/KlineChart/blob/master/wxGroup.jpg" width="320" hegiht="480" align=center />
 
 ## 五步接入: 
 
