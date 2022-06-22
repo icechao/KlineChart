@@ -1796,17 +1796,27 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     }
 
     protected void calcMainMaxValue(int tempIndex) {
-        mainMaxValue = (mainStatus == Status.MAIN_MA || mainStatus == Status.MAIN_NONE) ?
-                mainRender.getMaxValue((float) mainMaxValue,
+        switch (mainStatus){
+            case Status.MAIN_MA:
+                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_MA_1],
                         points[tempIndex + Constants.INDEX_MA_2],
-                        points[tempIndex + Constants.INDEX_MA_3]) :
-                mainRender.getMaxValue((float) mainMaxValue,
+                        points[tempIndex + Constants.INDEX_MA_3]);
+                break;
+            case Status.MAIN_BOLL:
+                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_BOLL_DN],
                         points[tempIndex + Constants.INDEX_BOLL_UP],
                         points[tempIndex + Constants.INDEX_BOLL_MB]);
+                break;
+            default:
+                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
+                        points[tempIndex + Constants.INDEX_HIGH]);
+                break;
+        }
+
     }
 
     /**
