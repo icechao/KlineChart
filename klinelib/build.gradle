@@ -1,6 +1,5 @@
-apply plugin: 'com.android.library'
-apply from: rootProject.getRootDir().getAbsolutePath() + "/maven.gradle"
-
+apply 
+plugin: 'com.android.library'
 android {
     compileSdkVersion 28
 
