@@ -1,5 +1,5 @@
 apply 
-plugin: 'com.android.library'
+plugin 'com.android.library'
 android {
     compileSdkVersion 28
 
