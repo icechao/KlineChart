@@ -2174,15 +2174,17 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 数据观察者,当数据变化
      */
     protected DataSetObserver dataSetObserver = new DataSetObserver() {
+        
         @Override
         public void onChanged() {
 //          1 判断数据个数化,更新最后一个数据还是添加数据
             int currentCount = BaseKChartView.this.itemsCount;
-            points = dataAdapter.getPoints();
+            float[] points = dataAdapter.getPoints();
             //当前没数据默认加载数据
             int tempDataCount = dataAdapter.getCount();
 
             if (currentCount == 0) { //原没有数据
+                BaseKChartView.this.points = points;
                 setItemsCount(tempDataCount);
                 int temp = (tempDataCount - 1) * indexInterval;
                 lastPrice = points[temp + Constants.INDEX_CLOSE];
@@ -2195,6 +2197,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     changeTranslated(getMinTranslate());
                 }
             } else {  //添加数据
+                BaseKChartView.this.points = points;
                 setItemsCount(tempDataCount);
                 lastChange();
                 if (dataAdapter.getResetShowPosition()) {
@@ -2204,6 +2207,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 }
             }
             needRender = true;
+
             invalidate();
         }
 
