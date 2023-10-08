@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -218,7 +219,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                     } else {
                        //4.绝大多数是通过最后一根线的时间判断是add还是update
 //                        adapter.addLast(all.get(new Random().nextInt(all.size() - 1))); // 尾部追加数据
-                        //adapter.changeItem(position,data);  更新数据
+                        KChartBean data = adapter.getDataSource().get(adapter.getCount() - 1);
+                        data.close = data.close + 100;
+                        adapter.changeItem(adapter.getCount() -1 , data); // 更新数据
                     }
                     chartView.hideLoading();
                 }
