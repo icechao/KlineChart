@@ -1,3 +1,6 @@
+
+[FlutterK线 支持iOS Android Web Mac Windows Linux](https://github.com/icechao/f_b_kline)
+
 # Star一下次直接找到不用再搜索
 # kline(尽量避免改动源码,方便修复bug重新依赖)
  ****************************************************
