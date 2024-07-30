@@ -24,13 +24,13 @@ import com.icechao.kline.R;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
 import com.icechao.klinelib.callback.OnSelectedChangedListener;
+import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.model.MarketDepthPercentItem;
 import com.icechao.klinelib.model.MarketTradeItem;
 import com.icechao.klinelib.utils.DateUtil;
 import com.icechao.klinelib.utils.LogUtil;
-import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.utils.Status;
 import com.icechao.klinelib.view.KChartView;
 
@@ -40,6 +40,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 public class MainActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -53,7 +56,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
     private View moreIndex;
     private View klineOperater;
     //    private ReqBean klineReq;
-    private DepthFullView depthFullView;
+//    private DepthFullView depthFullView;
     private List<KChartBean> all;
     private RadioGroup radioGroup;
     private Vibrator vibrator;
@@ -67,7 +70,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
         setTheme(R.style.AppTheme);
 
         chartView = findViewById(R.id.kLineChartView);
-        depthFullView = findViewById(R.id.full_depth_view);
+//        depthFullView = findViewById(R.id.full_depth_view);
         attachedOperater = findViewById(R.id.linear_layout_attached_operater);
         masterOperater = findViewById(R.id.linear_layout_master_operater);
         moreIndex = findViewById(R.id.linear_layout_index_more);
@@ -217,17 +220,31 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
                         adapter.resetData(all.subList(0, 100), false);
 //                        chartView.addDrawShape(new ParallelLineShape(chartView));
                     } else {
-                       //4.绝大多数是通过最后一根线的时间判断是add还是update
+                        //4.绝大多数是通过最后一根线的时间判断是add还是update
 //                        adapter.addLast(all.get(new Random().nextInt(all.size() - 1))); // 尾部追加数据
                         KChartBean data = adapter.getDataSource().get(adapter.getCount() - 1);
                         data.close = data.close + 100;
-                        adapter.changeItem(adapter.getCount() -1 , data); // 更新数据
+                        adapter.changeItem(adapter.getCount() - 1, data); // 更新数据
                     }
                     chartView.hideLoading();
                 }
             }
         }.start();
     }
+
+    public static HostnameVerifier getHostnameVerifier() {
+        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                // 校验证书域名
+
+
+            }
+        };
+        return hostnameVerifier;
+    }
+
+
 
     private boolean changeTheme;
 
@@ -243,7 +260,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.text_view_change_time_color:
                 chartView.setTimeLineColor(Color.BLUE);
                 break;
-                case R.id.text_view_change_theme:
+            case R.id.text_view_change_theme:
                 TypedArray typedArray = obtainStyledAttributes(changeTheme ? R.style.kline_style : R.style.kline, R.styleable.KChartView);
                 chartView.parseAttrs(typedArray, this);
                 changeTheme = !changeTheme;
@@ -287,28 +304,33 @@ public class MainActivity extends Activity implements View.OnClickListener, Radi
             case R.id.text_view_one_minute:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all);
+                int i1 = new Random(System.currentTimeMillis()).nextInt(100);
+                adapter.resetData(all.subList(5, 105));
                 break;
             case R.id.text_view_five_minute:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all);
+                i1 = new Random(System.currentTimeMillis()).nextInt(100);
+                adapter.resetData(all.subList(4, 104));
 
                 break;
             case R.id.text_view_half_hour:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all);
+                i1 = new Random(System.currentTimeMillis()).nextInt(100);
+                adapter.resetData(all.subList(3, 103));
                 break;
             case R.id.text_view_one_week:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all);
+                i1 = new Random(System.currentTimeMillis()).nextInt(100);
+                adapter.resetData(all.subList(2, 102));
                 break;
             case R.id.text_view_one_mounth:
                 chartView.hideSelectData();
                 chartView.setKlineState(Status.K_LINE_SHOW_CANDLE_LINE);
-                adapter.resetData(all);
+                i1 = new Random(System.currentTimeMillis()).nextInt(100);
+                adapter.resetData(all.subList(1, 101));
                 break;
             case R.id.text_view_change_label_state:
                 if (i % 2 == 0) {
