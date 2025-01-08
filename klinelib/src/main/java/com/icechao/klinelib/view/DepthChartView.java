@@ -303,16 +303,16 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         buysPoint = calcValues(mBuyDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
         sellsPoint = calcValues(mSellDataList, realDrawHeight, realDrawWidth, brokenLineMarginLeft, brokenLineMarginTop);
 
-        renderLeft(canvas);
-        renderRight(canvas);
-        renderLabel(canvas);
+        rendererLeft(canvas);
+        rendererRight(canvas);
+        rendererLabel(canvas);
 
         if (touchMode) {
-            renderTouch(canvas);
+            rendererTouch(canvas);
         }
     }
 
-    private void renderTouch(Canvas canvas) {
+    private void rendererTouch(Canvas canvas) {
         boolean safePoint = showBuy ? buysPoint != null && (showIndex < buysPoint.length && showIndex > 0) :
                 sellsPoint != null && (showIndex < sellsPoint.length && showIndex > 0);
         if (!safePoint) return;
@@ -401,7 +401,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
         averageXValue = calculateXValue / (gridColumns - 1);
     }
 
-    public void renderLeft(Canvas canvas) {
+    public void rendererLeft(Canvas canvas) {
         Path mPath = new Path();
         Path fillPath = new Path();
 
@@ -436,7 +436,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
 
     }
 
-    public void renderRight(Canvas canvas) {
+    public void rendererRight(Canvas canvas) {
         Path path = new Path();
         Path fillPath = new Path();
 
@@ -474,7 +474,7 @@ public class DepthChartView extends View implements GestureDetector.OnGestureLis
     /**
      * 绘制边框坐标
      */
-    private void renderLabel(Canvas canvas) {
+    private void rendererLabel(Canvas canvas) {
 
         //纵向的坐标
         float averageHeight = realDrawHeight / gridRows;

@@ -15,8 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.icechao.klinelib.adapter.BaseDepthAdapter;
-import com.icechao.klinelib.render.DepthRender;
-import com.icechao.klinelib.render.DepthLabelRender;
+import com.icechao.klinelib.renderer.DepthRenderer;
+import com.icechao.klinelib.renderer.DepthLabelRenderer;
 import com.icechao.klinelib.utils.Constants;
 
 
@@ -55,8 +55,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
 
     protected int height;
     protected int width;
-    private DepthRender depthRender;
-    private DepthLabelRender labelDraw;
+    private DepthRenderer depthRender;
+    private DepthLabelRenderer labelDraw;
     private DataSetObserver observer;
     private float selectedPointX;
 
@@ -86,8 +86,8 @@ public class BaseDepthView extends View implements View.OnTouchListener {
     private void initView(Context context) {
 
         setOnTouchListener(this);
-        labelDraw = new DepthLabelRender(5, 5);
-        depthRender = new DepthRender();
+        labelDraw = new DepthLabelRenderer(5, 5);
+        depthRender = new DepthRenderer();
 
         paint.setTextSize(legendTextSize);
         paint.setStyle(Paint.Style.FILL);

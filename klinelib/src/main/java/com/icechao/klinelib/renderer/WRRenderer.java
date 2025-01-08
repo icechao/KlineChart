@@ -1,13 +1,11 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 
 /*************************************************************************
@@ -20,7 +18,7 @@ import com.icechao.klinelib.utils.Constants;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class WRRender extends BaseRender {
+public class WRRenderer extends BaseRenderer {
 
     private Paint r1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint r2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -28,7 +26,7 @@ public class WRRender extends BaseRender {
     private final int indexInterval;
     private final String legendText;
 
-    public WRRender(Context context) {
+    public WRRenderer(Context context) {
         indexInterval = Constants.getCount();
         legendText = String.format(Constants.WR_TOP_TEXT_TEMPLATE, Constants.WR_1);
 

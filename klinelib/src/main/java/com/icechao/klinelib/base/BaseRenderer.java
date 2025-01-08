@@ -18,7 +18,7 @@ import java.util.Arrays;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public abstract class BaseRender {
+public abstract class BaseRenderer {
 
     protected IValueFormatter valueFormatter = new ValueFormatter();
 

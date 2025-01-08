@@ -16,7 +16,7 @@ import com.icechao.klinelib.R;
 import com.icechao.klinelib.adapter.BaseKLineChartAdapter;
 import com.icechao.klinelib.adapter.KLineChartAdapter;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.callback.IMaxMinDeal;
 import com.icechao.klinelib.callback.OnSelectedChangedListener;
 import com.icechao.klinelib.callback.PriceLabelInLineClickListener;
@@ -24,15 +24,15 @@ import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.IYValueFormatter;
-import com.icechao.klinelib.idraw.IDrawShape;
+import com.icechao.klinelib.idraw.IRendererShape;
 import com.icechao.klinelib.model.KLineEntity;
-import com.icechao.klinelib.render.EmaRender;
-import com.icechao.klinelib.render.KDJRender;
-import com.icechao.klinelib.render.MACDRender;
-import com.icechao.klinelib.render.MainRender;
-import com.icechao.klinelib.render.RSIRender;
-import com.icechao.klinelib.render.VolumeRender;
-import com.icechao.klinelib.render.WRRender;
+import com.icechao.klinelib.renderer.EmaRenderer;
+import com.icechao.klinelib.renderer.KDJRenderer;
+import com.icechao.klinelib.renderer.MACDRenderer;
+import com.icechao.klinelib.renderer.MainRenderer;
+import com.icechao.klinelib.renderer.RSIRenderer;
+import com.icechao.klinelib.renderer.VolumeRenderer;
+import com.icechao.klinelib.renderer.WRRenderer;
 import com.icechao.klinelib.utils.DpUtil;
 import com.icechao.klinelib.utils.Status;
 
@@ -69,13 +69,13 @@ public class KChartView extends BaseKChartView {
     }
 
     private void initView(Context context) {
-        mainRender = new MainRender(context);
-        volumeRender = new VolumeRender(context);
-        addIndexDraw(Status.INDEX_MACD, new MACDRender(context));
-        addIndexDraw(Status.INDEX_KDJ, new KDJRender(context));
-        addIndexDraw(Status.INDEX_RSI, new RSIRender(context));
-        addIndexDraw(Status.INDEX_WR, new WRRender(context));
-        addIndexDraw(Status.INDEX_EMA, new EmaRender(context));
+        mainRenderer = new MainRenderer(context);
+        volumeRenderer = new VolumeRenderer(context);
+        addIndexDraw(Status.INDEX_MACD, new MACDRenderer(context));
+        addIndexDraw(Status.INDEX_KDJ, new KDJRenderer(context));
+        addIndexDraw(Status.INDEX_RSI, new RSIRenderer(context));
+        addIndexDraw(Status.INDEX_WR, new WRRenderer(context));
+        addIndexDraw(Status.INDEX_EMA, new EmaRenderer(context));
     }
 
     private void initAttrs(AttributeSet attrs, Context context) {
@@ -290,7 +290,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setLimitTextColor(int color) {
-        mainRender.setLimitTextColor(color);
+        mainRenderer.setLimitTextColor(color);
         return this;
     }
 
@@ -301,7 +301,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setLimitTextSize(float dimension) {
-        mainRender.setLimitTextSize(dimension);
+        mainRenderer.setLimitTextSize(dimension);
         return this;
     }
 
@@ -411,9 +411,9 @@ public class KChartView extends BaseKChartView {
      * @param deColor 下降颜色
      */
     public KChartView setMacdChartColor(int inColor, int deColor) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setMacdChartColor(inColor, deColor);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setMacdChartColor(inColor, deColor);
         }
         return this;
     }
@@ -425,9 +425,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMacdHollow(@Status.HollowModel int model) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setStrokeModel(model);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setStrokeModel(model);
         }
         return this;
     }
@@ -439,9 +439,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMacdStrokeWidth(float lineWidth) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setMacdStrokeWidth(lineWidth);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setMacdStrokeWidth(lineWidth);
         }
         return this;
     }
@@ -529,9 +529,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setDIFColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setDIFColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setDIFColor(color);
         }
         return this;
     }
@@ -542,9 +542,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setDEAColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setDEAColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setDEAColor(color);
         }
         return this;
     }
@@ -555,9 +555,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMACDColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setMACDColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setMACDColor(color);
         }
         return this;
     }
@@ -569,9 +569,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMACDWidth(float MACDWidth) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_MACD);
-        if (baseRender instanceof MACDRender) {
-            ((MACDRender) baseRender).setMACDWidth(MACDWidth);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_MACD);
+        if (baseRender instanceof MACDRenderer) {
+            ((MACDRenderer) baseRender).setMACDWidth(MACDWidth);
         }
         return this;
     }
@@ -582,9 +582,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setKColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_KDJ);
-        if (baseRender instanceof KDJRender) {
-            ((KDJRender) baseRender).setKColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_KDJ);
+        if (baseRender instanceof KDJRenderer) {
+            ((KDJRenderer) baseRender).setKColor(color);
         }
         return this;
     }
@@ -595,9 +595,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setDColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_KDJ);
-        if (baseRender instanceof KDJRender) {
-            ((KDJRender) baseRender).setDColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_KDJ);
+        if (baseRender instanceof KDJRenderer) {
+            ((KDJRenderer) baseRender).setDColor(color);
         }
         return this;
     }
@@ -608,9 +608,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setJColor(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_KDJ);
-        if (baseRender instanceof KDJRender) {
-            ((KDJRender) baseRender).setJColor(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_KDJ);
+        if (baseRender instanceof KDJRenderer) {
+            ((KDJRenderer) baseRender).setJColor(color);
         }
         return this;
     }
@@ -621,9 +621,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setR1Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_WR);
-        if (baseRender instanceof WRRender) {
-            ((WRRender) baseRender).setR1Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_WR);
+        if (baseRender instanceof WRRenderer) {
+            ((WRRenderer) baseRender).setR1Color(color);
         }
         return this;
     }
@@ -634,9 +634,9 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setR2Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_WR);
-        if (baseRender instanceof WRRender) {
-            ((WRRender) baseRender).setR2Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_WR);
+        if (baseRender instanceof WRRenderer) {
+            ((WRRenderer) baseRender).setR2Color(color);
         }
         return this;
     }
@@ -647,20 +647,20 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setR3Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_WR);
-        if (baseRender instanceof WRRender) {
-            ((WRRender) baseRender).setR3Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_WR);
+        if (baseRender instanceof WRRenderer) {
+            ((WRRenderer) baseRender).setR3Color(color);
         }
         return this;
     }
 
     public KChartView setVolMa1Color(int color) {
-        volumeRender.setMaOneColor(color);
+        volumeRenderer.setMaOneColor(color);
         return this;
     }
 
     public KChartView setVolMa2Color(int color) {
-        volumeRender.setMaTwoColor(color);
+        volumeRenderer.setMaTwoColor(color);
         return this;
     }
 
@@ -671,7 +671,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMa1Color(int color) {
-        mainRender.setMaOneColor(color);
+        mainRenderer.setMaOneColor(color);
         return this;
     }
 
@@ -682,7 +682,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMa2Color(int color) {
-        mainRender.setMaTwoColor(color);
+        mainRenderer.setMaTwoColor(color);
         return this;
     }
 
@@ -693,7 +693,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMa3Color(int color) {
-        mainRender.setMaThreeColor(color);
+        mainRenderer.setMaThreeColor(color);
         return this;
     }
 
@@ -704,7 +704,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectedInfoTextSize(float textSize) {
-        mainRender.setSelectorTextSize(textSize);
+        mainRenderer.setSelectorTextSize(textSize);
         return this;
     }
 
@@ -715,8 +715,8 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setCandleWidth(float candleWidth) {
-        mainRender.setCandleWidth(candleWidth);
-        volumeRender.setBarWidth(candleWidth);
+        mainRenderer.setCandleWidth(candleWidth);
+        volumeRenderer.setBarWidth(candleWidth);
         return this;
     }
 
@@ -727,7 +727,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setCandleLineWidth(float candleLineWidth) {
-        mainRender.setCandleLineWidth(candleLineWidth);
+        mainRenderer.setCandleLineWidth(candleLineWidth);
         return this;
     }
 
@@ -737,7 +737,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setCandleHollow(@Status.HollowModel int hollowModel) {
-        mainRender.setStroke(hollowModel);
+        mainRenderer.setStroke(hollowModel);
         return this;
     }
 
@@ -753,25 +753,25 @@ public class KChartView extends BaseKChartView {
     }
 
     public KChartView setRSI1Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_RSI);
-        if (baseRender instanceof RSIRender) {
-            ((RSIRender) baseRender).setRSI1Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_RSI);
+        if (baseRender instanceof RSIRenderer) {
+            ((RSIRenderer) baseRender).setRSI1Color(color);
         }
         return this;
     }
 
     public KChartView setRSI2Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_RSI);
-        if (baseRender instanceof RSIRender) {
-            ((RSIRender) baseRender).setRSI2Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_RSI);
+        if (baseRender instanceof RSIRenderer) {
+            ((RSIRenderer) baseRender).setRSI2Color(color);
         }
         return this;
     }
 
     public KChartView setRSI3Color(int color) {
-        BaseRender baseRender = indexRenders.get(Status.INDEX_RSI);
-        if (baseRender instanceof RSIRender) {
-            ((RSIRender) baseRender).setRSI3Color(color);
+        BaseRenderer baseRender = indexRenders.get(Status.INDEX_RSI);
+        if (baseRender instanceof RSIRenderer) {
+            ((RSIRenderer) baseRender).setRSI3Color(color);
         }
         return this;
     }
@@ -783,12 +783,12 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setLineWidth(float lineWidth) {
-        mainRender.setLineWidth(lineWidth);
-        volumeRender.setLineWidth(lineWidth);
+        mainRenderer.setLineWidth(lineWidth);
+        volumeRenderer.setLineWidth(lineWidth);
         if (null != indexRenders && indexRenders.size() > 0) {
             Set<Integer> integers = indexRenders.keySet();
             for (Integer integer : integers) {
-                BaseRender baseRender = indexRenders.get(integer);
+                BaseRenderer baseRender = indexRenders.get(integer);
                 if (null != baseRender) {
                     baseRender.setLineWidth(lineWidth);
                 }
@@ -879,7 +879,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMainValueFormatter(IValueFormatter valueFormatter) {
-        mainRender.setValueFormatter(valueFormatter);
+        mainRenderer.setValueFormatter(valueFormatter);
         return this;
     }
 
@@ -893,7 +893,7 @@ public class KChartView extends BaseKChartView {
         if (null != indexRenders && indexRenders.size() > 0) {
             Set<Integer> integers = indexRenders.keySet();
             for (Integer integer : integers) {
-                BaseRender baseRender = indexRenders.get(integer);
+                BaseRenderer baseRender = indexRenders.get(integer);
                 if (null != baseRender) {
                     baseRender.setValueFormatter(valueFormatter);
                 }
@@ -1042,7 +1042,7 @@ public class KChartView extends BaseKChartView {
                         "涨跌幅    " +
                         "成交量  的翻译!");
             }
-            mainRender.setMarketInfoText(infoLabels);
+            mainRenderer.setMarketInfoText(infoLabels);
 
         }
         return this;
@@ -1132,8 +1132,8 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setIncreaseColor(int color) {
-        mainRender.setIncreaseColor(color);
-        volumeRender.setIncreaseColor(color);
+        mainRenderer.setIncreaseColor(color);
+        volumeRenderer.setIncreaseColor(color);
         return this;
     }
 
@@ -1144,8 +1144,8 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setDecreaseColor(int color) {
-        mainRender.setDecreaseColor(color);
-        volumeRender.setDecreaseColor(color);
+        mainRenderer.setDecreaseColor(color);
+        volumeRenderer.setDecreaseColor(color);
         return this;
     }
 
@@ -1156,7 +1156,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setTimeLineColor(int color) {
-        mainRender.setTimeLineColor(color);
+        mainRenderer.setTimeLineColor(color);
         return this;
     }
 
@@ -1189,7 +1189,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setMainLegendMarginTop(float mainLegendMarginTop) {
-        mainRender.setMainLegendMarginTop(mainLegendMarginTop);
+        mainRenderer.setMainLegendMarginTop(mainLegendMarginTop);
         return this;
     }
 
@@ -1211,7 +1211,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setVolLegendMarginTop(float volLegendMarginTop) {
-        volumeRender.setVolLegendMarginTop(volLegendMarginTop);
+        volumeRenderer.setVolLegendMarginTop(volLegendMarginTop);
         return this;
     }
 
@@ -1222,7 +1222,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setVolLegendColor(int color) {
-        volumeRender.setVolLegendColor(color);
+        volumeRenderer.setVolLegendColor(color);
         return this;
     }
 
@@ -1383,13 +1383,13 @@ public class KChartView extends BaseKChartView {
      */
     public KChartView setCommonTextSize(float textSize) {
         commonTextPaint.setTextSize(textSize);
-        mainRender.setTextSize(textSize);
-        volumeRender.setTextSize(textSize);
+        mainRenderer.setTextSize(textSize);
+        volumeRenderer.setTextSize(textSize);
 
         if (indexRenders.size() > 0) {
             Set<Integer> integers = indexRenders.keySet();
             for (Integer integer : integers) {
-                BaseRender baseRender = indexRenders.get(integer);
+                BaseRenderer baseRender = indexRenders.get(integer);
                 if (null != baseRender) {
                     baseRender.setTextSize(textSize);
                 }
@@ -1600,7 +1600,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectInfoBoxColors(int textColor, int borderColor, int backgroundColor) {
-        mainRender.setSelectorColors(textColor, borderColor, backgroundColor);
+        mainRenderer.setSelectorColors(textColor, borderColor, backgroundColor);
         return this;
     }
 
@@ -1643,7 +1643,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setVolFormatter(IValueFormatter valueFormatter) {
-        volumeRender.setValueFormatter(valueFormatter);
+        volumeRenderer.setValueFormatter(valueFormatter);
         return this;
     }
 
@@ -1695,14 +1695,14 @@ public class KChartView extends BaseKChartView {
         }
 
         if (position == Status.INDEX_NONE) {
-            indexRender = null;
+            indexRenderer = null;
             if (chartShowStatue == Status.MAIN_INDEX) {
                 chartShowStatue = Status.MAIN_ONLY;
             } else if (chartShowStatue == Status.MAIN_VOL_INDEX) {
                 chartShowStatue = Status.MAIN_VOL;
             }
         } else {
-            indexRender = this.indexRenders.get(position);
+            indexRenderer = this.indexRenders.get(position);
             if (chartShowStatue == Status.MAIN_ONLY) {
                 chartShowStatue = Status.MAIN_INDEX;
             } else if (chartShowStatue == Status.MAIN_VOL) {
@@ -1956,7 +1956,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectInfoBoxMargin(float margin) {
-        mainRender.setSelectInfoBoxMargin(margin);
+        mainRenderer.setSelectInfoBoxMargin(margin);
         return this;
     }
 
@@ -1967,7 +1967,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setSelectInfoBoxPadding(float padding) {
-        mainRender.setSelectorInfoBoxPadding(padding);
+        mainRenderer.setSelectorInfoBoxPadding(padding);
         return this;
     }
 
@@ -2020,7 +2020,7 @@ public class KChartView extends BaseKChartView {
      * @return {@link KChartView}
      */
     public KChartView setVolLineChartColor(int color) {
-        volumeRender.setLineChartColor(color);
+        volumeRenderer.setLineChartColor(color);
         return this;
     }
 
@@ -2051,8 +2051,8 @@ public class KChartView extends BaseKChartView {
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends MainRender> KChartView resetMainRender(T t) {
-        this.mainRender = t;
+    public <T extends MainRenderer> KChartView resetMainRender(T t) {
+        this.mainRenderer = t;
         return this;
     }
 
@@ -2063,8 +2063,8 @@ public class KChartView extends BaseKChartView {
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends VolumeRender> KChartView resetVolRender(T t) {
-        this.volumeRender = t;
+    public <T extends VolumeRenderer> KChartView resetVolRender(T t) {
+        this.volumeRenderer = t;
         return this;
     }
 
@@ -2170,7 +2170,7 @@ public class KChartView extends BaseKChartView {
      * @param <T> 泛型控制
      * @return {@link KChartView}
      */
-    public <T extends BaseRender> KChartView resetIndexRender(@Status.IndexStatus int status, T t) {
+    public <T extends BaseRenderer> KChartView resetIndexRender(@Status.IndexStatus int status, T t) {
         this.indexRenders.put(status, t);
         return this;
     }
@@ -2189,7 +2189,7 @@ public class KChartView extends BaseKChartView {
      *
      * @param childDraw IChartDraw
      */
-    public void addIndexDraw(@Status.IndexStatus int tag, BaseRender childDraw) {
+    public void addIndexDraw(@Status.IndexStatus int tag, BaseRenderer childDraw) {
         indexRenders.put(tag, childDraw);
     }
 
@@ -2207,7 +2207,7 @@ public class KChartView extends BaseKChartView {
      *
      * @param drawShape {@link IMaxMinDeal}
      */
-    public void addDrawShape(IDrawShape drawShape) {
+    public void addDrawShape(IRendererShape drawShape) {
         drawShapeEnable = true;
         this.drawShape = drawShape;
         showSelected = false;
@@ -2219,7 +2219,7 @@ public class KChartView extends BaseKChartView {
      *
      * @param drawShape {@link IMaxMinDeal}
      */
-    public void removeDrawShape(IDrawShape drawShape) {
+    public void removeDrawShape(IRendererShape drawShape) {
         drawShapeEnable = false;
         this.drawShape = drawShape;
         fixScrollEnable(getDataLength());

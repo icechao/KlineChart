@@ -1,4 +1,4 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,10 +6,8 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.R;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.Status;
 
@@ -24,7 +22,7 @@ import com.icechao.klinelib.utils.Status;
  * @version      : V1
  *************************************************************************/
 
-public class MACDRender extends BaseRender {
+public class MACDRenderer extends BaseRenderer {
 
     private Paint redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint greenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -41,7 +39,7 @@ public class MACDRender extends BaseRender {
     private String macdIndexLabel, difIndexLabel, deaIndexLabel;
     private @Status.HollowModel int macdStrokeModel = Status.NONE_HOLLOW;
 
-    public MACDRender(Context context) {
+    public MACDRenderer(Context context) {
         indexInterval = Constants.getCount();
         macdIndexLabel = context.getString(R.string.k_index_macd);
         difIndexLabel = context.getString(R.string.k_index_dif);

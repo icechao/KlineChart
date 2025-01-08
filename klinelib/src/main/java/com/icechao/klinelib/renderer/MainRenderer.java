@@ -1,4 +1,4 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.formatter.IValueFormatter;
 import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
@@ -25,7 +25,7 @@ import com.icechao.klinelib.utils.Status;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class MainRender extends BaseRender {
+public class MainRenderer extends BaseRenderer {
 
     private int itemCount;
     private String[] strings = new String[8];
@@ -58,7 +58,7 @@ public class MainRender extends BaseRender {
     private String[] marketInfoText = new String[8];
 
 
-    public MainRender(Context context) {
+    public MainRenderer(Context context) {
         indexInterval = Constants.getCount();
         selectorBorderPaint.setStyle(Paint.Style.STROKE);
         upLinePaint.setStyle(Paint.Style.STROKE);
@@ -265,7 +265,7 @@ public class MainRender extends BaseRender {
         double tempDiffPrice = values[Constants.INDEX_CLOSE] - values[Constants.INDEX_OPEN];
         strings[5] = getValueFormatter().format((float) tempDiffPrice);
         strings[6] = String.format("%.2f",(tempDiffPrice * 100) / values[Constants.INDEX_OPEN], 2) + "%";
-        strings[7] = view.getVolumeRender().getValueFormatter().format(values[Constants.INDEX_VOL]);
+        strings[7] = view.getVolumeRenderer().getValueFormatter().format(values[Constants.INDEX_VOL]);
 
         float width = 0, left, top = margin + view.getChartPaddingTop();
         //上下多加两个padding值的间隙

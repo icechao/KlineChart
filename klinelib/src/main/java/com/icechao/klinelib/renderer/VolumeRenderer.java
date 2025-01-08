@@ -1,4 +1,4 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.icechao.klinelib.R;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.Status;
 
@@ -23,7 +23,7 @@ import java.util.Arrays;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class VolumeRender extends BaseRender {
+public class VolumeRenderer extends BaseRenderer {
 
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint increasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -36,7 +36,7 @@ public class VolumeRender extends BaseRender {
     private final int indexInterval;
     private String volMaIndex1, volMaIndex2, volIndex;
 
-    public VolumeRender(Context context) {
+    public VolumeRenderer(Context context) {
         indexInterval = Constants.getCount();
         volIndex = context.getString(R.string.k_index_vol);
         String temp = context.getString(R.string.k_index_vol_ma);

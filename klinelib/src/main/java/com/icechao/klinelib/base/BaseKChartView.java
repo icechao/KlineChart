@@ -27,10 +27,10 @@ import com.icechao.klinelib.callback.SlidListener;
 import com.icechao.klinelib.formatter.DateFormatter;
 import com.icechao.klinelib.formatter.IDateTimeFormatter;
 import com.icechao.klinelib.formatter.IYValueFormatter;
-import com.icechao.klinelib.idraw.IDrawShape;
+import com.icechao.klinelib.idraw.IRendererShape;
 import com.icechao.klinelib.model.KLineEntity;
-import com.icechao.klinelib.render.MainRender;
-import com.icechao.klinelib.render.VolumeRender;
+import com.icechao.klinelib.renderer.MainRenderer;
+import com.icechao.klinelib.renderer.VolumeRenderer;
 import com.icechao.klinelib.utils.Constants;
 import com.icechao.klinelib.utils.LogUtil;
 import com.icechao.klinelib.utils.Status;
@@ -55,7 +55,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 当前正在绘制的图形
      */
-    protected IDrawShape drawShape;
+    protected IRendererShape drawShape;
     /**
      * 是否以动画的方式绘制最后一根线
      */
@@ -339,17 +339,17 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 主视视图
      */
-    protected MainRender mainRender;
+    protected MainRenderer mainRenderer;
 
     /**
      * 交易量视图
      */
-    protected VolumeRender volumeRender;
+    protected VolumeRenderer volumeRenderer;
 
     /**
      * 子视图
      */
-    protected BaseRender indexRender;
+    protected BaseRenderer indexRenderer;
 
     /**
      * 当前K线的最新价
@@ -485,16 +485,16 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 }
             });
             float[] tempData = Arrays.copyOfRange(points, tempIndex, points.length);
-            mainRender.startAnim(BaseKChartView.this, tempData);
-            volumeRender.startAnim(BaseKChartView.this, tempData);
-            if (null != indexRender) {
-                indexRender.startAnim(BaseKChartView.this, tempData);
+            mainRenderer.startAnim(BaseKChartView.this, tempData);
+            volumeRenderer.startAnim(BaseKChartView.this, tempData);
+            if (null != indexRenderer) {
+                indexRenderer.startAnim(BaseKChartView.this, tempData);
             }
         } else {
-            mainRender.resetValues();
-            volumeRender.resetValues();
-            if (null != indexRender) {
-                indexRender.resetValues();
+            mainRenderer.resetValues();
+            volumeRenderer.resetValues();
+            if (null != indexRenderer) {
+                indexRenderer.resetValues();
             }
             lastVol = points[tempIndex + Constants.INDEX_VOL];
             lastPrice = points[tempIndex + Constants.INDEX_CLOSE];
@@ -510,7 +510,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 指标视图
      */
-    protected Map<Integer, BaseRender> indexRenders = new HashMap<>();
+    protected Map<Integer, BaseRenderer> indexRenders = new HashMap<>();
 
 
     /**
@@ -519,7 +519,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected IYValueFormatter valueFormatter = new IYValueFormatter() {
         @Override
         public String format(double max, double min, double value) {
-            return mainRender.getValueFormatter().format(value);
+            return mainRenderer.getValueFormatter().format(value);
         }
     };
 
@@ -894,13 +894,13 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     protected void setItemsCount(int itemCount) {
         this.itemsCount = itemCount;
         dataLength = 0;
-        mainRender.setItemCount(itemsCount);
-        mainRender.resetValues();
-        volumeRender.setItemCount(itemsCount);
-        volumeRender.resetValues();
-        if (null != indexRender) {
-            indexRender.setItemCount(itemCount);
-            indexRender.resetValues();
+        mainRenderer.setItemCount(itemsCount);
+        mainRenderer.resetValues();
+        volumeRenderer.setItemCount(itemsCount);
+        volumeRenderer.resetValues();
+        if (null != indexRenderer) {
+            indexRenderer.setItemCount(itemCount);
+            indexRenderer.resetValues();
         }
         fixScrollEnable(getDataLength());
         invalidate();
@@ -973,12 +973,12 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 canvas.save();
                 canvas.clipRect(-canvasTranslateX, chartPaddingTop - textHeight, -canvasTranslateX + renderWidth, chartPaddingTop + displayHeight + textHeight);
                 renderKCandle(canvas);
-                mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
+                mainRenderer.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
                 canvas.restore();
                 break;
             case Status.LABEL_WITH_GRID:
                 renderKCandle(canvas);
-                mainRender.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
+                mainRenderer.renderMaxMinValue(canvas, this, getX(mainMaxIndex), mainHighMaxValue, getX(mainMinIndex), mainLowMinValue);
                 break;
         }
 
@@ -986,7 +986,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         if (getShowSelected()) {
             renderSelected(canvas, getX(getSelectedIndex()));
         } else if (drawShapeEnable && null != drawShape) {
-            drawShape.render(canvas,
+            drawShape.renderer(canvas,
                     xToTranslateX(0),
                     xToTranslateX(getChartWidth()),
                     0, (int) viewHeight);
@@ -1010,15 +1010,15 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             }
             switch (chartShowStatue) {
                 case Status.MAIN_VOL_INDEX:
-                    indexRender.render(canvas, lastX, curX, this, i, values);
+                    indexRenderer.render(canvas, lastX, curX, this, i, values);
                 case Status.MAIN_VOL:
-                    volumeRender.render(canvas, lastX, curX, this, i, values);
+                    volumeRenderer.render(canvas, lastX, curX, this, i, values);
                 case Status.MAIN_ONLY:
-                    mainRender.render(canvas, lastX, curX, this, i, values);
+                    mainRenderer.render(canvas, lastX, curX, this, i, values);
                     break;
                 case Status.MAIN_INDEX:
-                    indexRender.render(canvas, lastX, curX, this, i, values);
-                    mainRender.render(canvas, lastX, curX, this, i, values);
+                    indexRenderer.render(canvas, lastX, curX, this, i, values);
+                    mainRenderer.render(canvas, lastX, curX, this, i, values);
                     break;
             }
         }
@@ -1075,20 +1075,20 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             if (selectedY < mainRect.top + chartPaddingTop) {
                 return;
             } else if (selectedY < mainRect.bottom) {
-                text = mainRender.getValueFormatter().format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - chartPaddingTop) * (mainRect.bottom - selectedY)));
+                text = mainRenderer.getValueFormatter().format((float) (mainMinValue + (mainMaxValue - mainMinValue) / (mainRect.bottom - chartPaddingTop) * (mainRect.bottom - selectedY)));
             } else if (null != volRect && selectedY < volRect.top) {
                 return;
             } else if (null != volRect && selectedY < volRect.bottom) {
-                text = volumeRender.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY)));
-            } else if (null != indexRender && selectedY < indexRect.bottom) {
-                text = mainRender.getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
-            } else if (null != indexRender && selectedY < indexRect.top) {
+                text = volumeRenderer.getValueFormatter().format((volMaxValue / volRect.height() * (volRect.bottom - selectedY)));
+            } else if (null != indexRenderer && selectedY < indexRect.bottom) {
+                text = mainRenderer.getValueFormatter().format((indexMaxValue / indexRect.height() * (indexRect.bottom - selectedY)));
+            } else if (null != indexRenderer && selectedY < indexRect.top) {
                 return;
             } else {
                 return;
             }
         } else {
-            text = mainRender.getValueFormatter().format(points[getSelectedIndex() * indexInterval + Constants.INDEX_CLOSE]);
+            text = mainRenderer.getValueFormatter().format(points[getSelectedIndex() * indexInterval + Constants.INDEX_CLOSE]);
             y = getMainY(points[getSelectedIndex() * indexInterval + Constants.INDEX_CLOSE]);
         }
         canvas.drawLine(-canvasTranslateX, y, -canvasTranslateX + renderWidth, y, selectedXLinePaint);
@@ -1199,10 +1199,10 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
-                maxVol = volumeRender.getValueFormatter().format(volMaxValue);
+                maxVol = volumeRenderer.getValueFormatter().format(volMaxValue);
                 canvas.drawText(maxVol, tempLeft + yLabelX, mainRect.bottom + baseLine, yLabelPaint);
                 //子图Y轴label
-                childLabel = indexRender.getValueFormatter().format(indexMaxValue);
+                childLabel = indexRenderer.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLabel, tempLeft + yLabelX, volRect.bottom + baseLine, yLabelPaint);
                 break;
             case Status.MAIN_VOL:
@@ -1215,7 +1215,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
 
                 }
-                maxVol = volumeRender.getValueFormatter().format(volMaxValue);
+                maxVol = volumeRenderer.getValueFormatter().format(volMaxValue);
                 canvas.drawText(maxVol, tempLeft + yLabelX, mainRect.bottom + baseLine, yLabelPaint);
                 break;
             case Status.MAIN_ONLY:
@@ -1237,7 +1237,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     float v = rowSpace * i + chartPaddingTop;
                     canvas.drawText(text, tempLeft + yLabelX, v - mainYMoveUpInterval, yLabelPaint);
                 }
-                childLabel = indexRender.getValueFormatter().format(indexMaxValue);
+                childLabel = indexRenderer.getValueFormatter().format(indexMaxValue);
                 canvas.drawText(childLabel, tempLeft + yLabelX, indexRect.top - childViewPaddingTop + baseLine, yLabelPaint);
                 break;
         }
@@ -1265,7 +1265,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                     if (showPriceLabelInLine) {
                         float halfPriceBoxHeight = priceLabelInLineBoxHeight / 2;
                         priceLabelInLineBoxRight = tempRight - priceLineBoxMarginRight;
-                        priceText = mainRender.getValueFormatter().format(lastPrice);
+                        priceText = mainRenderer.getValueFormatter().format(lastPrice);
                         textWidth = commonTextPaint.measureText(priceText);
                         priceLabelInLineBoxLeft = priceLabelInLineBoxRight - textWidth
                                 - priceShapeWidth - priceLineBoxPadidng * 2
@@ -1440,19 +1440,19 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
             float x = legendMarginLeft;
             switch (chartShowStatue) {
                 case Status.MAIN_INDEX:
-                    mainRender.renderText(canvas, this, x,
+                    mainRenderer.renderText(canvas, this, x,
                             mainRect.top + baseLine - textHeight / 2, position, tempValues);
-                    indexRender.renderText(canvas, this, x,
+                    indexRenderer.renderText(canvas, this, x,
                             mainRect.bottom + baseLine, position, tempValues);
                     break;
                 case Status.MAIN_VOL_INDEX:
-                    indexRender.renderText(canvas, this, x,
+                    indexRenderer.renderText(canvas, this, x,
                             volRect.bottom + baseLine, position, tempValues);
                 case Status.MAIN_VOL:
-                    volumeRender.renderText(canvas, this, x,
+                    volumeRenderer.renderText(canvas, this, x,
                             mainRect.bottom + baseLine, position, tempValues);
                 case Status.MAIN_ONLY:
-                    mainRender.renderText(canvas, this, x,
+                    mainRenderer.renderText(canvas, this, x,
                             mainRect.top + baseLine - textHeight / 2, position, tempValues);
                     break;
             }
@@ -1710,13 +1710,13 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 case Status.MAIN_VOL_INDEX:
                 case Status.MAIN_VOL:
                     float volume = points[tempIndex + Constants.INDEX_VOL];
-                    volMaxValue = volumeRender.getMaxValue(
+                    volMaxValue = volumeRenderer.getMaxValue(
                             (float) volMaxValue,
                             points[tempIndex + Constants.INDEX_VOL],
                             points[tempIndex + Constants.INDEX_VOL_MA_1],
                             points[tempIndex + Constants.INDEX_VOL_MA_2]);
                     if (screenRightIndex != itemsCount - 1) {
-                        volMinValue = volumeRender.getMinValue(volMinValue,
+                        volMinValue = volumeRenderer.getMinValue(volMinValue,
                                 points[tempIndex + Constants.INDEX_VOL],
                                 points[tempIndex + Constants.INDEX_VOL_MA_1],
                                 points[tempIndex + Constants.INDEX_VOL_MA_2]);
@@ -1728,8 +1728,8 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                         break;
                     }
                 case Status.MAIN_INDEX:
-                    indexMaxValue = Math.max(indexMaxValue, indexRender.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
-                    mChildMinValue = Math.min(mChildMinValue, indexRender.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    indexMaxValue = Math.max(indexMaxValue, indexRenderer.getMaxValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
+                    mChildMinValue = Math.min(mChildMinValue, indexRenderer.getMinValue(Arrays.copyOfRange(points, tempIndex, tempIndex + indexInterval)));
                     break;
                 case Status.MAIN_ONLY:
                     break;
@@ -1782,46 +1782,46 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     }
 
     protected void calcMainMinValue(int tempIndex) {
-        switch (mainStatus){
+        switch (mainStatus) {
             case Status.MAIN_MA:
-                mainMinValue = mainRender.getMinValue((float) mainMinValue,
+                mainMinValue = mainRenderer.getMinValue((float) mainMinValue,
                         points[tempIndex + Constants.INDEX_LOW],
                         points[tempIndex + Constants.INDEX_MA_1],
                         points[tempIndex + Constants.INDEX_MA_2],
                         points[tempIndex + Constants.INDEX_MA_3]);
                 break;
             case Status.MAIN_BOLL:
-                mainMinValue = mainRender.getMinValue((float) mainMinValue,
+                mainMinValue = mainRenderer.getMinValue((float) mainMinValue,
                         points[tempIndex + Constants.INDEX_LOW],
                         points[tempIndex + Constants.INDEX_BOLL_DN],
                         points[tempIndex + Constants.INDEX_BOLL_UP],
                         points[tempIndex + Constants.INDEX_BOLL_MB]);
                 break;
             default:
-                mainMinValue =  mainRender.getMinValue((float) mainMinValue,
+                mainMinValue = mainRenderer.getMinValue((float) mainMinValue,
                         points[tempIndex + Constants.INDEX_LOW]);
                 break;
         }
     }
 
     protected void calcMainMaxValue(int tempIndex) {
-        switch (mainStatus){
+        switch (mainStatus) {
             case Status.MAIN_MA:
-                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
+                mainMaxValue = mainRenderer.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_MA_1],
                         points[tempIndex + Constants.INDEX_MA_2],
                         points[tempIndex + Constants.INDEX_MA_3]);
                 break;
             case Status.MAIN_BOLL:
-                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
+                mainMaxValue = mainRenderer.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH],
                         points[tempIndex + Constants.INDEX_BOLL_DN],
                         points[tempIndex + Constants.INDEX_BOLL_UP],
                         points[tempIndex + Constants.INDEX_BOLL_MB]);
                 break;
             default:
-                mainMaxValue = mainRender.getMaxValue((float) mainMaxValue,
+                mainMaxValue = mainRenderer.getMaxValue((float) mainMaxValue,
                         points[tempIndex + Constants.INDEX_HIGH]);
                 break;
         }
@@ -2061,10 +2061,10 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     /**
      * 获取交易量Render
      *
-     * @return {@link VolumeRender}
+     * @return {@link VolumeRenderer}
      */
-    public VolumeRender getVolumeRender() {
-        return volumeRender;
+    public VolumeRenderer getVolumeRenderer() {
+        return volumeRenderer;
     }
 
     @Override
@@ -2174,7 +2174,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      * 数据观察者,当数据变化
      */
     protected DataSetObserver dataSetObserver = new DataSetObserver() {
-        
+
         @Override
         public void onChanged() {
 //          1 判断数据个数化,更新最后一个数据还是添加数据
@@ -2229,15 +2229,15 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
         float diffTime = millions - start;
         float v = getDataLength() * (end - start) / diffTime;
 
-        LogUtil.e( "xToMillion  : millions = " +millions + "      x = "  + v);
+        LogUtil.e("xToMillion  : millions = " + millions + "      x = " + v);
         return v;
     }
 
     public float xToMillion(float x) {
         long start = dataAdapter.getDateMillion(0);
         long end = dataAdapter.getDateMillion(itemsCount - 1);
-        long l = (long) (getDataLength() * (end - start)/x + start);
-        LogUtil.e( "xToMillion  : x = " +x + "      millions = "  + l);
+        long l = (long) (getDataLength() * (end - start) / x + start);
+        LogUtil.e("xToMillion  : x = " + x + "      millions = " + l);
         return l;
     }
 

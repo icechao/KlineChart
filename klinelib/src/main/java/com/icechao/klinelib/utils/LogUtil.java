@@ -16,7 +16,7 @@ import com.icechao.klinelib.BuildConfig;
  * @version      : V1
  *************************************************************************/
 public class LogUtil {
-    private final static String TAG = "CHAO=>";
+    private final static String TAG = "LOG=>";
 
     public static void e(Object o) {
         if (BuildConfig.DEBUG) {

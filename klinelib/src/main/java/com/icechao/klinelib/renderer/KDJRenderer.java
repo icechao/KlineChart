@@ -1,14 +1,12 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import com.icechao.klinelib.R;
-import com.icechao.klinelib.base.BaseRender;
+import com.icechao.klinelib.base.BaseRenderer;
 import com.icechao.klinelib.base.BaseKChartView;
-import com.icechao.klinelib.formatter.IValueFormatter;
-import com.icechao.klinelib.formatter.ValueFormatter;
 import com.icechao.klinelib.utils.Constants;
 
 /*************************************************************************
@@ -21,7 +19,7 @@ import com.icechao.klinelib.utils.Constants;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class KDJRender extends BaseRender {
+public class KDJRenderer extends BaseRenderer {
 
     private Paint mKPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mDPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -29,7 +27,7 @@ public class KDJRender extends BaseRender {
     private final int indexInterval;
     private String kIndexLabel,dIndexLabel,jIndexLabel;
 
-    public KDJRender(Context context) {
+    public KDJRenderer(Context context) {
         indexInterval = Constants.getCount();
         kIndexLabel = context.getString(R.string.k_index_k);
         dIndexLabel = context.getString(R.string.k_index_d);

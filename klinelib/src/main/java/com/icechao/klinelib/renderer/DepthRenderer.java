@@ -1,4 +1,4 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,7 +15,7 @@ import android.graphics.Path;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class DepthRender {
+public class DepthRenderer {
 
     private Paint depthPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint areaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -46,7 +46,7 @@ public class DepthRender {
         this.width = width;
     }
 
-    public DepthRender() {
+    public DepthRenderer() {
         depthPaint.setAntiAlias(true);
         depthPaint.setStyle(Paint.Style.STROKE);
     }

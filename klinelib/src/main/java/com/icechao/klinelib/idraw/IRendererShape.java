@@ -2,7 +2,7 @@ package com.icechao.klinelib.idraw;
 
 import android.graphics.Canvas;
 
-public interface IDrawShape {
+public interface IRendererShape {
 
     void onTouchMove(double x, double y, double distanceX, double distanceY);
 
@@ -20,6 +20,6 @@ public interface IDrawShape {
 
     boolean touchUp(double x, double y);
 
-    void render(Canvas canvas, float chartLeft, float chartRight, int top, int bottom);
+    void renderer(Canvas canvas, float chartLeft, float chartRight, int top, int bottom);
 
 }

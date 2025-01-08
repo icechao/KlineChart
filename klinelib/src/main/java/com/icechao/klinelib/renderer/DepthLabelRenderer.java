@@ -1,4 +1,4 @@
-package com.icechao.klinelib.render;
+package com.icechao.klinelib.renderer;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,7 +15,7 @@ import android.graphics.RectF;
  * @Email        : icechliu@gmail.com
  * @version      : V1
  *************************************************************************/
-public class DepthLabelRender {
+public class DepthLabelRenderer {
 
     private Paint labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint selectedLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -51,7 +51,7 @@ public class DepthLabelRender {
         this.yLabelCount = yLabelCount;
     }
 
-    public DepthLabelRender(int xLabelCount, int yLabelCount) {
+    public DepthLabelRenderer(int xLabelCount, int yLabelCount) {
         this.xLabelCount = xLabelCount;
         this.yLabelCount = yLabelCount;
 
