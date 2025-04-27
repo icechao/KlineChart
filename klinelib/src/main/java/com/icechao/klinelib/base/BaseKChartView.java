@@ -2192,6 +2192,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
                 changeTranslated(getMinTranslate());
                 startAnimation();
             } else if (currentCount == tempDataCount) { //更新数据
+                BaseKChartView.this.points = points;
                 lastChange();
                 if (dataAdapter.getResetShowPosition()) {
                     changeTranslated(getMinTranslate());
